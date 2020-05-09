@@ -49,7 +49,7 @@ class Ball {
             this.xv += (Math.random() * 0.02) - 0.01;
         }
         // this.x <= 0 || this.x + this.width >= Canvas.width  Use this for a bouncing ball//
-        if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x) || (this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) {
+        else if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x) || (this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) {
 
             if (Math.round(Math.random()) == 0) {
                 this.first_audio.play();
