@@ -39,7 +39,8 @@ class Ball {
             //     this.y = Computer.y + Computer.height;
             //     this.speed *= 1.5;
             // }
-            // if (this.y < 0) this.y = 0;
+
+            if (this.y <= 0) this.y = 0;
             if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height);
 
             if (this.y <= 0 || this.y + this.height >= Canvas.height) this.speed *= 0.95;
