@@ -39,8 +39,7 @@ class Ball {
             //     this.y = Computer.y + Computer.height;
             //     this.speed *= 1.5;
             // }
-
-            if (this.y <= 0) this.y = 0;
+            if (this.y < 0) this.y = 1;
             if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height);
 
             if (this.y <= 0 || this.y + this.height >= Canvas.height) this.speed *= 0.95;
@@ -57,6 +56,9 @@ class Ball {
             } else {
                 this.second_audio.play();
             }
+
+            if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x)) this.x = Computer.x + Computer.width + 1;
+            if ((this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) this.x = Player.x - this.width;
 
             this.xv *= -1;
             this.speed *= 1.3;
