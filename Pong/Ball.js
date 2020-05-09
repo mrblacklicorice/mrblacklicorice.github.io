@@ -57,8 +57,8 @@ class Ball {
                 this.second_audio.play();
             }
 
-            if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x)) this.x = Computer.x + Computer.width + 1;
-            if ((this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) this.x = Player.x - this.width;
+            // if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x)) this.x = Computer.x + Computer.width + 1;
+            // if ((this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) this.x = Player.x - this.width;
 
             this.xv *= -1;
             this.speed *= 1.3;

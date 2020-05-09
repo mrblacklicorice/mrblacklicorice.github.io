@@ -2,7 +2,6 @@ var c = document.getElementById("screen");
 var context = c.getContext('2d');
 var pixel = 5;
 var movement;
-var animation;
 var score_once = true;
 var start = true;
 var point = document.getElementById('Point');
@@ -46,36 +45,38 @@ button.addEventListener('click', () => {
     button.hidden = true;
     point.play();
     c.style.cursor = 'none';
-
-    animation = setInterval(function () {
-        drawCanvas();
-        Pl.show(context);
-        Com.show(context);
-        Com.move(ball);
-        if (ball.x < 0 || ball.x + ball.width > c.width) {
-            if (score_once) {
-                point.play();
-                score_once = false;
-                if (ball.x < 0) {
-                    if (Com.speed < 24) Com.speed *= 1.2;
-                    Pl.score++;
-                }
-                if (ball.x + ball.width > c.width) {
-                    if (Com.speed < 24) Com.speed /= 1.2;
-                    Com.score++;
-                }
-
-                setTimeout(function () {
-                    ball = new Ball(pixel, c);
-                }, 500);
-            }
-        } else {
-            score_once = true;
-            ball.show(context);
-            ball.move(Pl, Com, c);
-        }
-    }, 1000 / 60);
+    requestAnimationFrame(Animation);
 });
+
+function Animation() {
+    drawCanvas();
+    Pl.show(context);
+    Com.show(context);
+    Com.move(ball);
+    if (ball.x < 0 || ball.x + ball.width > c.width) {
+        if (score_once) {
+            point.play();
+            score_once = false;
+            if (ball.x < 0) {
+                if (Com.speed < 24) Com.speed *= 1.2;
+                Pl.score++;
+            }
+            if (ball.x + ball.width > c.width) {
+                if (Com.speed < 24) Com.speed /= 1.2;
+                Com.score++;
+            }
+
+            setTimeout(function () {
+                ball = new Ball(pixel, c);
+            }, 500);
+        }
+    } else {
+        score_once = true;
+        ball.show(context);
+        ball.move(Pl, Com, c);
+    }
+    requestAnimationFrame(Animation);
+}
 
 document.addEventListener('mousemove', (event) => {
     clearInterval(movement);
