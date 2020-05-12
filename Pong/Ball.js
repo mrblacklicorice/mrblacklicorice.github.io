@@ -61,7 +61,7 @@ class Ball {
             // if ((this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) this.x = Player.x - this.width;
 
             this.xv *= -1;
-            this.speed *= 1.03;
+            this.speed *= 1.1;
 
             this.yv += (Math.random() * 0.02) - 0.01;
             this.xv += (Math.random() * 0.02) - 0.01;
