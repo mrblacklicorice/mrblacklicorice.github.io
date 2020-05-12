@@ -8,7 +8,7 @@ class Ball {
         this.x = (canvas.width / 2) - (this.width / 2);
         this.xv = Math.sin(((Math.random() * Math.PI / 6) + Math.PI / 6 + ((Math.floor(Math.random() * 4)) * Math.PI / 2)));
         this.yv = Math.sin(((Math.random() * Math.PI / 6) + Math.PI / 6 + ((Math.floor(Math.random() * 4)) * Math.PI / 2)))
-        this.speed = 1 * pixel * 1 / Math.abs(this.xv);
+        this.speed = 3 * pixel * 1 / Math.abs(this.xv);
         this.pixel = pixel;
         this.c = canvas;
     }
