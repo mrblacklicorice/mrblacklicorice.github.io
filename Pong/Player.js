@@ -6,6 +6,7 @@ class Player {
         this.x = (canvas.width - this.width * 3);
         this.y = (canvas.height / 2 - this.height / 2);
         this.c = canvas;
+        this.speed = 4;
         this.pixel = pixel;
     }
     show = (context) => {
@@ -14,10 +15,10 @@ class Player {
     };
 
     moveUp = () => {
-        if (this.y > 0) this.y -= this.pixel;
+        if (this.y > 0) this.y -= this.pixel * this.speed;
     }
 
     moveDown = () => {
-        if (this.y < this.c.height - this.height) this.y += this.pixel;
+        if (this.y < this.c.height - this.height) this.y += this.pixel * this.speed;
     }
 }
