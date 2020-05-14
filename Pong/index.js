@@ -80,14 +80,8 @@ function Animation() {
 }
 
 document.addEventListener('mousemove', (event) => {
-    clearInterval(movement);
-    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) <= Pl.y) {
-        movement = setInterval(Pl.moveUp(), 1 / Pl.speed);
-    }
-    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) >= Pl.y) {
-        movement = setInterval(Pl.moveDown(), 1 / Pl.speed);
-    }
-
+    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) <= Pl.y) Pl.moveUp()
+    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) >= Pl.y) Pl.moveDown();
 });
 
 function drawCanvas() {
