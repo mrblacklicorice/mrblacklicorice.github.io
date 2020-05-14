@@ -6,7 +6,7 @@ class AI {
         this.x = (this.width * 3);
         this.y = (canvas.height / 2 - this.height / 2);
         this.c = canvas;
-        this.speed = 2;
+        this.speed = 2/5 * pixel;
         this.pixel = pixel;
     }
     show = (context) => {

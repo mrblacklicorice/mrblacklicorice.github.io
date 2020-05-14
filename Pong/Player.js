@@ -6,7 +6,7 @@ class Player {
         this.x = (canvas.width - this.width * 3);
         this.y = (canvas.height / 2 - this.height / 2);
         this.c = canvas;
-        this.speed = 4;
+        this.speed = 4 / 5 * pixel;
         this.pixel = pixel;
     }
     show = (context) => {
@@ -14,11 +14,11 @@ class Player {
         context.fillRect(this.x, this.y, this.width, this.height);
     };
 
-    moveUp = () => {
-        if (this.y > 0) this.y -= this.pixel * this.speed;
-    }
-
-    moveDown = () => {
-        if (this.y < this.c.height - this.height) this.y += this.pixel * this.speed;
+    move = (y) => {
+        if (y  <= this.y) {
+            if (this.y > 0) this.y -= this.pixel * this.speed;
+        } else if (y  > this.y+this.height) {
+            if (this.y < this.c.height - this.height) this.y += this.pixel * this.speed;
+        }
     }
 }

@@ -4,11 +4,14 @@ var pixel = 5;
 var movement;
 var score_once = true;
 var start = true;
+var animation_shown = true;
 var point = document.getElementById('Point');
 var button = document.getElementById('button');
+var y;
 c.width = window.innerWidth-((window.innerWidth%pixel)+pixel*6);
 c.height = window.innerHeight-((window.innerHeight%pixel)+pixel*6);
 // window.innerHeight-((window.innerHeight%pixel)+pixel*6);
+pixel = c.width/317;
 c.style.position = 'absolute';
 c.style.left = ((window.innerWidth / 2) - (c.width / 2)) + 'px';
 c.style.top = ((window.innerHeight / 2) - (c.height / 2)) + 'px';
@@ -21,11 +24,11 @@ button.style.color = 'white';
 button.style.fontFamily = 'fantasy';
 button.style.position = "absolute";
 button.style.fontSize = '25px';
-button.width = 100;
-button.height = 100;
+button.width = 1585;
+button.height = 915;
 button.style.textAlign = 'center';
-button.style.left = ((window.innerWidth / 2) - (button.width / 2)) + 'px';
-button.style.top = ((window.innerHeight / 2) - (button.height / 2)) + 'px';
+// button.style.left = ((window.innerWidth / 2) - (button.width / 2)) + 'px';
+// button.style.top = ((window.innerHeight / 2) - (button.height / 2)) + 'px';
 
 var back_screen = document.getElementById("back_screen");
 back_screen.width = c.width;
@@ -45,6 +48,7 @@ context.fillRect(0, 0, c.width, c.height);
 button.addEventListener('click', () => {
     button.hidden = true;
     point.play();
+    animation_shown = true;
     c.style.cursor = 'none';
     requestAnimationFrame(Animation);
 });
@@ -54,6 +58,7 @@ function Animation() {
     Pl.show(context);
     Com.show(context);
     Com.move(ball);
+    Pl.move(y);
     if (ball.x < 0 || ball.x + ball.width > c.width) {
         if (score_once) {
             point.play();
@@ -76,18 +81,11 @@ function Animation() {
         ball.show(context);
         ball.move(Pl, Com, c);
     }
-    requestAnimationFrame(Animation);
+    if(animation_shown) requestAnimationFrame(Animation);
 }
 
-document.addEventListener('mousemove', (event) => {
-    clearInterval(movement);
-    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) <= Pl.y) {
-        movement = setInterval(Pl.moveUp());
-    }
-    if (event.y - (window.innerHeight - c.height) / 2 - (Pl.height / 2) >= Pl.y) {
-        movement = setInterval(Pl.moveDown());
-    }
-
+document.addEventListener('mousemove',function (e) {
+   y = event.y; 
 });
 
 function drawCanvas() {
@@ -103,3 +101,12 @@ function drawCanvas() {
     context.fillText(String(Com.score), c.width * 1 / 4, 50);
     context.fillText(String(Pl.score), c.width * 3 / 4, 50);
 }
+
+document.addEventListener("keydown",function(event){
+    if(event.keyCode == 80){
+        animation_shown = false;
+        button.hidden = false;
+        c.style.cursor = 'auto';
+        button.innerHTML = "Press this to continue playing!";
+    }
+});
