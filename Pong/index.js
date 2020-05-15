@@ -49,7 +49,7 @@ button.addEventListener('click', () => {
     button.hidden = true;
     point.play();
     animation_shown = true;
-    c.style.cursor = 'none';
+    body.style.cursor = 'none';
     requestAnimationFrame(Animation);
 });
 
@@ -106,7 +106,7 @@ document.addEventListener("keydown",function(event){
     if(event.keyCode == 80){
         animation_shown = false;
         button.hidden = false;
-        c.style.cursor = 'auto';
+        body.style.cursor = 'auto';
         button.innerHTML = "Press this to continue playing!";
     }
 });
