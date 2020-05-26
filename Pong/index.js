@@ -2,16 +2,16 @@ var c = document.getElementById("screen");
 var context = c.getContext('2d');
 var pixel = 5;
 var movement;
-var score_once = true;
+var score_once = [true];
 var start = true;
 var animation_shown = true;
 var point = document.getElementById('Point');
 var button = document.getElementById('button');
 var y;
-c.width = window.innerWidth-((window.innerWidth%pixel)+pixel*6);
-c.height = window.innerHeight-((window.innerHeight%pixel)+pixel*6);
+c.width = window.innerWidth - ((window.innerWidth % pixel));
+c.height = window.innerHeight - ((window.innerHeight % pixel) + pixel * 2);
 // window.innerHeight-((window.innerHeight%pixel)+pixel*6);
-pixel = c.width/317;
+pixel = c.width / 317;
 c.style.position = 'absolute';
 c.style.left = ((window.innerWidth / 2) - (c.width / 2)) + 'px';
 c.style.top = ((window.innerHeight / 2) - (c.height / 2)) + 'px';
@@ -40,7 +40,7 @@ back_screen.style.backgroundColor = 'white';
 
 var Pl = new Player(pixel, c);
 var Com = new AI(pixel, c);
-var ball = new Ball(pixel, c);
+var ball = [new Ball(pixel, c)];
 
 context.fillStyle = 'black';
 context.fillRect(0, 0, c.width, c.height);
@@ -57,35 +57,39 @@ function Animation() {
     drawCanvas();
     Pl.show(context);
     Com.show(context);
-    Com.move(ball);
     Pl.move(y);
-    if (ball.x < 0 || ball.x + ball.width > c.width) {
-        if (score_once) {
-            point.play();
-            score_once = false;
-            if (ball.x < 0) {
-                if (Com.speed < 24) Com.speed *= 1.2;
-                Pl.score++;
-            }
-            if (ball.x + ball.width > c.width) {
-                if (Com.speed < 24) Com.speed /= 1.2;
-                Com.score++;
-            }
 
-            setTimeout(function () {
-                ball = new Ball(pixel, c);
-            }, 500);
+    for (let i = 0; i < ball.length; i++) {
+        if (ball[i].x < 0 || ball[i].x + ball[i].width > c.width) {
+            if (score_once[i]) {
+                point.play();
+                score_once[i] = false;
+                if (ball[i].x < 0) {
+                    if (Com.speed < 24) Com.speed *= 1.2;
+                    Pl.score++;
+                }
+                if (ball[i].x + ball[i].width > c.width) {
+                    if (Com.speed < 24) Com.speed /= 1.2;
+                    Com.score++;
+                }
+
+                setTimeout(function () {
+                    ball[i] = new Ball(pixel, c);
+                }, 500);
+            }
+        } else {
+            score_once[i] = true;
+            ball[i].show(context);
+            ball[i].move(Pl, Com, c);
         }
-    } else {
-        score_once = true;
-        ball.show(context);
-        ball.move(Pl, Com, c);
+        Com.move(ball[i]);
     }
-    if(animation_shown) requestAnimationFrame(Animation);
+
+    if (animation_shown) requestAnimationFrame(Animation);
 }
 
-document.addEventListener('mousemove',function (e) {
-   y = event.y; 
+document.addEventListener('mousemove', function (e) {
+    y = event.y;
 });
 
 function drawCanvas() {
@@ -102,8 +106,8 @@ function drawCanvas() {
     context.fillText(String(Pl.score), c.width * 3 / 4, 50);
 }
 
-document.addEventListener("keydown",function(event){
-    if(event.keyCode == 80){
+document.addEventListener("keydown", function (event) {
+    if (event.keyCode == 80) {
         animation_shown = false;
         button.hidden = false;
         body.style.cursor = 'auto';

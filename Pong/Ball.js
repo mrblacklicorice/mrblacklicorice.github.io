@@ -8,16 +8,18 @@ class Ball {
         this.x = (canvas.width / 2) - (this.width / 2);
         this.xv = Math.sin(((Math.random() * Math.PI / 6) + Math.PI / 6 + ((Math.floor(Math.random() * 4)) * Math.PI / 2)));
         this.yv = Math.sin(((Math.random() * Math.PI / 6) + Math.PI / 6 + ((Math.floor(Math.random() * 4)) * Math.PI / 2)))
-        this.speed = 1.5 * pixel * 1 / Math.abs(this.xv);
+        this.speed = 2 * pixel * 1 / Math.abs(this.xv);
         this.pixel = pixel;
         this.c = canvas;
     }
+
     show = (context) => {
         context.fillStyle = 'white';
         context.fillRect(this.x, this.y, this.width, this.height);
     };
-    // (this.x+this.width>Player.x && this.x<Player.x+Player.width&&this.y+this.height>Player.y&&this.y<Player.y+Player.height)||(this.x<Computer.x && this.x+this.width>Computer.x&&this.y+this.height>Computer.y&&this.y<Computer.y+Computer.height)
+
     move = (Player, Computer, Canvas) => {
+        //sides of canvas
         if (this.y <= 0 || this.y + this.height >= Canvas.height) {
 
             if (Math.round(Math.random()) == 0) {
@@ -25,47 +27,85 @@ class Ball {
             } else {
                 this.second_audio.play();
             }
-
-            // if ((Player.y + (Player.height / 2)) >= this.y + this.height && this.x + this.width > Player.x && this.x < Player.x + Player.width) {
-            //     this.y = Player.y - this.height;
-            //     this.speed *= 1.5;
-            // } else if ((Player.y + (Player.height / 2)) < this.y && this.x + this.width > Player.x && this.x < Player.x + Player.width) {
-            //     this.y = Player.y + Player.height;
-            //     this.speed *= 1.5;
-            // } else if ((Computer.y + (Computer.height / 2)) >= this.y + this.height && this.x < Computer.x && this.x + this.width > Computer.x) {
-            //     this.y = Computer.y - this.height;
-            //     this.speed *= 1.5;
-            // } else if ((Computer.y + (Computer.height / 2)) < this.y && this.x < Computer.x && this.x + this.width > Computer.x) {
-            //     this.y = Computer.y + Computer.height;
-            //     this.speed *= 1.5;
-            // }
             if (this.y < 0) this.y = 0;
             if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height);
-            
-            this.speed *= 0.95;
+
+            this.speed *= 0.98;
             this.yv *= -1;
 
             this.yv += (Math.random() * 0.02) - 0.01;
             this.xv += (Math.random() * 0.02) - 0.01;
         }
         // this.x <= 0 || this.x + this.width >= Canvas.width  Use this for a bouncing ball//
-        if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x) || (this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) {
 
+        //Computer 
+        if (this.x <= Computer.width + Computer.x && this.x + this.width >= Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height) {
             if (Math.round(Math.random()) == 0) {
                 this.first_audio.play();
             } else {
                 this.second_audio.play();
             }
-
-            // if ((this.x <= Computer.width + Computer.x && this.y + this.height >= Computer.y && this.y <= Computer.y + Computer.height && this.x + this.width >= Computer.x)) this.x = Computer.x + Computer.width + 1;
-            // if ((this.x + this.width >= Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height && this.x <= Player.width + Player.x)) this.x = Player.x - this.width;
-
             this.xv *= -1;
-            this.speed *= 1.1;
+            if (this.y < Computer.y + (Computer.height / 4) || this.y > Computer.y + (3 * Computer.height / 4)) this.yv = -(((Computer.y + (Computer.height / 2)) - (this.y + (this.height / 2))) / (Computer.height / 2));
+
+            //side of paddle
+            if (this.x <= this.pixel + Computer.x && this.x + this.width >= Computer.x) {
+                this.x = Computer.x + Computer.width + 1;
+                this.speed *= 1.1;
+            }
+
+            //top of paddle
+            else if ((Computer.y + this.pixel) >= this.y + this.height) {
+                this.y = Computer.y - this.height;
+                if (Math.sign(this.yv) != -1) this.yv *= -1;
+                this.speed *= 1.2;
+            }
+
+            //bottom of paddle
+            else if ((Computer.y + Computer.height - this.pixel) < this.y) {
+                this.y = Computer.y + Computer.height;
+                if (Math.sign(this.yv) != +1) this.yv *= -1;
+                this.speed *= 1.2;
+            }
 
             this.yv += (Math.random() * 0.02) - 0.01;
             this.xv += (Math.random() * 0.02) - 0.01;
         }
+
+        //Player
+        if (this.x + this.width >= Player.x && this.x <= Player.width + Player.x && this.y + this.height >= Player.y && this.y <= Player.y + Player.height) {
+            if (Math.round(Math.random()) == 0) {
+                this.first_audio.play();
+            } else {
+                this.second_audio.play();
+            }
+            this.xv *= -1;
+            if (this.y < Player.y + (Player.height / 4) || this.y > Player.y + (3 * Player.height / 4)) this.yv = -(((Player.y + (Player.height / 2)) - (this.y + (this.height / 2))) / (Player.height / 2));
+
+            //side of the paddle
+            if (this.x + this.width >= Player.x && this.x <= Player.x + this.pixel) {
+                this.x = Player.x - this.width;
+                this.speed *= 1.1;
+            }
+
+            //top of paddle
+            else if ((Player.y + this.pixel) >= this.y + this.height) {
+                this.y = Player.y - this.height;
+                if (Math.sign(this.yv) != -1) this.yv *= -1;
+                this.speed *= 1.2;
+            }
+
+            //bottom of paddle
+            else if ((Player.y + Player.width - this.pixel) < this.y) {
+                this.y = Player.y + Player.height;
+                if (Math.sign(this.yv) != +1) this.yv *= -1;
+                this.speed *= 1.2;
+            }
+
+            this.yv += (Math.random() * 0.02) - 0.01;
+            this.xv += (Math.random() * 0.02) - 0.01;
+        }
+
         this.y += this.yv * this.speed;
         this.x += this.xv * this.speed;
     };
