@@ -8,7 +8,6 @@ class Player {
         this.x = (canvas.width - this.width * 3);
         this.y = (canvas.height / 2 - this.height / 2);
         this.c = canvas;
-        this.speed = 4 / 5 * pixel;
         this.pixel = pixel;
     }
     show = (context) => {
