@@ -1,7 +1,4 @@
 console.log("script loaded");
-document.getElementById('head').style.left = (0.0278884462*window.innerWidth)+'px';
-document.getElementById('Submit').style.left =  (0.119521912*window.innerWidth)+'px';
-document.getElementById('Submit').style.top =  (0.637450199*window.innerHeight)+'px';
 var num;
 var char = [];
 var stopper = true;
@@ -12,39 +9,36 @@ var current_value = 1;
 var temp_index;
 var x = 1;
 var next_one = false;
+var height = window.innerHeight/9.5;
 for (let j = 0; j < 9; j++) {
     for (let i = 0; i < 9; i++) {
         num = document.createElement('input');
         num.type = 'text';
         num.maxLength = "1";
-        num.style.width = '100px';
-        num.style.height = '100px';
+        num.style.width = height+'px';
+        num.style.height = height+'px';
         num.style.borderColor = '#848484';
-        num.style.borderWidth = '9px';
+        num.style.borderWidth = height/10 + 'px';
         num.style.borderStyle = 'solid';
         num.style.position = 'absolute';
-        num.style.fontSize = '75pt'
+        num.style.fontSize = height * 3 / 4 + 'pt';
         num.style.textAlign = 'center';
-        num.style.left = (i + 1) * 103.67 + window.innerWidth / 2 - 350 + 'px';
-        num.style.top = (j + 1) * 103.67 + window.innerHeight / 2 - 580 + 'px';
+        num.style.left = window.innerWidth*3/10 + (i + 1) * height + 'px';
+        num.style.top = window.innerHeight/100+j * height + 'px';
         num.id = "" + j + i;
         if (i == 3 || i == 0 || i == 6) {
-            num.style.borderLeftWidth = '9px';
             num.style.borderLeftColor = "black";
         }
 
         if (j == 3 || j == 0 || j == 6) {
-            num.style.borderTopWidth = '9px';
             num.style.borderTopColor = "black";
         }
 
         if (i == 8 || i == 5 || i == 2) {
-            num.style.borderRightWidth = '9px';
             num.style.borderRightColor = "black";
         }
 
         if (j == 8 || j == 5 || j == 2) {
-            num.style.borderBottomWidth = '9px';
             num.style.borderBottomColor = "black";
         }
         document.getElementById('Sudokugrid').appendChild(num);
@@ -72,7 +66,10 @@ document.getElementById('Submit').addEventListener('click', function () {
     }
 
     if (counter < 17) {
-        not_real();
+        alert("A sudoku needs at least 17 clues to be solvable");
+        console.log('Reloaded');
+        stopper = false;
+        window.location.reload();
     } else {
         check(true, false, 0, 0);
         start();
@@ -82,7 +79,7 @@ document.getElementById('Submit').addEventListener('click', function () {
 
 function start() {
     var interval = setInterval(function () {
-        if (char.indexOf("") != -1 && stopper&&!checker) {
+        if (char.indexOf("") != -1 && stopper && !checker) {
             x++;
             if (current_value == 1 || next_one) {
                 next_one = false;
@@ -126,7 +123,7 @@ function start() {
 }
 
 function not_real() {
-    alert("This sudoku is impossible!");
+    alert("This sudoku's clues don't align with the rules");
     console.log('Reloaded');
     stopper = false;
     window.location.reload();
@@ -191,7 +188,7 @@ function check(first_time, constraints, J, I) {
 
     for (let j = 0; j < 3 && stopper; j++) {
         for (let i = 0; i < 3 && stopper; i++) {
-            if (((Math.floor(J / 3) == j) && (Math.floor(I / 3) == i)) ||constraints) {
+            if (((Math.floor(J / 3) == j) && (Math.floor(I / 3) == i)) || constraints) {
                 square = [char[(j * 3) * 9 + (i * 3)], char[(j * 3) * 9 + (i * 3 + 1)], char[(j * 3) * 9 + (i * 3 + 2)], char[(j * 3 + 1) * 9 + (i * 3)], char[(j * 3 + 1) * 9 + (i * 3 + 1)], char[(j * 3 + 1) * 9 + (i * 3 + 2)], char[(j * 3 + 2) * 9 + (i * 3)], char[(j * 3 + 2) * 9 + (i * 3 + 1)], char[(j * 3 + 2) * 9 + (i * 3 + 2)]];
                 temps = square.join("");
                 square = temps.split("");
