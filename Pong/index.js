@@ -1,6 +1,6 @@
 var c = document.getElementById("screen");
 var context = c.getContext('2d');
-var pixel = 5;
+var pixel = window.innerHeight/210;
 var movement;
 var score_once = [true];
 var start = true;
