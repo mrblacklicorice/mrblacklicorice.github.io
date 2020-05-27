@@ -117,13 +117,34 @@ class Ball {
                 if (Powerups[i].type == 1) {
                     ball_array.push(new Ball(this.pixel, this.c));
                 } else if (Powerups[i].type == 2) {
-                    if (Math.sign(this.xv) == +1 && Computer.height / Computer.int_height <= 3.375) Computer.height = Computer.height * 1.5;
-                    if (Math.sign(this.xv) == -1 && Player.height / Player.int_height <= 3.375) Player.height = Player.height * 1.5;
+                    if (Math.sign(this.xv) == +1) {
+                        if (Computer.height / Computer.int_height >= 3.375) {
+                            Computer.score++;
+                        } else {
+                            Computer.height = Computer.height * 1.5;
+                        }
+                    } else if (Math.sign(this.xv) == -1) {
+                        if (Player.height / Player.int_height >= 3.375) {
+                            Player.score++;
+                        } else {
+                            Player.height = Player.height * 1.5;
+                        }
+                    }
                 } else if (Powerups[i].type == 3) {
-                    if (Math.sign(this.xv) == +1 && Computer.multipler <= 16) Computer.multiplier *= 2;
-                    if (Math.sign(this.xv) == -1 && Player.multipler <= 16) Player.multiplier *= 2;
+                    if (Math.sign(this.xv) == +1) {
+                        if (Computer.multipler >= 16) {
+                            Computer.score++;
+                        } else {
+                            Computer.multiplier *= 2;
+                        }
+                    } else if (Math.sign(this.xv) == -1) {
+                        if (Player.multipler >= 16) {
+                            Player.score++;
+                        } else {
+                            Player.multiplier *= 2;
+                        }
+                    }
                 }
-
                 //delete the powerup after use
                 Powerups.splice(i, 1);
             }
