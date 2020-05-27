@@ -6,10 +6,13 @@ class Powerup{
         this.y = Math.random()*(canvas.height-this.height);
         this.pixel = pixel;
         this.canvas = canvas;
-        this.type = Math.ceil(Math.random()*2);
+        this.type = Math.ceil(Math.random()*3);
     }
+
     show = (context) => {
+        context.setLineDash([0]);
         context.fillStyle = 'white';
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.fillText("+", this.x+this.width/2, this.y+this.height/2);
+        context.strokeRect(this.x, this.y, this.width, this.height);
     }
 }

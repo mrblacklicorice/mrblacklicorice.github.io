@@ -17,6 +17,9 @@ c.style.left = ((window.innerWidth / 2) - (c.width / 2)) + 'px';
 c.style.top = ((window.innerHeight / 2) - (c.height / 2)) + 'px';
 context.lineWidth = 5;
 context.font = '50px fantasy';
+context.textAlign="center"; 
+context.textBaseline = "middle";
+context.shadowColor = '#999';
 
 button.style.backgroundColor = 'black';
 button.style.borderWidth = '0px';
@@ -24,8 +27,8 @@ button.style.color = 'white';
 button.style.fontFamily = 'fantasy';
 button.style.position = "absolute";
 button.style.fontSize = '25px';
-button.width = 1585;
-button.height = 915;
+button.width = '1585px';
+button.height = '915px';
 button.style.textAlign = 'center';
 // button.style.left = ((window.innerWidth / 2) - (button.width / 2)) + 'px';
 // button.style.top = ((window.innerHeight / 2) - (button.height / 2)) + 'px';
@@ -41,6 +44,7 @@ back_screen.style.backgroundColor = 'white';
 var Pl = new Player(pixel, c);
 var Com = new AI(pixel, c);
 var ball = [new Ball(pixel, c)];
+var powerup = [new Powerup(pixel,c)];
 
 context.fillStyle = 'black';
 context.fillRect(0, 0, c.width, c.height);
@@ -58,7 +62,7 @@ function Animation() {
     Pl.show(context);
     Com.show(context);
     Pl.move(y);
-
+    powerup.forEach((element) =>{element.show(context);});
     for (let i = 0; i < ball.length; i++) {
         if (ball[i].x < 0 || ball[i].x + ball[i].width > c.width) {
             if (score_once[i]) {
@@ -66,23 +70,33 @@ function Animation() {
                 score_once[i] = false;
                 if (ball[i].x < 0) {
                     if (Com.speed < 24) Com.speed *= 1.2;
-                    Pl.score++;
+                    Pl.score= Pl.score+(1*Pl.multiplier);
+                    if(Com.multiplier != 1) Com.multiplier = 1;
+                    if(Com.height != Com.int_height)Com.height = Com.int_height;
                 }
                 if (ball[i].x + ball[i].width > c.width) {
                     if (Com.speed < 24) Com.speed /= 1.2;
-                    Com.score++;
+                    Com.score = Com.score+(1*Com.multiplier);
+                    if(Pl.multiplier != 1) Pl.multiplier = 1;
+                    if(Pl.height != Pl.int_height)Pl.height = Pl.int_height;
                 }
-
-                setTimeout(function () {
-                    ball[i] = new Ball(pixel, c);
-                }, 500);
+                if (ball.length <= 1) {
+                    setTimeout(function () {
+                        powerup.push(new Powerup(pixel,c));
+                        ball = [new Ball(pixel, c)];
+                        score_once = [true];
+                    }, 500);
+                } else {
+                    ball.splice(i, 1);
+                    score_once.splice(i,1);
+                }
             }
         } else {
+            Com.move(ball[i]);
             score_once[i] = true;
             ball[i].show(context);
-            ball[i].move(Pl, Com, c);
+            ball[i].move(Pl, Com, c,powerup,ball,point);
         }
-        Com.move(ball[i]);
     }
 
     if (animation_shown) requestAnimationFrame(Animation);

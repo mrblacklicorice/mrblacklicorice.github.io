@@ -2,7 +2,9 @@ class AI {
     constructor(pixel, canvas) {
         this.width = pixel * 4;
         this.height = pixel * 24;
+        this.int_height = this.height
         this.score = 0;
+        this.multiplier = 1;
         this.x = (this.width * 3);
         this.y = (canvas.height / 2 - this.height / 2);
         this.c = canvas;

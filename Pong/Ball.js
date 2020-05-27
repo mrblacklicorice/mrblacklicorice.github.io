@@ -14,11 +14,15 @@ class Ball {
     }
 
     show = (context) => {
+        context.shadowOffsetX = -1*this.xv;
+        context.shadowOffsetY = -1*this.yv;
         context.fillStyle = 'white';
         context.fillRect(this.x, this.y, this.width, this.height);
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
     };
 
-    move = (Player, Computer, Canvas) => {
+    move = (Player, Computer, Canvas, Powerups, ball_array,powerhit) => {
         //sides of canvas
         if (this.y <= 0 || this.y + this.height >= Canvas.height) {
 
@@ -106,6 +110,26 @@ class Ball {
             this.xv += (Math.random() * 0.02) - 0.01;
         }
 
+        //Powerups
+        for (let i = 0; i < Powerups.length; i++) {
+            if (this.x + this.width > Powerups[i].x && this.x < Powerups[i].x + Powerups[i].width && this.y + this.height > Powerups[i].y && this.y < Powerups[i].y + Powerups[i].height) {
+                powerhit.play();
+                if (Powerups[i].type == 1) {
+                    ball_array.push(new Ball(this.pixel, this.c));
+                } else if (Powerups[i].type == 2) {
+                    if (Math.sign(this.xv) == +1) Computer.height = Computer.height * 1.5;
+                    if (Math.sign(this.xv) == -1) Player.height = Player.height * 1.5;
+                } else if(Powerups[i].type == 3){
+                    if (Math.sign(this.xv) == +1) Computer.multiplier *= 2;
+                    if (Math.sign(this.xv) == -1) Player.multiplier *= 2;
+                }
+
+                //delete the powerup after use
+                Powerups.splice(i, 1);
+            }
+        }
+
+        //Movement
         this.y += this.yv * this.speed;
         this.x += this.xv * this.speed;
     };
