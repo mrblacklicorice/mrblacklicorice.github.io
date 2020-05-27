@@ -15,9 +15,9 @@ class Powerup {
         if (this.type == 3) {
             context.fillText("x2", this.x + this.width / 2, this.y + this.height / 2);
         } else if(this.type == 2) {
-            context.fillText("|", this.x + this.width / 2, this.y + this.height / 2);
+            context.fillText("I", this.x + this.width / 2, this.y + this.height / 2);
         } else if(this.type == 1){
-            context.fillText("*", this.x + this.width / 2, this.y + this.height / 2);
+            context.fillRect(this.x+(3*this.pixel),this.y+(3*this.pixel),4*this.pixel,4*this.pixel);
         }
         context.strokeRect(this.x, this.y, this.width, this.height);
     }
