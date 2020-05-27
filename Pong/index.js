@@ -1,5 +1,3 @@
-import { plum } from "color-name";
-
 var c = document.getElementById("screen");
 var context = c.getContext('2d');
 var pixel = 5;
