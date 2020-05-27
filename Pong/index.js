@@ -7,7 +7,6 @@ var start = true;
 var animation_shown = true;
 var point = document.getElementById('Point');
 var button = document.getElementById('button');
-var y;
 c.width = window.innerWidth - ((window.innerWidth % pixel));
 c.height = window.innerHeight - ((window.innerHeight % pixel) + pixel * 2);
 // window.innerHeight-((window.innerHeight%pixel)+pixel*6);
@@ -62,7 +61,6 @@ function Animation() {
     drawCanvas();
     Pl.show(context);
     Com.show(context);
-    Pl.move(y);
     powerup.forEach((element) => {
         element.show(context);
     });
@@ -106,7 +104,7 @@ function Animation() {
 }
 
 document.addEventListener('mousemove', function (e) {
-    y = event.y;
+    Pl.move(event.y);
 });
 
 function drawCanvas() {
