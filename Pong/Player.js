@@ -17,10 +17,8 @@ class Player {
     };
 
     move = (y) => {
-        if (y  <= this.y) {
-            if (this.y > 0) this.y -= this.pixel * this.speed;
-        } else if (y  > this.y+this.height) {
-            if (this.y < this.c.height - this.height) this.y += this.pixel * this.speed;
+        if (y > 0 && y < this.c.height - this.height) {
+            this.y = y;
         }
     }
 }
