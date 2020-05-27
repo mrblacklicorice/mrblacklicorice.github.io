@@ -1,3 +1,5 @@
+import { plum } from "color-name";
+
 var c = document.getElementById("screen");
 var context = c.getContext('2d');
 var pixel = 5;
@@ -70,13 +72,13 @@ function Animation() {
                 point.play();
                 score_once[i] = false;
                 if (ball[i].x < 0) {
-                    if (Com.speed < 24) Com.speed *= 1.2;
+                    if (Com.speed < 24) Com.speed *= 1.2*Pl.multiplier;
                     Pl.score = Pl.score + (1 * Pl.multiplier);
                     if (Com.multiplier != 1) Com.multiplier = 1;
                     if (Com.height != Com.int_height) Com.height = Com.int_height;
                 }
                 if (ball[i].x + ball[i].width > c.width) {
-                    if (Com.speed < 24) Com.speed /= 1.2;
+                    if (Com.speed < 24) Com.speed /= 1.2*Pl.multiplier;
                     Com.score = Com.score + (1 * Com.multiplier);
                     if (Pl.multiplier != 1) Pl.multiplier = 1;
                     if (Pl.height != Pl.int_height) Pl.height = Pl.int_height;
