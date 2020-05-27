@@ -14,15 +14,15 @@ class Ball {
     }
 
     show = (context) => {
-        context.shadowOffsetX = -1*this.xv;
-        context.shadowOffsetY = -1*this.yv;
+        context.shadowOffsetX = -1 * this.xv;
+        context.shadowOffsetY = -1 * this.yv;
         context.fillStyle = 'white';
         context.fillRect(this.x, this.y, this.width, this.height);
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
     };
 
-    move = (Player, Computer, Canvas, Powerups, ball_array,powerhit) => {
+    move = (Player, Computer, Canvas, Powerups, ball_array, powerhit) => {
         //sides of canvas
         if (this.y <= 0 || this.y + this.height >= Canvas.height) {
 
@@ -117,11 +117,11 @@ class Ball {
                 if (Powerups[i].type == 1) {
                     ball_array.push(new Ball(this.pixel, this.c));
                 } else if (Powerups[i].type == 2) {
-                    if (Math.sign(this.xv) == +1) Computer.height = Computer.height * 1.5;
-                    if (Math.sign(this.xv) == -1) Player.height = Player.height * 1.5;
-                } else if(Powerups[i].type == 3){
-                    if (Math.sign(this.xv) == +1) Computer.multiplier *= 2;
-                    if (Math.sign(this.xv) == -1) Player.multiplier *= 2;
+                    if (Math.sign(this.xv) == +1 && Computer.height / Computer.int_height <= 3.375) Computer.height = Computer.height * 1.5;
+                    if (Math.sign(this.xv) == -1 && Player.height / Player.int_height <= 3.375) Player.height = Player.height * 1.5;
+                } else if (Powerups[i].type == 3) {
+                    if (Math.sign(this.xv) == +1 && Computer.multipler <= 16) Computer.multiplier *= 2;
+                    if (Math.sign(this.xv) == -1 && Player.multipler <= 16) Player.multiplier *= 2;
                 }
 
                 //delete the powerup after use
