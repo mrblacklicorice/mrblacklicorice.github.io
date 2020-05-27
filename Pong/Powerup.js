@@ -15,7 +15,7 @@ class Powerup {
         if (this.type == 3) {
             context.fillText("x2", this.x + this.width / 2, this.y + this.height / 2);
         } else if(this.type == 2) {
-            context.fillText("|", this.x + this.width / 2, this.y + this.height / 2);
+            context.fillText("+", this.x + this.width / 2, this.y + this.height / 2);
         } else if(this.type == 1){
             context.fillText("*", this.x + this.width / 2, this.y + this.height / 2);
         }
