@@ -14,8 +14,10 @@ class Powerup {
         context.fillStyle = 'white';
         if (this.type == 3) {
             context.fillText("x2", this.x + this.width / 2, this.y + this.height / 2);
-        } else {
+        } else if(this.type == 2) {
             context.fillText("+", this.x + this.width / 2, this.y + this.height / 2);
+        } else if(this.type == 1){
+            context.fillText("*", this.x + this.width / 2, this.y + this.height / 2);
         }
         context.strokeRect(this.x, this.y, this.width, this.height);
     }
