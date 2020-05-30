@@ -14,8 +14,8 @@ pixel = c.width / 317;
 c.style.position = 'absolute';
 c.style.left = ((window.innerWidth / 2) - (c.width / 2)) + 'px';
 c.style.top = ((window.innerHeight / 2) - (c.height / 2)) + 'px';
-context.lineWidth = 5;
-context.font = '50px fantasy';
+context.lineWidth = pixel;
+context.font = '2.5vw fantasy';
 context.textAlign = "center";
 context.textBaseline = "middle";
 context.shadowColor = '#999';
@@ -25,12 +25,13 @@ button.style.borderWidth = '0px';
 button.style.color = 'white';
 button.style.fontFamily = 'fantasy';
 button.style.position = "absolute";
-button.style.fontSize = '25px';
-button.width = '1585px';
-button.height = '915px';
+button.style.fontSize = '3vw';
+button.style.width = '100%';
+button.style.height = '98.5%';
 button.style.textAlign = 'center';
-// button.style.left = ((window.innerWidth / 2) - (button.width / 2)) + 'px';
-// button.style.top = ((window.innerHeight / 2) - (button.height / 2)) + 'px';
+button.style.padding = '0px';
+button.style.left ='0px';
+button.style.top = '0.75vh';
 
 var back_screen = document.getElementById("back_screen");
 back_screen.width = c.width;
@@ -111,14 +112,14 @@ function drawCanvas() {
     context.fillStyle = 'black';
     context.fillRect(0, 0, c.width, c.height);
     context.strokeStyle = 'white';
-    context.setLineDash([10, 5]);
+    context.setLineDash([pixel*2, pixel]);
     context.beginPath();
     context.moveTo((c.width / 2), 0);
     context.lineTo((c.width / 2), c.height);
     context.stroke();
     context.fillStyle = "white";
-    context.fillText(String(Com.score), c.width * 1 / 4, 50);
-    context.fillText(String(Pl.score), c.width * 3 / 4, 50);
+    context.fillText(String(Com.score), c.width * 1 / 4, window.innerHeight*3/100);
+    context.fillText(String(Pl.score), c.width * 3 / 4, window.innerHeight*3/100);
 }
 
 document.addEventListener("keydown", function (event) {
