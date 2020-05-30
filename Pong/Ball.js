@@ -31,8 +31,8 @@ class Ball {
             } else {
                 this.second_audio.play();
             }
-            if (this.y < 0) this.y = 0;
-            if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height);
+            if (this.y < 0) this.y = 1;
+            if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height+1);
 
             this.speed *= 0.98;
             this.yv *= -1;
@@ -50,7 +50,7 @@ class Ball {
                 this.second_audio.play();
             }
             this.xv *= -1;
-            if (this.y < Computer.y + (Computer.height / 4) || this.y > Computer.y + (3 * Computer.height / 4)) this.yv = -(((Computer.y + (Computer.height / 2)) - (this.y + (this.height / 2))) / (Computer.height / 2));
+            // if (this.y < Computer.y + (Computer.height / 4) || this.y > Computer.y + (3 * Computer.height / 4)) this.yv = -(((Computer.y + (Computer.height / 2)) - (this.y + (this.height / 2))) / (Computer.height / 2));
 
             //side of paddle
             if (this.x <= this.pixel + Computer.x && this.x + this.width >= Computer.x) {
@@ -84,7 +84,7 @@ class Ball {
                 this.second_audio.play();
             }
             this.xv *= -1;
-            if (this.y < Player.y + (Player.height / 4) || this.y > Player.y + (3 * Player.height / 4)) this.yv = -(((Player.y + (Player.height / 2)) - (this.y + (this.height / 2))) / (Player.height / 2));
+            // if (this.y < Player.y + (Player.height / 4) || this.y > Player.y + (3 * Player.height / 4)) this.yv = -(((Player.y + (Player.height / 2)) - (this.y + (this.height / 2))) / (Player.height / 2));
 
             //side of the paddle
             if (this.x + this.width >= Player.x && this.x <= Player.x + this.pixel) {
