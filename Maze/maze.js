@@ -160,7 +160,7 @@ var caption = document.getElementById('captions');
 caption.hidden = false;
 caption.style.position = 'absolute';
 caption.style.left = c.style.left;
-caption.style.top = parseInt(c.style.top)+c.width+'px';
+caption.style.top = parseInt(c.style.top)+c.height+'px';
 var context = c.getContext('2d');
 context.fillStyle = '#808080';
 context.fillRect(0, 0, c.width, c.height);
