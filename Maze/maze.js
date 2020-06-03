@@ -154,13 +154,21 @@ var c = document.getElementById('Canvas');
 c.width = cols * w;
 c.height = rows * w;
 c.style.position = 'absolute';
-if((window.innerHeight - c.height) / 2 >= 0) c.style.top = (window.innerHeight - c.height) / 2 + 'px';
-if((window.innerWidth - c.width) / 2 >=0) c.style.left = (window.innerWidth - c.width) / 2 + 'px';
+if ((window.innerHeight - c.height) / 2 >= 0) {
+    c.style.top = (window.innerHeight - c.height) / 2 + 'px';
+} else {
+    c.style.top = 0 + 'px';
+}
+if ((window.innerWidth - c.width) / 2 >= 0) {
+    c.style.left = (window.innerWidth - c.width) / 2 + 'px';
+} else {
+    c.style.left = 0 + 'px';
+}
 var caption = document.getElementById('captions');
 caption.hidden = false;
 caption.style.position = 'absolute';
 caption.style.left = c.style.left;
-caption.style.top = parseInt(c.style.top)+c.height+'px';
+caption.style.top = parseInt(c.style.top) + c.height + 'px';
 var context = c.getContext('2d');
 context.fillStyle = '#808080';
 context.fillRect(0, 0, c.width, c.height);
