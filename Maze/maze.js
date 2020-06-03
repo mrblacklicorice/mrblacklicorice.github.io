@@ -178,12 +178,12 @@ var previous;
 var lastnum = 0;
 var counter = 0;
 var mazedone = false;
-var grid = new Array(cols);
+var grid = new Array(rows);
 var ywalls;
 var xwalls;
 var id;
-for (let j = 0; j < cols; j++) {
-    grid[j] = new Array(rows);
+for (let r = 0; r < rows; r++) {
+    grid[r] = new Array(cols);
 }
 
 for (let row = 0; row < rows; row++) {
