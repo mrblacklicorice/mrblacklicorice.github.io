@@ -1,25 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://live.staticflickr.com/572/20607150556_c01d092437_b.jpg">
-    <link rel="stylesheet" href="style.css">
-    <title>mrblacklicorice's Projects</title>
-</head>
-<body>
+<!DOCTYPE HTML>
+<html>
 
-    <h1>Welcome to my projects</h1>
-    <button onclick=linkOpen('sudoku'); class="btn btn1" >Sudoku</button>
-    <button onclick=linkOpen('Pong'); class="btn btn1">Pong</button>
-    <button onclick=linkOpen('Maze'); class="btn btn1">Maze</button>
+<head>
+	<title>Coffee and Algorithms</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- [if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif] -->
+	<link rel="icon" href="images/coffee (2).jpg">
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+
+<body class="landing">
+
+	<!-- Header -->
+	<header id="header" class="alt">
+		<h1><a href="index.html">My Projects</a></h1>
+		<a href="#nav">Menu</a>
+	</header>
+
+	<!-- Nav -->
+	<nav id="nav">
+		<ul class="links">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="aboutme.html">About me</a></li>
+			<!-- <li><a href="elements.html">Elements</a></li> -->
+		</ul>
+	</nav>
+
+	<!-- Banner -->
+	<section id="banner">
+		<i class="icon fa-diamond"></i>
+		<h2>mrblacklicorice</h2>
+		<p>Small Time Developer</p>
+		<ul class="actions">
+			<li><a href="aboutme.html" class="button big special">Learn More</a></li>
+		</ul>
+	</section>
+
+	<!-- One -->
+	<section id="one" class="wrapper style1">
+		<div class="inner">
+			<article class="feature left">
+				<span class="image"><img src="images/sudoku.png" alt="" /></span>
+				<div class="content">
+					<h2>Sweet Sweet Sudoku</h2>
+					<p>Sudoku Solver is my first project that was made without any other 3rd party website like
+						Code.org. This project was also the one that taught me the most in both HTML5 and JS. Please give it a go!</p>
+					<ul class="actions">
+						<li>
+							<a href="#" class="button alt" onclick=linkOpen('sudoku');>Try it out</a>
+						</li>
+					</ul>
+				</div>
+			</article>
+			<article class="feature right">
+				<span class="image"><img src="images/pong.gif" alt="" /></span>
+				<div class="content">
+					<h2>Pong but better</h2>
+					<p>I made this game as my second project. The intended purpose of this project was to develop a game
+						that was completely Object-Oriented. I added powerups to this game to make it more attractive
+						while trying to deliver the same experience as the classic.
+					</p>
+					<ul class="actions">
+						<li>
+							<a href="#" class="button alt" onclick=linkOpen('Pong');>Try it out</a>
+						</li>
+					</ul>
+				</div>
+			</article>
+			<article class="feature left">
+				<span class="image"><img src="images/maze.png" alt="" /></span>
+				<div class="content">
+					<h2>Mazes and Backtracking</h2>
+					<p>
+						This is a Maze generation algorithm that I made using Recursive Backtracking. I used an
+						improvised version of Recursive Backtracking to develop an algorithm that solves the maze.
+						Follow the prompts for instruction.
+					</p>
+					<ul class="actions">
+						<li>
+							<a href="#" class="button alt" onclick=linkOpen('Maze');>Try it out</a>
+						</li>
+					</ul>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<!-- Two -->
+	<section id="two" class="wrapper special">
+		<div class="inner">
+			<header class="major narrow">
+				<h2>Snacks and Languages</h2>
+				<p>'Once you stop learning, you start dying' -- Albert Einstien</p>
+			</header>
+			<div class="image-grid">
+				<a href="https://www.javascript.com/" class="image"><img src="images/js.jpg" alt="" /></a>
+				<a href="https://html.com/" class="image"><img src="images/html5.png" alt="" /></a>
+				<a href="https://css-tricks.com/" class="image"><img src="images/css.svg" alt="" /></a>
+				<a href="https://www.dunkindonuts.com/en" class="image"><img src="images/donuts (2).jpg" alt="" /></a>
+				<a href="https://docs.microsoft.com/en-us/dotnet/csharp/" class="image"><img src="images/c-sharp.png" alt="" /></a>
+				<a href="https://unity.com/" class="image"><img src="images/unity.png" alt="" /></a>
+				<a href="https://brain.js.org/#/" class="image"><img src="images/brain.js.png" alt="" /></a>
+				<a href="https://www.peets.com/" class="image"><img src="images/coffee (2).jpg" alt="" /></a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Three -->
+	<section id="three" class="wrapper style3 special">
+		<div class="inner">
+			<header class="major narrow	">
+				<h2>Check out my Github</h2>
+			</header>
+			<ul class="actions">
+				<li><a href="https://github.com/mrblacklicorice/mrblacklicorice.github.io" class="button big alt">Click here</a></li>
+			</ul>
+		</div>
+	</section>
+
+	<!-- Four -->
+	<section id="four" class="wrapper style2 special">
+		<div class="inner">
+			<header class="major narrow">
+				<h2>Get in touch</h2>
+			</header>
+			<form action="https://formspree.io/xrgyqqlj" method="POST">
+				<div class="container 75%">
+					<div class="row uniform 50%">
+						<div class="6u 12u$(xsmall)">
+							<input name="name" placeholder="Name" type="text" />
+						</div>
+						<div class="6u$ 12u$(xsmall)">
+							<input name="email" placeholder="Email" type="email" />
+						</div>
+						<div class="12u$">
+							<textarea name="message" placeholder="Message" rows="4"></textarea>
+						</div>
+					</div>
+				</div>
+				<ul class="actions">
+					<li><input type="submit" class="special" value="Submit" /></li>
+					<li><input type="reset" class="alt" value="Reset" /></li>
+				</ul>
+			</form>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-facebook">
+						<span class="label">Facebook</span>
+					</a></li>
+				<li><a href="#" class="icon fa-twitter">
+						<span class="label">Twitter</span>
+					</a></li>
+				<li><a href="#" class="icon fa-instagram">
+						<span class="label">Instagram</span>
+					</a></li>
+				<li><a href="#" class="icon fa-linkedin">
+						<span class="label">LinkedIn</span>
+					</a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled.</li>
+				<li>Images: <a href="http://unsplash.com">Unsplash</a>.</li>
+				<li>Design: <a href="http://templated.co">TEMPLATED</a>.</li>
+			</ul>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
+	<script>
+		function linkOpen(linkname) {
+			open('https://mrblacklicorice.github.io/' + linkname + '/');
+		}
+	</script>
+
 </body>
 
-<script>
-
-function linkOpen(linkname){
-    open('https://mrblacklicorice.github.io/'+linkname+'/');
-}
-
-</script>
 </html>
