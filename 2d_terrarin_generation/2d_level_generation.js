@@ -42,6 +42,7 @@ function main() {
     for (var x = 0; x < canvas.width / pixel; x++) {
         for (var y = 0; y < canvas.height / pixel; y++) {
             colorarray[x][y] = map(noise.perlin2((x + xf) / scl, (y + yf) / scl), -1, 1, 0, 1);
+            
             if (colorarray[x][y] < sealvl - 0.06) {
                 context.fillStyle = '#0f5e9c';
             } else if (colorarray[x][y] < sealvl - 0.02) {
@@ -64,11 +65,8 @@ function main() {
                 context.fillStyle = '#bcbcaa';
             } else if (colorarray[x][y] < sealvl + 0.70) {
                 context.fillStyle = '#dddde3';
-            // } else {
-            //     colorarray[x][y] *= 255;
-            //     colorarray[x][y] = Math.ceil(colorarray[x][y]);
-            //     context.fillStyle = '#' + colorarray[x][y].toString(16) + colorarray[x][y].toString(16) + colorarray[x][y].toString(16);
             }
+            
             context.fillRect(x * pixel, y * pixel, pixel, pixel);
         }
     }
@@ -81,3 +79,8 @@ function main() {
 function map(input, rmin, rmax, min, max) {
     return (input - rmin) * (max - min) / (rmax - rmin) + min;
 }
+
+            // } else {
+            //     colorarray[x][y] *= 255;
+            //     colorarray[x][y] = Math.ceil(colorarray[x][y]);
+            //     context.fillStyle = '#' + colorarray[x][y].toString(16) + colorarray[x][y].toString(16) + colorarray[x][y].toString(16);
