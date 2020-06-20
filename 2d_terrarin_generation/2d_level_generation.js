@@ -1,5 +1,3 @@
-alert('Use arrows to move.');
-
 var scl = 50;
 var xf = 0;
 var yf = 0;
@@ -72,9 +70,11 @@ function main() {
             //     context.fillStyle = '#' + colorarray[x][y].toString(16) + colorarray[x][y].toString(16) + colorarray[x][y].toString(16);
             }
             context.fillRect(x * pixel, y * pixel, pixel, pixel);
-
         }
     }
+    context.fillStyle = 'White';
+    context.font = "50px Arial";
+    context.fillText("Use Arrow Keys to Move", 0, 40);
 }
 
 
