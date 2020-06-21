@@ -9,8 +9,8 @@ canvas.width = (Math.floor(window.innerWidth / pixel)) * pixel;
 canvas.height = (Math.floor(window.innerHeight / pixel)) * pixel;
 canvas.style.position = 'absolute';
 canvas.style.padding = '0px';
-canvas.style.left = (window.innerWidth-canvas.width)/2 + 'px';
-canvas.style.top = (window.innerHeight-canvas.height)/2 + 'px';
+canvas.style.left = (window.innerWidth - canvas.width) / 2 + 'px';
+canvas.style.top = (window.innerHeight - canvas.height) / 2 + 'px';
 var context = canvas.getContext('2d');
 noise.seed(Math.random());
 var colorarray;
@@ -42,7 +42,7 @@ function main() {
     for (var x = 0; x < canvas.width / pixel; x++) {
         for (var y = 0; y < canvas.height / pixel; y++) {
             colorarray[x][y] = map(noise.perlin2((x + xf) / scl, (y + yf) / scl), -1, 1, 0, 1);
-            
+
             if (colorarray[x][y] < sealvl - 0.06) {
                 context.fillStyle = '#0f5e9c';
             } else if (colorarray[x][y] < sealvl - 0.02) {
@@ -66,7 +66,6 @@ function main() {
             } else if (colorarray[x][y] < sealvl + 0.70) {
                 context.fillStyle = '#dddde3';
             }
-            
             context.fillRect(x * pixel, y * pixel, pixel, pixel);
         }
     }
@@ -80,7 +79,7 @@ function map(input, rmin, rmax, min, max) {
     return (input - rmin) * (max - min) / (rmax - rmin) + min;
 }
 
-            // } else {
-            //     colorarray[x][y] *= 255;
-            //     colorarray[x][y] = Math.ceil(colorarray[x][y]);
-            //     context.fillStyle = '#' + colorarray[x][y].toString(16) + colorarray[x][y].toString(16) + colorarray[x][y].toString(16);
+// } else {
+//     colorarray[x][y] *= 255;
+//     colorarray[x][y] = Math.ceil(colorarray[x][y]);
+//     context.fillStyle = '#' + colorarray[x][y].toString(16) + colorarray[x][y].toString(16) + colorarray[x][y].toString(16);
