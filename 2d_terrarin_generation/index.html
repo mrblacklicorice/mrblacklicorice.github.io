@@ -6,10 +6,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://i.stack.imgur.com/9ACDe.jpg">
     <title>2d_level_generation</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
-<body style="padding: 0px;">
-    <canvas></canvas>
+<body>
+    <div class="menu">
+        <h1>Use Arrows to Navigate</h1>
+        <!-- Scale -->
+        <div>
+            <label for="scale">Scale</label>
+            <input name="scale" type="range" min="2" max="200" value="50" id="scale_in">
+            <label for="scale" id="scale_out">50</label>
+        </div>
+        <!-- Pixel -->
+        <div>
+            <label for="pixel">Pixels</label>
+            <input name="pixel" type="range" min="2" max="1024" value="128" id="pixel_in">
+            <label for="pixel" id="pixel_out">128</label>
+        </div>
+        <!-- Amplitude -->
+        <div>
+            <label for="amplitude">Amplitude</label>
+            <input name="amplitude" type="range" min="1" max="10" value="1" id="amplitude_in">
+            <label for="amplitude" id="amplitude_out">1</label>
+        </div>
+        <!-- Frequency -->
+        <div>
+            <label for="frequency">Frequency</label>
+            <input name="frequency" type="range" min="1" max="10" value="1" id="frequency_in">
+            <label for="frequency" id="frequency_out">1</label>
+        </div>
+        <!-- Persistence -->
+        <div>
+            <label for="persistence">Persistence</label>
+            <input name="persistence" type="range" min="1" max="9" value="5" id="persistence_in">
+            <label for="persistence" id="persistence_out">0.5</label>
+        </div>
+        <!-- Lacunarity -->
+        <div>
+            <label for="lacunarity">Lacunarity</label>
+            <input name="lacunarity" type="range" min="2" max="10" value="2" id="lacunarity_in">
+            <label for="lacunarity" id="lacunarity_out">2</label>
+        </div>
+        <!-- Speed -->
+        <div>
+            <label for="speed">Speed</label>
+            <input name="speed" type="range" min="1" max="50" value="10" id="speed_in">
+            <label for="speed" id="speed_out">10</label>
+        </div>
+        <!-- Seed -->
+        <div>
+            <label for="seed">Seed</label>
+            <input name="seed" type="range" min="1" max="65536" value="" id="seed_in">
+            <label for="seed" id="seed_out"></label>
+        </div>
+        <!-- Octaves -->
+        <div>
+            <label for="octaves">Octaves</label>
+            <input name="octaves" type="range" min="1" max="20" value="8" id="octaves_in">
+            <label for="octaves" id="octaves_out">8</label>
+        </div>
+
+        Xoffset <input type="number" value='0' step="1" id="xf"> <br>
+        Yoffset <input type="number" value='0' step="1" id="yf"> <br>
+
+        <!-- Deep Water -->
+        <div>
+            <input type="number" id="0n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="0c" value="#FFFFFF">
+        </div>
+        <!-- Water -->
+        <div>
+            <input type="number" id="1n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="1c" value="#FFFFFF">
+        </div>
+        <!-- Shallow Water -->
+        <div>
+            <input type="number" id="2n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="2c" value="#FFFFFF">
+        </div>
+        <!-- Sand -->
+        <div>
+            <input type="number" id="3n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="3c" value="#FFFFFF">
+        </div>
+        <!-- Plains -->
+        <div>
+            <input type="number" id="4n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="4c" value="#FFFFFF">
+        </div>
+        <!-- Woods -->
+        <div>
+            <input type="number" id="5n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="5c" value="#FFFFFF">
+        </div>
+        <!-- Forest -->
+        <div>
+            <input type="number" id="6n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="6c" value="#FFFFFF">
+        </div>
+        <!-- Gravel -->
+        <div>
+            <input type="number" id="7n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="7c" value="#FFFFFF">
+        </div>
+        <!-- Stone -->
+        <div>
+            <input type="number" id="8n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="8c" value="#FFFFFF">
+        </div>
+        <!-- Light Snow -->
+        <div>
+            <input type="number" id="9n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="9c" value="#FFFFFF">
+        </div>
+        <!-- Heavy Snow -->
+        <div>
+            <input type="number" id="10n" step="0.01" min="0" max="1" value="">
+            <input type="color" id="10c" value="#FFFFFF">
+        </div>
+        
+        <br><button id="generate">Generate</button>
+    </div>
+    <canvas id="canvas"></canvas>
 </body>
 <script src="perlin.js"></script>
 <script src="2d_level_generation.js"></script>
