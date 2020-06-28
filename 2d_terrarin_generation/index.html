@@ -67,8 +67,22 @@
             <label for="octaves" id="octaves_out">8</label>
         </div>
 
-        Xoffset <input type="number" value='0' step="1" id="xf"> <br>
+        Xoffset: <input type="number" value='0' step="1" id="xf"> <br>
         Yoffset <input type="number" value='0' step="1" id="yf"> <br>
+
+        <!-- Perlin Noise -->
+        Type of noise 
+        <select name="noise" id="noise">
+            <option value="perlin">Perlin</option>
+            <option value="simplex">Simplex</option>
+        </select> <br>
+        
+        <!-- Height -->
+        Height 
+        <select name="height" id="height">
+            <option value="absolute">Absolute</option>
+            <option value="relative">Relative</option>
+        </select> <br>
 
         <!-- Deep Water -->
         <div>

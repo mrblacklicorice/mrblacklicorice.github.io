@@ -8,7 +8,10 @@ var octaves = 8;
 var persistence = 0.5;
 var lacunarity = 2;
 var speed = 10;
+var noise_type = "perlin";
+var height_type = "absolute";
 var seed = Math.ceil(Math.random() * 65536);
+var max,min;
 noise.seed(seed);
 document.getElementById('seed_in').value = seed;
 document.getElementById('seed_out').innerHTML = seed;
@@ -48,6 +51,8 @@ document.getElementById('generate').addEventListener('click', function () {
     lacunarity = parseFloat(document.getElementById('lacunarity_in').value);
     speed = parseFloat(document.getElementById('speed_in').value);
     seed = parseFloat(document.getElementById('seed_in').value);
+    noise_type = document.getElementById("noise").value;
+    height_type = document.getElementById("height").value;
     for (let i = 0; i < values.length; i++) {
         colors[i] = document.getElementById(i + 'c').value;
         values[i] = document.getElementById(i + 'n').value;
@@ -94,21 +99,29 @@ function main() {
             var frequency = orig_fre;
             colorarray[x][y] = 0;
             for (let o = 0; o < octaves; o++) {
-                colorarray[x][y] += noise.perlin2((x + xf) / scale * frequency, (y + yf) / scale * frequency) * amplitude;
+                if (noise_type == "perlin") {
+                    colorarray[x][y] += noise.perlin2((x + xf) / scale * frequency, (y + yf) / scale * frequency) * amplitude;
+                } else if (noise_type == "simplex") {
+                    colorarray[x][y] += noise.simplex2((x + xf) / scale * frequency, (y + yf) / scale * frequency) * amplitude;
+                }
                 amplitude *= persistence;
                 frequency *= lacunarity;
             }
             arr.push(colorarray[x][y]);
         }
     }
-
-    var max = arr.reduce(function (a, b) {
+    max = arr.reduce(function (a, b) {
         return Math.max(a, b);
     });
 
-    var min = arr.reduce(function (a, b) {
+    min = arr.reduce(function (a, b) {
         return Math.min(a, b);
     });
+
+    if (height_type == 'absolute') {
+        min = -1;
+        max = 1;
+    }
 
     for (var x = 0; x < canvas.width / pixel; x++) {
         for (var y = 0; y < canvas.height / pixel; y++) {
