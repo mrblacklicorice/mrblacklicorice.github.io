@@ -11,7 +11,7 @@ var speed = 10;
 var noise_type = "perlin";
 var height_type = "absolute";
 var seed = Math.ceil(Math.random() * 65536);
-var max,min;
+var max, min;
 noise.seed(seed);
 document.getElementById('seed_in').value = seed;
 document.getElementById('seed_out').innerHTML = seed;
@@ -110,17 +110,17 @@ function main() {
             arr.push(colorarray[x][y]);
         }
     }
-    max = arr.reduce(function (a, b) {
-        return Math.max(a, b);
-    });
-
-    min = arr.reduce(function (a, b) {
-        return Math.min(a, b);
-    });
-
     if (height_type == 'absolute') {
         min = -1;
         max = 1;
+    } else if (height_type == 'relative') {
+        max = arr.reduce(function (a, b) {
+            return Math.max(a, b);
+        });
+
+        min = arr.reduce(function (a, b) {
+            return Math.min(a, b);
+        });
     }
 
     for (var x = 0; x < canvas.width / pixel; x++) {
