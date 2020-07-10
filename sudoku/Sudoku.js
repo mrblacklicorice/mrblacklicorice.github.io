@@ -1,5 +1,5 @@
 console.log("script loaded");
-var num;
+var num = ((new Array(9)).fill(0)).map(ele => (new Array(9)).fill(0));
 var char = [];
 var stopper = true;
 var id_array = [];
@@ -12,36 +12,36 @@ var next_one = false;
 var height = window.innerHeight/9.5;
 for (let j = 0; j < 9; j++) {
     for (let i = 0; i < 9; i++) {
-        num = document.createElement('input');
-        num.type = 'text';
-        num.maxLength = "1";
-        num.style.width = height+'px';
-        num.style.height = height+'px';
-        num.style.borderColor = '#848484';
-        num.style.borderWidth = height/10 + 'px';
-        num.style.borderStyle = 'solid';
-        num.style.position = 'absolute';
-        num.style.fontSize = height * 3 / 4 + 'pt';
-        num.style.textAlign = 'center';
-        num.style.left = window.innerWidth*3/10 + (i + 1) * height + 'px';
-        num.style.top = window.innerHeight/100+j * height + 'px';
-        num.id = "" + j + i;
+        num[j][i] = document.createElement('input');
+        num[j][i].type = 'text';
+        num[j][i].maxLength = "1";
+        num[j][i].style.width = height+'px';
+        num[j][i].style.height = height+'px';
+        num[j][i].style.borderColor = '#848484';
+        num[j][i].style.borderWidth = height/10 + 'px';
+        num[j][i].style.borderStyle = 'solid';
+        num[j][i].style.position = 'absolute';
+        num[j][i].style.fontSize = height * 3 / 4 + 'pt';
+        num[j][i].style.textAlign = 'center';
+        num[j][i].style.left = window.innerWidth*3/10 + (i + 1) * height + 'px';
+        num[j][i].style.top = window.innerHeight/100+j * height + 'px';
+        num[j][i].id = `${j}${i}`;
         if (i == 3 || i == 0 || i == 6) {
-            num.style.borderLeftColor = "black";
+            num[j][i].style.borderLeftColor = "black";
         }
 
         if (j == 3 || j == 0 || j == 6) {
-            num.style.borderTopColor = "black";
+            num[j][i].style.borderTopColor = "black";
         }
 
         if (i == 8 || i == 5 || i == 2) {
-            num.style.borderRightColor = "black";
+            num[j][i].style.borderRightColor = "black";
         }
 
         if (j == 8 || j == 5 || j == 2) {
-            num.style.borderBottomColor = "black";
+            num[j][i].style.borderBottomColor = "black";
         }
-        document.getElementById('Sudokugrid').appendChild(num);
+        document.getElementById('Sudokugrid').appendChild(num[j][i]);
     }
 }
 
@@ -54,14 +54,13 @@ document.getElementById('Submit').addEventListener('click', function () {
     var counter = 81;
     for (let j = 0; j < 9; j++) {
         for (let i = 0; i < 9; i++) {
-            num = document.getElementById("" + j + i);
-            if ((num.value).search(/[0-9]/) == -1 || num.value == "0") {
-                num.value = "";
+            if ((num[j][i].value).search(/[0-9]/) == -1 || num[j][i].value == "0") {
+                num[j][i].value = "";
                 counter--;
                 id_array.push(String(j * 9 + i));
             }
-            num.readOnly = true;
-            char.push(num.value);
+            num[j][i].readOnly = true;
+            char.push(num[j][i].value);
         }
     }
 
@@ -84,7 +83,7 @@ function start() {
             if (current_value == 1 || next_one) {
                 next_one = false;
                 temp_index = char.indexOf("");
-                cell = document.getElementById((Math.floor(temp_index / 9)) + "" + (temp_index % 9));
+                cell = num[Math.floor(temp_index / 9)][temp_index % 9];
                 cell.style.color = 'red';
             }
             cell.value = String(current_value);
