@@ -178,13 +178,10 @@ var previous;
 var lastnum = 0;
 var counter = 0;
 var mazedone = false;
-var grid = new Array(rows);
+var grid = ((new Array(cols)).fill(0)).map(ele => (new Array(rows)).fill(0));;
 var ywalls;
 var xwalls;
 var id;
-for (let r = 0; r < rows; r++) {
-    grid[r] = new Array(cols);
-}
 
 for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
