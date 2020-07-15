@@ -1,7 +1,18 @@
+var canvas = document.getElementsByTagName('canvas')[0];
+var context = canvas.getContext('2d');
+canvas.width = window.innerHeight - 20;
+canvas.height = window.innerHeight - 20;
+canvas.style.position = 'absolute';
+canvas.style.padding = '10px';
+canvas.style.left = '0px';
+canvas.style.top = '0px';
+
+document.getElementsByClassName('menu')[0].style.width = (window.innerWidth - window.innerHeight) + 'px';
+
 var scale = 50;
 var xf = 0;
 var yf = 0;
-var pixel;
+var pixel = canvas.height / 128;
 var orig_amp = 1;
 var orig_fre = 1;
 var octaves = 8;
@@ -23,18 +34,6 @@ for (let i = 0; i < values.length; i++) {
     document.getElementById(i + 'c').value = colors[i];
     document.getElementById(i + 'n').value = values[i];
 }
-
-var canvas = document.getElementsByTagName('canvas')[0];
-var context = canvas.getContext('2d');
-canvas.width = window.innerHeight - 20;
-canvas.height = window.innerHeight - 20;
-pixel = canvas.height / 128;
-canvas.style.position = 'absolute';
-canvas.style.padding = '10px';
-canvas.style.left = '0px';
-canvas.style.top = '0px';
-
-document.getElementsByClassName('menu')[0].style.width = (window.innerWidth - window.innerHeight) + 'px';
 
 main();
 
