@@ -71,14 +71,14 @@
         Yoffset <input type="number" value='0' step="1" id="yf"> <br>
 
         <!-- Perlin Noise -->
-        Type of noise 
+        Type of noise
         <select name="noise" id="noise">
             <option value="perlin">Perlin</option>
             <option value="simplex">Simplex</option>
         </select> <br>
-        
+
         <!-- Height -->
-        Height 
+        Height
         <select name="height" id="height">
             <option value="absolute">Absolute</option>
             <option value="relative">Relative</option>
@@ -139,12 +139,16 @@
             <input type="number" id="10n" step="0.01" min="0" max="1" value="">
             <input type="color" id="10c" value="#FFFFFF">
         </div>
-
-        <br><button id="generate">Generate</button>
+        <input type="file" id="file_upload" hidden>
+        <br><button id="load">Load settings</button>
+        <button id="generate">Generate</button>
+        <button id="save" >Save settings</button>
     </div>
     <canvas id="canvas"></canvas>
 </body>
 <script src="perlin.js"></script>
 <script src="2d_level_generation.js"></script>
+<script src="FileSaver.js"></script>
+<script src="filereader.js"></script>
 
 </html>
