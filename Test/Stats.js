@@ -21,10 +21,24 @@ function sum(input) {
 function multiplier(input_array, multiplicant) {
     var output = ""
     for (let i = 0; i < input_array.length; i++) {
-        output += `${input_array[i]} * ${multiplicant} = ${multiplicant*input_array[i]}\n`
+        output += `${input_array[i]} * ${multiplicant} = ${multiplicant * input_array[i]}\n`
     }
     return output;
 }
+
+function random(no_tests, no_sets, max, min, target_value) {
+    var counter;
+    var results = [];
+    for (let i = 0; i < no_tests; i++) {
+        counter = 0;
+        for (let index = 0; index < no_sets; index++) {
+            if (Math.floor(Math.random() * (max - (min - 1))) + min < target_value) counter++;
+        }
+        results.push(counter);
+    }
+    return results;
+}
+
 
 // console.log(sum([36])/sum([198,44,36,6,4,1,14,3,16,3])*100);
 // console.log(sum([198,44,36,6,4,1,14,3,16,3]));

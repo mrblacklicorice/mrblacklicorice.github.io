@@ -1,11 +1,11 @@
 var dictionary;
 const fetch = require('node-fetch');
 
-fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json').then(function(data){
+fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json').then(function (data) {
     return data.json();
-}).then(function(resp) {
+}).then(function (resp) {
     dictionary = resp;
-    console.table(isWords('lovingi',5,5));
+    console.table(isWords('ifs⁣'));
 });
 
 let findPermutations = (string) => {

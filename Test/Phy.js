@@ -1,6 +1,6 @@
 var algebra = require("algebra.js");
 
-function vectorAddition(vectors) {
+function vectorAddition(vectors, showWork) {
     var solutions = new Array(vectors.length);
     var x = 0;
     var y = 0;
@@ -14,16 +14,17 @@ function vectorAddition(vectors) {
         range[i] = solutions[i][1];
         solutions[i][0][0] = Math.cos(solutions[i][1]) * vectors[i][0];
         solutions[i][0][1] = Math.sin(solutions[i][1]) * vectors[i][0];
-        console.log(`cos(${round(radToDeg(solutions[i][1]))})*${vectors[i][0]} = ${round(solutions[i][0][0])}`);
+        if (showWork) console.log(`cos(${round(radToDeg(solutions[i][1]))})*${vectors[i][0]} = ${round(solutions[i][0][0])}`);
         x_string += " + " + solutions[i][0][0];
-        console.log(`sin(${round(radToDeg(solutions[i][1]))})*${vectors[i][0]} = ${round(solutions[i][0][1])}`);
+        if (showWork) console.log(`sin(${round(radToDeg(solutions[i][1]))})*${vectors[i][0]} = ${round(solutions[i][0][1])}`);
         y_string += " + " + solutions[i][0][1];
     }
     for (let i = 0; i < solutions.length; i++) {
         x += solutions[i][0][0];
         y += solutions[i][0][1];
     }
-    console.log(`\n${x_string.substring(3)} = ${round(x)}\n${y_string.substring(3)} = ${round(y)}\n\nsqrt((${round(x)}^2)+(${round(y)}^2)) = ${round(Math.sqrt((x * x) + (y * y)))} units\narctan(${round(y)}/${round(x)}) = ${degToCompass(whichone(round(radToDeg(Math.atan(y / x))), range))}`);
+    if (showWork) console.log(`\n${x_string.substring(3)} = ${round(x)}\n${y_string.substring(3)} = ${round(y)}\n\nsqrt((${round(x)}^2)+(${round(y)}^2)) = ${round(Math.sqrt((x * x) + (y * y)))} units\narctan(${round(y)}/${round(x)}) = ${degToCompass(whichone(round(radToDeg(Math.atan(y / x))), range))}`);
+    return [round(Math.sqrt((x * x) + (y * y))), [degToCompass(whichone(round(radToDeg(Math.atan(y / x))), range))]];
 }
 
 function getKeyByValue(object, value) {
@@ -76,7 +77,7 @@ function degToCompass(deg) {
 
     if (deg % 360 == 270) return `(${deg}°)   ` + "S";
     if (deg % 360 < 315) return `(${deg}°)   ` + (deg - 270) + "° EoS";
-    if (deg % 360 < 90) return `(${deg}°)   ` + (360 - deg) + "° SoE";
+    if (deg % 360 < 360) return `(${deg}°)   ` + (360 - deg) + "° SoE";
 }
 
 function vector_components(value, Vi, theta) {
@@ -99,17 +100,15 @@ function whichone(option, range) {
 }
 
 // console.log(vectorAddition([
-//     [15.6, [39.8,"SoE"]],
-//     [10, [0]],
-//     [15.6, [140.2]]
+//     [78.6, [0, "N"]],
+//     [58.0, [0, "W"]]
 // ]));
 
 
 // console.log(vectorAddition([
-// [25,[30,"NoW"]],
-// [45,[40,"EoN"]],
-// [15,[70,"NoE"]]
-// ]));
+//     [6, [0]],
+//     [10, [90]]
+// ], false));
 
 
 // F = 5.7 units, 315o
@@ -148,9 +147,9 @@ function kinematic_equations(input) {
 }
 
 kinematic_equations({
-    Vf: vector_components('x', 25, 55), // m/s //
-    Vi: vector_components('x', 25, 55),   // m/s //
-    a: 0,  // m/s^2 //
-    x: 'x', // m //
-    t: 4.18// s //
+    Vf: 'y', // m/s //
+    Vi: 0, // m/s //
+    a: 6.084,  // m/s^2 //
+    x: 258, // m //
+    t: 'x'// s //
 });

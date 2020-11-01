@@ -1,3 +1,5 @@
+const { random } = require("lodash");
+
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -343,34 +345,91 @@ var isLongPressedName = function (name, typed) {
 var rankTeams = function (votes) {
   totalvotes = {};
   for (let i = 0; i < votes.length; i++) {
-      var single_vote = votes[i].split("");
-      for (let j = 0; j < single_vote.length; j++) {
-          if (!totalvotes.hasOwnProperty(single_vote[j])) totalvotes[single_vote[j]] = 0;
-          totalvotes[single_vote[j]] += (j + 1);
-      }
+    var single_vote = votes[i].split("");
+    for (let j = 0; j < single_vote.length; j++) {
+      if (!totalvotes.hasOwnProperty(single_vote[j])) totalvotes[single_vote[j]] = 0;
+      totalvotes[single_vote[j]] += (j + 1);
+    }
   }
   var temp = [];
   var result = new Array(single_vote.length);
   var values = Object.values(totalvotes);
   values.sort((a, b) => a - b);
   for (let i = 0; i < values.length; i++) {
-      temp = [];
-      for (var [key, value] of Object.entries(totalvotes)) {
-          if(value == values[i]) temp.push(key);
-      }
-      if(temp.length == 1){
-          result.push(temp[0]);
-      }else{
-          console.log(temp);
-          if(!result.includes(temp[0])) result = result.concat(temp.sort());
-      }
+    temp = [];
+    for (var [key, value] of Object.entries(totalvotes)) {
+      if (value == values[i]) temp.push(key);
+    }
+    if (temp.length == 1) {
+      result.push(temp[0]);
+    } else {
+      console.log(temp);
+      if (!result.includes(temp[0])) result = result.concat(temp.sort());
+    }
   }
   console.log(totalvotes);
   return result.join("");
 };
 
+var maximumSwap = function (num) {
+  var temp = String(num).split("");
+  var high_index = 0;
+  var high = parseInt(temp[high_index]);
 
-var bagOfTokensScore = function(tokens, P) {
-  tokens.sort((a, b) => a - b);
-  return tokens;
+  for (let j = 0; j < temp.length; j++) {
+    if (j == 0 || temp[j - 1] == high) {
+      high_index = j;
+      high = parseInt(temp[high_index]);
+      for (let i = j; i < temp.length; i++) {
+        if (parseInt(temp[i]) >= high) {
+          high_index = i;
+          high = parseInt(temp[i]);
+        }
+      }
+    } else {
+      temp_num = temp[j - 1];
+      temp[j - 1] = high;
+      temp[high_index] = temp_num;
+
+      return parseInt(temp.join(""));
+    }
+  }
+  return parseInt(temp.join(""));
 };
+
+var checkPossibility = function (nums) {
+  if (nums.length == 1) return true;
+  var temp = [...nums];
+  var first = true;
+  var second = true;
+  var temp_good = true;
+  var nums_good = true;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i - 1] != undefined && nums[i - 1] > nums[i] && nums_good) {
+      nums[i - 1] = nums[i];
+      nums_good = false;
+    }
+    if (temp[temp.length - i] != undefined && temp[temp.length - (i + 1)] > temp[temp.length - (i)] && temp_good) {
+      temp[temp.length - i] = temp[temp.length - (i + 1)];
+      temp_good = false;
+    }
+  }
+  for (let i = 0; i < nums.length; i++) {
+    if ((nums[i - 1] != undefined && nums[i - 1] > nums[i])) {
+      first = false;
+    }
+    if ((temp[temp.length - i] != undefined && temp[temp.length - (i + 1)] > temp[temp.length - (i)])) {
+      second = false;
+    }
+  }
+  return (first || second);
+};
+
+function random(no_sets, max, min, percentage) {
+  var counter = 0;
+  for (let index = 0; index < no_sets; index++) {
+    if (Math.ceil(Math.random() * 150) + 1 < 20) counter++;
+  }
+  return counter;
+}
