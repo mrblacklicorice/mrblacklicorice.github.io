@@ -67,8 +67,8 @@ async function scrape_data(link, page) {
         var current = "";
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].className == "prc-th") {
-                data_arr[(arr[i].innerText.split(" ")).join("-")] = [];
-                current = (arr[i].innerText.split(" ")).join("-");
+                data_arr[arr[i].innerText] = {};
+                current = arr[i].innerText;
             } else if (arr[i].className == "tr") {
                 var temp_arr = (arr[i].innerHTML).split("</td>");
                 temp_arr.pop();
@@ -76,7 +76,11 @@ async function scrape_data(link, page) {
                     temp_arr[i] = temp_arr[i].split("<td>").pop();
                 }
                 if (temp_arr[1] == "&nbsp;") temp_arr[1] = "Cost not given";
-                data_arr[current].push(temp_arr);
+                if (temp_arr[2] == "") {
+                    data_arr[current][temp_arr[0]] = temp_arr[1];
+                } else {
+                    data_arr[current][temp_arr[0] + `(${temp_arr[2]})`] = temp_arr[1];
+                }
             }
         }
         return data_arr;
@@ -89,8 +93,8 @@ async function scrape_data(link, page) {
         var current = "";
         for (let i = 0; i < arr.length; i++) {
             if (arr[i].className == "prc-th") {
-                data_arr[(arr[i].innerText.split(" ")).join("-")] = [];
-                current = (arr[i].innerText.split(" ")).join("-");
+                data_arr[arr[i].innerText] = {};
+                current = arr[i].innerText;
             } else if (arr[i].className == "tr") {
                 var temp_arr = (arr[i].innerHTML).split("</td>");
                 temp_arr.pop();
@@ -98,7 +102,11 @@ async function scrape_data(link, page) {
                     temp_arr[i] = temp_arr[i].split("<td>").pop();
                 }
                 if (temp_arr[1] == "&nbsp;") temp_arr[1] = "Cost not given";
-                data_arr[current].push(temp_arr);
+                if (temp_arr[2] == "") {
+                    data_arr[current][temp_arr[0]] = temp_arr[1];
+                } else {
+                    data_arr[current][temp_arr[0] + `(${temp_arr[2]})`] = temp_arr[1];
+                }
             }
         }
         return data_arr;
