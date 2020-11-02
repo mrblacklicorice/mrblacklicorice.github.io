@@ -13,6 +13,13 @@ function delay(time) {
         "https://www.menuwithprice.com/menu/dark-matter-coffee/",
         "https://www.menuwithprice.com/menu/starbucks/illinois/chicago/122629/",
         "https://www.menuwithprice.com/menu/jamba-juice/illinois/chicago/62813/",
+        "https://www.menuwithprice.com/menu/mcdonalds/",
+        "https://www.menuwithprice.com/menu/dunkin-donuts/",
+        "https://www.menuwithprice.com/menu/krispy-kreme/",
+        "https://www.menuwithprice.com/menu/bad-ass-coffee/",
+        "https://www.menuwithprice.com/menu/biggby-coffee/",
+        "https://www.menuwithprice.com/menu/dairy-queen/",
+        "https://www.menuwithprice.com/menu/europa-cafe/",
     ];
     var resultsFromLinks = new Array(listOfLinks.length);
 

@@ -34,22 +34,10 @@
         "Strawberries Gone Bananas": "$2.99",
         "Blueberry Strawberry Blast-Off": "$2.99"
     },
-    "Energy Bowls": {
-        "Acai Primo Bowl, Chunky Strawberry Bowl or Fruit &amp; Greek Yogurt Bowl(12 oz.)": "$5.29",
-        "Acai Primo Bowl, Chunky Strawberry Bowl or Fruit &amp; Greek Yogurt Bowl(16 oz.)": "$6.29",
-        "Acai Primo Bowl, Chunky Strawberry Bowl or Fruit &amp; Greek Yogurt Bowl(24 oz.)": "$7.79"
-    },
     "Freshly Squeezed Juices": {
         "Purely Orange, Purely Carrot, Orange Carrot Twist, Triple Revitalizer, Orange Berry Antioxidant, Tropical Kick-Start or Kale Orange Power(12 oz.)": "$4.29",
         "Purely Orange, Purely Carrot, Orange Carrot Twist, Triple Revitalizer, Orange Berry Antioxidant, Tropical Kick-Start or Kale Orange Power(16 oz.)": "$4.99",
         "Purely Orange, Purely Carrot, Orange Carrot Twist, Triple Revitalizer, Orange Berry Antioxidant, Tropical Kick-Start or Kale Orange Power(24 oz.)": "$5.69",
         "Purely Orange, Purely Carrot, Orange Carrot Twist, Triple Revitalizer, Orange Berry Antioxidant, Tropical Kick-Start or Kale Orange Power(28 oz.)": "$6.39"
-    },
-    "Oatmeal": {
-        "Steel-Cut Oatmeal": "$3.29",
-        "Additonal Topping": "$0.50"
-    },
-    "Bottled Drink": {
-        "Water(Bottle)": "$1.25"
     }
 }

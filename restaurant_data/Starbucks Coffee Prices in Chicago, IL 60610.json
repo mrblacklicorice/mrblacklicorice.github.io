@@ -90,49 +90,5 @@
         "Teavana Shaken Iced Black Tea Lemonade(Venti)": "$3.45",
         "Teavana Shaken Iced Black Tea Lemonade(Trenta)": "$3.95",
         "Evolution Fresh(Grande)": "$5.95"
-    },
-    "Bakery": {
-        "Ham &amp; Cheese Savory Foldover": "$3.45",
-        "Wheat Spinach Savory Foldover": "$3.45",
-        "Pepperoni &amp; Tomato Savory Foldover": "$3.45",
-        "Cheese Danish": "$2.45",
-        "Butter Croissant": "$2.45",
-        "Chocolate Croissant": "$2.75",
-        "Blueberry Scone": "$2.45",
-        "Banana Nut Bread": "$2.75",
-        "Iced Lemon Pound Cake": "$2.45",
-        "Morning Bun": "$2.45",
-        "Chocolate Chip Cookie": "$1.95",
-        "Double Chocolate Chunk Brownie": "$2.35",
-        "Pumpkin Scone (Limited Time)": "$2.95",
-        "Pumpkin Cream Cheese Muffin (Limited Time)": "$2.95",
-        "Washington Apple Pound Cake (Limited Time)": "$2.95"
-    },
-    "All-Day Breakfast": {
-        "Hearty Blueberry Oatmeal": "$3.45",
-        "Bacon &amp; Gouda Breakfast Sandwich": "$3.75",
-        "Sausage &amp; Cheddar Breakfast Sandwich": "$3.45",
-        "Spinach &amp; Feta Breakfast Wrap": "$3.75",
-        "Reduced-Fat Turkey Bacon Breakfast Sandwich": "$3.75",
-        "Slow-Roasted Ham &amp; Swiss on Croissant Bun": "$4.75",
-        "Double-Smoked Bacon, Cheddar &amp; Egg on Croissant Bun (Limited Time)": "$4.75"
-    },
-    "Lunch & Anytime Snacks": {
-        "Protein Bistro Box": "$5.25",
-        "Cheese &amp; Fruit Bistro Box": "$4.95",
-        "Omega-3 Bistro Box": "$5.95",
-        "PB&amp;J on Wheat Bistro Box": "$5.25",
-        "Turkey Rustico Panini": "$6.45",
-        "Turkey Pesto Panini": "$6.45",
-        "Ham &amp; Swiss Panini": "$5.95",
-        "Chicken Santa Fe Flatbread": "$5.95",
-        "Chicken BLT Salad Deli Sandwich": "$5.95",
-        "Roasted Tomato &amp; Mozzarella Panini": "$5.55",
-        "Chicken Artichoke Panini (Limited Time)": "$6.45",
-        "Old-Fashioned Grilled Cheese": "$5.25",
-        "Edamame Hummus Wrap (Limited Time)": "$5.95",
-        "Thai-Style Peanut Chicken Wrap (Limited Time)": "$5.95",
-        "Salted Caramel or Birthday Cake Pop": "$1.95",
-        "Salted Caramel or Birthday Cake Pop(2 Pc.)": "$3.50"
     }
 }

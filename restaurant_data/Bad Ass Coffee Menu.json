@@ -1,0 +1,41 @@
+{
+    "Name": "Bad Ass Coffee Menu",
+    "Acai The Superfruit": {
+        "Acai Roots Smoothie": "$7.99",
+        "Acai Roots Bowl": "$5.99"
+    },
+    "Coffee": {
+        "Brewed Coffee Hawaiian Blend": "$1.86+",
+        "100% Kona Coffee": "$4.32+",
+        "Americano": "$2.33+",
+        "Cafe Latte": "$3.04+",
+        "Cappuccino": "$3.04+",
+        "Eye Opener": "$2.93+",
+        "Espresso": "$1.49+",
+        "Slammer": "$2.66+"
+    },
+    "Signature Flavored Lattes": {
+        "Bad Ass Mocha": "$3.57+",
+        "Almond Mocha": "$3.57+",
+        "Caramel Vanilla Latte": "$3.57+",
+        "Haole's Menehune": "$3.57+",
+        "Jitter Juice": "$3.57+",
+        "Kreme de Kona": "$3.57+",
+        "Monkey Mocha": "$3.57+",
+        "Snickerlicious": "$3.57+"
+    },
+    "Cold Beverages": {
+        "Frozen Blended Signature Drinks": "$5.17+",
+        "Granita-Coffee Kooler": "$4.64+",
+        "Frozen Blended Chai": "$4.64+",
+        "Fruit Smoothie": "$5.00+",
+        "Italian Soda": "$3.57+",
+        "Cremosa": "$3.57+"
+    },
+    "Beverages": {
+        "Spiced Chai Latte": "$3.57+",
+        "Hot Chocolate": "$3.04+",
+        "Steamers": "$3.04+",
+        "Hot Tea": "$2.35"
+    }
+}

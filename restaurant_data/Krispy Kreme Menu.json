@@ -1,0 +1,50 @@
+{
+    "Name": "Krispy Kreme Menu",
+    "Hot Beverages": {
+        "Coffee Blends (Smooth, Rich, or Decaf)(Small)": "$1.59",
+        "Coffee Blends (Smooth, Rich, or Decaf)(Medium)": "$1.79",
+        "Coffee Blends (Smooth, Rich, or Decaf)(Large)": "$1.89",
+        "Brew Box(96 oz.)": "$11.99",
+        "Bagged Coffee(12 oz.)": "$7.99",
+        "Latte or Cappuccino(Small)": "$2.49",
+        "Latte or Cappuccino(Medium)": "$2.99",
+        "Latte or Cappuccino(Large)": "$3.49",
+        "Hot Chocolate(Small)": "$2.39",
+        "Hot Chocolate(Medium)": "$2.69",
+        "Hot Chocolate(Large)": "$2.99",
+        "Hot Tea(Small)": "$1.59",
+        "Hot Tea(Medium)": "$1.79",
+        "Hot Tea(Large)": "$1.99"
+    },
+    "Espresso": {
+        "Mocha, Caramel Latte, Vanilla Latte, or Hazelnut Latte(Small)": "$2.99",
+        "Mocha, Caramel Latte, Vanilla Latte, or Hazelnut Latte(Medium)": "$3.49",
+        "Mocha, Caramel Latte, Vanilla Latte, or Hazelnut Latte(Large)": "$3.99"
+    },
+    "Chillers": {
+        "Fruity Flavors - Lemonade or Strawberry (Limited Time)(Small)": "$2.79",
+        "Fruity Flavors - Lemonade or Strawberry (Limited Time)(Medium)": "$3.29",
+        "Fruity Flavors - Lemonade or Strawberry (Limited Time)(Large)": "$3.79"
+    },
+    "Cold Beverages": {
+        "Soft Drink(Small)": "$1.39",
+        "Soft Drink(Medium)": "$1.59",
+        "Soft Drink(Large)": "$1.79",
+        "Milk(Small)": "$1.29",
+        "Milk(Large)": "$1.79",
+        "Bottled Soda": "$1.79",
+        "Bottled Water": "$1.79",
+        "Bottled Juice": "$1.79"
+    },
+    "Iced Beverages": {
+        "Iced Tea(Small)": "$1.39",
+        "Iced Tea(Medium)": "$1.59",
+        "Iced Tea(Large)": "$1.79",
+        "Iced Coffee(Small)": "$1.89",
+        "Iced Coffee(Large)": "$2.19",
+        "Bottled Iced Coffee": "$2.49",
+        "Frozen Lattees - Mocha, Caramel Latte or Vanilla Latte (Limited Time)(Small)": "$2.99",
+        "Frozen Lattees - Mocha, Caramel Latte or Vanilla Latte (Limited Time)(Medium)": "$3.49",
+        "Frozen Lattees - Mocha, Caramel Latte or Vanilla Latte (Limited Time)(Large)": "$3.99"
+    }
+}

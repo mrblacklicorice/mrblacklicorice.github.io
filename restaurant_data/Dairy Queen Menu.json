@@ -1,0 +1,59 @@
+{
+    "Name": "Dairy Queen Menu",
+    "Blizzard Treats": {
+        "Blizzard Treat(Mini)": "$2.89",
+        "Blizzard Treat(Small)": "$3.69",
+        "Blizzard Treat(Medium)": "$4.09",
+        "Blizzard Treat(Large)": "$4.59",
+        "Blizzard Treat(Cone)": "$3.89",
+        "Add Extra Stuff": "$0.69"
+    },
+    "Classic Treats": {
+        "Peanut Buster Parfait": "$4.29",
+        "Banana Split": "$4.29",
+        "Cone(Small)": "$1.99",
+        "Cone(Medium)": "$2.39",
+        "Cone(Large)": "$2.69",
+        "Dipped Cone(Small)": "$2.39",
+        "Dipped Cone(Medium)": "$2.79",
+        "Dipped Cone(Large)": "$3.19",
+        "Waffle Cone (Plain)": "$3.89",
+        "Waffle Cone (Chocolate Coated)": "$3.89"
+    },
+    "Sundaes": {
+        "Sundae(Small)": "$2.69",
+        "Sundae(Medium)": "$2.99",
+        "Sundae(Large)": "$3.29"
+    },
+    "Shakes & Malts": {
+        "Shake(Mini)": "$2.99",
+        "Shake(Small)": "$3.29",
+        "Shake(Medium)": "$3.89",
+        "Shake(Large)": "$4.59"
+    },
+    "MooLatte": {
+        "MooLatte(Small)": "$3.39",
+        "MooLatte(Medium)": "$3.89",
+        "MooLatte(Large)": "$4.49"
+    },
+    "Arctic Rush": {
+        "Arctic Rush(Small)": "$1.59",
+        "Arctic Rush(Medium)": "$1.89",
+        "Arctic Rush(Large)": "$2.19"
+    },
+    "Soft Drinks": {
+        "Soft Drink(Small)": "$1.59",
+        "Soft Drink(Medium)": "$1.79",
+        "Soft Drink(Large)": "$1.99"
+    },
+    "Orange Julius": {
+        "Premium Fruit Smoothie(Small)": "$2.99",
+        "Premium Fruit Smoothie(Medium)": "$3.49",
+        "Premium Fruit Smoothie(Large)": "$3.99",
+        "Julius Original(Small)": "$2.99",
+        "Julius Original(Medium)": "$3.29",
+        "Julius Original(Large)": "$3.79",
+        "Add a Boost (Protein)": "$0.99",
+        "Add a Boost (Fresh Banana)": "$0.99"
+    }
+}
