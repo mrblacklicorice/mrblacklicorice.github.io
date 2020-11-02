@@ -34,10 +34,12 @@ function delay(time) {
         }
         console.log("Closing browser now");
         await browser.close();
-        fs.writeFile('./restaurant_data/data.json', JSON.stringify(resultsFromLinks), function (err) {
-            if (err) throw err;
-            console.log('File is created successfully.');
-        });
+        for (let i = 0; i < resultsFromLinks.length; i++) {
+            fs.writeFile(`./restaurant_data/${resultsFromLinks[i].Name}.json`, JSON.stringify(resultsFromLinks[i]), function (err) {
+                if (err) throw err;
+                console.log('File is created successfully.');
+            });
+        }
     } catch (err) {
         console.log("Exception " + err);
     }
