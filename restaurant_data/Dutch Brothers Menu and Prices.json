@@ -1,0 +1,68 @@
+{
+    "Name": "Dutch Brothers Menu and Prices",
+    "Dutch Classics": {
+        "Kicker(Small)": "$3.00",
+        "Kicker(Medium)": "$3.50",
+        "Kicker(Large)": "$4.50",
+        "Annihilator(Small)": "$3.00",
+        "Annihilator(Medium)": "$3.50",
+        "Annihilator(Large)": "$4.50",
+        "Caramelizer(Small)": "$3.00",
+        "Caramelizer(Medium)": "$3.50",
+        "Caramelizer(Large)": "$4.50",
+        "Cocomo(Small)": "$3.00",
+        "Cocomo(Medium)": "$3.50",
+        "Cocomo(Large)": "$4.50",
+        "White Chocolate Mocha(Small)": "$3.00",
+        "White Chocolate Mocha(Medium)": "$3.50",
+        "White Chocolate Mocha(Large)": "$4.50",
+        "Chai Tea(Small)": "$3.00",
+        "Chai Tea(Medium)": "$3.50",
+        "Chai Tea(Large)": "$4.50",
+        "911(Small)": "$3.00",
+        "911(Medium)": "$3.50",
+        "911(Large)": "$4.50",
+        "Double Torture(Small)": "$3.00",
+        "Double Torture(Medium)": "$3.50",
+        "Double Torture(Large)": "$4.50",
+        "Extra Shot": "$0.50"
+    },
+    "Blended": {
+        "Dutch Freeze(16 oz.)": "$3.50",
+        "Dutch Freeze(24 oz.)": "$4.50",
+        "Dutch Freeze(32 oz.)": "$6.50",
+        "Dutch Frost(16 oz.)": "$3.50",
+        "Dutch Frost(24 oz.)": "$4.50",
+        "Dutch Frost(32 oz.)": "$6.50"
+    },
+    "Blue Rebel Energy Drink": {
+        "Blue Rebel(16 oz.)": "$3.50",
+        "Blue Rebel(24 oz.)": "$4.50",
+        "Blue Rebel(32 oz.)": "$6.50"
+    },
+    "Infused Teas & Sodas": {
+        "Dutch Tea(Small)": "$1.75",
+        "Dutch Tea(Medium)": "$2.25",
+        "Dutch Tea(Large)": "$3.00",
+        "Dutch Soda(Small)": "$1.75",
+        "Dutch Soda(Medium)": "$2.25",
+        "Dutch Soda(Large)": "$3.00"
+    },
+    "Private Reserve": {
+        "Dutch Cocoa(Small)": "$2.00",
+        "Dutch Cocoa(Medium)": "$2.50",
+        "Dutch Cocoa(Large)": "$3.00",
+        "Americano(Small)": "$1.50",
+        "Americano(Medium)": "$2.00",
+        "Americano(Large)": "$3.00",
+        "Dutch Bros Cups (Single Serve)(12 Pc.)": "$10.00"
+    },
+    "Jr. Mafia": {
+        "Mini Frost": "$2.25",
+        "Mini Smoothie": "$2.25",
+        "Not-so-Hot": "$1.50"
+    },
+    "Alternative Options": {
+        "Add Almond, Soy or Coconut Milk": "$0.50"
+    }
+}

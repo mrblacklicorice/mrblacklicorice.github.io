@@ -1,0 +1,63 @@
+{
+    "Name": "Atomic Coffee",
+    "Signature Drinks": {
+        "Lavender Latte(12oz)": "$5.00",
+        "Cardamom Rose Latte(12oz)": "$5.00",
+        "Honey Vanilla Latte(12oz)": "$5.00",
+        "Seasonal* Latte(12oz)": "$5.00",
+        "Mexican Mocha(12oz)": "$5.00"
+    },
+    "Nitro Drinks": {
+        "Nitro Cold Brew(16oz)": "$4.50",
+        "Nitro Cold Brew Float(16oz)": "$5.50",
+        "Honey Bear(16oz)": "$5.50",
+        "Grizzly Bear(16oz)": "$5.50",
+        "Polar Bear(16oz)": "$5.50"
+    },
+    "Brewed Coffee": {
+        "Brewed Coffee(12oz)": "$2.50",
+        "Brewed Coffee(16oz)": "$2.75",
+        "Café Au Lait(Any size)": "$3.75",
+        "Handpour(9oz)": "$4.50"
+    },
+    "Espresso Drinks": {
+        "Double Espresso(2oz)": "$2.75",
+        "Affogato(2oz)": "$3.75",
+        "Americano": "$2.75",
+        "Macchiato(3oz)": "$3.25",
+        "Cappuccino(5oz)": "$3.50",
+        "Latte(8oz)": "$3.75",
+        "Latte(12oz)": "$4.00",
+        "Latte(16oz)": "$4.25",
+        "Mocha / Dirty Chai(8oz)": "$4.25",
+        "Mocha / Dirty Chai(12oz)": "$4.50",
+        "Mocha / Dirty Chai(16oz)": "$4.75"
+    },
+    "Tea & More": {
+        "Hot Tea(Any size)": "$2.50",
+        "Iced Tea(16oz)": "$2.50",
+        "Arnold Palmer(16oz)": "$3.00",
+        "Chai / Hot Chocolate(8oz)": "$3.75",
+        "Chai / Hot Chocolate(12oz)": "$4.00",
+        "Chai / Hot Chocolate(16oz)": "$4.25"
+    },
+    "From the Cooler": {
+        "San Pellegrino(16.9oz)": "$3.75",
+        "Water(16.9oz)": "$2.75",
+        "Boylan Soda(12oz)": "$3.00",
+        "Red Bull(8.4oz)": "$3.75"
+    },
+    "Raw Juices and Smoothies": {
+        "Orange or Grapefruit Juice(10oz)": "$4.50",
+        "Lemonade(16oz)": "$3.00",
+        "Ruby Delight(16oz)": "$7.25",
+        "Seafoam(16oz)": "$7.25",
+        "Berry Bomb(16oz)": "$7.50",
+        "Orange Brutus(16oz)": "$6.00",
+        "Tropic Thunder(16oz)": "$7.75",
+        "Berry Brotein(16oz)": "$8.00",
+        "Miami Vice(16oz)": "$7.25",
+        "Peachy Keen(16oz)": "$7.50",
+        "Detox(16oz)": "$7.25"
+    }
+}

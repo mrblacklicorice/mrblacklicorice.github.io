@@ -10,16 +10,7 @@ function delay(time) {
 (async () => {
     var browser, page;
     var listOfLinks = [
-        "https://www.menuwithprice.com/menu/dark-matter-coffee/",
-        "https://www.menuwithprice.com/menu/starbucks/illinois/chicago/122629/",
-        "https://www.menuwithprice.com/menu/jamba-juice/illinois/chicago/62813/",
-        "https://www.menuwithprice.com/menu/mcdonalds/",
-        "https://www.menuwithprice.com/menu/dunkin-donuts/",
-        "https://www.menuwithprice.com/menu/krispy-kreme/",
-        "https://www.menuwithprice.com/menu/bad-ass-coffee/",
-        "https://www.menuwithprice.com/menu/biggby-coffee/",
-        "https://www.menuwithprice.com/menu/dairy-queen/",
-        "https://www.menuwithprice.com/menu/europa-cafe/",
+        "https://www.menuswithprice.com/dutch-brothers-menu/",
     ];
     var resultsFromLinks = new Array(listOfLinks.length);
 
@@ -113,6 +104,57 @@ async function scrape_data(link, page) {
                     data_arr[current][temp_arr[0]] = temp_arr[1];
                 } else {
                     data_arr[current][temp_arr[0] + `(${temp_arr[2]})`] = temp_arr[1];
+                }
+            }
+        }
+        return data_arr;
+    });
+    if (data.length == 0) data = await page.evaluate(() => {
+        var arr = Array.prototype.slice.call(document.querySelectorAll('div[class="section two-column"]'));
+        if (arr.length == 0) return [];
+        let data_arr = {};
+        data_arr.Name = document.querySelector('h1').innerText;
+        var current = "";
+        var arr_subsection;
+        var temp = "";
+        var arr_subsection_options;
+        var options_arr;
+        for (let i = 0; i < arr.length; i++) {
+            current = arr[i].querySelector("a").name;
+            data_arr[current] = {};
+            arr_subsection = Array.prototype.slice.call(arr[i].querySelectorAll('div[class="items"] > div[class="item left"]'));
+            for (let j = 0; j < arr_subsection.length; j++) {
+                temp = arr_subsection[j].querySelector("h4[class='item-title']").innerText;
+                arr_subsection_options = Array.prototype.slice.call(arr_subsection[j].querySelectorAll("li"));
+                if (arr_subsection_options.length == 0) {
+                    data_arr[current][temp] = arr_subsection[j].querySelector("span[class='price']").innerText
+                } else {
+                    for (let k = 0; k < arr_subsection_options.length; k++) {
+                        options_arr = (arr_subsection_options[k].innerText).split("\n");
+                        data_arr[current][`${temp}(${options_arr[0]})`] = options_arr[1];
+                    }
+                }
+            }
+        }
+        return data_arr;
+    });
+    if (data.length == 0) data = await page.evaluate(() => {
+        var headers = Array.prototype.slice.call(document.querySelectorAll('table > thead'));
+        var bodies = Array.prototype.slice.call(document.querySelectorAll('table > tbody'));
+        if (headers.length == 0) return [];
+        let data_arr = {};
+        var options;
+        var temp;
+        data_arr.Name = document.querySelector('h1').innerText;
+        for (let i = 0; i < headers.length; i++) {
+            data_arr[headers[i].innerText.trim()] = {};
+            options = Array.prototype.slice.call(bodies[i].children);
+            for (let j = 0; j < options.length; j++) {
+                temp = (options[j].innerText).split("\n");
+                if (temp.length == 3) {
+                    data_arr[headers[i].innerText.trim()][`${temp[0]}(${temp[2]})`] = temp[1];
+                } else if (temp.length == 2) {
+                    data_arr[headers[i].innerText.trim()][temp[0]] = temp[1];
                 }
             }
         }
