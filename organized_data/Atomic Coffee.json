@@ -1,0 +1,161 @@
+[
+    {
+        "Name": "Lavender Latte",
+        "Latte(12oz)": "$5.00"
+    },
+    {
+        "Name": "Cardamom Rose Latte",
+        "Latte(12oz)": "$5.00"
+    },
+    {
+        "Name": "Honey Vanilla Latte",
+        "Latte(12oz)": "$5.00"
+    },
+    {
+        "Name": "Seasonal* Latte",
+        "Latte(12oz)": "$5.00"
+    },
+    {
+        "Name": "Mexican Mocha",
+        "Mocha(12oz)": "$5.00"
+    },
+    {
+        "Name": "Nitro Cold Brew",
+        "Etc(16oz)": "$4.50"
+    },
+    {
+        "Name": "Nitro Cold Brew Float",
+        "Etc(16oz)": "$5.50"
+    },
+    {
+        "Name": "Honey Bear",
+        "Etc(16oz)": "$5.50"
+    },
+    {
+        "Name": "Grizzly Bear",
+        "Etc(16oz)": "$5.50"
+    },
+    {
+        "Name": "Polar Bear",
+        "Etc(16oz)": "$5.50"
+    },
+    {
+        "Name": "Brewed Coffee",
+        "Coffee(12oz)": "$2.50",
+        "Coffee(16oz)": "$2.75"
+    },
+    {
+        "Name": "Café Au Lait",
+        "Etc(Any size)": "$3.75"
+    },
+    {
+        "Name": "Handpour",
+        "Etc(9oz)": "$4.50"
+    },
+    {
+        "Name": "Double Espresso",
+        "Etc(2oz)": "$2.75"
+    },
+    {
+        "Name": "Affogato",
+        "Etc(2oz)": "$3.75"
+    },
+    {
+        "Name": "Macchiato",
+        "Etc(3oz)": "$3.25"
+    },
+    {
+        "Name": "Cappuccino",
+        "Etc(5oz)": "$3.50"
+    },
+    {
+        "Name": "Latte",
+        "Etc(12oz)": "$4.00",
+        "Etc(16oz)": "$4.25",
+        "Etc(8oz)": "$3.75"
+    },
+    {
+        "Name": "Mocha / Dirty Chai",
+        "Etc(12oz)": "$4.50",
+        "Etc(16oz)": "$4.75",
+        "Etc(8oz)": "$4.25"
+    },
+    {
+        "Name": "Hot Tea",
+        "Etc(Any size)": "$2.50"
+    },
+    {
+        "Name": "Iced Tea",
+        "Etc(16oz)": "$2.50"
+    },
+    {
+        "Name": "Arnold Palmer",
+        "Etc(16oz)": "$3.00"
+    },
+    {
+        "Name": "Chai / Hot Chocolate",
+        "Etc(12oz)": "$4.00",
+        "Etc(16oz)": "$4.25",
+        "Etc(8oz)": "$3.75"
+    },
+    {
+        "Name": "San Pellegrino",
+        "Etc(16.9oz)": "$3.75"
+    },
+    {
+        "Name": "Water",
+        "Etc(16.9oz)": "$2.75"
+    },
+    {
+        "Name": "Boylan Soda",
+        "Etc(12oz)": "$3.00"
+    },
+    {
+        "Name": "Red Bull",
+        "Etc(8.4oz)": "$3.75"
+    },
+    {
+        "Name": "Orange or Grapefruit Juice",
+        "Etc(10oz)": "$4.50"
+    },
+    {
+        "Name": "Lemonade",
+        "Etc(16oz)": "$3.00"
+    },
+    {
+        "Name": "Ruby Delight",
+        "Etc(16oz)": "$7.25"
+    },
+    {
+        "Name": "Seafoam",
+        "Etc(16oz)": "$7.25"
+    },
+    {
+        "Name": "Berry Bomb",
+        "Etc(16oz)": "$7.50"
+    },
+    {
+        "Name": "Orange Brutus",
+        "Etc(16oz)": "$6.00"
+    },
+    {
+        "Name": "Tropic Thunder",
+        "Etc(16oz)": "$7.75"
+    },
+    {
+        "Name": "Berry Brotein",
+        "Etc(16oz)": "$8.00"
+    },
+    {
+        "Name": "Miami Vice",
+        "Etc(16oz)": "$7.25"
+    },
+    {
+        "Name": "Peachy Keen",
+        "Etc(16oz)": "$7.50"
+    },
+    {
+        "Name": "Detox",
+        "Etc(16oz)": "$7.25"
+    }
+]

@@ -10,7 +10,18 @@ function delay(time) {
 (async () => {
     var browser, page;
     var listOfLinks = [
-        "https://www.menuswithprice.com/dutch-brothers-menu/",
+        // "https://www.menuwithprice.com/menu/dark-matter-coffee/",
+        // "https://www.menuwithprice.com/menu/starbucks/illinois/chicago/122629/",
+        // "https://www.menuwithprice.com/menu/jamba-juice/illinois/chicago/62813/",
+        // "https://www.menuwithprice.com/menu/mcdonalds/",
+        // "https://www.menuwithprice.com/menu/dunkin-donuts/",
+        // "https://www.menuwithprice.com/menu/krispy-kreme/",
+        // "https://www.menuwithprice.com/menu/bad-ass-coffee/",
+        // "https://www.menuwithprice.com/menu/biggby-coffee/",
+        // "https://www.menuwithprice.com/menu/dairy-queen/",
+        // "https://www.menuswithprice.com/java-city-menu/overland-park/6705373/",
+        // "https://www.menuswithprice.com/dutch-brothers-menu/",
+        // "http://places.singleplatform.com/atomic-coffee-3/menu"
     ];
     var resultsFromLinks = new Array(listOfLinks.length);
 
@@ -77,7 +88,7 @@ async function scrape_data(link, page) {
                 if (temp_arr[2] == "") {
                     data_arr[current][temp_arr[0]] = temp_arr[1];
                 } else {
-                    data_arr[current][temp_arr[0] + `(${temp_arr[2]})`] = temp_arr[1];
+                    data_arr[current][temp_arr[0] + `{${temp_arr[2]}}`] = temp_arr[1];
                 }
             }
         }
@@ -103,7 +114,7 @@ async function scrape_data(link, page) {
                 if (temp_arr[2] == "") {
                     data_arr[current][temp_arr[0]] = temp_arr[1];
                 } else {
-                    data_arr[current][temp_arr[0] + `(${temp_arr[2]})`] = temp_arr[1];
+                    data_arr[current][temp_arr[0] + `{${temp_arr[2]}}`] = temp_arr[1];
                 }
             }
         }
@@ -131,7 +142,7 @@ async function scrape_data(link, page) {
                 } else {
                     for (let k = 0; k < arr_subsection_options.length; k++) {
                         options_arr = (arr_subsection_options[k].innerText).split("\n");
-                        data_arr[current][`${temp}(${options_arr[0]})`] = options_arr[1];
+                        data_arr[current][`${temp}{${options_arr[0]}}`] = options_arr[1];
                     }
                 }
             }
@@ -152,7 +163,7 @@ async function scrape_data(link, page) {
             for (let j = 0; j < options.length; j++) {
                 temp = (options[j].innerText).split("\n");
                 if (temp.length == 3) {
-                    data_arr[headers[i].innerText.trim()][`${temp[0]}(${temp[2]})`] = temp[1];
+                    data_arr[headers[i].innerText.trim()][`${temp[0]}{${temp[2]}}`] = temp[1];
                 } else if (temp.length == 2) {
                     data_arr[headers[i].innerText.trim()][temp[0]] = temp[1];
                 }

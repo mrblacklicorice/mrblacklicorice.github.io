@@ -1,0 +1,31 @@
+{
+    "Name": "Java City Menu Prices at 6220 Sprint Pkwy, Overland Park, KS 66251",
+    "Beverages": {
+        "Fountain Drink": "$1.75 - $2.15",
+        "Milk": "$1.40 - $1.80"
+    },
+    "Espresso Bar": {
+        "Coffee of the Day": "$1.60 - $1.95",
+        "Espresso": "$1.75 - $2.75",
+        "Espresso with Cream": "$2.10 - $2.95",
+        "Americano": "$2.10 - $2.95",
+        "Jumpstart": "$2.25 - $3.10",
+        "Cafe Au Lait": "$2.25 - $2.85",
+        "Cappuccino": "$2.70 - $3.75",
+        "Cafe Latte": "$2.75 - $3.75",
+        "Caramel Latte": "$3.20 - $4.25",
+        "Cinnamon Roll Latte": "$3.25 - $4.30",
+        "Caramel Macchiato": "$3.25 - $4.30",
+        "Cafe Mocha": "$3.35 - $4.20",
+        "White Chocolate Mocha": "$3.50 - $4.40",
+        "Peppermint Mocha": "$3.25 - $4.30",
+        "Mayan Mocha": "$3.30 - $4.15",
+        "Hot Dark Chocolate": "$2.45 - $3.00",
+        "Hot White Chocolate": "$2.60 - $3.10",
+        "Flavored Steamed Milk": "$2.40 - $3.00",
+        "Chai Latte": "$3.00 - $3.95",
+        "Green Tea Latte": "$3.05 - $3.95",
+        "Hot Tea": "$1.45 - $1.95",
+        "Smoothie": "$4.00"
+    }
+}

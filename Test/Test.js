@@ -1,5 +1,3 @@
-const { random } = require("lodash");
-
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -433,3 +431,15 @@ function random(no_sets, max, min, percentage) {
   }
   return counter;
 }
+
+var judgeCircle = function (moves) {
+  var x = 0;
+  var y = 0;
+  for (const move of moves) {
+    if (move == "U") y++;
+    else if (move == "D") y--;
+    else if (move == "R") x++;
+    else if (move == "L") x--;
+  }
+  return (x == 0 && y == 0);
+};
