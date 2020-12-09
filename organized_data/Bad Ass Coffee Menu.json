@@ -1,1 +1,106 @@
-[]
+[
+    {
+        "Name": "Brewed Coffee Hawaiian Blend",
+        "Coffee(Any Size)": "$1.86+"
+    },
+    {
+        "Name": "100% Kona Coffee",
+        "Coffee(Any Size)": "$4.32+"
+    },
+    {
+        "Name": "Americano",
+        "Etc(Any Size)": "$2.33+"
+    },
+    {
+        "Name": "Cafe Latte",
+        "Latte(Any Size)": "$3.04+"
+    },
+    {
+        "Name": "Cappuccino",
+        "Etc(Any Size)": "$3.04+"
+    },
+    {
+        "Name": "Eye Opener",
+        "Etc(Any Size)": "$2.93+"
+    },
+    {
+        "Name": "Espresso",
+        "Etc(Any Size)": "$1.49+"
+    },
+    {
+        "Name": "Slammer",
+        "Etc(Any Size)": "$2.66+"
+    },
+    {
+        "Name": "Bad Ass Mocha",
+        "Mocha(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Almond Mocha",
+        "Mocha(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Caramel Vanilla Latte",
+        "Latte(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Haole's Menehune",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Jitter Juice",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Kreme de Kona",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Monkey Mocha",
+        "Mocha(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Snickerlicious",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Frozen Blended Signature Drinks",
+        "Etc(Any Size)": "$5.17+"
+    },
+    {
+        "Name": "Granita-Coffee Kooler",
+        "Coffee(Any Size)": "$4.64+"
+    },
+    {
+        "Name": "Frozen Blended Chai",
+        "Etc(Any Size)": "$4.64+"
+    },
+    {
+        "Name": "Fruit Smoothie",
+        "Etc(Any Size)": "$5.00+"
+    },
+    {
+        "Name": "Italian Soda",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Cremosa",
+        "Etc(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Spiced Chai Latte",
+        "Latte(Any Size)": "$3.57+"
+    },
+    {
+        "Name": "Hot Chocolate",
+        "Etc(Any Size)": "$3.04+"
+    },
+    {
+        "Name": "Steamers",
+        "Etc(Any Size)": "$3.04+"
+    },
+    {
+        "Name": "Hot Tea",
+        "Etc(Any Size)": "$2.35"
+    }
+]

@@ -1,1 +1,98 @@
-[]
+[
+    {
+        "Name": "Fountain Drink",
+        "Etc(Any Size)": "$1.75 - $2.15"
+    },
+    {
+        "Name": "Milk",
+        "Etc(Any Size)": "$1.40 - $1.80"
+    },
+    {
+        "Name": "Coffee of the Day",
+        "Coffee(Any Size)": "$1.60 - $1.95"
+    },
+    {
+        "Name": "Espresso",
+        "Etc(Any Size)": "$1.75 - $2.75"
+    },
+    {
+        "Name": "Espresso with Cream",
+        "Etc(Any Size)": "$2.10 - $2.95"
+    },
+    {
+        "Name": "Americano",
+        "Etc(Any Size)": "$2.10 - $2.95"
+    },
+    {
+        "Name": "Jumpstart",
+        "Etc(Any Size)": "$2.25 - $3.10"
+    },
+    {
+        "Name": "Cafe Au Lait",
+        "Etc(Any Size)": "$2.25 - $2.85"
+    },
+    {
+        "Name": "Cappuccino",
+        "Etc(Any Size)": "$2.70 - $3.75"
+    },
+    {
+        "Name": "Cafe Latte",
+        "Latte(Any Size)": "$2.75 - $3.75"
+    },
+    {
+        "Name": "Caramel Latte",
+        "Latte(Any Size)": "$3.20 - $4.25"
+    },
+    {
+        "Name": "Cinnamon Roll Latte",
+        "Latte(Any Size)": "$3.25 - $4.30"
+    },
+    {
+        "Name": "Caramel Macchiato",
+        "Etc(Any Size)": "$3.25 - $4.30"
+    },
+    {
+        "Name": "Cafe Mocha",
+        "Mocha(Any Size)": "$3.35 - $4.20"
+    },
+    {
+        "Name": "White Chocolate Mocha",
+        "Mocha(Any Size)": "$3.50 - $4.40"
+    },
+    {
+        "Name": "Peppermint Mocha",
+        "Mocha(Any Size)": "$3.25 - $4.30"
+    },
+    {
+        "Name": "Mayan Mocha",
+        "Mocha(Any Size)": "$3.30 - $4.15"
+    },
+    {
+        "Name": "Hot Dark Chocolate",
+        "Etc(Any Size)": "$2.45 - $3.00"
+    },
+    {
+        "Name": "Hot White Chocolate",
+        "Etc(Any Size)": "$2.60 - $3.10"
+    },
+    {
+        "Name": "Flavored Steamed Milk",
+        "Etc(Any Size)": "$2.40 - $3.00"
+    },
+    {
+        "Name": "Chai Latte",
+        "Latte(Any Size)": "$3.00 - $3.95"
+    },
+    {
+        "Name": "Green Tea Latte",
+        "Latte(Any Size)": "$3.05 - $3.95"
+    },
+    {
+        "Name": "Hot Tea",
+        "Etc(Any Size)": "$1.45 - $1.95"
+    },
+    {
+        "Name": "Smoothie",
+        "Etc(Any Size)": "$4.00"
+    }
+]

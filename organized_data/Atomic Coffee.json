@@ -61,6 +61,10 @@
         "Etc(2oz)": "$3.75"
     },
     {
+        "Name": "Americano",
+        "Etc(Any Size)": "$2.75"
+    },
+    {
         "Name": "Macchiato",
         "Etc(3oz)": "$3.25"
     },
@@ -70,15 +74,15 @@
     },
     {
         "Name": "Latte",
-        "Etc(12oz)": "$4.00",
-        "Etc(16oz)": "$4.25",
-        "Etc(8oz)": "$3.75"
+        "Latte(12oz)": "$4.00",
+        "Latte(16oz)": "$4.25",
+        "Latte(8oz)": "$3.75"
     },
     {
         "Name": "Mocha / Dirty Chai",
-        "Etc(12oz)": "$4.50",
-        "Etc(16oz)": "$4.75",
-        "Etc(8oz)": "$4.25"
+        "Mocha(12oz)": "$4.50",
+        "Mocha(16oz)": "$4.75",
+        "Mocha(8oz)": "$4.25"
     },
     {
         "Name": "Hot Tea",

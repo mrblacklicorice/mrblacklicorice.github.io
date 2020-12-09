@@ -10,18 +10,7 @@ function delay(time) {
 (async () => {
     var browser, page;
     var listOfLinks = [
-        // "https://www.menuwithprice.com/menu/dark-matter-coffee/",
-        // "https://www.menuwithprice.com/menu/starbucks/illinois/chicago/122629/",
-        // "https://www.menuwithprice.com/menu/jamba-juice/illinois/chicago/62813/",
-        // "https://www.menuwithprice.com/menu/mcdonalds/",
-        // "https://www.menuwithprice.com/menu/dunkin-donuts/",
-        // "https://www.menuwithprice.com/menu/krispy-kreme/",
-        // "https://www.menuwithprice.com/menu/bad-ass-coffee/",
-        // "https://www.menuwithprice.com/menu/biggby-coffee/",
-        // "https://www.menuwithprice.com/menu/dairy-queen/",
-        // "https://www.menuswithprice.com/java-city-menu/overland-park/6705373/",
-        // "https://www.menuswithprice.com/dutch-brothers-menu/",
-        // "http://places.singleplatform.com/atomic-coffee-3/menu"
+        "https://www.fastfoodmenuprices.com/dutch-bros-prices/"
     ];
     var resultsFromLinks = new Array(listOfLinks.length);
 

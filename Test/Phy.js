@@ -147,9 +147,10 @@ function kinematic_equations(input) {
 }
 
 kinematic_equations({
-    Vf: 'y', // m/s //
+    Vf: 'x', // m/s //
     Vi: 0, // m/s //
-    a: 6.084,  // m/s^2 //
-    x: 258, // m //
-    t: 'x'// s //
+    a: 20,  // m/s^2 //
+    x: 12, // m //
+    t: 'y'// s //
 });
+

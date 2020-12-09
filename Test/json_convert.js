@@ -18,6 +18,7 @@ dir.readFiles("./restaurant_data/",
         var cur_name = "";
         var cur_obj = {};
         var done = [""];
+        var index = -1;
         for (const item of Object.keys(data)) {
             if (item != "Name") {
                 for (const menu_item of Object.keys(data[item])) {

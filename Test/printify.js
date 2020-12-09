@@ -1,4 +1,5 @@
-const data = {}; //require document from json
+const data = require("../Printify/data.json");
+console.log(data);
 const puppeteer = require('puppeteer');
 
 function delay(time) {
@@ -7,12 +8,34 @@ function delay(time) {
     });
 }
 
+// "tags": [
+//     "Jiu Jitsu",
+//     "Brazilian Jiu Jitsu",
+//     "BJJ",
+//     "Jits",
+//     "Martial Arts",
+//     "Cool",
+//     "Modern",
+//     "Grapple",
+//     "Grappling",
+//     "Submission",
+//     "Moby Dick",
+//     "White Whale",
+//     "Hunter"
+// ]
+
+// SwiftPOD - https://printify.com/app/print-provider/39/products
+
+// Tee - https://printify.com/app/products/12/bellacanvas/unisex-jersey-short-sleeve-tee
+// Hoodie no zip - https://printify.com/app/products/77/gildan/unisex-heavy-blend-hooded-sweatshirt
+// Longsleeve Tee - https://printify.com/app/products/49/gildan/unisex-heavy-blend-crewneck-sweatshirt
+
 (async () => {
     var browser, page;
     try {
         console.log("Opening chrome browser");
         browser = await puppeteer.launch({
-            headless: false
+            headless: true
         });
         console.log("Opened chrome browser");
 
@@ -22,10 +45,8 @@ function delay(time) {
         await page.setDefaultNavigationTimeout(0);
 
         console.log("opening link...");
-        await page.goto('https://printify.com/app/editor/5fbafc7ee1f1eb7d8f1c4a7f/description');
+        await page.goto(data.link);
         console.log("opened link");
-
-        // sign-in page
 
         // Gmail
         await page.waitFor("input[type='email']");
@@ -46,22 +67,45 @@ function delay(time) {
         // Title
         await page.waitFor("input[name='name']");
         var title = await page.$("input[name='name']");
-        await title.click({ clickCount: 3 });
-        await title.type("Testing");
+        await page.focus("input[name='name']");
+
+        // for (let i = 0; i < await page.$eval("input[name='name']", el => el.value.length); i++) {
+        //     await page.keyboard.press('Backspace');
+        // }
+
+        // await title.click({ clickCount: 3 });
+        await page.keyboard.down('Control');
+        await page.keyboard.press('A');
+        await page.keyboard.up('Control');
+        await page.keyboard.press('Backspace');
+        await title.type(data.title);
 
         // Description
         await page.waitFor("iframe");
-        await page.$eval("iframe", (el) => {
+        await page.$eval("iframe", (el, data) => {
             var doc = el.contentDocument;
             if (doc.querySelector("p") != null) doc.querySelector("p").remove();
-            doc.querySelector("div").innerHTML = "TESTING THIS WORKS";
-        });
+            doc.querySelector("div").innerHTML = data.description;
+        }, data);
 
         // Tags
+        await page.waitFor("div[class='editor-tags'");
+        var curr_tags = await page.$eval("div[class='editor-tags'", (el) => {
+            var curr_tags_nodes = el.querySelectorAll("span > span");
+            var tags = [];
+            for (const item of curr_tags_nodes) tags.push(item.innerText);
+            return tags;
+        })
+
         await page.waitFor("input[name='tag']");
         var tag = await page.$("input[name='tag']");
-        await tag.type("Testing Tag")
-        await page.keyboard.press('Enter');
+        for (const tag_name of data.tags) {
+            if (!curr_tags.includes(tag_name)) {
+                await tag.type(tag_name);
+                await page.keyboard.press('Enter');
+                await delay(100);
+            }
+        }
 
         await delay(5000);
         await page.screenshot({ path: './Printify/description.png', fullPage: true });
@@ -80,7 +124,7 @@ function delay(time) {
 
         for (let i = 0; i < table.length; i++) {
             await table[i].click({ clickCount: 3 });
-            await table[i].type("100");
+            await table[i].type(data.price);
         }
 
         await delay(5000);
@@ -89,13 +133,13 @@ function delay(time) {
         await page.click("button[class='save']");
         await delay(5000);
 
-        console.log("Done with prices");
+        console.log("Done with Prices");
         // Saving
         await page.waitFor("button[class='secondary save-as-draft']");
         await page.click("button[class='secondary save-as-draft']");
 
         await delay(5000);
-
+        console.log("Done with Saving");
 
         console.log("Closing browser now");
         await browser.close();
