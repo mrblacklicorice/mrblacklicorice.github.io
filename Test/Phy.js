@@ -146,11 +146,10 @@ function kinematic_equations(input) {
     console.table(input);
 }
 
-kinematic_equations({
-    Vf: 'x', // m/s //
-    Vi: 0, // m/s //
-    a: 20,  // m/s^2 //
-    x: 12, // m //
-    t: 'y'// s //
-});
-
+// kinematic_equations({
+//     Vf: 'y', // m/s //
+//     Vi: -9, // m/s //
+//     a: 3,  // m/s^2 //
+//     x: 'x', // m //
+//     t: 10// s //
+// });

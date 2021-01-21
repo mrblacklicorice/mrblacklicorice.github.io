@@ -10,7 +10,8 @@ function delay(time) {
 (async () => {
     var browser, page;
     var listOfLinks = [
-        "https://www.fastfoodmenuprices.com/dutch-bros-prices/"
+        "https://www.google.com/"
+        // "https://www.fastfoodmenuprices.com/dutch-bros-prices/"
     ];
     var resultsFromLinks = new Array(listOfLinks.length);
 
