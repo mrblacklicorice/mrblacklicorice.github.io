@@ -443,3 +443,112 @@ var judgeCircle = function (moves) {
   }
   return (x == 0 && y == 0);
 };
+
+var lastStoneWeight = function (stones) {
+  while (stones.length > 1) {
+    stones.sort((a, b) => b - a);
+    stones.push(stones[0] - stones[1]);
+    stones.splice(0, 2);
+  }
+  if (stones.length == 1) return stones[0];
+  return 0;
+};
+
+
+var getSmallestString = function (n, k) {
+  var arr = new Array(n);
+  var inventory = 0;
+  var filling = 0;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (k > 26) {
+      arr[i] = 26;
+      k -= 26;
+    } else if (k > 0) {
+      arr[i] = k;
+      inventory = i;
+      filling = i - 1;
+      k = 0;
+    } else {
+      arr[i] = 0;
+    }
+  }
+  while (arr[0] == 0) {
+    if (arr[inventory] > 1) {
+      arr[filling]++;
+      arr[inventory]--;
+      filling--;
+    } else {
+      inventory++;
+    }
+  }
+  return arr.map(x => String.fromCharCode(x + 96)).join("");
+};
+
+var sortString = function (s) {
+  s_arr = (s.split("")).sort();
+  var value;
+  var end = "";
+  var count = 0;
+
+  while (s_arr.length != count) {
+    value = 0;
+    for (let i = 0; i < s_arr.length; i++) {
+      if (s_arr[i] != "" && (s_arr[i]).charCodeAt(0) > value) {
+        end += s_arr[i];
+        value = (s_arr[i]).charCodeAt(0);
+        s_arr[i] = "";
+        count++;
+      }
+    }
+    value = 1000;
+    for (let i = s_arr.length - 1; i >= 0; i--) {
+      if (s_arr[i] != "" && (s_arr[i]).charCodeAt(0) < value) {
+        end += s_arr[i];
+        value = (s_arr[i]).charCodeAt(0);
+        s_arr[i] = "";
+        count++;
+      }
+    }
+  }
+  return end;
+};
+
+var isToeplitzMatrix = function (matrix) {
+  for (let i = 0; i < matrix.length - 1; i++) {
+    console.log(matrix[i].slice(0, matrix[0].length));
+    if (JSON.stringify(matrix[i].slice(0, matrix[0].length - 1)) != JSON.stringify(matrix[i + 1].slice(1))) {
+      return false;
+    }
+  }
+  return true;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function (head) {
+  var x;
+  if (head == null) return false;
+  while (head.next != null && head.next != head) {
+    x = head.next;
+    head.next = head;
+    head = x;
+  }
+  return (head.next == head);
+};
+
+var singleNumber = function (nums) {
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length; i += 2) {
+    if (nums[i] != nums[i + 1]) return nums[i];
+  }
+};
