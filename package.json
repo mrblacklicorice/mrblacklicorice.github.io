@@ -552,7 +552,7 @@
       "resolved": "https://registry.npmjs.org/node-environment-flags/-/node-environment-flags-1.0.6.tgz",
       "version": "1.0.6"
     },
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "noisejs": "^2.1.0",
     "normalize-path": {
       "dev": true,
