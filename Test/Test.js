@@ -552,3 +552,59 @@ var singleNumber = function (nums) {
     if (nums[i] != nums[i + 1]) return nums[i];
   }
 };
+
+var check = function (nums) {
+  var n = true;
+  var x = 0;
+  if (nums[0] < nums[nums.length - 1]) n = false;
+  for (const y of nums) {
+    if (y < x) {
+      if (!n) return false;
+      n = false;
+    }
+    x = y;
+  }
+  return true;
+};
+
+var isMonotonic = function (A) {
+  for (let i = 1; i < A.length; i++) {
+    if ((A[0] <= A[1]) ? !(A[i - 1] <= A[i]) : !(A[i - 1] >= A[i])) return false;
+  }
+  return true;
+};
+
+
+
+
+
+// Input: accounts = [u, v]
+// Output: 6
+
+// 1st customer has wealth = 1 + 2 + 3 = 6
+// 2nd customer has wealth = 3 + 2 + 1 = 6
+// Both customers are considered the richest with a wealth of 6 each, so return 6.
+
+
+
+
+var maximumWealth = function (accounts) {
+  var wealth = [];
+  var current_sum = 0;
+  for (let i = 0; i < accounts.length; i++) {
+    current_sum = 0;
+    for (let j = 0; j < accounts[i].length; j++) {
+      current_sum += accounts[i][j];
+    }
+    wealth.push(current_sum);
+  }
+
+  var highest_wealth = 0;
+  for (let i = 0; i < wealth.length; i++) {
+    if (wealth[i] > highest_wealth) {
+      highest_wealth = wealth[i];
+    }
+  }
+
+  return highest_wealth;
+};
