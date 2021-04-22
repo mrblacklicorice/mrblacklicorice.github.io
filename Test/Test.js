@@ -574,37 +574,14 @@ var isMonotonic = function (A) {
   return true;
 };
 
-
-
-
-
-// Input: accounts = [u, v]
-// Output: 6
-
-// 1st customer has wealth = 1 + 2 + 3 = 6
-// 2nd customer has wealth = 3 + 2 + 1 = 6
-// Both customers are considered the richest with a wealth of 6 each, so return 6.
-
-
-
-
 var maximumWealth = function (accounts) {
-  var wealth = [];
   var current_sum = 0;
+  var highest_wealth = 0;
   for (let i = 0; i < accounts.length; i++) {
     current_sum = 0;
     for (let j = 0; j < accounts[i].length; j++) {
       current_sum += accounts[i][j];
     }
-    wealth.push(current_sum);
+    if (highest_wealth < current_sum) highest_wealth = current_sum;
   }
-
-  var highest_wealth = 0;
-  for (let i = 0; i < wealth.length; i++) {
-    if (wealth[i] > highest_wealth) {
-      highest_wealth = wealth[i];
-    }
-  }
-
-  return highest_wealth;
 };
