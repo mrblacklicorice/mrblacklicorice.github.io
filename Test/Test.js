@@ -1,3 +1,5 @@
+const { dotPow } = require("mathjs");
+
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -585,3 +587,67 @@ var maximumWealth = function (accounts) {
     if (highest_wealth < current_sum) highest_wealth = current_sum;
   }
 };
+
+
+
+var numSquares = function (n) {
+  if (n < 4) return n;
+
+  var min = n;
+  var sqrt = Math.floor(Math.sqrt(n));
+  var current = 0;
+  var sqr = 0;
+
+  for (let i = sqrt; i > 0; i--) {
+    sqr = i * i;
+    current = Math.floor(n / sqr) + numSquares(n % sqr);
+    if (current < min) {
+      min = current;
+    }
+  }
+
+  return min;
+};
+
+
+var square_num = function (n) {
+  var arr = [0];
+  while (arr.length <= n) {
+    var m = arr.length;
+    var squares = Number.MAX_VALUE;
+    for (var i = 1; i * i <= m; ++i) {
+      squares = min(squares, arr[m - i * i] + 1);
+    }
+    arr.push_back(squares);
+  }
+}
+
+var min = function (a, b) {
+  return (a - b > 0) ? b : a;
+}
+
+
+var nthUglyNumber = function (n) {
+  var current = 1;
+  var counter = 1;
+
+  while (counter <= n) {
+    let temp = current;
+    while (temp % 2 == 0 && temp != 1) {
+      temp /= 2;
+    }
+    while (temp % 3 == 0 && temp != 1) {
+      temp /= 3;
+    }
+    while (temp % 5 == 0 && temp != 1) {
+      temp /= 5;
+    }
+    if (temp == 1) {
+      counter++
+    }
+    current++;
+  }
+  return (current - 1);
+};
+
+console.log(nthUglyNumber(10));
