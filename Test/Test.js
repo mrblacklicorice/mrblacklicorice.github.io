@@ -650,4 +650,23 @@ var nthUglyNumber = function (n) {
   return (current - 1);
 };
 
-console.log(nthUglyNumber(10));
+var maxPower = function (s) {
+  if (s.length < 2) return s.length;
+
+  var current_score = 1;
+  var highscore = 1;
+
+  for (let i = 1; i < s.length; i++) {
+    if (s.charAt(i) == s.charAt(i - 1)) {
+      console.log(s.charAt(i));
+      current_score++;
+    }
+    else {
+      current_score = 1;
+    }
+    if (current_score > highscore) {
+      highscore = current_score;
+    }
+  }
+  return highscore;
+}
