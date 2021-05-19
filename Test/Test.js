@@ -670,3 +670,19 @@ var maxPower = function (s) {
   }
   return highscore;
 }
+
+var integerBreak = function (n) {
+  if (n < 4) {
+    return n - 1;
+  }
+
+  if (n % 3 == 2) {
+    return 3 ** ~~(n / 3) * 2;
+  } else if (n % 3 == 1) {
+    return 3 ** ~~((n / 3) - 1) * 4;
+  } else {
+    return 3 ** ~~(n / 3);
+  }
+};
+
+console.log(integerBreak(8));

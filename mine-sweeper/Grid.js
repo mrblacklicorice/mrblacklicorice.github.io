@@ -6,6 +6,7 @@ class Grid {
         this.offset = offset;
         this.mines = mines;
         this.flags = mines;
+        this.start = 0;
 
         this.matrix = ((new Array(rows)).fill(0)).map(ele => (new Array(cols)).fill(0));
         for (let r = 0; r < rows; r++) {
@@ -28,6 +29,7 @@ class Grid {
 
         this.mines = mines;
         var counter;
+        var mine_path = "";
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
@@ -75,6 +77,10 @@ class Grid {
     }
 
     left_click = (x, y) => {
+        if (this.start == 0) {
+            this.start = Date.now();
+        }
+
         var row = Math.floor((y - this.offset) / this.pixel);
         var col = Math.floor((x - this.offset) / this.pixel);
         if (row > -1 && col > -1 && row < this.matrix.length && col < this.matrix[0].length) {
@@ -92,6 +98,10 @@ class Grid {
     }
 
     right_click = (x, y) => {
+        if (this.start == 0) {
+            this.start = Date.now();
+        }
+
         var row = Math.floor((y - this.offset) / this.pixel);
         var col = Math.floor((x - this.offset) / this.pixel);
         if (row > -1 && col > -1 && row < this.matrix.length && col < this.matrix[0].length) {
@@ -120,6 +130,10 @@ class Grid {
     check_zeros = (r, c) => {
         if (r - 1 > -1 && !this.matrix[r - 1][c].dug) {
             this.matrix[r - 1][c].dug = true;
+            if (this.matrix[r - 1][c].flag) {
+                this.matrix[r - 1][c].flag = false;
+                this.flags++;
+            }
             if (this.matrix[r - 1][c].number == 0) {
                 this.check_zeros(r - 1, c);
             }
@@ -127,6 +141,10 @@ class Grid {
 
         if (r + 1 < rows && !this.matrix[r + 1][c].dug) {
             this.matrix[r + 1][c].dug = true;
+            if (this.matrix[r + 1][c].flag) {
+                this.matrix[r + 1][c].flag = false;
+                this.flags++;
+            }
             if (this.matrix[r + 1][c].number == 0) {
                 this.check_zeros(r + 1, c);
             }
@@ -134,6 +152,10 @@ class Grid {
 
         if (c - 1 > -1 && !this.matrix[r][c - 1].dug) {
             this.matrix[r][c - 1].dug = true;
+            if (this.matrix[r][c - 1].flag) {
+                this.matrix[r][c - 1].flag = false;
+                this.flags++;
+            }
             if (this.matrix[r][c - 1].number == 0) {
                 this.check_zeros(r, c - 1);
             }
@@ -141,6 +163,10 @@ class Grid {
 
         if (c + 1 < cols && !this.matrix[r][c + 1].dug) {
             this.matrix[r][c + 1].dug = true;
+            if (this.matrix[r][c + 1].flag) {
+                this.matrix[r][c + 1].flag = false;
+                this.flags++;
+            }
             if (this.matrix[r][c + 1].number == 0) {
                 this.check_zeros(r, c + 1);
             }
