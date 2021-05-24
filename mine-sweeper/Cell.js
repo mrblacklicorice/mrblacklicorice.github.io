@@ -19,38 +19,39 @@ class Cell {
         var result = false;
         if (this.dug) {
             if (this.mine) {
-                fill("#c96b6b");
+                fill("#b266b2");
                 result = true;
             } else {
-                // if ((this.row_id + this.col_id) % 2 == 1) {
-                fill('#F5F5F5');
+                if ((this.row_id + this.col_id) % 2 == 1) {
+                    fill('#f47a60');
+                } else {
+                    fill('#dc664e');
+                }
 
-                // } else {
-                // fill('#C3B299');
-                // }
 
             }
         } else {
-            // if ((this.row_id + this.col_id) % 2 == 1) {
-            fill('#559364');
-            // } else {
-            //     fill('#91c27d');
-            // }
+            if ((this.row_id + this.col_id) % 2 == 1) {
+                fill('#316879');
+            } else {
+                fill('#447a8b');
+            }
+
         }
 
-        stroke("black");
-        // noStroke();
-        strokeWeight(1);
+        // stroke("black");
+        noStroke();
+        // strokeWeight(1);
         rect(this.x, this.y, this.pixel, this.pixel);
         if (this.dug && !this.mine && this.number != 0) {
-            fill('#ed225d');
+            fill('#ffd3c8');
             noStroke();
             textAlign(CENTER, CENTER);
             textSize(pixel / 1.5);
             text(this.number, this.x + (this.pixel / 2), this.y + (this.pixel / 2));
         }
         if (this.flag) {
-            fill('#ed225d');
+            fill('#ffe9e3');
             noStroke();
             ellipse(this.x + (this.pixel / 2), this.y + (this.pixel / 2), pixel / 2);
         }
@@ -59,7 +60,7 @@ class Cell {
 
     hover = () => {
         noFill();
-        stroke("#3246a8");
+        stroke("#254550");
         strokeWeight(3);
 
         rect(this.x, this.y, this.pixel, this.pixel);

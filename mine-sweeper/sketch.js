@@ -1,13 +1,30 @@
-var rows = 10;
-// Number(prompt("Enter number of rows:", 10));
-var cols = 10;
-// Number(prompt("Enter number of cols:", 10));;
-var pixel = 50;
-// Number(prompt("Enter cell size:", 50));;
+const queryString = window.location.search;
+const URLparams = new URLSearchParams(queryString);
+
+var settings = {};
+
+settings.r = URLparams.has("r") ? Number(URLparams.get("r")) : 10;
+var rows = settings.r;
+
+settings.c = URLparams.has("c") ? cols = Number(URLparams.get("c")) : 10;
+var cols = settings.c;
+
+settings.p = URLparams.has("p") ? pixel = Number(URLparams.get("p")) : 50;
+var pixel = settings.p;
+
 var offset = pixel / 5;
-var mines = 15;
-// Number(prompt("Enter number of mines:", 15));;
+
+settings.m = URLparams.has("m") ? mines = Number(URLparams.get("m")) : 20;
+var mines = settings.m;
+
+settings.s = (URLparams.has("s") && URLparams.has("s") != "random") ? seed = URLparams.get("s") : makeid(13);
+var seed = settings.s;
+
 var grid;
+
+var url = "https://mrblacklicorice.github.io/mine-sweeper/?" + Object.keys(settings).map(key => `${key}=${settings[key]}`).join('&');
+
+console.log(url);
 
 function setup() {
 	// var div = createDiv();
@@ -26,18 +43,19 @@ function setup() {
 	textFont("Courier Prime");
 
 	canvas.center("horizontal");
+
 	document.body.style.background = '#222222';
 	document.getElementById("defaultCanvas0").addEventListener("contextmenu", (e) => e.preventDefault());
 	textAlign(CENTER, CENTER);
 	textSize(pixel / 2);
-	grid = new Grid(rows, cols, pixel, offset, mines);
+	grid = new Grid(rows, cols, pixel, offset, mines, seed);
 }
 
 var gameover = false;
 var lastkey = "";
 var gamepad_X = offset + pixel / 2;
 var gamepad_Y = offset + pixel / 2;
-var move_dist = (pixel * 2) / offset;
+var move_dist = (pixel * 1.5) / offset;
 var loop_around = false;
 
 var mouse_X = 0;
@@ -132,11 +150,13 @@ function draw() {
 		}
 
 		textAlign(LEFT, CENTER);
-		fill('#ed225d');
+		fill('#ffe9e3');
 		noStroke();
 
-		textSize(pixel / 2);
+		textSize((cols * rows * pixel * pixel) * 0.0001);
 		text(`Flags: ${grid.flags}`, offset, pixel * rows + (offset * 3));
+
+		text(`Seed: ${url}`, offset, pixel * rows + (offset * 6));
 
 		textAlign(RIGHT, CENTER);
 		text(`Time: ${((grid.start == 0) ? timer_parser(0) : timer_parser(Date.now() - grid.start))}`, pixel * cols + (offset * 1), pixel * rows + (offset * 3));
@@ -203,3 +223,14 @@ function timer_parser(time) {
 
 	return (m + ":" + s + ":" + ms);
 }
+
+function makeid(length) {
+	var result = [];
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+	}
+	return result.join('');
+}
+
