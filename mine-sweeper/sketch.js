@@ -27,18 +27,6 @@ var url = "https://mrblacklicorice.github.io/mine-sweeper/?" + Object.keys(setti
 console.log(url);
 
 function setup() {
-	// var div = createDiv();
-	// var button = createButton("click to create");
-	// button.mousePressed(() => {
-	// 	console.log("hekki");
-	// });
-	// button.parent(div);
-	// div.center();
-
-	// noLoop();
-
-
-
 	var canvas = createCanvas(pixel * cols + (offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 	textFont("Courier Prime");
 
@@ -156,7 +144,7 @@ function draw() {
 		textSize((cols * rows * pixel * pixel) * 0.0001);
 		text(`Flags: ${grid.flags}`, offset, pixel * rows + (offset * 3));
 
-		text(`Seed: ${url}`, offset, pixel * rows + (offset * 6));
+		text(`Seed: ${settings.s}`, offset, pixel * rows + (offset * 6));
 
 		textAlign(RIGHT, CENTER);
 		text(`Time: ${((grid.start == 0) ? timer_parser(0) : timer_parser(Date.now() - grid.start))}`, pixel * cols + (offset * 1), pixel * rows + (offset * 3));

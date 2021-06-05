@@ -32,7 +32,7 @@ class Ball {
                 this.second_audio.play();
             }
             if (this.y < 0) this.y = 1;
-            if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height+1);
+            if (this.y + this.height > Canvas.height) this.y = Canvas.height - (this.height + 1);
 
             this.speed *= 0.98;
             this.yv *= -1;
