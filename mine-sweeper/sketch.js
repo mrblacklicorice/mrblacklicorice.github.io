@@ -17,7 +17,7 @@ var offset = pixel / 5;
 settings.m = URLparams.has("m") ? mines = Number(URLparams.get("m")) : 20;
 var mines = settings.m;
 
-settings.s = (URLparams.has("s") && URLparams.has("s") != "random") ? seed = URLparams.get("s") : makeid(13);
+settings.s = (URLparams.has("s") && URLparams.get("s") != "random") ? seed = URLparams.get("s") : makeid(13);
 var seed = settings.s;
 
 var grid;
