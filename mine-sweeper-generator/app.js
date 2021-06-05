@@ -25,7 +25,7 @@ isRandom.addEventListener("change", () => {
 });
 
 copy.addEventListener("click", () => {
-    copyToClipboard
+    copyToClipboard();
 });
 
 play.addEventListener("click", () => {
@@ -51,10 +51,24 @@ mines.addEventListener("change", () => {
 });
 
 function copyToClipboard() {
-    var copyText = generate();
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    document.execCommand("copy");
+    var el = document.createElement('input');
+    el.type = "text";
+    el.value = generate();
+    el.setAttribute('readonly', '');
+    // el.setAttribute("hidden", '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    el.select();
+    el.setSelectionRange(0, 99999);
+    console.log(el)
+    document.execCommand('copy');
+
+    document.body.removeChild(el);
+
+    // var copyText = generate();
+    // copyText.select();
+    // copyText.setSelectionRange(0, 99999);
+    // document.execCommand("copy");
 }
 
 function generate() {
@@ -63,6 +77,6 @@ function generate() {
     result += "c=" + cols.valueAsNumber + "&";
     result += "m=" + mines.valueAsNumber + "&";
     result += "s=" + (isRandom.checked || seed.value == "" ? "random" : seed.value);
-
+    console.log(result);
     return result;
 }
