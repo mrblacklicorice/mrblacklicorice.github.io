@@ -685,4 +685,31 @@ var integerBreak = function (n) {
   }
 };
 
-console.log(integerBreak(8));
+// console.log(integerBreak(8));
+
+
+var longestCommonPrefix = function (strs) {
+  if (strs.length == 1) return strs[0];
+  var highest = -1;
+  var hit = false;
+
+  var min = strs.reduce((shortestWord, currentWord) => {
+    return currentWord.length < shortestWord.length ? currentWord : shortestWord;
+  }, strs[0]);
+
+  for (let i = 0; i < min.length; i++) {
+    for (let j = 0; j < strs.length && !hit; j++) {
+      hit = !(strs[j][i] == min[i]);
+    }
+
+    if (!hit) {
+      highest = i;
+    } else {
+      return min.substring(0, highest + 1);
+    }
+  }
+
+  return min;
+};
+
+// console.log(longestCommonPrefix(["asadasb", "asadb"]));

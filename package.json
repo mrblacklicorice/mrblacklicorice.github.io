@@ -681,6 +681,7 @@
       "resolved": "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz",
       "version": "2.0.0"
     },
+    "source-map-loader": "^3.0.0",
     "sprintf-js": {
       "dev": true,
       "integrity": "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=",
@@ -772,6 +773,7 @@
       "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
       "version": "5.0.1"
     },
+    "ts-loader": "^9.2.3",
     "which": {
       "dev": true,
       "integrity": "sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==",
