@@ -509,7 +509,7 @@
       "resolved": "https://registry.npmjs.org/log-symbols/-/log-symbols-3.0.0.tgz",
       "version": "3.0.0"
     },
-    "mathjs": "^7.0.1",
+    "mathjs": "^7.5.1",
     "minimatch": {
       "dev": true,
       "integrity": "sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==",
