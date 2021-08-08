@@ -176,13 +176,13 @@ class Grid {
     }
 
     first_click = (r, c) => {
-        var rnd_r = random(this.rows);
-        var rnd_c = random(this.cols);
+        var rnd_r = Math.floor(random(this.rows));
+        var rnd_c = Math.floor(random(this.cols));
 
         if (this.matrix[r][c].mine) {
             while (this.matrix[rnd_r][rnd_c].mine) {
-                rnd_r = random(this.rows);
-                rnd_c = random(this.cols);
+                rnd_r = Math.floor(random(this.rows));
+                rnd_c = Math.floor(random(this.cols));
             }
 
             this.matrix[rnd_r][rnd_c].mine = true;
