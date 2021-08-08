@@ -80,12 +80,15 @@ class Grid {
     }
 
     left_click = (x, y) => {
-        if (this.start == 0) {
-            this.start = Date.now();
-        }
-
         var row = Math.floor((y - this.offset) / this.pixel);
         var col = Math.floor((x - this.offset) / this.pixel);
+
+
+        if (this.start == 0) {
+            this.start = Date.now();
+            this.first_click(row, col);
+        }
+
         if (row > -1 && col > -1 && row < this.matrix.length && col < this.matrix[0].length) {
             if (!this.matrix[row][col].dug && !this.matrix[row][col].flag) {
                 this.matrix[row][col].dug = true;
@@ -168,6 +171,34 @@ class Grid {
             }
             if (this.matrix[r][c + 1].number == 0) {
                 this.check_zeros(r, c + 1);
+            }
+        }
+    }
+
+    first_click = (r, c) => {
+        var rnd_r = random(this.rows);
+        var rnd_c = random(this.cols);
+
+        if (this.matrix[r][c].mine) {
+            while (this.matrix[rnd_r][rnd_c].mine) {
+                rnd_r = random(this.rows);
+                rnd_c = random(this.cols);
+            }
+
+            this.matrix[rnd_r][rnd_c].mine = true;
+            this.matrix[r][c].mine = false;
+
+
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (!this.matrix[rnd_r + i][rnd_c + j].mine && rnd_r + i > -1 && rnd_r + i < this.rows && rnd_c + j > -1 && rnd_c < this.cols) {
+                        this.matrix[rnd_r + i][rnd_c + j].number++;
+                    }
+
+                    if (!this.matrix[r + i][c + j].mine && r + i > -1 && r + i < this.rows && c + j > -1 && c < this.cols) {
+                        this.matrix[r + i][c + j].number--;
+                    }
+                }
             }
         }
     }
