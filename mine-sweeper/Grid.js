@@ -7,6 +7,7 @@ class Grid {
         this.mines = mines;
         this.flags = mines;
         this.start = 0;
+        this.first_click_done = false;
         this.seed = seed;
 
         this.matrix = ((new Array(rows)).fill(0)).map(ele => (new Array(cols)).fill(0));
@@ -86,6 +87,9 @@ class Grid {
 
         if (this.start == 0) {
             this.start = Date.now();
+        }
+
+        if (!this.first_click_done) {
             this.first_click(row, col);
         }
 
@@ -186,20 +190,34 @@ class Grid {
             }
 
             this.matrix[rnd_r][rnd_c].mine = true;
+            this.matrix[rnd_r][rnd_c].number = -1;
             this.matrix[r][c].mine = false;
+            this.matrix[r][c].number = 0;
 
 
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
-                    if (!this.matrix[rnd_r + i][rnd_c + j].mine && rnd_r + i > -1 && rnd_r + i < this.rows && rnd_c + j > -1 && rnd_c < this.cols) {
-                        this.matrix[rnd_r + i][rnd_c + j].number++;
+                    if (rnd_r + i > -1 && rnd_r + i < this.rows && rnd_c + j > -1 && rnd_c < this.cols) {
+                        if (!this.matrix[rnd_r + i][rnd_c + j].mine) {
+                            this.matrix[rnd_r + i][rnd_c + j].number++;
+                        }
                     }
 
-                    if (!this.matrix[r + i][c + j].mine && r + i > -1 && r + i < this.rows && c + j > -1 && c < this.cols) {
-                        this.matrix[r + i][c + j].number--;
+                    if (r + i > -1 && r + i < this.rows && c + j > -1 && c < this.cols) {
+                        if (!this.matrix[r + i][c + j].mine) {
+                            this.matrix[r + i][c + j].number--;
+                        } else {
+                            this.matrix[r][c].number++;
+                        }
                     }
                 }
             }
         }
     }
 }
+
+// todo... 
+// replacing the mine doesn't work
+// lower all the numbers and also get a number for the current mine
+
+// make sure to do this...
