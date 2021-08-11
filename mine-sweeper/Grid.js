@@ -91,6 +91,7 @@ class Grid {
 
         if (!this.first_click_done) {
             this.first_click(row, col);
+            this.first_click_done = true;
         }
 
         if (row > -1 && col > -1 && row < this.matrix.length && col < this.matrix[0].length) {
@@ -192,7 +193,7 @@ class Grid {
             this.matrix[rnd_r][rnd_c].mine = true;
             this.matrix[rnd_r][rnd_c].number = -1;
             this.matrix[r][c].mine = false;
-            this.matrix[r][c].number = 0;
+            this.matrix[r][c].number = 1;
 
 
             for (let i = -1; i <= 1; i++) {
