@@ -193,7 +193,7 @@ class Grid {
             this.matrix[rnd_r][rnd_c].mine = true;
             this.matrix[rnd_r][rnd_c].number = -1;
             this.matrix[r][c].mine = false;
-            this.matrix[r][c].number = 0;
+            this.matrix[r][c].number = 1;
 
 
             for (let i = -1; i <= 1; i++) {
