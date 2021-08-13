@@ -216,9 +216,3 @@ class Grid {
         }
     }
 }
-
-// todo... 
-// replacing the mine doesn't work
-// lower all the numbers and also get a number for the current mine
-
-// make sure to do this...
