@@ -46,7 +46,7 @@
       "resolved": "https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz",
       "version": "1.0.10"
     },
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "axois": "0.0.1-security",
     "balanced-match": {
       "dev": true,
