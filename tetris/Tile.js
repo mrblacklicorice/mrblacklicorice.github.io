@@ -3,7 +3,7 @@ class Tile {
         // [none, I, J, L, S, Z, O, T]
         // [  0 , 1, 2, 3, 4, 5, 6, 7]
 
-        this.offset = o;
+        this.o = o;
         this.x = x;
         this.x_pos = x * l + o;
         this.y = y;
@@ -16,6 +16,9 @@ class Tile {
     shift = (x, y) => {
         this.x += x;
         this.y += y;
+
+        this.x_pos = this.x * this.l + this.o;
+        this.y_pos = this.y * this.l + this.o;
     }
 
     show = () => {
