@@ -31,6 +31,8 @@ var arr = new Array();
 settings.colors = ['#0f5e9c', '#2389da', '#1ca3ec', '#d2b98b', '#88ab55', '#569944', '#337755', '#6e6a61', '#625a56', '#c3c4ba', '#dddde3'];
 settings.values = [0.29, 0.33, 0.35, 0.38, 0.47, 0.55, 0.64, 0.77, 0.88, 0.98, 1.00];
 
+var colorarray;
+
 for (let i = 0; i < settings.values.length; i++) {
     document.getElementById(i + 'c').value = settings.colors[i];
     document.getElementById(i + 'n').value = settings.values[i];
@@ -86,7 +88,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 function main() {
-    var colorarray = new Array(Math.round(canvas.width / settings.pixel));
+    colorarray = new Array(Math.round(canvas.width / settings.pixel));
     for (let i = 0; i < colorarray.length; i++) {
         colorarray[i] = new Array(Math.round(canvas.height / settings.pixel));
     }
@@ -133,6 +135,10 @@ function main() {
     document.getElementById('generate').removeAttribute("disabled");
 }
 
+function shift() {
+
+}
+
 function map(input, rmin, rmax, min, max) {
     return (input - rmin) * (max - min) / (rmax - rmin) + min;
 }
@@ -151,12 +157,12 @@ function color(v) {
 
 document.getElementById("save").addEventListener("click", function () {
     document.getElementById("generate").click();
-    settings.pixel = canvas.height/settings.pixel;
+    settings.pixel = canvas.height / settings.pixel;
     var blob = new Blob([JSON.stringify(settings)], {
         type: "text/plain;charset=utf-8"
     });
-    saveAs(blob, `${prompt("Enter a file name","noise_generation_settings")}.json`);
-    settings.pixel = canvas.height/settings.pixel;
+    saveAs(blob, `${prompt("Enter a file name", "noise_generation_settings")}.json`);
+    settings.pixel = canvas.height / settings.pixel;
 });
 
 document.getElementById("load").addEventListener("click", function () {
@@ -183,13 +189,13 @@ document.getElementById("file_upload").addEventListener("change", function () {
             document.getElementById('amplitude_out').innerHTML = String(settings.orig_amp);
             document.getElementById('frequency_in').value = settings.orig_fre;
             document.getElementById('frequency_out').innerHTML = String(settings.orig_fre);
-            document.getElementById('persistence_in').value = settings.persistence*10;
+            document.getElementById('persistence_in').value = settings.persistence * 10;
             document.getElementById('persistence_out').innerHTML = String(settings.persistence);
             document.getElementById('noise').value = settings.noise_type;
             document.getElementById('height').value = settings.height_type;
-            settings.pixel = canvas.height/settings.pixel;
+            settings.pixel = canvas.height / settings.pixel;
 
-            update(["scale","octaves","lacunarity","speed","seed"]);
+            update(["scale", "octaves", "lacunarity", "speed", "seed"]);
 
             noise.seed(settings.seed);
             main();
@@ -200,7 +206,7 @@ document.getElementById("file_upload").addEventListener("change", function () {
     }
 });
 
-function update(input){
+function update(input) {
     for (let i = 0; i < input.length; i++) {
         document.getElementById(`${input[i]}_in`).value = settings[input[i]];
         document.getElementById(`${input[i]}_out`).innerHTML = String(settings[input[i]]);

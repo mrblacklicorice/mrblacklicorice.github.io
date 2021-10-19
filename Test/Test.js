@@ -712,4 +712,22 @@ var longestCommonPrefix = function (strs) {
   return min;
 };
 
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseWords = function (s) {
+  var words = (s.split(" ")).map(val => { val.split("").reverse().join("") }).join(" ");
+
+  for (let i = 0; i < words.length; i++) {
+    words[i] = (words[i].split("")).reverse().join("")
+  }
+
+  return words.join(" ");
+  // return (s.split(" ")).map(val => { return val.split("").reverse().join("") }).join(" ");
+
+};
+
+
+// console.log(reverseWords("Hello Guys"));
 // console.log(longestCommonPrefix(["asadasb", "asadb"]));
