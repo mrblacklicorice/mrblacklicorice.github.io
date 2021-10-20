@@ -67,14 +67,20 @@ function spawnTile(tile) {
 
 function tilePerTick() {
 	for (let i = 0; i < curr_piece.length; i++) {
-		curr_piece[i].shift(0, 1);
-	}
-	for (let i = 0; i < curr_piece.length; i++) {
-		if (curr_piece[i].y == rows - 1) {
+		if (curr_piece[i].y == rows - 1 || tiles[curr_piece.y][curr_piece.x].c != 0) {
 			clearInterval(global_timer);
+			for (let i = 0; i < curr_piece.length; i++) {
+				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
+			}
+
+			curr_piece = spawnTile(1);
+			global_timer = setInterval(tilePerTick, 500);
+
 			break;
 		}
+		curr_piece[i].shift(0, 1);
 	}
+
 }
 
 function keyPressed() {
@@ -107,7 +113,7 @@ function keyPressed() {
 			curr_piece[i].shift(0, 1);
 		}
 		clearInterval(global_timer);
-		// global_timer = setInterval(tilePerTick, 500);
+		global_timer = setInterval(tilePerTick, 500);
 	}
 
 }
@@ -141,5 +147,8 @@ function keyTyped() {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].shift(0, 1);
 		}
+		clearInterval(global_timer);
+		global_timer = setInterval(tilePerTick, 500);
+
 	}
 }
