@@ -28,7 +28,7 @@ function setup() {
 	}
 
 	curr_piece = spawnTile(1);
-	global_timer = setInterval(tilePerTick, 500);
+	global_timer = setInterval(shift_piece, 500, 0, 1);
 }
 
 
@@ -65,22 +65,30 @@ function spawnTile(tile) {
 	return result;
 }
 
-function tilePerTick() {
+function shift_piece(x_diff, y_diff) {
+	var statement = false;
+
 	for (let i = 0; i < curr_piece.length; i++) {
-		if (curr_piece[i].y == rows - 1 || tiles[curr_piece.y][curr_piece.x].c != 0) {
+		if (curr_piece[i].y == rows - 1 || (curr_piece[i].y > -1 && tiles[curr_piece[i].y + y_diff][curr_piece[i].x + x_diff].c != 0)) {
 			clearInterval(global_timer);
 			for (let i = 0; i < curr_piece.length; i++) {
 				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 			}
 
 			curr_piece = spawnTile(1);
-			global_timer = setInterval(tilePerTick, 500);
+			global_timer = setInterval(shift_piece, 500, 0, 1);
 
+			statement = true;
 			break;
+
 		}
-		curr_piece[i].shift(0, 1);
 	}
 
+	for (let i = 0; i < curr_piece.length; i++) {
+		curr_piece[i].shift(x_diff, y_diff);
+	}
+
+	return statement;
 }
 
 function keyPressed() {
@@ -101,19 +109,16 @@ function keyPressed() {
 	}
 
 	if (keyCode == LEFT_ARROW && lowest_x > 0) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(-1, 0);
-		}
+		shift_piece(-1, 0)
+		// curr_piece[i].shift(-1, 0);
 	} else if (keyCode === RIGHT_ARROW && highest_x < cols - 1) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(1, 0);
-		}
+		shift_piece(1, 0)
+		// curr_piece[i].shift(1, 0);
 	} else if (keyCode === DOWN_ARROW && highest_y < rows - 1) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(0, 1);
-		}
+		shift_piece(0, 1)
+		// curr_piece[i].shift(0, 1);
 		clearInterval(global_timer);
-		global_timer = setInterval(tilePerTick, 500);
+		global_timer = setInterval(shift_piece, 500, 0, 1);
 	}
 
 }
@@ -136,19 +141,28 @@ function keyTyped() {
 	}
 
 	if (key == "a" && lowest_x > 0) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(-1, 0);
-		}
+		shift_piece(-1, 0)
+		// curr_piece[i].shift(-1, 0);
 	} else if (key == "d" && highest_x < cols - 1) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(1, 0);
-		}
+		shift_piece(1, 0)
+		// curr_piece[i].shift(1, 0);
 	} else if (key == "s" && highest_y < rows - 1) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].shift(0, 1);
-		}
+		shift_piece(0, 1)
+		// curr_piece[i].shift(0, 1);
 		clearInterval(global_timer);
-		global_timer = setInterval(tilePerTick, 500);
+		global_timer = setInterval(shift_piece, 500, 0, 1);
 
+	} else if (key == " ") {
+		var down = false;
+
+		while (!down) {
+			down = shift_piece(0, 1)
+		}
 	}
 }
+
+// create a game over feature
+// see key held instead of key pressed
+// create line break
+// create new tiles
+// create rotation
