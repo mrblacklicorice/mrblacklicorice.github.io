@@ -73,11 +73,16 @@ function shift_piece(x_diff, y_diff) {
 			clearInterval(global_timer);
 			for (let i = 0; i < curr_piece.length; i++) {
 				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
+				checkLine(curr_piece[i].y, true);
 			}
+
+
 
 			curr_piece = spawnTile(1);
 			global_timer = setInterval(shift_piece, 500, 0, 1);
+			if (checkLine(0, false) && checkLine(1, false)) {
 
+			}
 			statement = true;
 			break;
 
@@ -161,8 +166,32 @@ function keyTyped() {
 	}
 }
 
-// create a game over feature
+function checkLine(y, IsZero) {
+	for (let i = 0; i < tiles[y].length; i++) {
+		if ((IsZero) ? (tiles[y][i].c == 0) : (tiles[y][i].c != 0)) {
+			return false;
+		}
+	}
+
+	if (IsZero) {
+		tiles.splice(y, 1);
+		tiles.unshift(new Array(tiles[0].length))
+
+		for (let i = 0; i < tiles[0].length; i++) {
+			tiles[0][i] = new Tile(i, 0, pixel, 0, offset);
+
+		}
+
+		for (let i = y; i > 0; i--) {
+			for (let j = 0; j < tiles[i].length; j++) {
+				tiles[i][j].shift(0, 1);
+
+			}
+		}
+	}
+}
+
+
 // see key held instead of key pressed
-// create line break
 // create new tiles
 // create rotation
