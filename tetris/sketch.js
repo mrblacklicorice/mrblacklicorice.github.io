@@ -12,6 +12,8 @@ var curr_piece;
 
 var global_timer;
 
+var movement_timer;
+
 function setup() {
 	var canvas = createCanvas(pixel * cols + (offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 
@@ -29,6 +31,8 @@ function setup() {
 
 	curr_piece = spawnTile(1);
 	global_timer = setInterval(shift_piece, 500, 0, 1);
+
+	movement_timer = setInterval(movement, 100);
 }
 
 
@@ -46,6 +50,8 @@ function draw() {
 	for (let i = 0; i < curr_piece.length; i++) {
 		curr_piece[i].show();
 	}
+
+	// movement();
 }
 
 function spawnTile(tile) {
@@ -96,7 +102,39 @@ function shift_piece(x_diff, y_diff) {
 	return statement;
 }
 
-function keyPressed() {
+// function keyPressed() {
+// 	var lowest_x = 1000;
+// 	var highest_x = -1;
+// 	var highest_y = -1;
+
+// 	for (let i = 0; i < curr_piece.length; i++) {
+// 		if (curr_piece[i].y > highest_y) {
+// 			highest_y = curr_piece[i].y;
+// 		}
+// 		if (curr_piece[i].x > highest_x) {
+// 			highest_x = curr_piece[i].x;
+// 		}
+// 		if (curr_piece[i].x < lowest_x) {
+// 			lowest_x = curr_piece[i].x;
+// 		}
+// 	}
+
+// 	if (keyCode == LEFT_ARROW && lowest_x > 0) {
+// 		shift_piece(-1, 0)
+// 		// curr_piece[i].shift(-1, 0);
+// 	} else if (keyCode === RIGHT_ARROW && highest_x < cols - 1) {
+// 		shift_piece(1, 0)
+// 		// curr_piece[i].shift(1, 0);
+// 	} else if (keyCode === DOWN_ARROW && highest_y < rows - 1) {
+// 		shift_piece(0, 1)
+// 		// curr_piece[i].shift(0, 1);
+// 		clearInterval(global_timer);
+// 		global_timer = setInterval(shift_piece, 500, 0, 1);
+// 	}
+
+// }
+
+function movement() {
 	var lowest_x = 1000;
 	var highest_x = -1;
 	var highest_y = -1;
@@ -113,56 +151,18 @@ function keyPressed() {
 		}
 	}
 
-	if (keyCode == LEFT_ARROW && lowest_x > 0) {
+	if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && lowest_x > 0) {
 		shift_piece(-1, 0)
 		// curr_piece[i].shift(-1, 0);
-	} else if (keyCode === RIGHT_ARROW && highest_x < cols - 1) {
+	} else if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && highest_x < cols - 1) {
 		shift_piece(1, 0)
 		// curr_piece[i].shift(1, 0);
-	} else if (keyCode === DOWN_ARROW && highest_y < rows - 1) {
-		shift_piece(0, 1)
-		// curr_piece[i].shift(0, 1);
-		clearInterval(global_timer);
-		global_timer = setInterval(shift_piece, 500, 0, 1);
-	}
-
-}
-
-function keyTyped() {
-	var lowest_x = 1000;
-	var highest_x = -1;
-	var highest_y = -1;
-
-	for (let i = 0; i < curr_piece.length; i++) {
-		if (curr_piece[i].y > highest_y) {
-			highest_y = curr_piece[i].y;
-		}
-		if (curr_piece[i].x > highest_x) {
-			highest_x = curr_piece[i].x;
-		}
-		if (curr_piece[i].x < lowest_x) {
-			lowest_x = curr_piece[i].x;
-		}
-	}
-
-	if (key == "a" && lowest_x > 0) {
-		shift_piece(-1, 0)
-		// curr_piece[i].shift(-1, 0);
-	} else if (key == "d" && highest_x < cols - 1) {
-		shift_piece(1, 0)
-		// curr_piece[i].shift(1, 0);
-	} else if (key == "s" && highest_y < rows - 1) {
+	} else if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && highest_y < rows - 1) {
 		shift_piece(0, 1)
 		// curr_piece[i].shift(0, 1);
 		clearInterval(global_timer);
 		global_timer = setInterval(shift_piece, 500, 0, 1);
 
-	} else if (key == " ") {
-		var down = false;
-
-		while (!down) {
-			down = shift_piece(0, 1)
-		}
 	}
 }
 
@@ -195,3 +195,14 @@ function checkLine(y, IsZero) {
 // see key held instead of key pressed
 // create new tiles
 // create rotation
+
+
+function keyTyped() {
+	if (key == " ") {
+		var down = false;
+
+		while (!down) {
+			down = shift_piece(0, 1)
+		}
+	}
+}
