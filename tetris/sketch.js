@@ -10,6 +10,8 @@ var tiles = [];
 
 var curr_piece;
 
+var curr_piece_hover;
+
 var global_timer;
 
 var movement_timer;
@@ -29,7 +31,9 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(1);
+	curr_piece = spawnTile(1, false);
+	curr_piece_hover = spawnTile(1, true);
+
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
 	movement_timer = setInterval(movement, 100);
@@ -49,12 +53,12 @@ function draw() {
 
 	for (let i = 0; i < curr_piece.length; i++) {
 		curr_piece[i].show();
+		curr_piece_hover[i].show();
 	}
 
-	// movement();
 }
 
-function spawnTile(tile) {
+function spawnTile(tile, hover) {
 	// [none, I, J, L, S, Z, O, T]
 	// [  0 , 1, 2, 3, 4, 5, 6, 7]
 	center = (cols / 2) - 1;
@@ -68,30 +72,61 @@ function spawnTile(tile) {
 		default:
 			break;
 	}
+	if (hover) {
+		for (let i = 0; i < result.length; i++) {
+			result[i].show = () => {
+				var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+				noFill();
+
+				// noStroke();
+				strokeWeight(1);
+				stroke(colors[result[i].c]);
+				rect(result[i].x_pos, result[i].y_pos, result[i].l, result[i].l);
+			}
+
+		}
+	}
 	return result;
 }
 
 function shift_piece(x_diff, y_diff) {
-	var statement = false;
+	// var statement = false;
+
+	for (let i = 0; i < curr_piece_hover.length; i++) {
+		curr_piece_hover[i].x = curr_piece[i].x;
+		curr_piece_hover[i].y = curr_piece[i].y;
+		curr_piece_hover[i].shift(0, 0);
+	}
+
+	// for (let i = 0; i < curr_piece.length; i++) {
+	// 	// if (curr_piece[i].y == rows - 1 || (curr_piece[i].y > -1 && tiles[curr_piece[i].y + y_diff][curr_piece[i].x + x_diff].c != 0)) {
+
+
+	// 	// }
+	// }
+
+
+	var hover_done = shift_piece_hover(x_diff, y_diff);
+	while (!hover_done) {
+		hover_done = shift_piece_hover(0, 1);
+	}
 
 	for (let i = 0; i < curr_piece.length; i++) {
-		if (curr_piece[i].y == rows - 1 || (curr_piece[i].y > -1 && tiles[curr_piece[i].y + y_diff][curr_piece[i].x + x_diff].c != 0)) {
+		if (curr_piece[i].x == curr_piece_hover[i].x && curr_piece[i].y == curr_piece_hover[i].y) {
 			clearInterval(global_timer);
 			for (let i = 0; i < curr_piece.length; i++) {
 				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 				checkLine(curr_piece[i].y, true);
 			}
 
+			curr_piece = spawnTile(1, false);
+			curr_piece_hover = spawnTile(1, true);
 
-
-			curr_piece = spawnTile(1);
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 			if (checkLine(0, false) && checkLine(1, false)) {
 
 			}
-			statement = true;
-			break;
-
+			return true;
 		}
 	}
 
@@ -99,8 +134,30 @@ function shift_piece(x_diff, y_diff) {
 		curr_piece[i].shift(x_diff, y_diff);
 	}
 
-	return statement;
+	return false;
 }
+
+function shift_piece_hover(x_diff, y_diff) {
+	for (let i = 0; i < curr_piece_hover.length; i++) {
+		if (curr_piece_hover[i].y + y_diff >= rows || (curr_piece_hover[i].y > -1 && tiles[curr_piece_hover[i].y + y_diff][curr_piece_hover[i].x + x_diff].c != 0)) {
+			// clearInterval(global_timer);
+			// for (let i = 0; i < curr_piece_hover.length; i++) {
+			// 	tiles[curr_piece_hover[i].y][curr_piece_hover[i].x] = curr_piece_hover[i];
+			// }
+
+			// global_timer = setInterval(shift_piece, 500, 0, 1);
+			return true;
+		}
+	}
+
+	for (let i = 0; i < curr_piece_hover.length; i++) {
+		curr_piece_hover[i].shift(x_diff, y_diff);
+	}
+
+	return false;
+}
+
+
 
 // function keyPressed() {
 // 	var lowest_x = 1000;
