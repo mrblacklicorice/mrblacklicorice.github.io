@@ -31,8 +31,8 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(1, false);
-	curr_piece_hover = spawnTile(1, true);
+	curr_piece = spawnTile(2, false);
+	curr_piece_hover = spawnTile(2, true);
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
@@ -68,7 +68,9 @@ function spawnTile(tile, hover) {
 		case 1:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 2, -1, pixel, tile, offset)];
 			break;
-
+		case 2:
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			break;
 		default:
 			break;
 	}
@@ -79,7 +81,7 @@ function spawnTile(tile, hover) {
 				noFill();
 
 				// noStroke();
-				strokeWeight(1);
+				strokeWeight(2);
 				stroke(colors[result[i].c]);
 				rect(result[i].x_pos, result[i].y_pos, result[i].l, result[i].l);
 			}
@@ -116,15 +118,17 @@ function shift_piece(x_diff, y_diff) {
 			clearInterval(global_timer);
 			for (let i = 0; i < curr_piece.length; i++) {
 				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
+			}
+			for (let i = 0; i < curr_piece.length; i++) {
 				checkLine(curr_piece[i].y, true);
 			}
-
-			curr_piece = spawnTile(1, false);
-			curr_piece_hover = spawnTile(1, true);
+			curr_piece = spawnTile(2, false);
+			curr_piece_hover = spawnTile(2, true);
 
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 			if (checkLine(0, false) && checkLine(1, false)) {
-
+				clearInterval(global_timer);
+				console.log("game over")
 			}
 			return true;
 		}
