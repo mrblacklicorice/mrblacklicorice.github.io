@@ -68,7 +68,7 @@ function spawnTile(tile, hover) {
 
 	switch (tile) {
 		case 1:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 2, -1, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center + 2, -1, pixel, tile, offset, 3)];
 			break;
 		case 2:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset)];
@@ -241,6 +241,15 @@ function movement() {
 		clearInterval(global_timer);
 		global_timer = setInterval(shift_piece, 500, 0, 1);
 
+	} else if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
+		for (let i = 0; i < curr_piece.length; i++) {
+			curr_piece[i].rotate();
+			curr_piece_hover[i].rotate();
+		}
+		// curr_piece[i].shift(0, 1);
+		shift_piece(0, 0);
+		clearInterval(global_timer);
+		global_timer = setInterval(shift_piece, 500, 0, 1);
 	}
 }
 

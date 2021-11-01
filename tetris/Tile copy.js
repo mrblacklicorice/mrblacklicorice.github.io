@@ -1,0 +1,55 @@
+class Tile {
+    constructor(x, y, l, c, o, i) {
+        // [none, I, J, L, S, Z, O, T]
+        // [  0 , 1, 2, 3, 4, 5, 6, 7]
+        this.i = i;
+        this.o = o;
+        this.x = x;
+        this.x_pos = x * l + o;
+        this.y = y;
+        this.y_pos = y * l + o;
+        this.l = l;
+        this.c = c;
+        this.r = 0;
+
+        this.r_d =
+            [
+                [
+                    [[1, -2], [2, -1], [-1, 2], [-2, -1]],
+                    [[0, -1], [1, 0], [1, 1], [-1, 0]],
+                    [[-1, 0], [0, -1], [1, 0], [0, 1]],
+                    [[-2, 1], [-1, -2], [2, -1], [1, 2]]
+                ],
+                [],
+                [],
+                [],
+                [],
+                []
+            ]
+    }
+
+    shift = (x, y) => {
+        this.x += x;
+        this.y += y;
+
+        this.x_pos = this.x * this.l + this.o;
+        this.y_pos = this.y * this.l + this.o;
+    }
+
+    show = () => {
+        var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+        fill(colors[this.c]);
+
+        // noStroke();
+        strokeWeight(1);
+        stroke("#000000");
+        rect(this.x_pos, this.y_pos, this.l, this.l);
+
+    }
+
+    rotate = () => {
+        this.r = (this.r + 1) % 4;
+        var temp_cord = this.r_d[this.c - 1][this.i][this.r];
+        this.shift(temp_cord[0], temp_cord[1]);
+    }
+}
