@@ -31,8 +31,8 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(2, false);
-	curr_piece_hover = spawnTile(2, true);
+	curr_piece = spawnTile(3, false);
+	curr_piece_hover = spawnTile(3, true);
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
@@ -69,6 +69,15 @@ function spawnTile(tile, hover) {
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 2, -1, pixel, tile, offset)];
 			break;
 		case 2:
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset), new Tile(center, -3, pixel, tile, offset)];
+			break;
+		case 3:
+			result = [new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center - 1, -3, pixel, tile, offset)];
+			break;
+		case 4:
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset), new Tile(center, -3, pixel, tile, offset)];
+			break;
+		case 6:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
 			break;
 		default:
@@ -122,8 +131,8 @@ function shift_piece(x_diff, y_diff) {
 			for (let i = 0; i < curr_piece.length; i++) {
 				checkLine(curr_piece[i].y, true);
 			}
-			curr_piece = spawnTile(2, false);
-			curr_piece_hover = spawnTile(2, true);
+			curr_piece = spawnTile(3, false);
+			curr_piece_hover = spawnTile(3, true);
 
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 			if (checkLine(0, false) && checkLine(1, false)) {
