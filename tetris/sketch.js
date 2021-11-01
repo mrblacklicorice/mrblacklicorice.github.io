@@ -16,6 +16,8 @@ var global_timer;
 
 var movement_timer;
 
+var x = 1;
+
 function setup() {
 	var canvas = createCanvas(pixel * cols + (offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 
@@ -31,8 +33,8 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(3, false);
-	curr_piece_hover = spawnTile(3, true);
+	curr_piece = spawnTile(x, false);
+	curr_piece_hover = spawnTile(x, true);
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
@@ -69,16 +71,22 @@ function spawnTile(tile, hover) {
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 2, -1, pixel, tile, offset)];
 			break;
 		case 2:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset), new Tile(center, -3, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset)];
 			break;
 		case 3:
-			result = [new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center - 1, -3, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset)];
 			break;
 		case 4:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset), new Tile(center, -3, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			break;
+		case 5:
+			result = [new Tile(center + 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
 			break;
 		case 6:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			break;
+		case 7:
+			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
 			break;
 		default:
 			break;
@@ -131,8 +139,8 @@ function shift_piece(x_diff, y_diff) {
 			for (let i = 0; i < curr_piece.length; i++) {
 				checkLine(curr_piece[i].y, true);
 			}
-			curr_piece = spawnTile(3, false);
-			curr_piece_hover = spawnTile(3, true);
+			curr_piece = spawnTile(x, false);
+			curr_piece_hover = spawnTile(x, true);
 
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 			if (checkLine(0, false) && checkLine(1, false)) {
@@ -262,9 +270,9 @@ function checkLine(y, IsZero) {
 }
 
 
-// see key held instead of key pressed
-// create new tiles
-// create rotation
+// see key held instead of key pressed --- kinda done??
+// create new tiles --- done!!
+// create rotation --- figure out :(
 
 
 function keyTyped() {
