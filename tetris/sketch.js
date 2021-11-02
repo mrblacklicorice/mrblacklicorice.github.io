@@ -1,10 +1,10 @@
-var pixel = 15;
+var pixel = 30;
 
 var offset = pixel / 5;
 
-var cols = 20;
+var cols = 10;
 
-var rows = 40;
+var rows = 24;
 
 var tiles = [];
 
@@ -74,7 +74,7 @@ function spawnTile(tile, hover) {
 			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center - 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 3:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center + 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 4:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
@@ -114,6 +114,7 @@ function shift_piece(x_diff, y_diff) {
 	for (let i = 0; i < curr_piece_hover.length; i++) {
 		curr_piece_hover[i].x = curr_piece[i].x;
 		curr_piece_hover[i].y = curr_piece[i].y;
+		curr_piece_hover[i].r = curr_piece[i].r;
 		curr_piece_hover[i].shift(0, 0);
 	}
 
@@ -213,21 +214,7 @@ function shift_piece_hover(x_diff, y_diff) {
 // }
 
 function movement() {
-	var lowest_x = 1000;
-	var highest_x = -1;
-	var highest_y = -1;
 
-	for (let i = 0; i < curr_piece.length; i++) {
-		if (curr_piece[i].y > highest_y) {
-			highest_y = curr_piece[i].y;
-		}
-		if (curr_piece[i].x > highest_x) {
-			highest_x = curr_piece[i].x;
-		}
-		if (curr_piece[i].x < lowest_x) {
-			lowest_x = curr_piece[i].x;
-		}
-	}
 
 	if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && lowest_x > 0) {
 		shift_piece(-1, 0)
@@ -243,13 +230,42 @@ function movement() {
 
 	} else if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
 		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece[i].rotate();
+			curr_piece_hover[i].x = curr_piece[i].x;
+			curr_piece_hover[i].y = curr_piece[i].y;
+			curr_piece_hover[i].r = curr_piece[i].r;
+			curr_piece_hover[i].shift(0, 0);
+			// curr_piece[i].rotate();
 			curr_piece_hover[i].rotate();
+		}
+
+		lowest_x = 1000;
+		highest_x = -1;
+		highest_y = -1;
+
+		for (let i = 0; i < curr_piece_hover.length; i++) {
+			if (curr_piece_hover[i].y > highest_y) {
+				highest_y = curr_piece_hover[i].y;
+			}
+			if (curr_piece_hover[i].x > highest_x) {
+				highest_x = curr_piece_hover[i].x;
+			}
+			if (curr_piece_hover[i].x < lowest_x) {
+				lowest_x = curr_piece_hover[i].x;
+			}
+		}
+		console.log(lowest_x, highest_x, highest_y)
+
+		if (lowest_x > 0 && highest_x < cols - 1 && highest_y < rows - 1) {
+			console.log("here")
+			for (let i = 0; i < curr_piece.length; i++) {
+				curr_piece[i].rotate();
+				// curr_piece_hover[i].rotate();
+			}
 		}
 		// curr_piece[i].shift(0, 1);
 		shift_piece(0, 0);
-		clearInterval(global_timer);
-		global_timer = setInterval(shift_piece, 500, 0, 1);
+		// clearInterval(global_timer);
+		// global_timer = setInterval(shift_piece, 500, 0, 1);
 	}
 }
 
@@ -293,4 +309,59 @@ function keyTyped() {
 			down = shift_piece(0, 1)
 		}
 	}
+}
+
+const p = { // JUST FOR THIS DEMO. You use Piece.prototype
+	lowest_x = 1000,
+	highest_x = -1,
+	highest_y = -1,
+
+	generic_calc(array) {
+		lowest_x = 1000;
+		highest_x = -1;
+		highest_y = -1;
+
+		for (let i = 0; i < array.length; i++) {
+			if (array[i].y > highest_y) {
+				highest_y = array[i].y;
+			}
+			if (array[i].x > highest_x) {
+				highest_x = array[i].x;
+			}
+			if (array[i].x < lowest_x) {
+				lowest_x = array[i].x;
+			}
+		}
+	},
+	moveLeft() {
+		this.generic_calc(curr_piece);
+
+	},
+	rotate() {
+
+	},
+	moveRight() {
+
+	},
+	moveDown() {
+
+	},
+};
+
+document.addEventListener("keydown", CONTROL);
+
+function CONTROL(event) {
+	const k = event.keyCode;
+
+	if (k < 37 || k > 40) return; // Do nothing if was not an arrow key. Else Do:
+
+	event.preventDefault();       // Prevent browser scroll on arrows
+	if (k == 37 || k == 39) dropStart = Date.now(); // Only for left or right
+
+	return {
+		37: p.moveLeft,
+		38: p.rotate,
+		39: p.moveRight,
+		40: p.moveDown
+	}[k]();
 }
