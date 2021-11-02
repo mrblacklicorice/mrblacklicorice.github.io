@@ -71,7 +71,7 @@ function spawnTile(tile, hover) {
 			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center + 2, -1, pixel, tile, offset, 3)];
 			break;
 		case 2:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center - 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 3:
 			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset)];
@@ -277,6 +277,7 @@ function checkLine(y, IsZero) {
 		}
 	}
 }
+
 
 
 // see key held instead of key pressed --- kinda done??

@@ -12,6 +12,25 @@ class Tile {
         this.c = c;
         this.r = 0;
 
+        this.r_d =
+            [
+                [
+                    [[+1, -2], [+2, +1], [-1, +2], [-2, -1]],
+                    [[+0, -1], [+1, +0], [+0, +1], [-1, +0]],
+                    [[-1, +0], [+0, -1], [+1, +0], [+0, +1]],
+                    [[-2, +1], [-1, -2], [+2, -1], [+1, +2]]
+                ],
+                [
+                    [[+1, -1], [+1, +1], [-1, +1], [-1, -1]],
+                    [[+0, +0], [+0, +0], [+0, +0], [+0, +0]],
+                    [[-1, +1], [-1, -1], [+1, -1], [+1, +1]],
+                    [[+2, +0], [+0, +2], [-2, +0], [+0, -2]]
+                ],
+                [],
+                [],
+                [],
+                []
+            ]
     }
 
     shift = (x, y) => {
@@ -34,97 +53,8 @@ class Tile {
     }
 
     rotate = () => {
-
+        var temp_cord = this.r_d[this.c - 1][this.i][this.r];
+        this.shift(temp_cord[0], temp_cord[1]);
         this.r = (this.r + 1) % 4;
-
-        switch (this.c) {
-            case 1:
-                switch (this.i) {
-                    case 1:
-                        switch (this.r) {
-                            case 0:
-                                this.shift(1, -2);
-                                break;
-                            case 1:
-                                this.shift(+2, +1);
-                                break;
-                            case 2:
-                                this.shift(-1, -1);
-                                break;
-                            case 3:
-                                this.shift(-2, +2);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case 2:
-                        switch (this.r) {
-                            case 0:
-                                this.shift(0, -1);
-                                break;
-                            case 1:
-                                this.shift(+1, 0);
-                                break;
-                            case 2:
-                                this.shift(0, +1);
-                                break;
-                            case 3:
-                                this.shift(-1, 0);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-
-
-                    case 3:
-                        switch (this.r) {
-                            case 0:
-                                this.shift(-1, 0);
-                                break;
-                            case 1:
-                                this.shift(0, -1);
-                                break;
-                            case 2:
-                                this.shift(1, 0);
-                                break;
-                            case 3:
-                                this.shift(0, 1);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case 4:
-                        switch (this.r) {
-                            case 0:
-                                this.shift(-2, +1);
-                                break;
-                            case 1:
-                                this.shift(-1, -2);
-                                break;
-                            case 2:
-                                this.shift(+2, -1);
-                                break;
-                            case 3:
-                                this.shift(+1, +2);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                break;
-
-            default:
-                break;
-        }
     }
-
-
 }
