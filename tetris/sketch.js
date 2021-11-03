@@ -110,8 +110,33 @@ function spawnTile(tile, hover) {
 }
 
 function shift_piece(x_diff, y_diff) {
-	// var statement = false;
 
+	if (check_piece(x_diff, y_diff)) {
+		clearInterval(global_timer);
+		for (let i = 0; i < curr_piece.length; i++) {
+			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
+		}
+		for (let i = 0; i < curr_piece.length; i++) {
+			checkLine(curr_piece[i].y, true);
+		}
+		curr_piece = spawnTile(x, false);
+		curr_piece_hover = spawnTile(x, true);
+
+		global_timer = setInterval(shift_piece, 500, 0, 1);
+		if (checkLine(0, false) && checkLine(1, false)) {
+			clearInterval(global_timer);
+			console.log("game over")
+		}
+		return true;
+	} else {
+		for (let i = 0; i < curr_piece.length; i++) {
+			curr_piece[i].shift(x_diff, y_diff);
+		}
+	}
+	return false;
+}
+
+function check_piece(x_diff, y_diff) {
 	for (let i = 0; i < curr_piece_hover.length; i++) {
 		curr_piece_hover[i].x = curr_piece[i].x;
 		curr_piece_hover[i].y = curr_piece[i].y;
@@ -119,48 +144,26 @@ function shift_piece(x_diff, y_diff) {
 		curr_piece_hover[i].shift(0, 0);
 	}
 
-	// for (let i = 0; i < curr_piece.length; i++) {
-	// 	// if (curr_piece[i].y == rows - 1 || (curr_piece[i].y > -1 && tiles[curr_piece[i].y + y_diff][curr_piece[i].x + x_diff].c != 0)) {
-
-
-	// 	// }
-	// }
-
-
-	var hover_done = shift_piece_hover(x_diff, y_diff);
+	var hover_done = check_piece_hover(x_diff, y_diff);
+	console.log(hover_done);
 	while (!hover_done) {
-		hover_done = shift_piece_hover(0, 1);
+		hover_done = check_piece_hover(0, 1);
 	}
 
 	for (let i = 0; i < curr_piece.length; i++) {
 		if (curr_piece[i].x == curr_piece_hover[i].x && curr_piece[i].y == curr_piece_hover[i].y) {
-			clearInterval(global_timer);
-			for (let i = 0; i < curr_piece.length; i++) {
-				tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
-			}
-			for (let i = 0; i < curr_piece.length; i++) {
-				checkLine(curr_piece[i].y, true);
-			}
-			curr_piece = spawnTile(x, false);
-			curr_piece_hover = spawnTile(x, true);
-
-			global_timer = setInterval(shift_piece, 500, 0, 1);
-			if (checkLine(0, false) && checkLine(1, false)) {
-				clearInterval(global_timer);
-				console.log("game over")
-			}
 			return true;
 		}
 	}
-
-	for (let i = 0; i < curr_piece.length; i++) {
-		curr_piece[i].shift(x_diff, y_diff);
-	}
-
 	return false;
 }
 
-function shift_piece_hover(x_diff, y_diff) {
+// ok, so, ur mim big gae
+// make shift peice 2 functions
+// make it check peice and shifting the piece based on the check
+
+
+function check_piece_hover(x_diff, y_diff) {
 	for (let i = 0; i < curr_piece_hover.length; i++) {
 		if (curr_piece_hover[i].y + y_diff >= rows || ((curr_piece_hover[i].y > -1) && tiles[curr_piece_hover[i].y + y_diff][curr_piece_hover[i].x + x_diff].c != 0)) {
 			return true;

@@ -10,7 +10,7 @@ class Tile {
         this.y_pos = y * l + o;
         this.l = l;
         this.c = c;
-        this.r = 0;
+        this.r = 40000;
 
         this.r_d =
             [
@@ -80,9 +80,24 @@ class Tile {
             this.r = (this.r + 1) % 4;
             return;
         }
-        var temp_cord = this.r_d[this.c - 1][this.i][this.r];
+        var temp_cord = this.r_d[this.c - 1][this.i][this.r % 4];
+        console.log(temp_cord);
 
         this.shift(temp_cord[0], temp_cord[1]);
         this.r = (this.r + 1) % 4;
+    }
+
+    inv_rotate = () => {
+        if (this.c == 6) {
+            this.r = Math.abs((this.r - 1) % 4);
+            return;
+        }
+        this.r = (this.r - 1);
+
+        var temp_cord = this.r_d[this.c - 1][this.i][this.r % 4];
+        console.log(temp_cord);
+
+        this.shift(-temp_cord[0], -temp_cord[1]);
+        // this.r = Math.abs((this.r - 1) % 4);
     }
 }
