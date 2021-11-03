@@ -81,7 +81,6 @@ class Tile {
             return;
         }
         var temp_cord = this.r_d[this.c - 1][this.i][this.r % 4];
-        console.log(temp_cord);
 
         this.shift(temp_cord[0], temp_cord[1]);
         this.r = (this.r + 1) % 4;
@@ -95,7 +94,6 @@ class Tile {
         this.r = (this.r - 1);
 
         var temp_cord = this.r_d[this.c - 1][this.i][this.r % 4];
-        console.log(temp_cord);
 
         this.shift(-temp_cord[0], -temp_cord[1]);
         // this.r = Math.abs((this.r - 1) % 4);

@@ -16,7 +16,7 @@ var global_timer;
 
 var movement_timer;
 
-var x = 1;
+var x = Math.floor(Math.random() * 7) + 1;
 
 function setup() {
 	var canvas = createCanvas(pixel * cols + (offset * 2), pixel * rows + (offset * 2) + (offset * 10));
@@ -119,6 +119,7 @@ function shift_piece(x_diff, y_diff) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			checkLine(curr_piece[i].y, true);
 		}
+		x = Math.floor(Math.random() * 7) + 1;
 		curr_piece = spawnTile(x, false);
 		curr_piece_hover = spawnTile(x, true);
 
@@ -145,7 +146,6 @@ function check_piece(x_diff, y_diff) {
 	}
 
 	var hover_done = check_piece_hover(x_diff, y_diff);
-	console.log(hover_done);
 	while (!hover_done) {
 		hover_done = check_piece_hover(0, 1);
 	}
@@ -334,15 +334,21 @@ const p = {
 	},
 	moveLeft() {
 		p.generic_calc(curr_piece);
-		if (p.lowest_x > 0) shift_piece(-1, 0);
+		var moveable = (p.lowest_x > 0);
+		for (let i = 0; i < curr_piece.length && moveable; i++) {
+			if (curr_piece[i].y > -1) moveable = (tiles[curr_piece[i].y][curr_piece[i].x - 1].c == 0);
+		}
+		if (moveable) {
+			shift_piece(-1, 0);
+		}
 
 	},
 	rotate() {
 
 		curr_piece.forEach((ele) => { ele.rotate(); })
 		curr_piece_hover.forEach((ele) => { ele.rotate(); })
-
-		if (check_piece(0, 0)) {
+		p.generic_calc(curr_piece);
+		if (p.lowest_x < 0 || p.highest_x > cols - 1 || check_piece(0, 0)) {
 			curr_piece.forEach((ele) => { ele.inv_rotate(); })
 			curr_piece_hover.forEach((ele) => { ele.inv_rotate(); })
 		}
@@ -350,7 +356,13 @@ const p = {
 	},
 	moveRight() {
 		p.generic_calc(curr_piece);
-		if (p.highest_x < cols - 1) shift_piece(1, 0);
+		var moveable = (p.highest_x < cols - 1);
+		for (let i = 0; i < curr_piece.length && moveable; i++) {
+			if (curr_piece[i].y > -1) moveable = (tiles[curr_piece[i].y][curr_piece[i].x + 1].c == 0);
+		}
+		if (moveable) {
+			shift_piece(1, 0);
+		}
 	},
 	moveDown() {
 		p.generic_calc(curr_piece);
