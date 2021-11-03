@@ -38,7 +38,8 @@ function setup() {
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
-	movement_timer = setInterval(movement, 100);
+	frameRate(100);
+	// movement_timer = setInterval(movement, 100);
 }
 
 
@@ -77,16 +78,16 @@ function spawnTile(tile, hover) {
 			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center + 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 4:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center, -2, pixel, tile, offset, 2), new Tile(center + 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 5:
-			result = [new Tile(center + 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			result = [new Tile(center + 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center, -2, pixel, tile, offset, 2), new Tile(center - 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 6:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center - 1, -2, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center - 1, -2, pixel, tile, offset, 2), new Tile(center, -2, pixel, tile, offset, 3)];
 			break;
 		case 7:
-			result = [new Tile(center - 1, -1, pixel, tile, offset), new Tile(center, -1, pixel, tile, offset), new Tile(center + 1, -1, pixel, tile, offset), new Tile(center, -2, pixel, tile, offset)];
+			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center, -2, pixel, tile, offset, 3)];
 			break;
 		default:
 			break;
@@ -161,13 +162,7 @@ function shift_piece(x_diff, y_diff) {
 
 function shift_piece_hover(x_diff, y_diff) {
 	for (let i = 0; i < curr_piece_hover.length; i++) {
-		if (curr_piece_hover[i].y + y_diff >= rows || (curr_piece_hover[i].y > -1 && tiles[curr_piece_hover[i].y + y_diff][curr_piece_hover[i].x + x_diff].c != 0)) {
-			// clearInterval(global_timer);
-			// for (let i = 0; i < curr_piece_hover.length; i++) {
-			// 	tiles[curr_piece_hover[i].y][curr_piece_hover[i].x] = curr_piece_hover[i];
-			// }
-
-			// global_timer = setInterval(shift_piece, 500, 0, 1);
+		if (curr_piece_hover[i].y + y_diff >= rows || ((curr_piece_hover[i].y > -1) && tiles[curr_piece_hover[i].y + y_diff][curr_piece_hover[i].x + x_diff].c != 0)) {
 			return true;
 		}
 	}
@@ -213,61 +208,61 @@ function shift_piece_hover(x_diff, y_diff) {
 
 // }
 
-function movement() {
+// function movement() {
 
 
-	if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && lowest_x > 0) {
-		shift_piece(-1, 0)
-		// curr_piece[i].shift(-1, 0);
-	} else if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && highest_x < cols - 1) {
-		shift_piece(1, 0)
-		// curr_piece[i].shift(1, 0);
-	} else if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && highest_y < rows - 1) {
-		shift_piece(0, 1)
-		// curr_piece[i].shift(0, 1);
-		clearInterval(global_timer);
-		global_timer = setInterval(shift_piece, 500, 0, 1);
+// 	if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && lowest_x > 0) {
+// 		shift_piece(-1, 0)
+// 		// curr_piece[i].shift(-1, 0);
+// 	} else if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && highest_x < cols - 1) {
+// 		shift_piece(1, 0)
+// 		// curr_piece[i].shift(1, 0);
+// 	} else if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && highest_y < rows - 1) {
+// 		shift_piece(0, 1)
+// 		// curr_piece[i].shift(0, 1);
+// 		clearInterval(global_timer);
+// 		global_timer = setInterval(shift_piece, 500, 0, 1);
 
-	} else if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece_hover[i].x = curr_piece[i].x;
-			curr_piece_hover[i].y = curr_piece[i].y;
-			curr_piece_hover[i].r = curr_piece[i].r;
-			curr_piece_hover[i].shift(0, 0);
-			// curr_piece[i].rotate();
-			curr_piece_hover[i].rotate();
-		}
+// 	} else if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
+// 		for (let i = 0; i < curr_piece.length; i++) {
+// 			curr_piece_hover[i].x = curr_piece[i].x;
+// 			curr_piece_hover[i].y = curr_piece[i].y;
+// 			curr_piece_hover[i].r = curr_piece[i].r;
+// 			curr_piece_hover[i].shift(0, 0);
+// 			// curr_piece[i].rotate();
+// 			curr_piece_hover[i].rotate();
+// 		}
 
-		lowest_x = 1000;
-		highest_x = -1;
-		highest_y = -1;
+// 		lowest_x = 1000;
+// 		highest_x = -1;
+// 		highest_y = -1;
 
-		for (let i = 0; i < curr_piece_hover.length; i++) {
-			if (curr_piece_hover[i].y > highest_y) {
-				highest_y = curr_piece_hover[i].y;
-			}
-			if (curr_piece_hover[i].x > highest_x) {
-				highest_x = curr_piece_hover[i].x;
-			}
-			if (curr_piece_hover[i].x < lowest_x) {
-				lowest_x = curr_piece_hover[i].x;
-			}
-		}
-		console.log(lowest_x, highest_x, highest_y)
+// 		for (let i = 0; i < curr_piece_hover.length; i++) {
+// 			if (curr_piece_hover[i].y > highest_y) {
+// 				highest_y = curr_piece_hover[i].y;
+// 			}
+// 			if (curr_piece_hover[i].x > highest_x) {
+// 				highest_x = curr_piece_hover[i].x;
+// 			}
+// 			if (curr_piece_hover[i].x < lowest_x) {
+// 				lowest_x = curr_piece_hover[i].x;
+// 			}
+// 		}
+// 		console.log(lowest_x, highest_x, highest_y)
 
-		if (lowest_x > 0 && highest_x < cols - 1 && highest_y < rows - 1) {
-			console.log("here")
-			for (let i = 0; i < curr_piece.length; i++) {
-				curr_piece[i].rotate();
-				// curr_piece_hover[i].rotate();
-			}
-		}
-		// curr_piece[i].shift(0, 1);
-		shift_piece(0, 0);
-		// clearInterval(global_timer);
-		// global_timer = setInterval(shift_piece, 500, 0, 1);
-	}
-}
+// 		if (lowest_x > 0 && highest_x < cols - 1 && highest_y < rows - 1) {
+// 			console.log("here")
+// 			for (let i = 0; i < curr_piece.length; i++) {
+// 				curr_piece[i].rotate();
+// 				// curr_piece_hover[i].rotate();
+// 			}
+// 		}
+// 		// curr_piece[i].shift(0, 1);
+// 		shift_piece(0, 0);
+// 		// clearInterval(global_timer);
+// 		// global_timer = setInterval(shift_piece, 500, 0, 1);
+// 	}
+// }
 
 function checkLine(y, IsZero) {
 	for (let i = 0; i < tiles[y].length; i++) {
@@ -311,40 +306,60 @@ function keyTyped() {
 	}
 }
 
+
 const p = { // JUST FOR THIS DEMO. You use Piece.prototype
-	lowest_x = 1000,
-	highest_x = -1,
-	highest_y = -1,
+	lowest_x: 10000,
+	highest_x: -1,
+	highest_y: -1,
 
 	generic_calc(array) {
-		lowest_x = 1000;
-		highest_x = -1;
-		highest_y = -1;
+		p.lowest_x = 1000;
+		p.highest_x = -1;
+		p.highest_y = -1;
 
 		for (let i = 0; i < array.length; i++) {
-			if (array[i].y > highest_y) {
-				highest_y = array[i].y;
+			if (array[i].y > p.highest_y) {
+				p.highest_y = array[i].y;
 			}
-			if (array[i].x > highest_x) {
-				highest_x = array[i].x;
+			if (array[i].x > p.highest_x) {
+				p.highest_x = array[i].x;
 			}
-			if (array[i].x < lowest_x) {
-				lowest_x = array[i].x;
+			if (array[i].x < p.lowest_x) {
+				p.lowest_x = array[i].x;
 			}
 		}
 	},
 	moveLeft() {
-		this.generic_calc(curr_piece);
+		p.generic_calc(curr_piece);
+		if (p.lowest_x > 0) shift_piece(-1, 0);
 
 	},
 	rotate() {
+		for (let i = 0; i < curr_piece.length; i++) {
+			curr_piece_hover[i].x = curr_piece[i].x;
+			curr_piece_hover[i].y = curr_piece[i].y;
+			curr_piece_hover[i].r = curr_piece[i].r;
+			curr_piece_hover[i].shift(0, 0);
+			curr_piece_hover[i].rotate();
+		}
+		p.generic_calc(curr_piece_hover);
+		// console.log(lowest_x, highest_x, highest_y)
+
+		if (p.lowest_x > -1 && p.highest_x < cols && p.highest_y < rows) {
+			for (let i = 0; i < curr_piece.length; i++) {
+				curr_piece[i].rotate();
+			}
+		}
+		shift_piece(0, 0);
 
 	},
 	moveRight() {
-
+		p.generic_calc(curr_piece);
+		if (p.highest_x < cols - 1) shift_piece(1, 0);
 	},
 	moveDown() {
-
+		p.generic_calc(curr_piece);
+		if (p.highest_y < rows - 1) shift_piece(0, 1);
 	},
 };
 
@@ -353,10 +368,10 @@ document.addEventListener("keydown", CONTROL);
 function CONTROL(event) {
 	const k = event.keyCode;
 
-	if (k < 37 || k > 40) return; // Do nothing if was not an arrow key. Else Do:
+	if (k < 37 || k > 40) return;
 
-	event.preventDefault();       // Prevent browser scroll on arrows
-	if (k == 37 || k == 39) dropStart = Date.now(); // Only for left or right
+	event.preventDefault();
+	if (k == 37 || k == 39) dropStart = Date.now();
 
 	return {
 		37: p.moveLeft,
