@@ -338,23 +338,15 @@ const p = {
 
 	},
 	rotate() {
-		for (let i = 0; i < curr_piece.length; i++) {
-			curr_piece_hover[i].x = curr_piece[i].x;
-			curr_piece_hover[i].y = curr_piece[i].y;
-			curr_piece_hover[i].r = curr_piece[i].r;
-			curr_piece_hover[i].shift(0, 0);
-			curr_piece_hover[i].rotate();
-		}
-		p.generic_calc(curr_piece_hover);
-		// console.log(lowest_x, highest_x, highest_y)
 
-		if (p.lowest_x > -1 && p.highest_x < cols && p.highest_y < rows) {
-			for (let i = 0; i < curr_piece.length; i++) {
-				curr_piece[i].rotate();
-			}
+		curr_piece.forEach((ele) => { ele.rotate(); })
+		curr_piece_hover.forEach((ele) => { ele.rotate(); })
+
+		if (check_piece(0, 0)) {
+			curr_piece.forEach((ele) => { ele.inv_rotate(); })
+			curr_piece_hover.forEach((ele) => { ele.inv_rotate(); })
 		}
 		shift_piece(0, 0);
-
 	},
 	moveRight() {
 		p.generic_calc(curr_piece);
