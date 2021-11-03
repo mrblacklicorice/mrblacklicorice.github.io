@@ -296,7 +296,7 @@ function checkLine(y, IsZero) {
 
 // see key held instead of key pressed --- kinda done??
 // create new tiles --- done!!
-// create rotation --- figure out :(
+// create rotation --- done!!
 
 
 function keyTyped() {
@@ -310,7 +310,7 @@ function keyTyped() {
 }
 
 
-const p = { // JUST FOR THIS DEMO. You use Piece.prototype
+const p = {
 	lowest_x: 10000,
 	highest_x: -1,
 	highest_y: -1,
