@@ -177,96 +177,6 @@ function check_piece_hover(x_diff, y_diff) {
 	return false;
 }
 
-
-
-// function keyPressed() {
-// 	var lowest_x = 1000;
-// 	var highest_x = -1;
-// 	var highest_y = -1;
-
-// 	for (let i = 0; i < curr_piece.length; i++) {
-// 		if (curr_piece[i].y > highest_y) {
-// 			highest_y = curr_piece[i].y;
-// 		}
-// 		if (curr_piece[i].x > highest_x) {
-// 			highest_x = curr_piece[i].x;
-// 		}
-// 		if (curr_piece[i].x < lowest_x) {
-// 			lowest_x = curr_piece[i].x;
-// 		}
-// 	}
-
-// 	if (keyCode == LEFT_ARROW && lowest_x > 0) {
-// 		shift_piece(-1, 0)
-// 		// curr_piece[i].shift(-1, 0);
-// 	} else if (keyCode === RIGHT_ARROW && highest_x < cols - 1) {
-// 		shift_piece(1, 0)
-// 		// curr_piece[i].shift(1, 0);
-// 	} else if (keyCode === DOWN_ARROW && highest_y < rows - 1) {
-// 		shift_piece(0, 1)
-// 		// curr_piece[i].shift(0, 1);
-// 		clearInterval(global_timer);
-// 		global_timer = setInterval(shift_piece, 500, 0, 1);
-// 	}
-
-// }
-
-// function movement() {
-
-
-// 	if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && lowest_x > 0) {
-// 		shift_piece(-1, 0)
-// 		// curr_piece[i].shift(-1, 0);
-// 	} else if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && highest_x < cols - 1) {
-// 		shift_piece(1, 0)
-// 		// curr_piece[i].shift(1, 0);
-// 	} else if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && highest_y < rows - 1) {
-// 		shift_piece(0, 1)
-// 		// curr_piece[i].shift(0, 1);
-// 		clearInterval(global_timer);
-// 		global_timer = setInterval(shift_piece, 500, 0, 1);
-
-// 	} else if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
-// 		for (let i = 0; i < curr_piece.length; i++) {
-// 			curr_piece_hover[i].x = curr_piece[i].x;
-// 			curr_piece_hover[i].y = curr_piece[i].y;
-// 			curr_piece_hover[i].r = curr_piece[i].r;
-// 			curr_piece_hover[i].shift(0, 0);
-// 			// curr_piece[i].rotate();
-// 			curr_piece_hover[i].rotate();
-// 		}
-
-// 		lowest_x = 1000;
-// 		highest_x = -1;
-// 		highest_y = -1;
-
-// 		for (let i = 0; i < curr_piece_hover.length; i++) {
-// 			if (curr_piece_hover[i].y > highest_y) {
-// 				highest_y = curr_piece_hover[i].y;
-// 			}
-// 			if (curr_piece_hover[i].x > highest_x) {
-// 				highest_x = curr_piece_hover[i].x;
-// 			}
-// 			if (curr_piece_hover[i].x < lowest_x) {
-// 				lowest_x = curr_piece_hover[i].x;
-// 			}
-// 		}
-// 		console.log(lowest_x, highest_x, highest_y)
-
-// 		if (lowest_x > 0 && highest_x < cols - 1 && highest_y < rows - 1) {
-// 			console.log("here")
-// 			for (let i = 0; i < curr_piece.length; i++) {
-// 				curr_piece[i].rotate();
-// 				// curr_piece_hover[i].rotate();
-// 			}
-// 		}
-// 		// curr_piece[i].shift(0, 1);
-// 		shift_piece(0, 0);
-// 		// clearInterval(global_timer);
-// 		// global_timer = setInterval(shift_piece, 500, 0, 1);
-// 	}
-// }
-
 function checkLine(y, IsZero) {
 	for (let i = 0; i < tiles[y].length; i++) {
 		if ((IsZero) ? (tiles[y][i].c == 0) : (tiles[y][i].c != 0)) {
@@ -344,23 +254,27 @@ const p = {
 
 	},
 	rotate() {
-
+		// clearInterval(global_timer);
 		curr_piece.forEach((ele) => { ele.rotate(); })
 		curr_piece_hover.forEach((ele) => { ele.rotate(); })
 		p.generic_calc(curr_piece);
 
-		var good = (p.lowest_x < 0 || p.highest_x > cols - 1);
+		var good = !(p.lowest_x > -1 && p.highest_x < cols);
+		console.log(good);
+		console.log(p.lowest_x, p.highest_x);
 		for (let i = 0; i < curr_piece.length && !good; i++) {
-			if (curr_piece[i].y + y_diff >= rows || ((curr_piece[i].y > -1) && tiles[curr_piece[i].y][curr_piece[i].x].c != 0)) {
+			if (curr_piece[i].y >= rows || ((curr_piece[i].y > -1) && tiles[curr_piece[i].y][curr_piece[i].x].c != 0)) {
 				good = true;
 			}
 		}
+		// console.log(good);
 
 		if (good) {
 			curr_piece.forEach((ele) => { ele.inv_rotate(); })
 			curr_piece_hover.forEach((ele) => { ele.inv_rotate(); })
 		}
 		shift_piece(0, 0);
+		// global_timer = setInterval(shift_piece, 500, 0, 1);
 	},
 	moveRight() {
 		p.generic_calc(curr_piece);
