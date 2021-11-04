@@ -77,13 +77,13 @@ class Tile {
 
     rotate = () => {
         if (this.c == 6) {
-            this.r = (this.r + 1) % 4;
+            this.r = this.r + 1;
             return;
         }
         var temp_cord = this.r_d[this.c - 1][this.i][this.r % 4];
 
         this.shift(temp_cord[0], temp_cord[1]);
-        this.r = (this.r + 1) % 4;
+        this.r = this.r + 1;
     }
 
     inv_rotate = () => {
