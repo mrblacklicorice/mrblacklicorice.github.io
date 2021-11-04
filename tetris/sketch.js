@@ -348,7 +348,15 @@ const p = {
 		curr_piece.forEach((ele) => { ele.rotate(); })
 		curr_piece_hover.forEach((ele) => { ele.rotate(); })
 		p.generic_calc(curr_piece);
-		if (p.lowest_x < 0 || p.highest_x > cols - 1 || check_piece(0, 0)) {
+
+		var good = (p.lowest_x < 0 || p.highest_x > cols - 1);
+		for (let i = 0; i < curr_piece.length && !good; i++) {
+			if (curr_piece[i].y + y_diff >= rows || ((curr_piece[i].y > -1) && tiles[curr_piece[i].y][curr_piece[i].x].c != 0)) {
+				good = true;
+			}
+		}
+
+		if (good) {
 			curr_piece.forEach((ele) => { ele.inv_rotate(); })
 			curr_piece_hover.forEach((ele) => { ele.inv_rotate(); })
 		}
