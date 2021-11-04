@@ -28,6 +28,7 @@ var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", 
 
 var show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
 
+var held = false;
 
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
@@ -50,6 +51,8 @@ function setup() {
 	show_tiles_changing(1);
 	show_tiles_changing(2);
 	show_tiles_changing(3);
+
+	hold_piece_showing();
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
@@ -74,6 +77,10 @@ function draw() {
 
 	stroke(colors[hold[0].c]);
 	rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
+	for (let i = 0; i < hold.length; i++) {
+		hold[i].show();
+
+	}
 	// this is for hold
 
 	for (let i = 0; i < 3; i++) {
@@ -159,6 +166,8 @@ function shift_piece(x_diff, y_diff) {
 		show_tiles_changing(2);
 		show_tiles_changing(3);
 
+		held = false;
+
 		curr_piece = spawnTile(piece_queue, false);
 		curr_piece_hover = spawnTile(piece_queue, true);
 
@@ -226,6 +235,30 @@ function show_tiles_changing(i) {
 	}
 }
 
+function hold_piece_showing() {
+	var lowest_x = 1000;
+	var highest_x = -1000;
+	var lowest_y = 1000;
+	var highest_y = -1000;
+
+	for (let j = 0; j < hold.length; j++) {
+		if (lowest_x > hold[j].x) lowest_x = hold[j].x;
+		if (highest_x < hold[j].x) highest_x = hold[j].x;
+		if (lowest_y > hold[j].y) lowest_y = hold[j].y;
+		if (highest_y < hold[j].y) highest_y = hold[j].y;
+	}
+
+	var width = (highest_x - lowest_x + 1) * pixel;
+	var height = (highest_y - lowest_y + 1) * pixel;
+	var cor_x = (offset * 0.1 * side_bar) + (pixel * (5 / 2)) - width / 2;
+	var cor_y = (offset * 10) + (pixel * (5 / 2)) - height / 2;
+
+	for (let j = 0; j < hold.length; j++) {
+		hold[j].x_pos = (highest_x - hold[j].x) * pixel + cor_x;
+		hold[j].y_pos = (highest_y - hold[j].y) * pixel + cor_y;
+	}
+}
+
 function check_piece_hover(x_diff, y_diff) {
 	for (let i = 0; i < curr_piece_hover.length; i++) {
 		if (curr_piece_hover[i].y + y_diff >= rows || ((curr_piece_hover[i].y > -1) && tiles[curr_piece_hover[i].y + y_diff][curr_piece_hover[i].x + x_diff].c != 0)) {
@@ -279,6 +312,30 @@ function keyTyped() {
 		while (!down) {
 			down = shift_piece(0, 1)
 		}
+	} else if (key == "c" && !held) {
+		held = true;
+		var temp;
+
+		if (hold[0].c == 0) {
+			hold = spawnTile(piece_queue, false);
+			piece_queue.shift();
+			piece_queue.push(Math.floor(Math.random() * 7) + 1);
+			show_tiles.shift();
+			show_tiles.push(spawnTile(piece_queue, false, piece_queue[3]));
+
+			show_tiles_changing(1);
+			show_tiles_changing(2);
+			show_tiles_changing(3);
+		} else {
+			temp = piece_queue[0];
+			piece_queue[0] = hold[0].c;
+			hold = spawnTile([temp], false);
+
+			show_tiles[0] = spawnTile(piece_queue, false, piece_queue[0]);
+		}
+		curr_piece = spawnTile(piece_queue, false);
+		curr_piece_hover = spawnTile(piece_queue, true);
+		hold_piece_showing();
 	}
 }
 
