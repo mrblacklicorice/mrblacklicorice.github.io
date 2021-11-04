@@ -5,7 +5,7 @@ class Tile {
         this.i = i;
         this.o = o;
         this.x = x;
-        this.x_pos = x * l + (26 * o);
+        this.x_pos = x * l + (31 * o);
         this.y = y;
         this.y_pos = y * l + o;
         this.l = l;
@@ -60,7 +60,7 @@ class Tile {
         this.x += x;
         this.y += y;
 
-        this.x_pos = this.x * this.l + (26 * this.o);
+        this.x_pos = this.x * this.l + (31 * this.o);
         this.y_pos = this.y * this.l + this.o;
     }
 
