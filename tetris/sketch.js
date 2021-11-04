@@ -16,10 +16,16 @@ var global_timer;
 
 var movement_timer;
 
-var x = Math.floor(Math.random() * 7) + 1;
+var piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
+
+var canvas;
+
+var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+
+var show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
 
 function setup() {
-	var canvas = createCanvas(pixel * cols + (offset * 2), pixel * rows + (offset * 2) + (offset * 10));
+	canvas = createCanvas(pixel * cols + (offset * 2) + (offset * 50), pixel * rows + (offset * 2) + (offset * 10));
 
 	canvas.center("horizontal");
 	document.body.style.background = '#222222';
@@ -33,8 +39,8 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(x, false);
-	curr_piece_hover = spawnTile(x, true);
+	curr_piece = spawnTile(piece_queue, false);
+	curr_piece_hover = spawnTile(piece_queue, true);
 
 	global_timer = setInterval(shift_piece, 500, 0, 1);
 
@@ -59,13 +65,23 @@ function draw() {
 		curr_piece_hover[i].show();
 	}
 
+	stroke(colors[0]);
+	rect(offset, offset * 10, pixel * 4, pixel * 4);
+	// this is for hold
+
+	for (let i = 0; i < 3; i++) {
+		stroke(colors[piece_queue[i + 1]]);
+		rect(canvas.width - (20 * offset), (offset * (i + 1)) + (pixel * (i * 4)), pixel * 4, pixel * 4);
+	}
+	// this is for peices in order
 }
 
-function spawnTile(tile, hover) {
+function spawnTile(tile_array, hover, i) {
 	// [none, I, J, L, S, Z, O, T]
 	// [  0 , 1, 2, 3, 4, 5, 6, 7]
-	center = (cols / 2) - 1;
+	center = ((cols / 2)) - 1;
 	var result;
+	var tile = (i == undefined) ? tile_array[0] : tile_array[i];
 
 	switch (tile) {
 		case 1:
@@ -119,9 +135,12 @@ function shift_piece(x_diff, y_diff) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			checkLine(curr_piece[i].y, true);
 		}
-		x = Math.floor(Math.random() * 7) + 1;
-		curr_piece = spawnTile(x, false);
-		curr_piece_hover = spawnTile(x, true);
+
+		piece_queue.shift();
+		piece_queue.push(Math.floor(Math.random() * 7) + 1);
+
+		curr_piece = spawnTile(piece_queue, false);
+		curr_piece_hover = spawnTile(piece_queue, true);
 
 		global_timer = setInterval(shift_piece, 500, 0, 1);
 		if (checkLine(0, false) && checkLine(1, false)) {
@@ -260,8 +279,6 @@ const p = {
 		p.generic_calc(curr_piece);
 
 		var good = !(p.lowest_x > -1 && p.highest_x < cols);
-		console.log(good);
-		console.log(p.lowest_x, p.highest_x);
 		for (let i = 0; i < curr_piece.length && !good; i++) {
 			if (curr_piece[i].y >= rows || ((curr_piece[i].y > -1) && tiles[curr_piece[i].y][curr_piece[i].x].c != 0)) {
 				good = true;
