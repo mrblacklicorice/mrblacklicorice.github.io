@@ -69,7 +69,7 @@ class Tile {
         fill(colors[this.c]);
 
         // noStroke();
-        strokeWeight(0);
+        strokeWeight(1);
         stroke("#000000");
         rect(this.x_pos, this.y_pos, this.l, this.l);
 

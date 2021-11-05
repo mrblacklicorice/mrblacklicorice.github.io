@@ -181,6 +181,7 @@ class Grid {
     }
 
     first_click = (r, c) => {
+        randomSeed(this.seed);
         var rnd_r = Math.floor(random(this.rows));
         var rnd_c = Math.floor(random(this.cols));
 
