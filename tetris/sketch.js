@@ -30,6 +30,9 @@ var show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece
 
 var held = false;
 
+var timer = 0;
+var pressed = 0;
+
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 
@@ -92,8 +95,23 @@ function draw() {
 			show_tiles[i + 1][j].show();
 		}
 	}
-
 	// this is for peices in order
+	if (timer % 6 == 0 && pressed == 0) {
+		console.log(pressed);
+		if (keyIsDown(40)) {
+			p.moveDown();
+		} else if (keyIsDown(37)) {
+			p.moveLeft();
+		} else if (keyIsDown(39)) {
+			p.moveRight();
+		}
+	}
+
+	if (pressed > 0) {
+		pressed--;
+	}
+
+	timer++;
 }
 
 function spawnTile(tile_array, hover, i) {
@@ -120,7 +138,7 @@ function spawnTile(tile_array, hover, i) {
 			result = [new Tile(center + 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center, -2, pixel, tile, offset, 2), new Tile(center - 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 6:
-			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center - 1, -2, pixel, tile, offset, 2), new Tile(center, -2, pixel, tile, offset, 3)];
+			result = [new Tile(center, -1, pixel, tile, offset, 0), new Tile(center + 1, -1, pixel, tile, offset, 1), new Tile(center, -2, pixel, tile, offset, 2), new Tile(center + 1, -2, pixel, tile, offset, 3)];
 			break;
 		case 7:
 			result = [new Tile(center - 1, -1, pixel, tile, offset, 0), new Tile(center, -1, pixel, tile, offset, 1), new Tile(center + 1, -1, pixel, tile, offset, 2), new Tile(center, -2, pixel, tile, offset, 3)];
@@ -146,10 +164,15 @@ function spawnTile(tile_array, hover, i) {
 }
 
 function shift_piece(x_diff, y_diff) {
-
 	if (check_piece(x_diff, y_diff)) {
 		clearInterval(global_timer);
 		for (let i = 0; i < curr_piece.length; i++) {
+			if (curr_piece[i].y < 0) {
+				console.log("game over");
+				clearInterval(global_timer);
+				noLoop();
+				return;
+			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
 		for (let i = 0; i < curr_piece.length; i++) {
@@ -172,9 +195,11 @@ function shift_piece(x_diff, y_diff) {
 		curr_piece_hover = spawnTile(piece_queue, true);
 
 		global_timer = setInterval(shift_piece, 500, 0, 1);
-		if (checkLine(0, false) && checkLine(1, false)) {
+		if (checkLine(0, false)) {
+			console.log("game over");
 			clearInterval(global_timer);
-			console.log("game over")
+			noLoop();
+			return;
 		}
 		return true;
 	} else {
@@ -276,7 +301,7 @@ function check_piece_hover(x_diff, y_diff) {
 function checkLine(y, IsZero) {
 	for (let i = 0; i < tiles[y].length; i++) {
 		if ((IsZero) ? (tiles[y][i].c == 0) : (tiles[y][i].c != 0)) {
-			return false;
+			return true;
 		}
 	}
 
@@ -296,6 +321,7 @@ function checkLine(y, IsZero) {
 			}
 		}
 	}
+	// return true;
 }
 
 
@@ -305,14 +331,15 @@ function checkLine(y, IsZero) {
 // create rotation --- done!!
 
 
-function keyTyped() {
-	if (key == " ") {
+function keyPressed() {
+	console.log(keyCode);
+	if (keyCode == 32) {
 		var down = false;
 
 		while (!down) {
 			down = shift_piece(0, 1)
 		}
-	} else if (key == "c" && !held) {
+	} else if (keyCode == 67 && !held) {
 		held = true;
 		var temp;
 
@@ -336,6 +363,17 @@ function keyTyped() {
 		curr_piece = spawnTile(piece_queue, false);
 		curr_piece_hover = spawnTile(piece_queue, true);
 		hold_piece_showing();
+	} else if (keyCode == 38) {
+		p.rotate();
+	} else if (keyCode == 40) {
+		p.moveDown();
+		pressed = 6;
+	} else if (keyCode == 37) {
+		p.moveLeft();
+		pressed = 6;
+	} else if (keyCode == 39) {
+		p.moveRight();
+		pressed = 6;
 	}
 }
 
@@ -410,20 +448,20 @@ const p = {
 	},
 };
 
-document.addEventListener("keydown", CONTROL);
+// document.addEventListener("keydown", CONTROL);
 
-function CONTROL(event) {
-	const k = event.keyCode;
+// function CONTROL(event) {
+// 	const k = event.keyCode;
 
-	if (k < 37 || k > 40) return;
+// 	if (k < 37 || k > 40) return;
 
-	event.preventDefault();
-	if (k == 37 || k == 39) dropStart = Date.now();
+// 	event.preventDefault();
+// 	// if (k == 37 || k == 39) dropStart = Date.now();
 
-	return {
-		37: p.moveLeft,
-		38: p.rotate,
-		39: p.moveRight,
-		40: p.moveDown
-	}[k]();
-}
+// 	return {
+// 		37: p.moveLeft,
+// 		38: p.rotate,
+// 		39: p.moveRight,
+// 		40: p.moveDown
+// 	}[k]();
+// }

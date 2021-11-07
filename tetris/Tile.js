@@ -65,14 +65,15 @@ class Tile {
     }
 
     show = () => {
-        var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+        var colors = ["#666666", "#00f0f1", "#0001ed", "#f09f06", "#00f100", "#f10100", "#f2ee07", "#a100f3"];
+        var colors_bor = ["#444444", "#00d9db", "#0000de", "#dd9202", "#00dd00", "#df0103", "#d7d500", "#8e00df"];
         fill(colors[this.c]);
 
         // noStroke();
+        // strokeWeight((this.c == 0) ? 0 : 1);
         strokeWeight(1);
-        stroke("#000000");
+        stroke(colors_bor[this.c]);
         rect(this.x_pos, this.y_pos, this.l, this.l);
-
     }
 
     rotate = () => {
