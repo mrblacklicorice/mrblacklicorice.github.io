@@ -367,13 +367,13 @@ function keyPressed() {
 		p.rotate();
 	} else if (keyCode == 40) {
 		p.moveDown();
-		pressed = 6;
+		pressed = 7;
 	} else if (keyCode == 37) {
 		p.moveLeft();
-		pressed = 6;
+		pressed = 7;
 	} else if (keyCode == 39) {
 		p.moveRight();
-		pressed = 6;
+		pressed = 7;
 	}
 }
 
