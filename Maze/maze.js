@@ -178,7 +178,7 @@ var previous;
 var lastnum = 0;
 var counter = 0;
 var mazedone = false;
-var grid = ((new Array(cols)).fill(0)).map(ele => (new Array(rows)).fill(0));;
+var grid = ((new Array(cols)).fill(0)).map(ele => (new Array(rows)).fill(0));
 var ywalls;
 var xwalls;
 var id;

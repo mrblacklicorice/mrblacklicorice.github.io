@@ -30,6 +30,8 @@ var show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece
 
 var held = false;
 
+var lines = 0;
+
 var timer = 0;
 var pressed = 0;
 
@@ -176,7 +178,13 @@ function shift_piece(x_diff, y_diff) {
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
 		for (let i = 0; i < curr_piece.length; i++) {
-			checkLine(curr_piece[i].y, true);
+			if (!checkLine(curr_piece[i].y, true)) {
+				lines++;
+			}
+		}
+
+		if (lines > 0 && (lines % 3 == 0)) {
+			flip_tiles();
 		}
 
 		piece_queue.shift();
@@ -321,9 +329,49 @@ function checkLine(y, IsZero) {
 			}
 		}
 	}
-	// return true;
+	return false;
 }
 
+function flip_tiles() {
+	var temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill());
+	console.log(temp_tiles);
+
+	for (var i = tiles.length - 1; i >= 0; i--) {
+		for (var j = tiles[0].length - 1; j >= 0; j--) {
+			//   console.log(i + "," + j)
+			temp_tiles[tiles.length - (i + 1)][tiles[0].length - (j + 1)] = deepCopy(tiles[i][j]);
+		}
+	}
+
+	for (let i = 0; i < tiles.length; i++) {
+		for (let j = 0; j < tiles[0].length; j++) {
+			temp_tiles[i][j].x = tiles[i][j].x;
+			temp_tiles[i][j].y = tiles[i][j].y;
+			temp_tiles.shift(0, 0);
+		}
+	}
+
+	tiles = deepCopy(temp_tiles);
+}
+
+function deepCopy(inObject) {
+	var outObject;
+	var value;
+	var key;
+
+	if (typeof inObject !== "object" || inObject === null) {
+		return inObject;
+	}
+
+	outObject = Array.isArray(inObject) ? [] : {};
+
+	for (key in inObject) {
+		value = inObject[key];
+		outObject[key] = deepCopy(value);
+	}
+
+	return outObject;
+}
 
 
 // see key held instead of key pressed --- kinda done??

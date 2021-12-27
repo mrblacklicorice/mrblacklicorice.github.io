@@ -728,6 +728,26 @@ var reverseWords = function (s) {
 
 };
 
+/**
+ * @param {number[]} piles
+ * @param {number} h
+ * @return {number}
+ */
+var minEatingSpeed = function (piles, h) {
+  var x = Infinity;
+  var k = 0;
+  while (x > h) {
+    x = 0;
+    k++;
+    for (let i = 0; i < piles.length; i++) {
+      x += Math.ceil(piles[i] / k);
+    }
+  }
+
+  return k;
+};
 
 // console.log(reverseWords("Hello Guys"));
 // console.log(longestCommonPrefix(["asadasb", "asadb"]));
+
+// function calculateDaysBetweenDates(begin, end) {

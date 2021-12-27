@@ -1,0 +1,26 @@
+#!javascript
+
+var x  = [[1,2],[5,5],[3,4]];
+var y = new Array(x.length);
+
+for (let i = 0; i < x.length; i++) {
+	y[i] = x[i].splice();
+}
+
+for(var i = x.length-1; i >=0; i--){
+  for(var j = x[0].length-1; j >=0; j--){
+    //   console.log(i + "," + j)
+      y[x.length-(i+1)][x[0].length-(j+1)] = x[i][j];
+  }
+}
+
+console.log(y);
+console.log(x);
+
+#!javascript
+
+var y = [[1,2],[5,5],[3,4]];
+
+var x = ((new Array(y.length)).fill(0)).map(ele => (new Array(y[0].length)).fill());
+
+return x;
