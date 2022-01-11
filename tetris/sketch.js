@@ -99,7 +99,6 @@ function draw() {
 	}
 	// this is for peices in order
 	if (timer % 6 == 0 && pressed == 0) {
-		console.log(pressed);
 		if (keyIsDown(40)) {
 			p.moveDown();
 		} else if (keyIsDown(37)) {
@@ -333,7 +332,7 @@ function checkLine(y, IsZero) {
 }
 
 function flip_tiles() {
-	var temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill());
+	var temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill(0));
 	console.log(temp_tiles);
 
 	for (var i = tiles.length - 1; i >= 0; i--) {
@@ -380,7 +379,6 @@ function deepCopy(inObject) {
 
 
 function keyPressed() {
-	console.log(keyCode);
 	if (keyCode == 32) {
 		var down = false;
 
