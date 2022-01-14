@@ -1,39 +1,39 @@
-var pixel = 30;
+let pixel = 30;
 
-var side_bar = pixel;
+let side_bar = pixel;
 
-var offset = pixel / 5;
+let offset = pixel / 5;
 
-var cols = 10;
+const cols = 10;
 
-var rows = 24;
+const rows = 24;
 
-var tiles = [];
+let tiles = [];
 
-var curr_piece;
+let curr_piece;
 
-var curr_piece_hover;
+let curr_piece_hover;
 
-var global_timer;
+let global_timer;
 
-var movement_timer;
+let movement_timer;
 
-var piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
+let piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
 
-var canvas;
+let canvas;
 
-var hold = [new Tile(0, 0, 0, 0, offset)];
+let hold = [new Tile(0, 0, 0, 0, offset)];
 
-var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+let colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
 
-var show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
+let show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
 
-var held = false;
+let held = false;
 
-var lines = 0;
+let lines = 0;
 
-var timer = 0;
-var pressed = 0;
+let timer = 0;
+let pressed = 0;
 
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
@@ -118,9 +118,9 @@ function draw() {
 function spawnTile(tile_array, hover, i) {
 	// [none, I, J, L, S, Z, O, T]
 	// [  0 , 1, 2, 3, 4, 5, 6, 7]
-	var center = ((cols / 2)) - 1;
-	var result;
-	var tile = (i == undefined) ? tile_array[0] : i;
+	let center = ((cols / 2)) - 1;
+	let result;
+	let tile = (i == undefined) ? tile_array[0] : i;
 
 	switch (tile) {
 		case 1:
@@ -150,7 +150,7 @@ function spawnTile(tile_array, hover, i) {
 	if (hover) {
 		for (let i = 0; i < result.length; i++) {
 			result[i].show = () => {
-				var colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
+				let colors = ["#777777", "#00ffff", "#0000aa", "#ff7700", "#00ff00", "#ff0000", "#ffff00", "#cc00cc"];
 				noFill();
 
 				// noStroke();
@@ -225,7 +225,7 @@ function check_piece(x_diff, y_diff) {
 		curr_piece_hover[i].shift(0, 0);
 	}
 
-	var hover_done = check_piece_hover(x_diff, y_diff);
+	let hover_done = check_piece_hover(x_diff, y_diff);
 	while (!hover_done) {
 		hover_done = check_piece_hover(0, 1);
 	}
@@ -244,10 +244,10 @@ function check_piece(x_diff, y_diff) {
 
 
 function show_tiles_changing(i) {
-	var lowest_x = 1000;
-	var highest_x = -1000;
-	var lowest_y = 1000;
-	var highest_y = -1000;
+	let lowest_x = 1000;
+	let highest_x = -1000;
+	let lowest_y = 1000;
+	let highest_y = -1000;
 
 	for (let j = 0; j < show_tiles[i].length; j++) {
 		if (lowest_x > show_tiles[i][j].x) lowest_x = show_tiles[i][j].x;
@@ -256,10 +256,10 @@ function show_tiles_changing(i) {
 		if (highest_y < show_tiles[i][j].y) highest_y = show_tiles[i][j].y;
 	}
 
-	var width = (highest_x - lowest_x + 1) * pixel;
-	var height = (highest_y - lowest_y + 1) * pixel;
-	var cor_x = ((canvas.width - (side_bar * offset * 0.9)) + (pixel * (5 / 2)) - width / 2);
-	var cor_y = (offset * (i)) + (pixel * ((i - 1) * 5)) + (pixel * (5 / 2)) - height / 2;
+	let width = (highest_x - lowest_x + 1) * pixel;
+	let height = (highest_y - lowest_y + 1) * pixel;
+	let cor_x = ((canvas.width - (side_bar * offset * 0.9)) + (pixel * (5 / 2)) - width / 2);
+	let cor_y = (offset * (i)) + (pixel * ((i - 1) * 5)) + (pixel * (5 / 2)) - height / 2;
 
 	for (let j = 0; j < show_tiles[i].length; j++) {
 		show_tiles[i][j].x_pos = (highest_x - show_tiles[i][j].x) * pixel + cor_x;
@@ -268,10 +268,10 @@ function show_tiles_changing(i) {
 }
 
 function hold_piece_showing() {
-	var lowest_x = 1000;
-	var highest_x = -1000;
-	var lowest_y = 1000;
-	var highest_y = -1000;
+	let lowest_x = 1000;
+	let highest_x = -1000;
+	let lowest_y = 1000;
+	let highest_y = -1000;
 
 	for (let j = 0; j < hold.length; j++) {
 		if (lowest_x > hold[j].x) lowest_x = hold[j].x;
@@ -280,10 +280,10 @@ function hold_piece_showing() {
 		if (highest_y < hold[j].y) highest_y = hold[j].y;
 	}
 
-	var width = (highest_x - lowest_x + 1) * pixel;
-	var height = (highest_y - lowest_y + 1) * pixel;
-	var cor_x = (offset * 0.1 * side_bar) + (pixel * (5 / 2)) - width / 2;
-	var cor_y = (offset * 10) + (pixel * (5 / 2)) - height / 2;
+	let width = (highest_x - lowest_x + 1) * pixel;
+	let height = (highest_y - lowest_y + 1) * pixel;
+	let cor_x = (offset * 0.1 * side_bar) + (pixel * (5 / 2)) - width / 2;
+	let cor_y = (offset * 10) + (pixel * (5 / 2)) - height / 2;
 
 	for (let j = 0; j < hold.length; j++) {
 		hold[j].x_pos = (highest_x - hold[j].x) * pixel + cor_x;
@@ -332,11 +332,11 @@ function checkLine(y, IsZero) {
 }
 
 function flip_tiles() {
-	var temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill(0));
+	let temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill(0));
 	console.log(temp_tiles);
 
-	for (var i = tiles.length - 1; i >= 0; i--) {
-		for (var j = tiles[0].length - 1; j >= 0; j--) {
+	for (let i = tiles.length - 1; i >= 0; i--) {
+		for (let j = tiles[0].length - 1; j >= 0; j--) {
 			//   console.log(i + "," + j)
 			temp_tiles[tiles.length - (i + 1)][tiles[0].length - (j + 1)] = deepCopy(tiles[i][j]);
 		}
@@ -354,9 +354,8 @@ function flip_tiles() {
 }
 
 function deepCopy(inObject) {
-	var outObject;
-	var value;
-	var key;
+	let outObject;
+	let value;
 
 	if (typeof inObject !== "object" || inObject === null) {
 		return inObject;
@@ -364,7 +363,7 @@ function deepCopy(inObject) {
 
 	outObject = Array.isArray(inObject) ? [] : {};
 
-	for (key in inObject) {
+	for (let key of inObject) {
 		value = inObject[key];
 		outObject[key] = deepCopy(value);
 	}
@@ -380,14 +379,14 @@ function deepCopy(inObject) {
 
 function keyPressed() {
 	if (keyCode == 32) {
-		var down = false;
+		let down = false;
 
 		while (!down) {
 			down = shift_piece(0, 1)
 		}
 	} else if (keyCode == 67 && !held) {
 		held = true;
-		var temp;
+		let temp;
 
 		if (hold[0].c == 0) {
 			hold = spawnTile(piece_queue, false);
@@ -448,7 +447,7 @@ const p = {
 	},
 	moveLeft() {
 		p.generic_calc(curr_piece);
-		var moveable = (p.lowest_x > 0);
+		let moveable = (p.lowest_x > 0);
 		for (let i = 0; i < curr_piece.length && moveable; i++) {
 			if (curr_piece[i].y > -1) moveable = (tiles[curr_piece[i].y][curr_piece[i].x - 1].c == 0);
 		}
@@ -463,7 +462,7 @@ const p = {
 		curr_piece_hover.forEach((ele) => { ele.rotate(); })
 		p.generic_calc(curr_piece);
 
-		var good = !(p.lowest_x > -1 && p.highest_x < cols);
+		let good = !(p.lowest_x > -1 && p.highest_x < cols);
 		for (let i = 0; i < curr_piece.length && !good; i++) {
 			if (curr_piece[i].y >= rows || ((curr_piece[i].y > -1) && tiles[curr_piece[i].y][curr_piece[i].x].c != 0)) {
 				good = true;
@@ -480,7 +479,7 @@ const p = {
 	},
 	moveRight() {
 		p.generic_calc(curr_piece);
-		var moveable = (p.highest_x < cols - 1);
+		let moveable = (p.highest_x < cols - 1);
 		for (let i = 0; i < curr_piece.length && moveable; i++) {
 			if (curr_piece[i].y > -1) moveable = (tiles[curr_piece[i].y][curr_piece[i].x + 1].c == 0);
 		}
