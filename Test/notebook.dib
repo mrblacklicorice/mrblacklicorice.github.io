@@ -1,6 +1,9 @@
 #!javascript
 
-var x  = [[1,2],[5,5],[3,4]];
+var x  = 
+[[1,2],
+[5,5],
+[3,4]];
 var y = new Array(x.length);
 
 for (let i = 0; i < x.length; i++) {
@@ -24,7 +27,3 @@ var y = [[1,2],[5,5],[3,4]];
 var x = ((new Array(y.length)).fill(0)).map(ele => (new Array(y[0].length)).fill());
 
 return x;
-
-#!javascript
-
-return ("Hello.b").indexOf(".");

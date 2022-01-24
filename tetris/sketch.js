@@ -332,25 +332,38 @@ function checkLine(y, IsZero) {
 }
 
 function flip_tiles() {
-	let temp_tiles = ((new Array(tiles.length)).fill(0)).map(ele => (new Array(tiles[0].length)).fill(0));
-	console.log(temp_tiles);
+	let cc = 0;
+	while (cc < tiles.length && !checkLine(cc, false)) {
+		cc++;
+	}
 
-	for (let i = tiles.length - 1; i >= 0; i--) {
-		for (let j = tiles[0].length - 1; j >= 0; j--) {
-			//   console.log(i + "," + j)
-			temp_tiles[tiles.length - (i + 1)][tiles[0].length - (j + 1)] = deepCopy(tiles[i][j]);
+	console.log(cc)
+
+	let temp_tiles = [];
+	for (let i = 0; i < rows; i++) {
+		temp_tiles[i] = [];
+		for (let j = 0; j < cols; j++) {
+			temp_tiles[i][j] = new Tile(j, i, pixel, 0, offset);
 		}
 	}
 
-	for (let i = 0; i < tiles.length; i++) {
+	// for (let i = tiles.length - 1; i >= cc; i--) {
+	// 	for (let j = tiles[0].length - 1; j >= 0; j--) {
+	// 		temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)] = deepCopy(tiles[i][j]);
+	// 	}
+	// }
+
+	for (let i = cc; i < tiles.length; i++) {
 		for (let j = 0; j < tiles[0].length; j++) {
 			temp_tiles[i][j].x = tiles[i][j].x;
 			temp_tiles[i][j].y = tiles[i][j].y;
-			temp_tiles.shift(0, 0);
+			temp_tiles[i][j].x_pos = tiles[i][j].x_pos;
+			temp_tiles[i][j].y_pos = tiles[i][j].y_pos;
+			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].i = tiles[i][j].i;
+			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].c = tiles[i][j].c;
+			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].r = tiles[i][j].r;
 		}
 	}
-
-	tiles = deepCopy(temp_tiles);
 }
 
 function deepCopy(inObject) {
@@ -363,7 +376,7 @@ function deepCopy(inObject) {
 
 	outObject = Array.isArray(inObject) ? [] : {};
 
-	for (let key of inObject) {
+	for (let key in inObject) {
 		value = inObject[key];
 		outObject[key] = deepCopy(value);
 	}
