@@ -67,6 +67,7 @@ class Tile {
     show = () => {
         var colors = ["#666666", "#00f0f1", "#0001ed", "#f09f06", "#00f100", "#f10100", "#f2ee07", "#a100f3"];
         var colors_bor = ["#444444", "#00d9db", "#0000de", "#dd9202", "#00dd00", "#df0103", "#d7d500", "#8e00df"];
+        // console.log(this.c);
         fill(colors[this.c]);
 
         // noStroke();

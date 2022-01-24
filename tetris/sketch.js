@@ -343,7 +343,7 @@ function flip_tiles() {
 	for (let i = 0; i < rows; i++) {
 		temp_tiles[i] = [];
 		for (let j = 0; j < cols; j++) {
-			temp_tiles[i][j] = new Tile(j, i, pixel, 0, offset);
+			temp_tiles[i][j] = {};
 		}
 	}
 
@@ -355,13 +355,13 @@ function flip_tiles() {
 
 	for (let i = cc; i < tiles.length; i++) {
 		for (let j = 0; j < tiles[0].length; j++) {
-			temp_tiles[i][j].x = tiles[i][j].x;
-			temp_tiles[i][j].y = tiles[i][j].y;
-			temp_tiles[i][j].x_pos = tiles[i][j].x_pos;
-			temp_tiles[i][j].y_pos = tiles[i][j].y_pos;
 			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].i = tiles[i][j].i;
 			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].c = tiles[i][j].c;
 			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].r = tiles[i][j].r;
+
+			tiles[i][j].i = temp_tiles[i][j].i;
+			tiles[i][j].c = temp_tiles[i][j].c;
+			tiles[i][j].r = temp_tiles[i][j].r;
 		}
 	}
 }
