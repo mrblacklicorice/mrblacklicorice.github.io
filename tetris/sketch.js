@@ -35,6 +35,8 @@ let lines = 0;
 let timer = 0;
 let pressed = 0;
 
+let already_flipped = false;
+
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 
@@ -179,11 +181,12 @@ function shift_piece(x_diff, y_diff) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (!checkLine(curr_piece[i].y, true)) {
 				lines++;
+				already_flipped = false;
 			}
-		}
-
-		if (lines > 0 && (lines % 3 == 0)) {
-			flip_tiles();
+			if (lines > 0 && (lines % 3 == 0) && !already_flipped) {
+				flip_tiles();
+				already_flipped = true;
+			}
 		}
 
 		piece_queue.shift();
@@ -332,36 +335,32 @@ function checkLine(y, IsZero) {
 }
 
 function flip_tiles() {
-	let cc = 0;
-	while (cc < tiles.length && !checkLine(cc, false)) {
-		cc++;
+	let sp = 0;
+	while (sp < tiles.length && !checkLine(sp, false)) {
+		sp++;
 	}
 
-	console.log(cc)
-
 	let temp_tiles = [];
-	for (let i = 0; i < rows; i++) {
+	for (let i = 0; i < rows - sp; i++) {
 		temp_tiles[i] = [];
 		for (let j = 0; j < cols; j++) {
 			temp_tiles[i][j] = {};
 		}
 	}
 
-	// for (let i = tiles.length - 1; i >= cc; i--) {
-	// 	for (let j = tiles[0].length - 1; j >= 0; j--) {
-	// 		temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)] = deepCopy(tiles[i][j]);
-	// 	}
-	// }
-
-	for (let i = cc; i < tiles.length; i++) {
+	for (let i = 0; i < tiles.length - sp; i++) {
 		for (let j = 0; j < tiles[0].length; j++) {
-			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].i = tiles[i][j].i;
-			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].c = tiles[i][j].c;
-			temp_tiles[temp_tiles.length - (i + 1) + cc][temp_tiles[0].length - (j + 1)].r = tiles[i][j].r;
+			temp_tiles[i][j].i = tiles[i + sp][j].i;
+			temp_tiles[i][j].c = tiles[i + sp][j].c;
+			temp_tiles[i][j].r = tiles[i + sp][j].r;
+		}
+	}
 
-			tiles[i][j].i = temp_tiles[i][j].i;
-			tiles[i][j].c = temp_tiles[i][j].c;
-			tiles[i][j].r = temp_tiles[i][j].r;
+	for (let i = 0; i < tiles.length - sp; i++) {
+		for (let j = 0; j < tiles[0].length; j++) {
+			tiles[i + sp][j].i = temp_tiles[temp_tiles.length - (i + 1)][temp_tiles[0].length - (j + 1)].i;
+			tiles[i + sp][j].c = temp_tiles[temp_tiles.length - (i + 1)][temp_tiles[0].length - (j + 1)].c;
+			tiles[i + sp][j].r = temp_tiles[temp_tiles.length - (i + 1)][temp_tiles[0].length - (j + 1)].r;
 		}
 	}
 }
