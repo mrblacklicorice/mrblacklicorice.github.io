@@ -37,6 +37,9 @@ let pressed = 0;
 
 let already_flipped = false;
 
+let gamestate = -1;
+// -1 == didnt start, 0 == started, 1 == ended
+
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
 
@@ -52,17 +55,6 @@ function setup() {
 		}
 	}
 
-	curr_piece = spawnTile(piece_queue, false);
-	curr_piece_hover = spawnTile(piece_queue, true);
-
-	show_tiles_changing(1);
-	show_tiles_changing(2);
-	show_tiles_changing(3);
-
-	hold_piece_showing();
-
-	global_timer = setInterval(shift_piece, 500, 0, 1);
-
 	frameRate(100);
 }
 
@@ -77,49 +69,62 @@ function draw() {
 		}
 	}
 
-	for (let i = 0; i < curr_piece.length; i++) {
-		curr_piece[i].show();
-		curr_piece_hover[i].show();
-	}
-
 	stroke(colors[hold[0].c]);
+	noFill();
 	rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
-	for (let i = 0; i < hold.length; i++) {
-		hold[i].show();
-
-	}
-	// this is for hold
 
 	noFill();
 	stroke("#347589");
 	rect((offset * 0.1 * side_bar), (offset * 11) + (pixel * 5), pixel * 5, pixel * 10);
-	// this is for points
 
 	for (let i = 0; i < 3; i++) {
 		noFill();
-		stroke(colors[piece_queue[i + 1]]);
+		stroke(colors[hold[0].c]);
 		rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
+	}
+	if (gamestate == -1) {
 
-		for (let j = 0; j < show_tiles[i + 1].length; j++) {
-			show_tiles[i + 1][j].show();
+	} else if (gamestate == 0) {
+		for (let i = 0; i < curr_piece.length; i++) {
+			curr_piece[i].show();
+			curr_piece_hover[i].show();
 		}
-	}
-	// this is for peices in order
-	if (timer % 6 == 0 && pressed == 0) {
-		if (keyIsDown(40)) {
-			p.moveDown();
-		} else if (keyIsDown(37)) {
-			p.moveLeft();
-		} else if (keyIsDown(39)) {
-			p.moveRight();
+
+		stroke(colors[hold[0].c]);
+		for (let i = 0; i < hold.length; i++) {
+			hold[i].show();
 		}
-	}
+		// this is for hold
 
-	if (pressed > 0) {
-		pressed--;
-	}
 
-	timer++;
+		// this is for points
+
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < show_tiles[i + 1].length; j++) {
+				noFill();
+				stroke(colors[piece_queue[i + 1]]);
+				show_tiles[i + 1][j].show();
+			}
+		}
+		// this is for peices in order
+		if (timer % 6 == 0 && pressed == 0) {
+			if (keyIsDown(40)) {
+				p.moveDown();
+			} else if (keyIsDown(37)) {
+				p.moveLeft();
+			} else if (keyIsDown(39)) {
+				p.moveRight();
+			}
+		}
+
+		if (pressed > 0) {
+			pressed--;
+		}
+
+		timer++;
+	} else if (gamestate == 1) {
+
+	}
 }
 
 function spawnTile(tile_array, hover, i) {
@@ -245,11 +250,6 @@ function check_piece(x_diff, y_diff) {
 	}
 	return false;
 }
-
-// ok, so, ur mim big gae
-// make shift peice 2 functions
-// make it check peice and shifting the piece based on the check
-
 
 function show_tiles_changing(i) {
 	let lowest_x = 1000;
@@ -396,10 +396,24 @@ function deepCopy(inObject) {
 
 function keyPressed() {
 	if (keyCode == 32) {
-		let down = false;
+		if (gamestate == 0) {
+			let down = false;
 
-		while (!down) {
-			down = shift_piece(0, 1)
+			while (!down) {
+				down = shift_piece(0, 1)
+			}
+		} else if (gamestate == -1) {
+			curr_piece = spawnTile(piece_queue, false);
+			curr_piece_hover = spawnTile(piece_queue, true);
+
+			show_tiles_changing(1);
+			show_tiles_changing(2);
+			show_tiles_changing(3);
+
+			hold_piece_showing();
+
+			global_timer = setInterval(shift_piece, 500, 0, 1);
+			gamestate++;
 		}
 	} else if (keyCode == 67 && !held) {
 		held = true;
