@@ -77,13 +77,13 @@ function draw() {
 	stroke("#347589");
 	rect((offset * 0.1 * side_bar), (offset * 11) + (pixel * 5), pixel * 5, pixel * 10);
 
-	for (let i = 0; i < 3; i++) {
-		noFill();
-		stroke(colors[hold[0].c]);
-		rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
-	}
-	if (gamestate == -1) {
 
+	if (gamestate == -1) {
+		for (let i = 0; i < 3; i++) {
+			noFill();
+			stroke(colors[hold[0].c]);
+			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
+		}
 	} else if (gamestate == 0) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
@@ -100,6 +100,8 @@ function draw() {
 		// this is for points
 
 		for (let i = 0; i < 3; i++) {
+			stroke(colors[piece_queue[i + 1]]);
+			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
 			for (let j = 0; j < show_tiles[i + 1].length; j++) {
 				noFill();
 				stroke(colors[piece_queue[i + 1]]);
