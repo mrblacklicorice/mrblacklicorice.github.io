@@ -96,14 +96,11 @@ function draw() {
 		}
 		// this is for hold
 
-
-		// this is for points
-
 		for (let i = 0; i < 3; i++) {
+			noFill();
 			stroke(colors[piece_queue[i + 1]]);
 			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
 			for (let j = 0; j < show_tiles[i + 1].length; j++) {
-				noFill();
 				stroke(colors[piece_queue[i + 1]]);
 				show_tiles[i + 1][j].show();
 			}
