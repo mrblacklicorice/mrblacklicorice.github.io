@@ -90,6 +90,11 @@ function draw() {
 	}
 	// this is for hold
 
+	noFill();
+	stroke("#347589");
+	rect((offset * 0.1 * side_bar), (offset * 11) + (pixel * 5), pixel * 5, pixel * 10);
+	// this is for points
+
 	for (let i = 0; i < 3; i++) {
 		noFill();
 		stroke(colors[piece_queue[i + 1]]);
