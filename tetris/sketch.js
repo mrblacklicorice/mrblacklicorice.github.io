@@ -38,7 +38,7 @@ let pressed = 0;
 let already_flipped = false;
 
 let gamestate = -1;
-// -1 == didnt start, 0 == started, 1 == ended
+// -1 == didnt start, 0 == started, 1 == paused, 2 == ended
 
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
@@ -122,6 +122,27 @@ function draw() {
 
 		timer++;
 	} else if (gamestate == 1) {
+		for (let i = 0; i < curr_piece.length; i++) {
+			curr_piece[i].show();
+			curr_piece_hover[i].show();
+		}
+
+		stroke(colors[hold[0].c]);
+		for (let i = 0; i < hold.length; i++) {
+			hold[i].show();
+		}
+		// this is for hold
+
+		for (let i = 0; i < 3; i++) {
+			noFill();
+			stroke(colors[piece_queue[i + 1]]);
+			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
+			for (let j = 0; j < show_tiles[i + 1].length; j++) {
+				stroke(colors[piece_queue[i + 1]]);
+				show_tiles[i + 1][j].show();
+			}
+		}
+	} else if (gamestate == 2) {
 
 	}
 }
@@ -181,9 +202,9 @@ function shift_piece(x_diff, y_diff) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (curr_piece[i].y < 0) {
 				console.log("game over");
-				clearInterval(global_timer);
-				noLoop();
-				return;
+				// debugger;
+				gamestate = 2;
+				return true;
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
@@ -216,8 +237,7 @@ function shift_piece(x_diff, y_diff) {
 		global_timer = setInterval(shift_piece, 500, 0, 1);
 		if (checkLine(0, false)) {
 			console.log("game over");
-			clearInterval(global_timer);
-			noLoop();
+			gamestate = 2;
 			return;
 		}
 		return true;
@@ -369,88 +389,76 @@ function flip_tiles() {
 	}
 }
 
-function deepCopy(inObject) {
-	let outObject;
-	let value;
-
-	if (typeof inObject !== "object" || inObject === null) {
-		return inObject;
-	}
-
-	outObject = Array.isArray(inObject) ? [] : {};
-
-	for (let key in inObject) {
-		value = inObject[key];
-		outObject[key] = deepCopy(value);
-	}
-
-	return outObject;
-}
-
-
 // see key held instead of key pressed --- kinda done??
 // create new tiles --- done!!
 // create rotation --- done!!
 
 
 function keyPressed() {
-	if (keyCode == 32) {
-		if (gamestate == 0) {
+	if (gamestate == 0) {
+		if (keyCode == 32) {
 			let down = false;
 
 			while (!down) {
 				down = shift_piece(0, 1)
 			}
-		} else if (gamestate == -1) {
+		} else if (keyCode == 27) {
+			gamestate = 1;
+			clearInterval(global_timer);
+		} else if (keyCode == 67 && !held) {
+			held = true;
+			let temp;
+
+			if (hold[0].c == 0) {
+				hold = spawnTile(piece_queue, false);
+				piece_queue.shift();
+				piece_queue.push(Math.floor(Math.random() * 7) + 1);
+				show_tiles.shift();
+				show_tiles.push(spawnTile(piece_queue, false, piece_queue[3]));
+
+				show_tiles_changing(1);
+				show_tiles_changing(2);
+				show_tiles_changing(3);
+			} else {
+				temp = piece_queue[0];
+				piece_queue[0] = hold[0].c;
+				hold = spawnTile([temp], false);
+
+				show_tiles[0] = spawnTile(piece_queue, false, piece_queue[0]);
+			}
 			curr_piece = spawnTile(piece_queue, false);
 			curr_piece_hover = spawnTile(piece_queue, true);
-
-			show_tiles_changing(1);
-			show_tiles_changing(2);
-			show_tiles_changing(3);
-
 			hold_piece_showing();
-
-			global_timer = setInterval(shift_piece, 500, 0, 1);
-			gamestate++;
+		} else if (keyCode == 38) {
+			p.rotate();
+		} else if (keyCode == 40) {
+			p.moveDown();
+			pressed = 7;
+		} else if (keyCode == 37) {
+			p.moveLeft();
+			pressed = 7;
+		} else if (keyCode == 39) {
+			p.moveRight();
+			pressed = 7;
 		}
-	} else if (keyCode == 67 && !held) {
-		held = true;
-		let temp;
-
-		if (hold[0].c == 0) {
-			hold = spawnTile(piece_queue, false);
-			piece_queue.shift();
-			piece_queue.push(Math.floor(Math.random() * 7) + 1);
-			show_tiles.shift();
-			show_tiles.push(spawnTile(piece_queue, false, piece_queue[3]));
-
-			show_tiles_changing(1);
-			show_tiles_changing(2);
-			show_tiles_changing(3);
-		} else {
-			temp = piece_queue[0];
-			piece_queue[0] = hold[0].c;
-			hold = spawnTile([temp], false);
-
-			show_tiles[0] = spawnTile(piece_queue, false, piece_queue[0]);
-		}
+	} else if (gamestate == -1 && keyCode == 32) {
 		curr_piece = spawnTile(piece_queue, false);
 		curr_piece_hover = spawnTile(piece_queue, true);
+
+		show_tiles_changing(1);
+		show_tiles_changing(2);
+		show_tiles_changing(3);
+
 		hold_piece_showing();
-	} else if (keyCode == 38) {
-		p.rotate();
-	} else if (keyCode == 40) {
-		p.moveDown();
-		pressed = 7;
-	} else if (keyCode == 37) {
-		p.moveLeft();
-		pressed = 7;
-	} else if (keyCode == 39) {
-		p.moveRight();
-		pressed = 7;
+
+		global_timer = setInterval(shift_piece, 500, 0, 1);
+		gamestate = 0;
+	} else if (gamestate == 1 && keyCode == 27) {
+		gamestate = 0;
+		global_timer = setInterval(shift_piece, 500, 0, 1);
 	}
 }
+
 
 
 const p = {
