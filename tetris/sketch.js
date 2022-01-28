@@ -15,6 +15,8 @@ let curr_piece;
 let curr_piece_hover;
 
 let global_timer;
+let global_timeout;
+let global_time_left = 0;
 
 let movement_timer;
 
@@ -404,6 +406,8 @@ function keyPressed() {
 			}
 		} else if (keyCode == 27) {
 			gamestate = 1;
+			global_time_left = (global_timeout == -1) ? (global_timer._idleStart + global_timer._idleTimeout - Date.now()) : (global_timer._idleStart + global_timer._idleTimeout - Date.now());
+			clearTimeout(global_timeout);
 			clearInterval(global_timer);
 		} else if (keyCode == 67 && !held) {
 			held = true;
@@ -455,7 +459,10 @@ function keyPressed() {
 		gamestate = 0;
 	} else if (gamestate == 1 && keyCode == 27) {
 		gamestate = 0;
-		global_timer = setInterval(shift_piece, 500, 0, 1);
+		global_timeout = setTimeout(() => {
+			global_timeout = -1;
+			global_timer = setInterval(shift_piece, 500, 0, 1);
+		}, global_time_left);
 	}
 }
 
