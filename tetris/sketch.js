@@ -71,21 +71,33 @@ function draw() {
 		}
 	}
 
-	stroke(colors[hold[0].c]);
-	noFill();
-	rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
-
 	noFill();
 	stroke("#347589");
 	rect((offset * 0.1 * side_bar), (offset * 11) + (pixel * 5), pixel * 5, pixel * 10);
 
 
 	if (gamestate == -1) {
+		stroke(colors[0]);
+		noFill();
+		rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
+
 		for (let i = 0; i < 3; i++) {
 			noFill();
 			stroke(colors[hold[0].c]);
 			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
 		}
+
+		fill(50, 50, 50, 150);
+		stroke(50, 50, 50, 150);
+		rect(tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(24);
+		fill("#FFFFFF");
+		noStroke();
+		textAlign(CENTER, CENTER);
+		text('PRESS SPACE TO START', tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(12);
+		textAlign(CENTER, TOP);
+		text('PRESS ESC TO PAUSE\nUSE ARROWS TO NAVIGATE\nPRESS C TO HOLD\nPRESS SPACE TO HARD DROP', (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 0) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
@@ -93,6 +105,9 @@ function draw() {
 		}
 
 		stroke(colors[hold[0].c]);
+		noFill();
+		rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
+
 		for (let i = 0; i < hold.length; i++) {
 			hold[i].show();
 		}
@@ -130,6 +145,8 @@ function draw() {
 		}
 
 		stroke(colors[hold[0].c]);
+		noFill();
+		rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
 		for (let i = 0; i < hold.length; i++) {
 			hold[i].show();
 		}
@@ -144,8 +161,34 @@ function draw() {
 				show_tiles[i + 1][j].show();
 			}
 		}
-	} else if (gamestate == 2) {
 
+		fill(50, 50, 50, 150);
+		stroke(50, 50, 50, 150);
+		rect(tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(32);
+		fill("#FFFFFF");
+		noStroke();
+		textAlign(CENTER, CENTER);
+		text('PAUSED', tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+	} else if (gamestate == 2) {
+		stroke(colors[0]);
+		noFill();
+		rect(offset * 0.1 * side_bar, offset * 10, pixel * 5, pixel * 5);
+
+		for (let i = 0; i < 3; i++) {
+			noFill();
+			stroke(colors[hold[0].c]);
+			rect(canvas.width - (side_bar * offset * 0.9), (offset * (i + 1)) + (pixel * (i * 5)), pixel * 5, pixel * 5);
+		}
+
+		fill(50, 50, 50, 150);
+		stroke(50, 50, 50, 150);
+		rect(tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(32);
+		fill("#FFFFFF");
+		noStroke();
+		textAlign(CENTER, CENTER);
+		text('GAME OVER', tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
 	}
 }
 
@@ -206,6 +249,13 @@ function shift_piece(x_diff, y_diff) {
 				console.log("game over");
 				// debugger;
 				gamestate = 2;
+				for (let i = 0; i < rows; i++) {
+					tiles[i] = [];
+					for (let j = 0; j < cols; j++) {
+						tiles[i][j] = new Tile(j, i, pixel, 0, offset);
+					}
+				}
+				setTimeout(() => { gamestate = -1; }, 1000);
 				return true;
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
@@ -446,6 +496,18 @@ function keyPressed() {
 			pressed = 7;
 		}
 	} else if (gamestate == -1 && keyCode == 32) {
+		global_timeout;
+		global_time_left = 0;
+		movement_timer;
+		piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
+		hold = [new Tile(0, 0, 0, 0, offset)];
+		show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
+		held = false;
+		lines = 0;
+		timer = 0;
+		pressed = 0;
+		already_flipped = false;
+
 		curr_piece = spawnTile(piece_queue, false);
 		curr_piece_hover = spawnTile(piece_queue, true);
 
