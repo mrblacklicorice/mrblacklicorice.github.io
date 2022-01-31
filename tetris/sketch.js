@@ -170,6 +170,9 @@ function draw() {
 		noStroke();
 		textAlign(CENTER, CENTER);
 		text('PAUSED', tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(12);
+		textAlign(CENTER, TOP);
+		text('PRESS ESC TO PAUSE\nUSE ARROWS TO NAVIGATE\nPRESS C TO HOLD\nPRESS SPACE TO HARD DROP', (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 2) {
 		stroke(colors[0]);
 		noFill();
