@@ -139,6 +139,10 @@ function draw() {
 		}
 
 		timer++;
+
+		textSize(24);
+		textAlign(CENTER, TOP);
+		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 1) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
@@ -269,7 +273,6 @@ function shift_piece(x_diff, y_diff) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (!checkLine(curr_piece[i].y, true)) {
 				lines++;
-				temp_lines++;
 				already_flipped = false;
 			}
 
@@ -281,6 +284,7 @@ function shift_piece(x_diff, y_diff) {
 
 		if (flip_times % 1 == 1) {
 			flip_tiles();
+			already_flipped = true;
 		}
 		piece_queue.shift();
 		piece_queue.push(Math.floor(Math.random() * 7) + 1);
