@@ -33,6 +33,7 @@ let show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece
 let held = false;
 
 let lines = 0;
+let temp_lines;
 
 let timer = 0;
 let pressed = 0;
@@ -263,15 +264,19 @@ function shift_piece(x_diff, y_diff) {
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
+
+		temp_lines = 0;
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (!checkLine(curr_piece[i].y, true)) {
 				lines++;
+				temp_lines++;
 				already_flipped = false;
 			}
-			if (lines > 0 && (lines % 3 == 0) && !already_flipped) {
-				flip_tiles();
-				already_flipped = true;
-			}
+		}
+
+		if (lines > 0 && temp_lines > 0 && (temp_lines % 3 == 0) && ((temp_lines / 3) % 2 == 1) && !already_flipped) {
+			flip_tiles();
+			already_flipped = true;
 		}
 
 		piece_queue.shift();
