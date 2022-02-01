@@ -140,6 +140,8 @@ function draw() {
 
 		timer++;
 
+		fill("#FFFFFF");
+		noStroke();
 		textSize(24);
 		textAlign(CENTER, TOP);
 		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
@@ -282,9 +284,8 @@ function shift_piece(x_diff, y_diff) {
 			}
 		}
 
-		if (flip_times % 1 == 1) {
+		if (flip_times % 2 == 1) {
 			flip_tiles();
-			already_flipped = true;
 		}
 		piece_queue.shift();
 		piece_queue.push(Math.floor(Math.random() * 7) + 1);
