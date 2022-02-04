@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>SMArT Workout</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- [if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif] -->
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+
+<body class="landing">
+
+	<!-- Header -->
+	<header id="header" class="alt">
+		<h1><a href="index.html">Workout</a></h1>
+	</header>
+
+
+	<!-- Banner -->
+	<section id="banner">
+		<br><br><br><br><br><br><br><br><br><br><br><br>
+	</section>
+
+	<!-- One -->
+	<section id="one" class="wrapper style1">
+		<div class="inner">
+			<article class="feature left">
+				<span class="image"><img id="gps" src="images/blank.png" alt="" /></span>
+				<div class="content">
+					<h2 id="mile">Miles: 0.00</h2>
+					<h2 id="time">Time: 00:00</h2>
+					<ul class="actions">
+						<li>
+							<button id="workout" class="button alt" onclick="print()">Start
+								Workout</button>
+						</li>
+					</ul>
+				</div>
+			</article>
+		</div>
+	</section>
+
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
+	<script>
+		var mph = Number(prompt("enter mph"));
+		var running = false;
+		var currtime = 0;
+		var timer;
+		var currmiles = 0;
+		var btn = document.getElementById("workout");
+		var time = document.getElementById("time");
+		var mile = document.getElementById("mile");
+		var gps = document.getElementById("gps");
+
+		function print() {
+			if (running) {
+				running = false;
+				clearInterval(timer);
+				gps.src = "images/workout.png";
+				btn.textContent = "Resume Workout";
+			} else {
+				running = true;
+				if (currmiles < 1.2) gps.src = "images/blank.png";
+				timer = setInterval(per_sec, 1000);
+				btn.textContent = "Pause Workout";
+			}
+		}
+
+		function per_sec() {
+			currtime++;
+			time.textContent = "Time: " + msToTime(currtime);
+
+			if (currtime > 30) { currmiles += mph / 3540 }
+			mile.textContent = "Miles: " + mileFormat(Math.floor(currmiles * 100) / 100);
+		}
+
+		function msToTime(s) {
+			var secs = s % 60;
+			s = (s - secs) / 60;
+			var mins = s % 60;
+			var hrs = (s - mins) / 60;
+			var minT = (mins < 10) ? "0" + mins : String(mins);
+			var secT = (secs < 10) ? "0" + secs : String(secs);
+
+			return minT + ':' + secT;
+		}
+
+		function mileFormat(num_mile) {
+			if (num_mile == 0) {
+				return "0.00";
+			} else if (num_mile % 1 == 0) {
+				return num_mile + ".00";
+			} else if ((num_mile * 10) % 1 == 0) {
+				return num_mile + "0";
+			} else {
+				return num_mile;
+			}
+		}
+	</script>
+</body>
+
+</html>
