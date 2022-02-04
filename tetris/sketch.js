@@ -33,6 +33,7 @@ let show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece
 let held = false;
 
 let lines = 0;
+let flip_times;
 
 let timer = 0;
 let pressed = 0;
@@ -138,6 +139,12 @@ function draw() {
 		}
 
 		timer++;
+
+		fill("#FFFFFF");
+		noStroke();
+		textSize(24);
+		textAlign(CENTER, TOP);
+		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 1) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
@@ -170,6 +177,9 @@ function draw() {
 		noStroke();
 		textAlign(CENTER, CENTER);
 		text('PAUSED', tiles[0][0].x_pos, tiles[0][0].y_pos, cols * pixel, rows * pixel);
+		textSize(12);
+		textAlign(CENTER, TOP);
+		text('PRESS ESC TO PAUSE\nUSE ARROWS TO NAVIGATE\nPRESS C TO HOLD\nPRESS SPACE TO HARD DROP', (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 2) {
 		stroke(colors[0]);
 		noFill();
@@ -260,17 +270,23 @@ function shift_piece(x_diff, y_diff) {
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
+
+		flip_times = 0;
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (!checkLine(curr_piece[i].y, true)) {
 				lines++;
 				already_flipped = false;
 			}
+
 			if (lines > 0 && (lines % 3 == 0) && !already_flipped) {
-				flip_tiles();
+				flip_times++;
 				already_flipped = true;
 			}
 		}
 
+		if (flip_times % 2 == 1) {
+			flip_tiles();
+		}
 		piece_queue.shift();
 		piece_queue.push(Math.floor(Math.random() * 7) + 1);
 
