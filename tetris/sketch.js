@@ -36,7 +36,6 @@ let lines = 0;
 let flip_times;
 
 let timer = 0;
-let pressed = 0;
 
 let already_flipped = false;
 
@@ -124,7 +123,7 @@ function draw() {
 			}
 		}
 		// this is for peices in order
-		if (timer % 6 == 0 && pressed == 0) {
+		if (timer % 10 == 0) {
 			if (keyIsDown(40)) {
 				p.moveDown();
 			} else if (keyIsDown(37)) {
@@ -132,10 +131,6 @@ function draw() {
 			} else if (keyIsDown(39)) {
 				p.moveRight();
 			}
-		}
-
-		if (pressed > 0) {
-			pressed--;
 		}
 
 		timer++;
@@ -457,10 +452,18 @@ function flip_tiles() {
 	}
 }
 
-// see key held instead of key pressed --- kinda done??
-// create new tiles --- done!!
-// create rotation --- done!!
+function random() {
+	var nums = [1, 2, 3, 4, 5, 6, 7],
+		ranNums = [],
+		i = nums.length,
+		j = 0;
 
+	while (i--) {
+		j = Math.floor(Math.random() * (i + 1));
+		ranNums.push(nums[j]);
+		nums.splice(j, 1);
+	}
+}
 
 function keyPressed() {
 	if (gamestate == 0) {
@@ -503,13 +506,10 @@ function keyPressed() {
 			p.rotate();
 		} else if (keyCode == 40) {
 			p.moveDown();
-			pressed = 7;
 		} else if (keyCode == 37) {
 			p.moveLeft();
-			pressed = 7;
 		} else if (keyCode == 39) {
 			p.moveRight();
-			pressed = 7;
 		}
 	} else if (gamestate == -1 && keyCode == 32) {
 		global_timeout;
@@ -521,7 +521,6 @@ function keyPressed() {
 		held = false;
 		lines = 0;
 		timer = 0;
-		pressed = 0;
 		already_flipped = false;
 
 		curr_piece = spawnTile(piece_queue, false);
@@ -544,7 +543,9 @@ function keyPressed() {
 	}
 }
 
-
+function keyReleased() {
+	timer = 0;
+}
 
 const p = {
 	lowest_x: 10000,
