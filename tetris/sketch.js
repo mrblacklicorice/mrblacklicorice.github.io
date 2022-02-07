@@ -20,7 +20,7 @@ let global_time_left = 0;
 
 let movement_timer;
 
-let piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
+let piece_queue = random_piece().concat(random_piece());
 
 let canvas;
 
@@ -35,7 +35,7 @@ let held = false;
 let lines = 0;
 let flip_times;
 
-let timer = 0;
+let timer = [0, 0, 0];
 
 let already_flipped = false;
 
@@ -123,17 +123,17 @@ function draw() {
 			}
 		}
 		// this is for peices in order
-		if (timer % 10 == 0) {
-			if (keyIsDown(40)) {
-				p.moveDown();
-			} else if (keyIsDown(37)) {
-				p.moveLeft();
-			} else if (keyIsDown(39)) {
-				p.moveRight();
-			}
-		}
 
-		timer++;
+		if (keyIsDown(40)) {
+			timer[0]++;
+			if (timer[0] % 7 == 0) p.moveDown();
+		} else if (keyIsDown(37)) {
+			timer[1]++;
+			if (timer[1] % 7 == 0) p.moveLeft();;
+		} else if (keyIsDown(39)) {
+			timer[2]++;
+			if (timer[2] % 7 == 0) p.moveRight();;
+		}
 
 		fill("#FFFFFF");
 		noStroke();
@@ -283,7 +283,7 @@ function shift_piece(x_diff, y_diff) {
 			flip_tiles();
 		}
 		piece_queue.shift();
-		piece_queue.push(Math.floor(Math.random() * 7) + 1);
+		if (piece_queue.length == 7) piece_queue = piece_queue.concat(random_piece());
 
 		show_tiles.shift();
 		show_tiles.push(spawnTile(piece_queue, false, piece_queue[3]))
@@ -451,18 +451,15 @@ function flip_tiles() {
 		}
 	}
 }
+function random_piece() {
+	var nums = [1, 2, 3, 4, 5, 6, 7];
+	var ranNums = [];
 
-function random() {
-	var nums = [1, 2, 3, 4, 5, 6, 7],
-		ranNums = [],
-		i = nums.length,
-		j = 0;
-
-	while (i--) {
-		j = Math.floor(Math.random() * (i + 1));
-		ranNums.push(nums[j]);
-		nums.splice(j, 1);
+	while (nums.length > 0) {
+		ranNums.push(nums.splice(Math.floor(Math.random() * (nums.length)), 1)[0]);
 	}
+
+	return ranNums;
 }
 
 function keyPressed() {
@@ -485,7 +482,7 @@ function keyPressed() {
 			if (hold[0].c == 0) {
 				hold = spawnTile(piece_queue, false);
 				piece_queue.shift();
-				piece_queue.push(Math.floor(Math.random() * 7) + 1);
+				if (piece_queue.length == 7) piece_queue = piece_queue.concat(random_piece());
 				show_tiles.shift();
 				show_tiles.push(spawnTile(piece_queue, false, piece_queue[3]));
 
@@ -515,7 +512,7 @@ function keyPressed() {
 		global_timeout;
 		global_time_left = 0;
 		movement_timer;
-		piece_queue = [Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1, Math.floor(Math.random() * 7) + 1];
+		piece_queue = random_piece().concat(random_piece());
 		hold = [new Tile(0, 0, 0, 0, offset)];
 		show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
 		held = false;
@@ -544,7 +541,7 @@ function keyPressed() {
 }
 
 function keyReleased() {
-	timer = 0;
+	timer = [0, 0, 0];
 }
 
 const p = {
