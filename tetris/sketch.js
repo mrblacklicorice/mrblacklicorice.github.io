@@ -440,6 +440,10 @@ function checkLine(y, IsZero) {
 	return false;
 }
 
+function keyReleased() {
+	timer = [0, 0, 0];
+}
+
 function flip_tiles() {
 	let sp = 0;
 	while (sp < tiles.length && !checkLine(sp, false)) {
