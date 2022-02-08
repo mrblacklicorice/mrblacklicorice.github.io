@@ -131,7 +131,10 @@ function draw() {
 
 		if (keyIsDown(40)) {
 			timer[0]++;
-			if (timer[0] % 7 == 0) p.moveDown();
+			if (timer[0] % 7 == 0) {
+				p.moveDown();
+				points += combo * 10;
+			}
 		} else if (keyIsDown(37)) {
 			timer[1]++;
 			if (timer[1] % 7 == 0) p.moveLeft();;
@@ -518,17 +521,18 @@ function keyPressed() {
 			hold_piece_showing();
 		} else if (keyCode == 38) {
 			p.rotate();
-		} else if (keyCode == 40) {
-			p.moveDown();
-			timer[0] = 0;
-			points += combo * 10;
-		} else if (keyCode == 37) {
-			p.moveLeft();
-			timer[1] = 0;
-		} else if (keyCode == 39) {
-			p.moveRight();
-			timer[2] = 0;
 		}
+		// else if (keyCode == 40) {
+		// 	p.moveDown();
+		// 	timer[0] = 0;
+		// 	points += combo * 10;
+		// } else if (keyCode == 37) {
+		// 	p.moveLeft();
+		// 	timer[1] = 0;
+		// } else if (keyCode == 39) {
+		// 	p.moveRight();
+		// 	timer[2] = 0;
+		// }
 	} else if (gamestate == -1 && keyCode == 32) {
 		global_timeout;
 		global_time_left = 0;
