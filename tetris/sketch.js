@@ -34,12 +34,17 @@ let held = false;
 
 let lines = 0;
 let flip_times;
+let temp_lines;
 
 let timer = [0, 0, 0];
 
 let already_flipped = false;
 
 let gamestate = -1;
+
+let points = 0;
+let combo = 1;
+let highscore = 0;
 // -1 == didnt start, 0 == started, 1 == paused, 2 == ended
 
 function setup() {
@@ -139,7 +144,10 @@ function draw() {
 		noStroke();
 		textSize(24);
 		textAlign(CENTER, TOP);
-		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Points: ' + points, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Combo: ' + combo + "x", (offset * 0.1 * side_bar), (offset * 16) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 20) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Highscore: ' + highscore, (offset * 0.1 * side_bar), (offset * 28) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 1) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
@@ -261,15 +269,18 @@ function shift_piece(x_diff, y_diff) {
 					}
 				}
 				setTimeout(() => { gamestate = -1; }, 1000);
+				highscore = highscore > points ? highscore : points;
 				return true;
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
 		}
 
+		temp_lines = 0;
 		flip_times = 0;
 		for (let i = 0; i < curr_piece.length; i++) {
 			if (!checkLine(curr_piece[i].y, true)) {
 				lines++;
+				temp_lines++;
 				already_flipped = false;
 			}
 
@@ -279,9 +290,14 @@ function shift_piece(x_diff, y_diff) {
 			}
 		}
 
+		combo += 0.1 * flip_times;
+
 		if (flip_times % 2 == 1) {
 			flip_tiles();
 		}
+
+		lines += combo * (temp_lines > 1 ? (temp_lines > 2 ? (temp_lines > 3 ? 700 : 500) : 300) : temp_lines * 100);
+
 		piece_queue.shift();
 		if (piece_queue.length == 7) piece_queue = piece_queue.concat(random_piece());
 
@@ -468,7 +484,8 @@ function keyPressed() {
 			let down = false;
 
 			while (!down) {
-				down = shift_piece(0, 1)
+				down = shift_piece(0, 1);
+				points += combo * 15;
 			}
 		} else if (keyCode == 27) {
 			gamestate = 1;
@@ -503,10 +520,14 @@ function keyPressed() {
 			p.rotate();
 		} else if (keyCode == 40) {
 			p.moveDown();
+			timer[0] = 0;
+			points += combo * 10;
 		} else if (keyCode == 37) {
 			p.moveLeft();
+			timer[1] = 0;
 		} else if (keyCode == 39) {
 			p.moveRight();
+			timer[2] = 0;
 		}
 	} else if (gamestate == -1 && keyCode == 32) {
 		global_timeout;
@@ -517,8 +538,10 @@ function keyPressed() {
 		show_tiles = [spawnTile(piece_queue, false, piece_queue[0]), spawnTile(piece_queue, false, piece_queue[1]), spawnTile(piece_queue, false, piece_queue[2]), spawnTile(piece_queue, false, piece_queue[3])];
 		held = false;
 		lines = 0;
-		timer = 0;
+		timer = [0, 0, 0];
 		already_flipped = false;
+		points = 0;
+		combo = 1;
 
 		curr_piece = spawnTile(piece_queue, false);
 		curr_piece_hover = spawnTile(piece_queue, true);
@@ -538,10 +561,6 @@ function keyPressed() {
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 		}, global_time_left);
 	}
-}
-
-function keyReleased() {
-	timer = [0, 0, 0];
 }
 
 const p = {
