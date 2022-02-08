@@ -144,10 +144,10 @@ function draw() {
 		noStroke();
 		textSize(24);
 		textAlign(CENTER, TOP);
-		text('Points: ' + points, (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
-		text('Combo: ' + combo + "x", (offset * 0.1 * side_bar), (offset * 16) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Points: ' + Math.floor(points), (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Combo: ' + Math.floor(combo) + "x", (offset * 0.1 * side_bar), (offset * 16) + (pixel * 5), pixel * 5, pixel * 10);
 		text('Lines: ' + lines, (offset * 0.1 * side_bar), (offset * 20) + (pixel * 5), pixel * 5, pixel * 10);
-		text('Highscore: ' + highscore, (offset * 0.1 * side_bar), (offset * 28) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Highscore: ' + Math.floor(highscore), (offset * 0.1 * side_bar), (offset * 28) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 1) {
 		for (let i = 0; i < curr_piece.length; i++) {
 			curr_piece[i].show();
