@@ -148,7 +148,7 @@ function draw() {
 		textSize(16);
 		textAlign(CENTER, TOP);
 		text('Points: ' + Math.floor(points), (offset * 0.1 * side_bar), (offset * 12) + (pixel * 5), pixel * 5, pixel * 10);
-		text('Combo: ' + Math.floor(combo) + "x", (offset * 0.1 * side_bar), (offset * 16) + (pixel * 5), pixel * 5, pixel * 10);
+		text('Combo: ' + (Math.floor(combo * 10) / 10) + "x", (offset * 0.1 * side_bar), (offset * 16) + (pixel * 5), pixel * 5, pixel * 10);
 		text('Lines Left: ' + (3 - (Math.floor(lines) % 3)), (offset * 0.1 * side_bar), (offset * 20) + (pixel * 5), pixel * 5, pixel * 10);
 		text('Highscore: ' + Math.floor(highscore), (offset * 0.1 * side_bar), (offset * 28) + (pixel * 5), pixel * 5, pixel * 10);
 	} else if (gamestate == 1) {
@@ -271,6 +271,7 @@ function shift_piece(x_diff, y_diff) {
 						tiles[i][j] = new Tile(j, i, pixel, 0, offset);
 					}
 				}
+				hold = [new Tile(0, 0, 0, 0, offset)];
 				setTimeout(() => { gamestate = -1; }, 1000);
 				highscore = highscore > points ? highscore : points;
 				return true;
@@ -440,10 +441,6 @@ function checkLine(y, IsZero) {
 	return false;
 }
 
-function keyReleased() {
-	timer = [0, 0, 0];
-}
-
 function flip_tiles() {
 	let sp = 0;
 	while (sp < tiles.length && !checkLine(sp, false)) {
@@ -485,21 +482,23 @@ function random_piece() {
 	return ranNums;
 }
 
-function keyPressed() {
+
+
+document.addEventListener('keydown', (event) => {
 	if (gamestate == 0) {
-		if (keyCode == 32) {
+		if (event.code == "Space") {
 			let down = false;
 
 			while (!down) {
 				down = shift_piece(0, 1);
 				points += combo * 15;
 			}
-		} else if (keyCode == 27) {
+		} else if (event.code == "Escape") {
 			gamestate = 1;
 			global_time_left = (global_timeout == -1) ? (global_timer._idleStart + global_timer._idleTimeout - Date.now()) : (global_timer._idleStart + global_timer._idleTimeout - Date.now());
 			clearTimeout(global_timeout);
 			clearInterval(global_timer);
-		} else if (keyCode == 67 && !held) {
+		} else if (event.code == "KeyC" && !held) {
 			held = true;
 			let temp;
 
@@ -523,21 +522,28 @@ function keyPressed() {
 			curr_piece = spawnTile(piece_queue, false);
 			curr_piece_hover = spawnTile(piece_queue, true);
 			hold_piece_showing();
-		} else if (keyCode == 38) {
-			p.rotate();
+		} else {
+			if (event.code == "ArrowUp" && !event.repeat) {
+				p.rotate();
+			}
+
+			if (event.code == "ArrowDown" && !event.repeat) {
+				p.moveDown();
+				timer[0] = 1;
+				points += combo * 10;
+			}
+
+			if (event.code == "ArrowLeft" && !event.repeat) {
+				p.moveLeft();
+				timer[1] = 1;
+			}
+
+			if (event.code == "ArrowRight" && !event.repeat) {
+				p.moveRight();
+				timer[2] = 1;
+			}
 		}
-		// else if (keyCode == 40) {
-		// 	p.moveDown();
-		// 	timer[0] = 0;
-		// 	points += combo * 10;
-		// } else if (keyCode == 37) {
-		// 	p.moveLeft();
-		// 	timer[1] = 0;
-		// } else if (keyCode == 39) {
-		// 	p.moveRight();
-		// 	timer[2] = 0;
-		// }
-	} else if (gamestate == -1 && keyCode == 32) {
+	} else if (gamestate == -1 && event.code == "Space") {
 		global_timeout;
 		global_time_left = 0;
 		movement_timer;
@@ -562,14 +568,14 @@ function keyPressed() {
 
 		global_timer = setInterval(shift_piece, 500, 0, 1);
 		gamestate = 0;
-	} else if (gamestate == 1 && keyCode == 27) {
+	} else if (gamestate == 1 && event.code == "Escape") {
 		gamestate = 0;
 		global_timeout = setTimeout(() => {
 			global_timeout = -1;
 			global_timer = setInterval(shift_piece, 500, 0, 1);
 		}, global_time_left);
 	}
-}
+});
 
 const p = {
 	lowest_x: 10000,
