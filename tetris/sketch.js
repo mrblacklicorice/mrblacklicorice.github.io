@@ -300,7 +300,7 @@ function shift_piece(x_diff, y_diff) {
 			flip_tiles();
 		}
 
-		lines += combo * (temp_lines > 1 ? (temp_lines > 2 ? (temp_lines > 3 ? 700 : 500) : 300) : temp_lines * 100);
+		points += combo * (temp_lines > 1 ? (temp_lines > 2 ? (temp_lines > 3 ? 700 : 500) : 300) : temp_lines * 100);
 
 		piece_queue.shift();
 		if (piece_queue.length == 7) piece_queue = piece_queue.concat(random_piece());
