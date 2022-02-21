@@ -270,6 +270,7 @@
       "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz",
       "version": "4.0.1"
     },
+    "express": "^4.17.2",
     "file-saver": "^2.0.2",
     "fill-range": {
       "dev": true,
@@ -681,6 +682,7 @@
       "resolved": "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz",
       "version": "2.0.0"
     },
+    "socket.io": "^4.4.1",
     "source-map-loader": "^3.0.0",
     "sprintf-js": {
       "dev": true,

@@ -1,5 +1,3 @@
-const { dotPow } = require("mathjs");
-
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -24,16 +22,16 @@ function isTravelPossible(towers) {
   return false;
 }
 
-function shuffle(Array) {
+function shuffle(array) {
   var temp;
   var number;
-  for (let i = 0; i < Array.length; i++) {
-    temp = Array[i];
-    number = Math.floor(Math.random() * Array.length);
-    Array[i] = Array[number];
-    Array[number] = temp;
+  for (let i = 0; i < array.length; i++) {
+    temp = array[i];
+    number = Math.floor(Math.random() * array.length);
+    array[i] = array[number];
+    array[number] = temp;
   }
-  return Array;
+  return array;
 }
 
 function Equation(numbers, operations, result) {
@@ -296,7 +294,7 @@ var isLongPressedName = function (name, typed) {
   var grid = ((new Array(name.length)).fill(0)).map(ele => (new Array(typed.length)).fill(0));
   var thisLineGood = false;
   var lastIndex = -1;
-  var thiscol = false;
+  var thisCol = false;
   var checker = true;
   for (let i = 0; i < typed.length; i++) {
     if (name.search(typed[i]) == -1) return false;
@@ -317,13 +315,13 @@ var isLongPressedName = function (name, typed) {
         }
       } else {
         if (name[n] == typed[t] && lastIndex < t) {
-          thiscol = false;
-          for (let i = 0; i < n && !thiscol; i++) {
+          thisCol = false;
+          for (let i = 0; i < n && !thisCol; i++) {
             if (grid[i][t]) {
-              thiscol = true;
+              thisCol = true;
             }
           }
-          if (thiscol) {
+          if (thisCol) {
             grid[n][t] = false;
           } else {
             grid[n][t] = true;
@@ -367,7 +365,6 @@ var rankTeams = function (votes) {
       if (!result.includes(temp[0])) result = result.concat(temp.sort());
     }
   }
-  console.log(totalvotes);
   return result.join("");
 };
 
