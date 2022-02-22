@@ -118,7 +118,19 @@ console.log(titleToNumber());
 /**
  * @param {string} s
  * @return {number}
+ * returns the length of the last word
  */
 var lengthOfLastWord = function(s) {
+    return s.trim().split(" ").pop().length;
+};
+
+#!javascript
+
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ * returns if one element can be removed to make the function strictly increasing
+ */
+var canBeIncreasing = function(nums) {
     
 };
