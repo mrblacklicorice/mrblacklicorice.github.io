@@ -101,6 +101,15 @@ var titleToNumber = function (s) {
   return count;
 };
 
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ * returns if one element can be removed to make the function strictly increasing
+ */
+var canBeIncreasing = function (nums) {
+
+};
+
 var calculate = function (s) {
   s = (s.split(" ")).join("");
   var sign = "";
