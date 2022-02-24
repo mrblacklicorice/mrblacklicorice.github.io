@@ -7,7 +7,7 @@
   "dependencies": {
     "algebra.js": "^0.2.6",
     "ansi-colors": "3.2.3",
-    "ansi-regex": "3.0.0",
+    "ansi-regex": "5.0.1",
     "ansi-styles": "3.2.1",
     "anymatch": "3.1.1",
     "argparse": "1.0.10",
