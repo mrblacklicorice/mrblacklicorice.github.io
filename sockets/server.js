@@ -1,54 +1,38 @@
-// Based off of Shawn Van Every's Live Web
-// http://itp.nyu.edu/~sve204/liveweb_fall2013/week3.html
-
-// Using express: http://expressjs.com/
+var http = require('http');
 var express = require('express');
-// Create the app
 var app = express();
 
-// Set up the server
-// process.env.PORT is related to deploying on heroku
-var server = app.listen(process.env.PORT || 3000, listen);
+var server = http.createServer(app);
+// Pass a http.Server instance to the listen method
+var io = require('socket.io')(server)
 
-// This call back just tells us that the server has started
-function listen() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Example app listening at http://' + host + ':' + port);
-}
+// The server should start listening
+server.listen(80);
 
-app.use(express.static('public'));
+// Register the index route of your app that returns the HTML file
+app.get('/', function (req, res) {
+  console.log("Homepage");
+  res.sendFile(__dirname + '/index.html');
+});
 
+// Expose the node_modules folder as static resources (to access socket.io.js in the browser)
+app.use('/static', express.static('node_modules'));
 
-// WebSocket Portion
-// WebSockets work with the HTTP server
-var io = require('socket.io')(server);
+// Handle connection
+io.on('connection', function (socket) {
+  console.log("Connected succesfully to the socket ...");
 
-// Register a callback function to run when we have an individual connection
-// This is run for each individual user that connects
-io.sockets.on('connection',
-  // We are given a websocket object in our function
-  function (socket) {
-  
-    console.log("We have a new client: " + socket.id);
-  
-    // When this user emits, client side: socket.emit('otherevent',some data);
-    socket.on('mouse',
-      function(data) {
-        // Data comes in as whatever was sent, including objects
-        console.log("Received: 'mouse' " + data.x + " " + data.y);
-      
-        // Send it to all other clients
-        socket.broadcast.emit('mouse', data);
-        
-        // This is a way to send to everyone including sender
-        // io.sockets.emit('message', "this goes to everyone");
+  var news = [
+    { title: 'The cure of the Sadness is to play Videogames', date: '04.10.2016' },
+    { title: 'Batman saves Racoon City, the Joker is infected once again', date: '05.10.2016' },
+    { title: "Deadpool doesn't want to do a third part of the franchise", date: '05.10.2016' },
+    { title: 'Quicksilver demand Warner Bros. due to plagiarism with Speedy Gonzales', date: '04.10.2016' },
+  ];
 
-      }
-    );
-    
-    socket.on('disconnect', function() {
-      console.log("Client has disconnected");
-    });
-  }
-);
+  // Send news on the socket
+  socket.emit('news', news);
+
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
