@@ -51,11 +51,14 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
 	<script>
-		var mph = Number(prompt("enter mph"));
+		const queryString = window.location.search;
+		const URLparams = new URLSearchParams(queryString);
+
+		var mph = Number(prompt("enter mph", "0"));
 		var running = false;
-		var currtime = 0;
+		var currtime = URLparams.has("t") ? Number(URLparams.get("t")) : 0;;
 		var timer;
-		var currmiles = 0;
+		var currmiles = URLparams.has("m") ? Number(URLparams.get("m")) : 0;;
 		var btn = document.getElementById("workout");
 		var time = document.getElementById("time");
 		var mile = document.getElementById("mile");
