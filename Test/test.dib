@@ -131,23 +131,25 @@ var lengthOfLastWord = function(s) {
  * @return {boolean}
  * returns if one element can be removed to make the function strictly increasing
  */
- var canBeIncreasing = function (nums) {
-  if (nums.length < 3) return true;
-  nums.unshift(-1);
-  nums.push(4294967296);
+var canBeIncreasing = function (nums) {
+  if (nums.length <3) return true;
+  nums.unshift(0);
+  nums.push(1001);
+  var once = false;
   for (let i = 1; i < nums.length - 1; i++) {
-    if (nums[i] < nums[i - 1] || nums[i] >= nums[i + 1]) {
-      console.log(nums[i]);
-      if (nums[i + 1] > nums[i - 1]) {
-        nums.splice(i, 1);
-      } else {
-        return false;
-      }
+    if (nums[i] >= nums[i+1]){
+      if(once) return false;
+      once = true;
+
+      if(nums[i-1] >= nums[i+1]) nums.splice(i+1, 1);
+      else nums.splice(i,1);
+      i--;
+       
     }
   }
   return true;
 };
 
 // console.log(canBeIncreasing([1,2,10,5,7]));
-// console.log(canBeIncreasing([2,3,1,2]));
-console.log(canBeIncreasing([105,924,32,968]));
+console.log(canBeIncreasing([2,3,1,2]));
+// console.log(canBeIncreasing([105,924,32,968]));
