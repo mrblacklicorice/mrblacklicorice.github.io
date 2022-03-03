@@ -151,3 +151,24 @@ var canBeIncreasing = function (nums) {
 // console.log(canBeIncreasing([1,2,10,5,7]));
 console.log(canBeIncreasing([2,3,1,2]));
 // console.log(canBeIncreasing([105,924,32,968]));
+
+#!javascript
+
+/**
+ * @param {number[]} original
+ * @param {number} m rows
+ * @param {number} n cols
+ * @return {number[][]}
+ */
+var construct2DArray = function(original, m, n) {
+    if(original.length != m*n) return [];
+    var matrix = ((new Array(m)).fill(0)).map(ele => (new Array(n)).fill(0));
+    for (let i = 0; i < original.length; i++) {
+        // console.log("row: " + Math.floor(i/n) + ", col: " + (i - (Math.floor(i/n) * n)));
+        matrix[Math.floor(i/n)][(i - (Math.floor(i/n) * n))] = original[i];
+    }
+    return matrix;
+};
+
+console.log(construct2DArray([1,2,3], 1, 3));
+console.log(construct2DArray([1,2,3,4,5,6], 2, 3));
