@@ -141,10 +141,8 @@ var canBeIncreasing = function (nums) {
       if(once) return false;
       once = true;
 
-      if(nums[i-1] >= nums[i+1]) nums.splice(i+1, 1);
-      else nums.splice(i,1);
-      i--;
-       
+      if(nums[i-1] >= nums[i+1]) nums[i+1] = nums[i];
+      else nums[i] = nums[i-1];       
     }
   }
   return true;
