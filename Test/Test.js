@@ -106,7 +106,24 @@ var titleToNumber = function (s) {
  * @return {boolean}
  * returns if one element can be removed to make the function strictly increasing
  */
+var canBeIncreasing = function (nums) {
+  if (nums.length < 3) return true;
+  nums.unshift(0);
+  nums.push(1001);
+  var once = false;
+  for (let i = 1; i < nums.length - 1; i++) {
+    if (nums[i] >= nums[i + 1]) {
+      if (once) return false;
+      once = true;
 
+      if (nums[i - 1] >= nums[i + 1]) nums.splice(i + 1, 1);
+      else nums.splice(i, 1);
+      i--;
+
+    }
+  }
+  return true;
+};
 
 var calculate = function (s) {
   s = (s.split(" ")).join("");
