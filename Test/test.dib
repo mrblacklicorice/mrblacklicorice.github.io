@@ -165,7 +165,7 @@ var construct2DArray = function(original, m, n) {
     var matrix = ((new Array(m)).fill(0)).map(ele => (new Array(n)).fill(0));
     for (let i = 0; i < original.length; i++) {
         // console.log("row: " + Math.floor(i/n) + ", col: " + (i - (Math.floor(i/n) * n)));
-        matrix[Math.floor(i/n)][(i - (Math.floor(i/n) * n))] = original[i];
+        matrix[Math.floor(i/n)][i % n] = original[i];
     }
     return matrix;
 };
