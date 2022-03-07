@@ -7,14 +7,14 @@ var server = http.createServer(app);
 var io = require('socket.io')(server)
 
 // The server should start listening
-server.listen(80);
+server.listen(8080);
 
-console.log("localhost");
+console.log("http://localhost:8080");
 
 // Register the index route of your app that returns the HTML file
 app.get('/', function (req, res) {
   console.log("Homepage");
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 // Expose the node_modules folder as static resources (to access socket.io.js in the browser)
