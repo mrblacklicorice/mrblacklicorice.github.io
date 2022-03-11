@@ -1,12 +1,12 @@
-let pixel = 30;
+let pixel = 90;
 
 let side_bar = pixel;
 
 let offset = pixel / 5;
 
-const cols = 10;
+const cols = 8;
 
-const rows = 24;
+const rows = 8;
 
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
