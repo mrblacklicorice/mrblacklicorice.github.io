@@ -15,7 +15,6 @@ console.log("http://localhost:8080");
 app.get('/', function (req, res) {
   console.log("Homepage");
   res.sendFile(__dirname + '/index.html');
->>>>>>> 28b89ec6f13627f2b49fafea2a9fcd2c8dbf94fa
 });
 
 // Expose the node_modules folder as static resources (to access socket.io.js in the browser)
