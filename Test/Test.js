@@ -123,6 +123,58 @@ var canBeIncreasing = function (nums) {
   return true;
 };
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function (l1, l2) {
+  var s1 = "";
+  var s2 = "";
+  var result;
+
+  while (!(l1 == undefined && l2 == undefined)) {
+    if (l1 != undefined) { s1 += l1.val; l1 = l1.next; }
+    if (l2 != undefined) { s2 += l2.val; l2 = l2.next; }
+  }
+
+  s1 = s1.split("")
+  s2 = s2.split("")
+
+  if (s1.length > s2.length) {
+    s2 = s2.concat(new Array(s1.length - s2.length).fill("0"));
+  } else if (s2.length > s1.length) {
+    s1 = s1.concat(new Array(s2.length - s1.length).fill("0"));
+  }
+
+  result = new Array(s1.length + 1).fill(0);
+
+  for (let i = 0; i < s1.length; i++) {
+    result[i] += (+s1[i]) + (+s2[i]);
+    if (result[i] > 9) {
+      result[i] = result[i] - 10;
+      result[i + 1]++;
+    }
+  }
+
+  if (result[result.length - 1] == 0) result.pop();
+  result.reverse();
+  result[0] = { val: result[0], next: null };
+
+  for (var i = 1; i < result.length; i++) {
+    result[i] = { val: result[i], next: result[i - 1] };
+  }
+
+  return result.pop();
+};
+
 var calculate = function (s) {
   s = (s.split(" ")).join("");
   var sign = "";
