@@ -42,8 +42,6 @@ var d = [
 
 function check_win(p) {
 	var tr, tc, i;
-	var sr = [1, -1, 0, 0, 1, -1];
-	var sc = [0, 0, 1, -1, 1, -1];
 	for (let r = 0; r < d.length; r++) {
 		for (let c = 0; c < d[r].length; c++) {
 			if (d[r][c] == p) {
