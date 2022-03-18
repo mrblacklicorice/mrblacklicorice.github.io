@@ -34,7 +34,7 @@ const rows = 6;
 var d = [
 	["-", "-", "-", "-", "-", "-", "-"],
 	["-", "-", "-", "-", "-", "-", "-"],
-	["-", "x", "-", "-", "-", "-", "-"],
+	["-", "x", "x", "x", "x", "-", "-"],
 	["-", "-", "-", "-", "-", "-", "-"],
 	["-", "-", "-", "-", "-", "-", "-"],
 	["-", "-", "-", "-", "-", "-", "-"],
@@ -47,19 +47,27 @@ function check_win(p) {
 	for (let r = 0; r < d.length; r++) {
 		for (let c = 0; c < d[r].length; c++) {
 			if (d[r][c] == p) {
-				tr = 0, tc = 0, i = 1;
-				while (isInBorder(r + tr, c + tc) && d[r + tr][c + tc] == p) {
-					if (i == 4) return true;
-					tr++;
-					i++;
+				for (let l = -1; l < 1; l++) {
+					for (let k = -1; k < 1; k++) {
+						tr = 0, tc = 0, i = 1;
+						if (!(l == 0 && k == 0)) {
+							while (isInBorder(r + tr, c + tc) && d[r + tr][c + tc] == p) {
+								if (i == 4) return true;
+								tr += l;
+								tc += k;
+								i++;
+							}
+						}
+					}
 				}
 			}
 		}
 	}
+	return false;
 }
 
 function isInBorder(r, c) {
 	return (r > -1 && r < rows && c > -1 && c < cols);
 }
 
-// check_win("x");
+console.log(check_win("x"));
