@@ -73,7 +73,7 @@
     "log-symbols": "3.0.0",
     "mathjs": "^7.0.1",
     "minimatch": "3.0.4",
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "mkdirp": "0.5.5",
     "mocha": "^7.1.2",
     "ms": "2.1.1",
