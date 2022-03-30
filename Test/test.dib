@@ -171,7 +171,7 @@ var construct2DArray = function(original, m, n) {
 };
 
 console.log(construct2DArray([1,2,3], 1, 3));
-console.log(construct2DArray([1,2,3,4,5,6], 2, 3));
+// console.log(construct2DArray([1,2,3,4,5,6], 2, 3));
 
 #!javascript
 
@@ -234,3 +234,72 @@ result.reverse();
     // }
     // return result;
 };
+
+#!javascript
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {number} a
+ * @param {number} b
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeInBetween = function(list1, a, b, list2) {
+    var i = 0;
+    var curr = list1;
+    var start = curr;
+    var first;
+    while(i < b){
+        if(i == a) first = curr;
+        curr = curr.next;
+        i++;
+    }
+    first.next = list2;
+    while(first.next != null){
+        first = first.next; 
+    }
+    first.next = curr;
+    return start;
+};
+
+#!javascript
+
+/**
+ * @param {number[]} fruits
+ * @return {number}
+ */
+var totalFruit = function(fruits) {
+    if(fruits.length <= 2) return fruits.length;
+
+    var curr = 0;
+    var first = fruits[0];
+    var second;
+
+    for(var i = 0; i < fruits.length; i++){
+        if(second == undefined && fruits[i] != first) second = fruits[i];
+
+        if(fruits[i] == first || fruits[i] == second) curr++;
+        else break;
+    }
+    
+    var comp = totalFruit(fruits.slice(1));
+
+    return (curr > comp)? curr : comp;
+};
+
+// console.log(totalFruit([0,1,2,2]));
+console.log(totalFruit([0,0,1,1]));
+
+#!javascript
+
+var cols = 2
+var rows = 2
+
+return ((new Array(cols)).fill(0)).map(ele => (new Array(rows)).fill(0));
