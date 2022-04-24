@@ -1,3 +1,5 @@
+const { resourceLimits } = require("worker_threads");
+
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -855,3 +857,53 @@ let searchMatrix = function (matrix, target) {
 }
 
 // console.log(searchMatrix([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 3));
+
+/**
+ * @param {number} n
+ * @return {number[][]}
+ */
+var generateMatrix = function (n) {
+  var mat = ((new Array(n)).fill(0)).map(ele => (new Array(n)).fill(0));
+
+  var r = 0, c = 0;
+  var rx = 0, cx = 1;
+
+  mat[0][0] = 1;
+  for (let i = 2; i <= n * n; i++) {
+    if (!(r + rx < n && r + rx > -1 && c + cx < n && c + cx > -1 && mat[r + rx][c + cx] == 0)) {
+      [cx, rx] = (cx != 0) ? [0, cx] : [-rx, 0];
+    }
+    mat[r + rx][c + cx] = i;
+    r += rx;
+    c += cx;
+  }
+  return mat;
+};
+
+// console.table(generateMatrix(5))
+
+/**
+ * @param {number[]} rains
+ * @return {number[]}
+ */
+var avoidFlood = function (rains) {
+  var ans = new Array(rains.length).fill(-1);
+
+  var result = [];
+  temp = [];
+  var zero = false;
+
+  for (let i = 0; i < rains.length; i++) {
+    if ((!zero && rains[i] != 0) || (zero && rains[i] == 0)) {
+      temp.push(rains[i]);
+    } else {
+      result.push(temp);
+      temp = [rains[i]];
+      zero = !zero;
+    }
+  }
+  result.push(temp);
+  return result;
+};
+
+console.log(avoidFlood([1, 2, 0, 0, 2, 1]));
