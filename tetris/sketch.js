@@ -41,14 +41,17 @@ let timer = [0, 0, 0];
 let already_flipped = false;
 
 let gamestate = -1;
+// -1 == didnt start, 0 == started, 1 == paused, 2 == ended
+
 
 let points = 0;
 let combo = 1;
-let highscore = (getItem("highscore") == null) ? 0 : Number(getItem("highscore"));
-// -1 == didnt start, 0 == started, 1 == paused, 2 == ended
+let highscore = 0
 
 function setup() {
 	canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 2), pixel * rows + (offset * 2) + (offset * 10));
+
+	highscore = (getItem("highscore") == null) ? 0 : Number(getItem("highscore"));
 
 	canvas.center("horizontal");
 	document.body.style.background = '#222222';
