@@ -44,7 +44,7 @@ let gamestate = -1;
 
 let points = 0;
 let combo = 1;
-let highscore = 0;
+let highscore = (getItem("highscore") == null) ? 0 : Number(getItem("highscore"));
 // -1 == didnt start, 0 == started, 1 == paused, 2 == ended
 
 function setup() {
@@ -273,7 +273,8 @@ function shift_piece(x_diff, y_diff) {
 				}
 				hold = [new Tile(0, 0, 0, 0, offset)];
 				setTimeout(() => { gamestate = -1; }, 1000);
-				highscore = highscore > points ? highscore : points;
+				highscore = (highscore > points) ? highscore : points;
+				storeItem("highscore", String(highscore));
 				return true;
 			}
 			tiles[curr_piece[i].y][curr_piece[i].x] = curr_piece[i];
