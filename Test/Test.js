@@ -1,5 +1,3 @@
-const { resourceLimits } = require("worker_threads");
-
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
