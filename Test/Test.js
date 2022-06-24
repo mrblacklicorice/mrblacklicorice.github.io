@@ -916,3 +916,22 @@ var findKthLargest = function (nums, k) {
 };
 
 // console.log(findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4));
+
+var thing = function (courses) {
+  var oc = courses.sort((a, b) => a[1] - b[1]);
+  var counter = 0;
+  var curr_day = 0;
+
+  for (let i = 0; i < oc.length; i++) {
+    if (oc[i][1] > curr_day + oc[i][0] && oc[i][0] <= oc[i][1]) {
+      curr_day += oc[i][0];
+      counter++;
+    }
+  }
+
+  return [curr_day, counter];
+}
+
+// console.log(thing([[100, 200], [1000, 1300], [200, 1250], [2000, 3200]]));
+console.log(thing([[1, 2]]));
+console.log(thing([[3, 1]]));
