@@ -972,3 +972,13 @@ var isPossible = function (target) {
 
 // console.log(isPossible([9, 3, 5]));
 
+/**
+ * 665. Non-decreasing Array
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var checkPossibility = function (nums) {
+
+};
+
+console.log(checkPossibility([4, 2, 3]));
