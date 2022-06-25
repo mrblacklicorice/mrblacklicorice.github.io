@@ -917,21 +917,58 @@ var findKthLargest = function (nums, k) {
 
 // console.log(findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4));
 
-var thing = function (courses) {
+/**
+ * TODO: 630
+ * @param {number[][]} courses
+ * @return {number}
+ */
+var scheduleCourse = function (courses) {
   var oc = courses.sort((a, b) => a[1] - b[1]);
   var counter = 0;
   var curr_day = 0;
 
   for (let i = 0; i < oc.length; i++) {
-    if (oc[i][1] > curr_day + oc[i][0] && oc[i][0] <= oc[i][1]) {
+    if (oc[i][1] >= curr_day + oc[i][0] && oc[i][0] <= oc[i][1]) {
       curr_day += oc[i][0];
       counter++;
     }
   }
 
-  return [curr_day, counter];
+  return counter;
 }
 
-// console.log(thing([[100, 200], [1000, 1300], [200, 1250], [2000, 3200]]));
-console.log(thing([[1, 2]]));
-console.log(thing([[3, 1]]));
+// console.log(scheduleCourse([[100, 200], [1000, 1300], [200, 1250], [2000, 3200]]));
+
+/**
+ * 1354. Construct Target Array With Multiple Sums
+ * @param {number[]} target
+ * @return {boolean}
+ */
+var isPossible = function (target) {
+  var max_i = 0;
+  var total = 0;
+
+  if (target.length == 2 && target.includes(1)) return true;
+  if (target.length == 1) return (target[0] == 1);
+
+  do {
+    total = 0;
+    max_i = 0;
+    for (let i = 0; i < target.length; i++) {
+      total += target[i];
+      if (target[i] > target[max_i]) {
+        max_i = i;
+      }
+    }
+
+    if (target[max_i] == 1 && total == target.length) return true;
+
+    total -= target[max_i];
+    target[max_i] -= total;
+  } while ((target[max_i] > 0));
+
+  return false;
+};
+
+// console.log(isPossible([9, 3, 5]));
+
