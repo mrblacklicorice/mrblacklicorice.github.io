@@ -975,4 +975,40 @@ var isPossible = function (target) {
 
 // console.log(isPossible([9, 3, 5]));
 
+/**
+ * 1423. Maximum Points You Can Obtain from Cards
+ * @param {number[]} cardPoints
+ * @param {number} k
+ * @return {number}
+ */
+var maxScore = function (cardPoints, k) {
+  var st = [0];
+  var ed = [0];
 
+  if (cardPoints.length < k) {
+    var x = 0;
+    for (let i = 0; i < cardPoints.length; i++) {
+      x += cardPoints[i];
+    }
+    return x;
+  }
+
+  for (let i = 0; i < k; i++) {
+    st.push(st[st.length - 1] + cardPoints[i])
+    ed.push(ed[ed.length - 1] + cardPoints[cardPoints.length - (i + 1)])
+  }
+
+  ed.reverse();
+
+  var high = 0;
+
+  for (let i = 0; i < st.length; i++) {
+    if (high < ed[i] + st[i]) {
+      high = ed[i] + st[i];
+    }
+  }
+
+  return high;
+};
+
+console.log(maxScore([11, 49, 100, 20, 86, 29, 72], 4));
