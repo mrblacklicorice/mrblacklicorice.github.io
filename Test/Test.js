@@ -1011,4 +1011,16 @@ var maxScore = function (cardPoints, k) {
   return high;
 };
 
-console.log(maxScore([11, 49, 100, 20, 86, 29, 72], 4));
+// console.log(maxScore([11, 49, 100, 20, 86, 29, 72], 4));
+
+/**
+ * 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
+ * @param {string} n
+ * @return {number}
+ */
+var minPartitions = function (n) {
+  return Math.max(...n.split(""));
+};
+
+// console.log(minPartitions("82734"));
+
