@@ -1024,3 +1024,34 @@ var minPartitions = function (n) {
 
 // console.log(minPartitions("82734"));
 
+/**
+ * 1315. Sum of Nodes with Even-Valued Grandparent
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var sumEvenGrandparent = function (root) {
+  var total = 0;
+  if (root.left != null) {
+    if (root.val % 2 == 0) {
+      total += (root.left.left != null) ? root.left.left.val : 0;
+      total += (root.left.right != null) ? root.left.right.val : 0;
+    }
+    total += sumEvenGrandparent(root.left);
+  }
+  if (root.right != null) {
+    if (root.val % 2 == 0) {
+      total += (root.right.left != null) ? root.right.left.val : 0;
+      total += (root.right.right != null) ? root.right.right.val : 0;
+    }
+    total += sumEvenGrandparent(root.right);
+  }
+  return total;
+};
