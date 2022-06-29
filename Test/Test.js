@@ -1055,3 +1055,60 @@ var sumEvenGrandparent = function (root) {
   }
   return total;
 };
+
+/**
+ * 1647. Minimum Deletions to Make Character Frequencies Unique
+ * @param {string} s
+ * @return {number}
+ */
+var minDeletions = function (s) {
+  var total = 0;
+
+  var dict = {};
+  var arr = s.split("");
+
+  for (let i = 0; i < arr.length; i++) {
+    if (dict[arr[i]] == null) dict[arr[i]] = 1;
+    else dict[arr[i]]++;
+  }
+
+  var keys = Object.keys(dict);
+  var result = [];
+
+  for (let i = 0; i < keys.length; i++) {
+    if (result[dict[keys[i]] - 1] == undefined) result[dict[keys[i]] - 1] = [keys[i]];
+    else result[dict[keys[i]] - 1].push(keys[i]);
+  }
+
+  var j = 0;
+  for (let i = 0; i < result.length; i++) {
+    while (result[i] != undefined && result[i].length > 1) {
+      j = i - 1;
+      while (j >= 0) {
+        if (result[j] == undefined) result[j] = [result[j + 1].pop()];
+        else result[j].push(result[j + 1].pop());
+
+        total++;
+
+        if (result[j].length > 1) j--;
+        else break;
+      }
+      if (j == -1 && result[0].length > 1) {
+        result[0].pop();
+        total++;
+      }
+    }
+  }
+
+  return total;
+};
+
+// console.log(minDeletions("aaabbbcc"));
+
+/**
+ * @param {number[][]} people
+ * @return {number[][]}
+ */
+var reconstructQueue = function (people) {
+
+};
