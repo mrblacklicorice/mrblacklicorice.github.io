@@ -1131,3 +1131,19 @@ var reconstructQueue = function (people) {
 
 // console.log(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]));
 
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minMoves2 = function (nums) {
+  nums = nums.sort((a, b) => a - b);
+  var median = (nums.length % 2 == 1) ? nums[Math.floor(nums.length / 2)] : (nums[Math.floor(nums.length / 2)] + nums[Math.floor(nums.length / 2)]) / 2;
+
+  var result = 0;
+  for (let i = 0; i < nums.length; i++) {
+    result += Math.abs(nums[i] - median);
+  }
+  return result;
+};
+
+console.log(minMoves2([1, 0, 0, 8, 6]));
