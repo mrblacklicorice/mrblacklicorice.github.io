@@ -1106,9 +1106,28 @@ var minDeletions = function (s) {
 // console.log(minDeletions("aaabbbcc"));
 
 /**
+ * 406. Queue Reconstruction by Height
  * @param {number[][]} people
  * @return {number[][]}
  */
 var reconstructQueue = function (people) {
+  people = people.sort((a, b) => { return (a[0] - b[0] != 0) ? a[0] - b[0] : a[1] - b[1] })
+  var result = new Array(people.length).fill([1000000, 1000000]);
 
+  var total = 0;
+  var j = 0;
+  for (let i = 0; i < people.length; i++) {
+    total = people[i][1];
+    j = 0;
+    while (total > 0 || result[j][0] != 1000000) {
+      if (result[j][0] >= people[i][0]) total--;
+      j++;
+    }
+    result[j] = people[i];
+  }
+
+  return result;
 };
+
+// console.log(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]));
+
