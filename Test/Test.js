@@ -1146,4 +1146,27 @@ var minMoves2 = function (nums) {
   return result;
 };
 
-console.log(minMoves2([1, 0, 0, 8, 6]));
+// console.log(minMoves2([1, 0, 0, 8, 6]));
+
+/**
+ * @param {number[][]} boxTypes
+ * @param {number} truckSize
+ * @return {number}
+ */
+var maximumUnits = function (boxTypes, truckSize) {
+  boxTypes = boxTypes.sort((a, b) => b[1] - a[1]);
+  var total = 0;
+  for (let i = 0; i < boxTypes.length; i++) {
+    if (boxTypes[i][0] <= truckSize) {
+      total += boxTypes[i][0] * boxTypes[i][1];
+      truckSize -= boxTypes[i][0];
+    } else {
+      total += truckSize * boxTypes[i][1];
+      break;
+    }
+  }
+
+  return total;
+};
+
+// console.log(maximumUnits([[5, 10], [2, 5], [4, 7], [3, 9]], 10));
