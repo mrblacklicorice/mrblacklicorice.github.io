@@ -1132,6 +1132,7 @@ var reconstructQueue = function (people) {
 // console.log(reconstructQueue([[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]));
 
 /**
+ * 462. Minimum Moves to Equal Array Elements II
  * @param {number[]} nums
  * @return {number}
  */
@@ -1149,6 +1150,7 @@ var minMoves2 = function (nums) {
 // console.log(minMoves2([1, 0, 0, 8, 6]));
 
 /**
+ * 1710. Maximum Units on a Truck
  * @param {number[][]} boxTypes
  * @param {number} truckSize
  * @return {number}
@@ -1170,3 +1172,54 @@ var maximumUnits = function (boxTypes, truckSize) {
 };
 
 // console.log(maximumUnits([[5, 10], [2, 5], [4, 7], [3, 9]], 10));
+
+/**
+ * 2278. Percentage of Letter in String
+ * @param {string} s
+ * @param {character} letter
+ * @return {number}
+ */
+var percentageLetter = function (s, letter) {
+  var total = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == letter) total++;
+  }
+  return Math.floor((total / s.length) * 100);
+};
+
+// console.log(percentageLetter("foobar", "o"));
+
+/**
+ * 2095. Delete the Middle Node of a Linked List
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteMiddle = function (head) {
+  var start = head;
+  var length = 0;
+
+  if (head.next == null) return null;
+
+  while (start.next != null) {
+    start = start.next;
+    length++;
+  }
+
+  start = head;
+  length = (length % 2 == 0) ? (length / 2) : ((length + 1) / 2);
+
+  for (let i = 0; i < length - 1; i++) {
+    start = start.next;
+  }
+
+  start.next = (start.next.next != null) ? start.next.next : null;
+
+  return head;
+};
