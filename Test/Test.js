@@ -1223,3 +1223,61 @@ var deleteMiddle = function (head) {
 
   return head;
 };
+
+/**
+ * 1562. Find Latest Group of Size M
+ * @param {number[]} arr
+ * @param {number} m
+ * @return {number}
+ */
+var findLatestStep = function (arr, m) {
+  var result = new Array(arr.length).fill('0')
+  var target = "1".repeat(m);
+  var latest = -1;
+
+
+  for (let i = 0; i < arr.length; i++) {
+    console.log(result);
+    result[arr[i] - 1] = '1';
+    if (result.join("").split("0").includes(target)) latest = i + 1;
+  }
+
+  return latest;
+};
+
+// console.log(findLatestStep([3, 5, 1, 2, 4], 1))
+
+/**
+ * 1465. Maximum Area of a Piece of Cake After Horizontal and Vertical Cuts
+ * @param {number} h
+ * @param {number} w
+ * @param {number[]} horizontalCuts
+ * @param {number[]} verticalCuts
+ * @return {number}
+ */
+var maxArea = function (h, w, horizontalCuts, verticalCuts) {
+  verticalCuts.sort((a, b) => a - b);
+  horizontalCuts.sort((a, b) => a - b);
+
+  verticalCuts.push(w);
+  horizontalCuts.push(h);
+
+  var max_v = verticalCuts[0];
+  var max_h = horizontalCuts[0];
+
+  for (let i = 0; i < verticalCuts.length - 1; i++) {
+    if (max_v < verticalCuts[i + 1] - verticalCuts[i]) max_v = verticalCuts[i + 1] - verticalCuts[i];
+  }
+
+  for (let i = 0; i < horizontalCuts.length - 1; i++) {
+    if (max_h < horizontalCuts[i + 1] - horizontalCuts[i]) max_h = horizontalCuts[i + 1] - horizontalCuts[i];
+  }
+
+  let x = max_v * max_h;
+  if (!Number.isSafeInteger(x)) {
+    return Number((BigInt(max_v) * BigInt(max_h)) % BigInt((10 ** 9) + 7));
+  }
+  return x % ((10 ** 9) + 7);
+};
+
+// console.log(maxArea(5, 4, [1, 2, 4], [1, 3]));
