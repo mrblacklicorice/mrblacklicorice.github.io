@@ -1281,3 +1281,15 @@ var maxArea = function (h, w, horizontalCuts, verticalCuts) {
 };
 
 // console.log(maxArea(5, 4, [1, 2, 4], [1, 3]));
+
+/**
+ * 2235. Add Two Integers
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+var sum = function (num1, num2) {
+  return num1 + num2;
+};
+
+// console.log(sum(1, 2));
