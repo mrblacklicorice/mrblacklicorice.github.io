@@ -1293,3 +1293,24 @@ var sum = function (num1, num2) {
 };
 
 // console.log(sum(1, 2));
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var wiggleMaxLength = function (nums) {
+  let p = 1;
+  let n = 1;
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > nums[i - 1]) {
+      p = n + 1;
+    } else if (nums[i] < nums[i - 1]) {
+      n = p + 1;
+    }
+  }
+
+  return Math.max(p, n);
+};
+
+// console.log(wiggleMaxLength([1, 17, 5, 10, 13, 15, 10, 5, 16, 8]));
