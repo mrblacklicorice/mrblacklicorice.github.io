@@ -1314,3 +1314,61 @@ var wiggleMaxLength = function (nums) {
 };
 
 // console.log(wiggleMaxLength([1, 17, 5, 10, 13, 15, 10, 5, 16, 8]));
+
+/**
+ * 135. Candy
+ * @param {number[]} ratings
+ * @return {number}
+ */
+var candy = function (ratings) {
+  var results = new Array(ratings.length).fill(1);
+
+  if (ratings.length == 1) return 1;
+
+  if (ratings[0] < ratings[1]) results[0] = 1;
+  else results[0] = 2;
+
+  for (let i = 1; i < ratings.length; i++) {
+    if (ratings[i - 1] <= ratings[i]) {
+      results[i] = results[i - 1] + 1;
+    } else {
+      if (results[i - 1] > 1) results[i] = results[i - 1] - 1;
+      else results[i - 1]++;
+    }
+  }
+
+  var sum = 0;
+  for (let i = 0; i < results.length; i++) {
+    sum += results[i];
+  }
+
+  return sum;
+};
+
+// console.log(candy([1, 3, 2, 2, 1]));
+
+/**
+ * 128. Longest Consecutive Sequence
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestConsecutive = function (nums) {
+  if (nums.length < 2) return nums.length;
+  nums = nums.sort((a, b) => a - b);
+
+  var lar = 1;
+  var curr = 1;
+  var prev = nums[0];
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] == prev + 1) curr++;
+    else if (!(nums[i] == prev)) curr = 1;
+
+    if (lar < curr) lar = curr;
+    prev = nums[i];
+  }
+
+  return lar;
+};
+
+console.log(longestConsecutive([1, 2, 0, 1]));
