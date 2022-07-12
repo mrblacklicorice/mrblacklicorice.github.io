@@ -1371,4 +1371,55 @@ var longestConsecutive = function (nums) {
   return lar;
 };
 
-console.log(longestConsecutive([1, 2, 0, 1]));
+// console.log(longestConsecutive([1, 2, 0, 1]));
+
+/**
+ * 199. Binary Tree Right Side View
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function (root) {
+  var res = [root.val];
+
+  console.log(root.left);
+  console.log(root.right);
+
+  // var left = root.left ? rightSideView(root.left) : [];
+  // var right = root.right ? rightSideView(root.right) : [];
+
+  // if (right.length >= left.length) res.concat(right);
+  // else res.concat(left).concat(right.substring(left.length))
+
+  return res;
+};
+
+/**
+ * 473. Matchsticks to Square
+ * @param {number[]} matchsticks
+ * @return {boolean}
+ */
+var makesquare = function (matchsticks, target) {
+  if (target == undefined) {
+    matchsticks = matchsticks.sort((a, b) => a - b);
+    var l = 0;
+
+    for (let i = 0; i < matchsticks.length; i++) {
+      l += matchsticks[i];
+    }
+
+    if (l % 4 != 0) return false;
+    else l /= 4;
+
+    var result = ((new Array(matchsticks.length)).fill(0)).map(ele => (new Array(l.length)).fill(null))
+  } else {
+
+  }
+};
