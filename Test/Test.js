@@ -1408,7 +1408,7 @@ var rightSideView = function (root) {
  */
 var makesquare = function (matchsticks, target) {
   if (target == undefined) {
-    matchsticks = matchsticks.sort((a, b) => a - b);
+    matchsticks = matchsticks.sort((a, b) => b - a);
     var l = 0;
 
     for (let i = 0; i < matchsticks.length; i++) {
@@ -1418,8 +1418,47 @@ var makesquare = function (matchsticks, target) {
     if (l % 4 != 0) return false;
     else l /= 4;
 
-    var result = ((new Array(matchsticks.length)).fill(0)).map(ele => (new Array(l.length)).fill(null))
-  } else {
+    matchsticks = makesquare(matchsticks, l);
+    matchsticks = makesquare(matchsticks, l);
+    matchsticks = makesquare(matchsticks, l);
+    matchsticks = makesquare(matchsticks, l);
 
+    return (matchsticks.join('').matches(new Array(matchsticks.length).fill(0).join('')));
+  } else {
+    var result = ((new Array(matchsticks.length + 1)).fill(null)).map(ele => (new Array(target + 1)).fill(null))
+
+    result[0].fill(false);
+    for (let i = 0; i < result.length; i++) {
+      result[i][0] = true;
+    }
+
+    for (let i = 1; i < result.length; i++) {
+      for (let j = 1; j < result[i].length; j++) {
+        if (matchsticks[i - 1] > j) {
+          result[i][j] = result[i - 1][j];
+        } else {
+          result[i][j] = result[i - 1][j - matchsticks[i - 1]];
+        }
+      }
+    }
+
+    if (result[result.length - 1][result[0].length - 1] == false) return matchsticks;
+
+    var x = result.length - 1;
+    var y = result[0].length - 1;
+
+    console;
+
+    while (x != 1 || y != 0) {
+      if (!(result[x - 1][y] == true)) {
+        y -= matchsticks[x - 1];
+        matchsticks[x - 1] = 0;
+      }
+      x--;
+    }
+
+    return matchsticks;
   }
 };
+
+console.log(makesquare([1, 1, 2, 2, 2]));
