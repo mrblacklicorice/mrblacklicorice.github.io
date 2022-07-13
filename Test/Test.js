@@ -1423,3 +1423,45 @@ var makesquare = function (matchsticks, target) {
 
   }
 };
+
+/**
+ * 102. Binary Tree Level Order Traversal
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+  if (root == null) return [];
+
+  let l = [0]
+  let q = [root];
+
+  let r = [];
+
+  while (q.length > 0) {
+    var c = l.shift();
+    var i = q.shift();
+
+    if (r[c] == null) r[c] = [i.val];
+    else r[c].push(i.val);
+
+    if (i.left != null) {
+      q.push(i.left)
+      l.push(c + 1);
+    }
+
+    if (i.right != null) {
+      q.push(i.right)
+      l.push(c + 1);
+    }
+  }
+
+  return r;
+};
