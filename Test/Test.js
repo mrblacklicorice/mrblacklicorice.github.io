@@ -1,3 +1,18 @@
+var binaryPrint = function (root, n) {
+  let q = [root];
+  let r = [];
+
+  while (q.length > 0) {
+    var i = q.shift();
+    r.push(i.val);
+
+    if (i.left != undefined) q.push(i.left)
+    if (i.right != undefined) q.push(i.right)
+  }
+
+  return r;
+}
+
 function fib(n, mem) {
   if (mem[n] != null) return mem[n];
   if (n == 1 || n == 2) {
@@ -1461,7 +1476,7 @@ var makesquare = function (matchsticks, target) {
   }
 };
 
-console.log(makesquare([1, 1, 2, 2, 2]));
+// console.log(makesquare([1, 1, 2, 2, 2]));
 
 /**
  * 102. Binary Tree Level Order Traversal
@@ -1504,3 +1519,51 @@ var levelOrder = function (root) {
 
   return r;
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function (preorder, inorder) {
+  if (preorder.length == 0) return null;
+  var head = {
+    val: preorder.shift(),
+    left: null,
+    right: null
+  }
+
+  var int = inorder.indexOf(head.val);
+
+  var lp = [];
+  var li = inorder.slice(0, int);
+
+  var rp = [];
+  var ri = inorder.slice(int + 1);
+
+  for (let i = 0; i < preorder.length; i++) {
+    if (li.includes(preorder[i])) lp.push(preorder[i]);
+    if (ri.includes(preorder[i])) rp.push(preorder[i]);
+  }
+
+  if (lp.length > 0) {
+    head.left = buildTree(lp, li);
+  }
+
+  if (rp.length > 0) {
+    head.right = buildTree(rp, ri);
+  }
+
+  return head;
+};
+
+console.log(binaryPrint(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])));
+
