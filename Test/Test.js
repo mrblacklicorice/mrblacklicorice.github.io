@@ -1565,5 +1565,50 @@ var buildTree = function (preorder, inorder) {
   return head;
 };
 
-console.log(binaryPrint(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])));
+// console.log(binaryPrint(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7])));
 
+/**
+ * 695. Max Area of Island
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxAreaOfIsland = function (grid) {
+  var result = new Array(grid.length).fill(false).map(ele => (new Array(grid[0].length)).fill(false));
+
+  var highest = 0;
+  var curr = 0;
+  var queue = [];
+  var h;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] == 1 && !result[i][j]) {
+        queue.push([i, j]);
+        while (queue.length > 0) {
+          h = queue.shift();
+          if (!result[h[0]][h[1]]) {
+            result[h[0]][h[1]] = true;
+            curr++;
+
+            for (let q = -1; q <= 1; q += 2) {
+              if (h[0] + q > -1 && h[0] + q < grid.length && grid[h[0] + q][h[1]] == 1 && !result[h[0] + q][h[1]])
+                queue.push([h[0] + q, h[1]]);
+
+              if (h[1] + q > -1 && h[1] + q < grid[0].length && grid[h[0]][h[1] + q] == 1 && !result[h[0]][h[1] + q])
+                queue.push([h[0], h[1] + q]);
+
+            }
+          }
+        }
+
+        if (curr > highest) highest = curr;
+        curr = 0;
+      }
+    }
+  }
+
+  return highest;
+};
+
+// console.log(maxAreaOfIsland([[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]));
+// console.log(maxAreaOfIsland([[1, 1, 0, 0, 0], [1, 1, 0, 0, 0], [0, 0, 0, 1, 1], [0, 0, 0, 1, 1]]));
