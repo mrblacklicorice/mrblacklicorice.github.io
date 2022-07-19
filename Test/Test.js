@@ -1612,3 +1612,27 @@ var maxAreaOfIsland = function (grid) {
 
 // console.log(maxAreaOfIsland([[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0], [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]));
 // console.log(maxAreaOfIsland([[1, 1, 0, 0, 0], [1, 1, 0, 0, 0], [0, 0, 0, 1, 1], [0, 0, 0, 1, 1]]));
+
+/**
+ * @param {number} numRows
+ * @return {number[][]}
+ */
+var generate = function (numRows) {
+  if (numRows == 1) return [[1]];
+
+  var result = [[1], [1, 1]];
+
+  var temp;
+  for (let l = 2; l < numRows; l++) {
+    temp = [1];
+    for (let i = 0; i < result[l - 1].length - 1; i++) {
+      temp.push(result[l - 1][i] + result[l - 1][i + 1]);
+    }
+    temp.push(1);
+    result.push(temp);
+  }
+  return result;
+};
+
+// console.log(generate(5));
+
