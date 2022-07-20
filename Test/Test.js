@@ -1614,6 +1614,7 @@ var maxAreaOfIsland = function (grid) {
 // console.log(maxAreaOfIsland([[1, 1, 0, 0, 0], [1, 1, 0, 0, 0], [0, 0, 0, 1, 1], [0, 0, 0, 1, 1]]));
 
 /**
+ * 118. Pascal's Triangle
  * @param {number} numRows
  * @return {number[][]}
  */
@@ -1636,3 +1637,31 @@ var generate = function (numRows) {
 
 // console.log(generate(5));
 
+/**
+ * 119. Pascal's Triangle II
+ * @param {number} rowIndex
+ * @return {number[]}
+ */
+var getRow = function (rowIndex) {
+  if (rowIndex == 0) return [1];
+  if (rowIndex == 1) return [1, 1];
+
+  var prev = [1, 1];
+  var curr = [1, 2, 1];
+  var l = 2;
+
+  while (l < rowIndex) {
+    prev = curr;
+    curr = [1];
+
+    for (let i = 0; i < prev.length - 1; i++) {
+      curr.push(prev[i] + prev[i + 1]);
+    }
+    curr.push(1);
+
+    l++;
+  }
+  return curr;
+};
+
+// console.log(getRow(5));  
