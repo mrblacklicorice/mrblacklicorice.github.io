@@ -1664,4 +1664,37 @@ var getRow = function (rowIndex) {
   return curr;
 };
 
-// console.log(getRow(5));  
+// console.log(getRow(5));
+
+/**
+ * 792. Number of Matching Subsequences
+ * @param {string} s
+ * @param {string[]} words
+ * @return {number}
+ */
+var numMatchingSubseq = function (s, words) {
+  var result = 0;
+  var curr_i = 0;
+  var skip = false;
+
+  var curr_word;
+
+  for (let i = 0; i < words.length; i++) {
+    curr_word = words[i].split('');
+    curr_i = 0;
+    skip = false;
+
+    for (let j = 0; (j < curr_word.length) && !skip; j++) {
+      if (!s.includes(curr_word[j], curr_i)) skip = true;
+      curr_i = s.indexOf(curr_word[j], curr_i) + 1;
+    }
+
+    if (!skip) {
+      result++;
+    }
+  }
+
+  return result;
+};
+
+// console.log(numMatchingSubseq("abcde", ["a", "bb", "acd", "ace"]));
