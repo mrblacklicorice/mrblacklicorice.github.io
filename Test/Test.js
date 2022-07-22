@@ -1768,3 +1768,38 @@ var reverseBetween = function (head, left, right) {
 
   return left == 1 ? prev : head;
 };
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} x
+ * @return {ListNode}
+ */
+var partition = function (head, x) {
+  var result = [];
+
+  var new_head = new ListNode(0, head);
+  var curr = new_head;
+  while (curr.next != null) {
+    if (curr.next.val >= x) {
+      result.push(curr.next.val);
+      curr.next = curr.next.next;
+    } else {
+      curr = curr.next;
+    }
+  }
+
+  for (let i = 0; i < result.length; i++) {
+    curr.next = { val: result[i], next: null };
+
+    curr = curr.next;
+  }
+
+  return new_head;
+};
