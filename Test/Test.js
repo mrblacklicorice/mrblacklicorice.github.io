@@ -1801,5 +1801,5 @@ var partition = function (head, x) {
     curr = curr.next;
   }
 
-  return new_head;
+  return new_head.next;
 };
