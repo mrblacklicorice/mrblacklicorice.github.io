@@ -1698,3 +1698,73 @@ var numMatchingSubseq = function (s, words) {
 };
 
 // console.log(numMatchingSubseq("abcde", ["a", "bb", "acd", "ace"]));
+
+/**
+ * 206. Reverse Linked List
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function (head) {
+  var curr = head;
+  var prev = null;
+  var nxt;
+
+  while (curr != null) {
+    nxt = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nxt;
+  }
+
+  return prev;
+};
+
+/**
+ * 92. Reverse Linked List II
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} left
+ * @param {number} right
+ * @return {ListNode}
+ */
+var reverseBetween = function (head, left, right) {
+  let start = head;
+  let curr = head;
+
+  var i = 1
+  while (i < left) {
+    start = curr;
+    curr = curr.next;
+    i++;
+  }
+
+  var prev = null;
+  var tail = curr;
+  var nxt;
+
+  while (i <= right) {
+    nxt = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = nxt;
+    i++;
+  }
+
+  start.next = prev;
+  tail.next = curr;
+
+  return left == 1 ? prev : head;
+};
