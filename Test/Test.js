@@ -1803,3 +1803,37 @@ var partition = function (head, x) {
 
   return new_head.next;
 };
+
+/**
+ * 34. Find First and Last Position of Element in Sorted Array
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var searchRange = function (nums, target) {
+  var l = 0, h = nums.length - 1;
+  var m = Math.floor((h - l) / 2);
+
+  var r = [-1, -1];
+
+  while (l <= h && r[0] == -1) {
+    m = l + Math.floor((h - l) / 2);
+    if ((m == 0 || nums[m - 1] < target) && nums[m] == target) r[0] = m;
+    else if (target > nums[m]) l = m + 1;
+    else h = m - 1;
+  }
+
+  l = 0, h = nums.length - 1;
+  m = (h - l) / 2;
+
+  while (l <= h && r[1] == -1) {
+    m = l + Math.floor((h - l) / 2);
+    if ((m == nums.length - 1 || nums[m + 1] > target) && nums[m] == target) r[1] = m
+    else if (target < nums[m]) h = m - 1;
+    else l = m + 1;
+  }
+
+  return r;
+};
+
+console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
