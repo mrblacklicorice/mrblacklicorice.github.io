@@ -1837,3 +1837,61 @@ var searchRange = function (nums, target) {
 };
 
 console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  var one = [];
+  var two = [];
+  var history = [];
+
+  const dfs = function (head) {
+    history.push(head.val);
+
+    if (head.val === p.val) {
+      one = [...history];
+    }
+    if (head.val === q.val) {
+      two = [...history];
+    }
+
+    if (one.length == 0 || two.length == 0) {
+      if (head.left != null) {
+        dfs(head.left);
+        history.pop();
+      }
+      if (head.right != null) {
+        dfs(head.right);
+        history.pop();
+      }
+    }
+
+    return null;
+  };
+
+  dfs(root);
+  var curr = root;
+
+  for (let i = 1; i < (one.length > two.length) ? two.length : one.length; i++) {
+    if (one[i] == two[i]) {
+      if (curr.left && curr.left.val == one[i]) curr = curr.left;
+      if (curr.right && curr.right.val == one[i]) curr = curr.right;
+    } else {
+      break;
+    }
+  }
+
+  return curr;
+};
+
