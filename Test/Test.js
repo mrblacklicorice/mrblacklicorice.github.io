@@ -1895,3 +1895,42 @@ var lowestCommonAncestor = function (root, p, q) {
   return curr;
 };
 
+/**
+ * 114. Flatten Binary Tree to Linked List
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {void} Do not return anything, modify root in-place instead.
+ */
+var flatten = function (root) {
+  if (root == null) return;
+  var result = [];
+  const dfs = function (head) {
+    result.push(head.val);
+
+    if (head.left != null) {
+      dfs(head.left);
+    }
+    if (head.right != null) {
+      dfs(head.right);
+    }
+  }
+
+  dfs(root);
+
+  var s = root;
+  for (let i = 0; i < result.length; i++) {
+    s.val = result[i];
+    s.left = null;
+    if (i != result.length - 1) {
+      s.right = new TreeNode();
+      s = s.right;
+    }
+  }
+};
