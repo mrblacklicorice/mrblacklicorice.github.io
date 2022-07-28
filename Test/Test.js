@@ -1836,7 +1836,7 @@ var searchRange = function (nums, target) {
   return r;
 };
 
-console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
+// console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 
 /**
  * Definition for a binary tree node.
@@ -1934,3 +1934,27 @@ var flatten = function (root) {
     }
   }
 };
+
+/**
+ * 242. Valid Anagram
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function (s, t) {
+  if (s.length != t.length) return false;
+
+  var t = t.split('');
+
+  var n;
+  for (let i = 0; i < s.length; i++) {
+    n = t.indexOf(s[i]);
+
+    if (n != -1 && t[n] != '') t[n] = ''
+    else return false;
+  }
+
+  return true;
+};
+
+console.log(isAnagram("anagram", "nagaram"));
