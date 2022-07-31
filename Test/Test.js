@@ -1957,4 +1957,42 @@ var isAnagram = function (s, t) {
   return true;
 };
 
-console.log(isAnagram("anagram", "nagaram"));
+// console.log(isAnagram("anagram", "nagaram"));
+
+/**
+ * 890. Find and Replace Pattern
+ * @param {string[]} words
+ * @param {string} pattern
+ * @return {string[]}
+ */
+var findAndReplacePattern = function (words, pattern) {
+  let len = pattern.length;
+
+  let hash = encodeString(pattern);
+
+  var result = [];
+
+  for (let word = 0; word < words.length; word++) {
+    if (words[word].length == len && encodeString(words[word]) == (hash)) result.push(words[word]);
+  }
+
+  function encodeString(str) {
+    let map = new Map();
+    let res = "";
+    let i = 0;
+
+    let ch;
+    for (let j = 0; j < str.length; j++) {
+      ch = str[j];
+
+      if (!map.has(ch)) map.set(ch, i++);
+      res += map.get(ch);
+    }
+
+    return res;
+  }
+
+  return result;
+};
+
+console.log(findAndReplacePattern(["abc", "deq", "mee", "aqq", "dkd", "ccc"], "abb"))
