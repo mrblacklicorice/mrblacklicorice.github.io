@@ -1995,4 +1995,126 @@ var findAndReplacePattern = function (words, pattern) {
   return result;
 };
 
-console.log(findAndReplacePattern(["abc", "deq", "mee", "aqq", "dkd", "ccc"], "abb"))
+// console.log(findAndReplacePattern(["abc", "deq", "mee", "aqq", "dkd", "ccc"], "abb"));
+
+/**
+ * 916. Word Subsets
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {string[]}
+ */
+var wordSubsets = function (words1, words2) {
+  var total = {};
+  var curr = {};
+  var keys = [];
+
+  for (let i = 0; i < words2.length; i++) {
+    curr = {};
+
+    for (let l = 0; l < words2[i].length; l++) {
+      if (curr[words2[i][l]]) curr[words2[i][l]]++;
+      else curr[words2[i][l]] = 1;
+    }
+
+    keys = Object.keys(curr);
+    for (let i = 0; i < keys.length; i++) {
+      if (total[keys[i]]) total[keys[i]] = (total[keys[i]] > curr[keys[i]]) ? total[keys[i]] : curr[keys[i]];
+      else total[keys[i]] = curr[keys[i]];
+    }
+  }
+
+
+  var result = [];
+  var tempG;
+  for (let i = 0; i < words1.length; i++) {
+    tempG = { ...total };
+
+    for (let l = 0; l < words1[i].length; l++) {
+      if (tempG[words1[i][l]]) tempG[words1[i][l]]--;
+      if (tempG[words1[i][l]] == 0) delete tempG[words1[i][l]]
+    }
+
+    if (Object.keys(tempG).length == 0) result.push(words1[i]);
+  }
+
+  return result;
+};
+
+// console.log(wordSubsets(["amazon", "apple", "facebook", "google", "leetcode"], ["lo", "eo"]));
+
+/**
+ * 307. Range Sum Query - Mutable
+ * @param {number[]} nums
+ */
+var NumArray = function (nums) {
+  this.len = nums.length;
+  this.nums = nums;
+  this.bit = new Array(this.len).fill(0);
+
+  // Build Tree
+  for (let i = 0; i < this.len; i++) {
+    this.add(i, nums[i]);
+  }
+};
+
+NumArray.prototype.add = function (idx, val) {
+  while (idx < this.len) {
+    this.bit[idx] += val;
+    idx = idx | (idx + 1);
+  }
+}
+
+NumArray.prototype.update = function (idx, val) {
+  let delta = val - this.nums[idx];
+
+  this.nums[idx] = val;
+  this.add(idx, delta);
+};
+
+NumArray.prototype.sum = function (idx) {
+  let res = 0;
+
+  while (idx >= 0) {
+    res += this.bit[idx];
+    idx = (idx & (idx + 1)) - 1
+  }
+
+  return res;
+}
+
+NumArray.prototype.sumRange = function (l, r) {
+  return this.sum(r) - this.sum(l - 1)
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * var obj = new NumArray(nums)
+ * obj.update(index,val)
+ * var param_2 = obj.sumRange(left,right)
+ */
+
+// var obj = new NumArray([1, 3, 5]);
+// obj.update(1, 2);
+// var param_2 = obj.sumRange(0, 2);
+
+// console.log(obj, param_2);
+
+/**
+ * 62. Unique Paths
+ * @param {number} m
+ * @param {number} n
+ * @return {number}
+ */
+var uniquePaths = function (m, n) {
+  var f = function (x) {
+    var sum = 1;
+    for (let i = x; i > 0; i--) {
+      sum *= i;
+    }
+    return sum;
+  }
+
+  return (f(n + m - 2)) / ((f(n - 1)) * (f(m - 1)));
+};
+
+// console.log(uniquePaths(3, 7));
