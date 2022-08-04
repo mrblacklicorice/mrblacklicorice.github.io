@@ -2130,3 +2130,44 @@ var kthSmallest = function (matrix, k) {
 };
 
 // console.log([[1, 5, 9], [10, 11, 13], [12, 13, 15]], 8);
+
+var MyCalendar = function () {
+  this.arr = [];
+};
+
+/** 
+ * @param {number} start 
+ * @param {number} end
+ * @return {boolean}
+ */
+MyCalendar.prototype.book = function (start, end) {
+  if (this.arr.length == 0) {
+    this.arr.push([start, end]);
+    return true;
+  }
+  var low = 0, high = this.arr.length;
+
+  while (low < high) {
+    var mid = low + high >>> 1;
+    if (this.arr[mid][0] < start) low = mid + 1;
+    else high = mid;
+  }
+
+  if ((low != this.arr.length && this.arr[low][0] < end) || (low != 0 && this.arr[low - 1][1] > start)) {
+    return false;
+  }
+
+  this.arr.splice(low, 0, [start, end]);
+  return true;
+};
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * var obj = new MyCalendar()
+ * var param_1 = obj.book(start,end)
+ */
+
+// myCalendar = new MyCalendar();
+// console.log(myCalendar.book(10, 20));
+// console.log(myCalendar.book(15, 25));
+// console.log(myCalendar.book(20, 30));
