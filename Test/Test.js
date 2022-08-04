@@ -2171,3 +2171,23 @@ MyCalendar.prototype.book = function (start, end) {
 // console.log(myCalendar.book(10, 20));
 // console.log(myCalendar.book(15, 25));
 // console.log(myCalendar.book(20, 30));
+
+/**
+ * 858. Mirror Reflection
+ * @param {number} p
+ * @param {number} q
+ * @return {number}
+ */
+var mirrorReflection = function (p, q) {
+  var y = p, x = q;
+  while (y) {
+    var t = y;
+    y = x % y;
+    x = t;
+  }
+  var lcm = (p * q) / x;
+
+  return ((lcm / p) % 2 == 1) ? (((lcm / q) % 2 == 1) ? 1 : 2) : (((lcm / q) % 2 == 1) ? 0 : 1);
+};
+
+console.log(mirrorReflection(3, 4));
