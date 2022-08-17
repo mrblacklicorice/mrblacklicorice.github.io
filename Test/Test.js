@@ -1839,6 +1839,7 @@ var searchRange = function (nums, target) {
 // console.log(searchRange([5, 7, 7, 8, 8, 10], 8));
 
 /**
+ * 235. Lowest Common Ancestor of a Binary Search Tree
  * Definition for a binary tree node.
  * function TreeNode(val) {
  *     this.val = val;
@@ -2190,4 +2191,78 @@ var mirrorReflection = function (p, q) {
   return ((lcm / p) % 2 == 1) ? (((lcm / q) % 2 == 1) ? 1 : 2) : (((lcm / q) % 2 == 1) ? 0 : 1);
 };
 
-console.log(mirrorReflection(3, 4));
+// console.log(mirrorReflection(3, 4));
+
+/**
+ * 387. First Unique Character in a String
+ * @param {string} s
+ * @return {number}
+ */
+var firstUniqChar = function (s) {
+  var str = s.split('');
+  var d = {};
+
+  for (let i = 0; i < str.length; i++) {
+    if (d[str[i]] == undefined) {
+      if (str.indexOf(str[i], i + 1) == -1) return i;
+      d[str[i]] = true;
+    }
+  }
+
+  return -1;
+};
+
+// console.log(firstUniqChar('leetcode'));
+
+/**
+ * 2351. First Letter to Appear Twice
+ * @param {string} s
+ * @return {character}
+ */
+var repeatedCharacter = function (s) {
+  var str = s.split('');
+
+  var curr1 = '';
+  var curr2 = '';
+  var high = ["", 100];
+
+  for (let i = 0; i < str.length; i++) {
+    curr1 = str.indexOf(str[i], i + 1);
+
+    if (curr1 != -1 && (curr1 - i) > -1) {
+      curr2 = str.indexOf(str[i], curr1);
+
+      if (curr2 != -1 && (curr2 - curr1) > -1 && (curr2) < high[1]) {
+        high = [str[i], curr2];
+      }
+    }
+  }
+
+  return high[0];
+};
+
+// console.log(repeatedCharacter('"jkodgypoya"'));
+
+/**
+ * 804. Unique Morse Code Words
+ * @param {string[]} words
+ * @return {number}
+ */
+var uniqueMorseRepresentations = function (words) {
+  var dict = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."];
+
+  var result = new Set();
+  var temp = '';
+
+  for (let i = 0; i < words.length; i++) {
+    for (let l = 0; l < words[i].length; l++) {
+      temp += dict[words[i].charCodeAt(l) - 97];
+    }
+    result.add(temp);
+    temp = '';
+  }
+
+  return result.size;
+};
+
+console.log(uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]));
