@@ -2265,4 +2265,61 @@ var uniqueMorseRepresentations = function (words) {
   return result.size;
 };
 
-console.log(uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]));
+// console.log(uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]));
+
+/**
+ * 342. Power of Four
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfFour = function (n) {
+  var q = Math.abs(n).toString(2).split('1');
+  return (n > 0 && q.length == 2 && q[1].length % 2 == 0);
+};
+
+// console.log(isPowerOfFour(16));
+
+/**
+ * 234. Palindrome Linked List
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+  var f = '', r = '';
+
+  while (head != null) {
+    f = head.val + f;
+    r = r + head.val;
+
+    head = head.next;
+  }
+
+  return (f == r);
+};
+
+/**
+ * 326. Power of Three
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfThree = function (n) {
+  var q = Math.abs(n).toString(3);
+  return (n > 0 && q.split(1).length == 2 && q.split(2).length == 1);
+};
+
+/**
+ * 231. Power of Two
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfTwo = function (n) {
+  var q = Math.abs(n).toString(2).split('1');
+  return (n > 0 && q.length == 2);
+};
