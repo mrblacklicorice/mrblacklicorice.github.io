@@ -2323,3 +2323,27 @@ var isPowerOfTwo = function (n) {
   var q = Math.abs(n).toString(2).split('1');
   return (n > 0 && q.length == 2);
 };
+
+/**
+ * 383. Ransom Note
+ * @param {string} ransomNote
+ * @param {string} magazine
+ * @return {boolean}
+ */
+var canConstruct = function (ransomNote, magazine) {
+  var dict = {};
+
+  for (let i = 0; i < magazine.length; i++) {
+    if (!dict[magazine[i]]) dict[magazine[i]] = 1;
+    else !dict[magazine[i]]++;
+  }
+
+  for (let i = 0; i < ransomNote.length; i++) {
+    if (!dict[ransomNote[i]] || dict[ransomNote[i]] == 0) return false;
+    else dict[ransomNote[i]]--;
+  }
+
+  return true;
+};
+
+console.log(canConstruct("aa", "aab"));
