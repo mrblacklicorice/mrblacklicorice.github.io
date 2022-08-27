@@ -2314,6 +2314,8 @@ var isPowerOfThree = function (n) {
   return (n > 0 && q.split(1).length == 2 && q.split(2).length == 1);
 };
 
+// console.log(isPowerOfThree(27));
+
 /**
  * 231. Power of Two
  * @param {number} n
@@ -2323,6 +2325,9 @@ var isPowerOfTwo = function (n) {
   var q = Math.abs(n).toString(2).split('1');
   return (n > 0 && q.length == 2);
 };
+
+
+// console.log(isPowerOfTwo(64));
 
 /**
  * 383. Ransom Note
@@ -2346,4 +2351,41 @@ var canConstruct = function (ransomNote, magazine) {
   return true;
 };
 
-console.log(canConstruct("aa", "aab"));
+// console.log(canConstruct("aa", "aab"));
+
+/**
+ * 869. Reordered Power of 2
+ * @param {number} n
+ * @return {boolean}
+ */
+var reorderedPowerOf2 = function (n) {
+  var ref = [
+    [{ "1": 1 }, { "2": 1 }, { "4": 1 }, { "8": 1 }],
+    [{ "1": 1, "6": 1 }, { "2": 1, "3": 1 }, { "4": 1, "6": 1 }],
+    [{ "1": 1, "2": 1, "8": 1 }, { "2": 1, "5": 1, "6": 1 }, { "1": 1, "2": 1, "5": 1 }],
+    [{ "0": 1, "1": 1, "2": 1, "4": 1 }, { "0": 1, "2": 1, "4": 1, "8": 1 }, { "0": 1, "4": 1, "6": 1, "9": 1 }, { "1": 1, "2": 1, "8": 1, "9": 1 }],
+    [{ "1": 1, "3": 1, "4": 1, "6": 1, "8": 1 }, { "2": 1, "3": 1, "6": 1, "7": 1, "8": 1 }, { "3": 1, "5": 2, "6": 2 }],
+    [{ "0": 1, "1": 2, "2": 1, "3": 1, "7": 1 }, { "1": 1, "2": 2, "4": 2, "6": 1 }, { "2": 2, "4": 1, "5": 1, "8": 2 }],
+    [{ "0": 1, "1": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1 }, { "0": 1, "1": 1, "2": 2, "5": 1, "7": 1, "9": 1 }, { "0": 1, "1": 1, "3": 1, "4": 3, "9": 1 }, { "0": 1, "3": 1, "6": 1, "8": 4 }],
+    [{ "1": 2, "2": 1, "6": 2, "7": 3 }, { "2": 1, "3": 3, "4": 2, "5": 2 }, { "0": 1, "1": 1, "4": 1, "6": 2, "7": 1, "8": 2 }],
+    [{ "1": 2, "2": 2, "3": 1, "4": 1, "7": 2, "8": 1 }, { "2": 1, "3": 1, "4": 2, "5": 2, "6": 2, "8": 1 }, { "0": 1, "1": 1, "2": 1, "3": 1, "5": 1, "6": 1, "7": 1, "8": 1, "9": 1 }]
+  ]
+
+  var s = String(n);
+  var l = s.length;
+
+  for (let i = 0; i < ref[l - 1].length; i++) {
+    for (let j = 0; j < l; j++) {
+      if (!ref[l - 1][i][s[j]] || ref[l - 1][i][s[j]] == 0) {
+        break;
+      } else {
+        ref[l - 1][i][s[j]]--;
+        if (j == l - 1) return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+// console.log(reorderedPowerOf2(16));
