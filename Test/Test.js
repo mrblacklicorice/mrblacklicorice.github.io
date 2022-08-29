@@ -2389,3 +2389,43 @@ var reorderedPowerOf2 = function (n) {
 };
 
 // console.log(reorderedPowerOf2(16));
+
+/**
+ * @param {character[][]} grid
+ * @return {number}
+ */
+var numIslands = function (grid) {
+  var result = new Array(grid.length).fill(false).map(ele => (new Array(grid[0].length)).fill(false));
+
+  var num = 0;
+  var queue = [];
+  var h;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] == 1 && !result[i][j]) {
+        queue.push([i, j]);
+        while (queue.length > 0) {
+          h = queue.shift();
+          if (!result[h[0]][h[1]]) {
+            result[h[0]][h[1]] = true;
+
+            for (let q = -1; q <= 1; q += 2) {
+              if (h[0] + q > -1 && h[0] + q < grid.length && grid[h[0] + q][h[1]] == 1 && !result[h[0] + q][h[1]])
+                queue.push([h[0] + q, h[1]]);
+
+              if (h[1] + q > -1 && h[1] + q < grid[0].length && grid[h[0]][h[1] + q] == 1 && !result[h[0]][h[1] + q])
+                queue.push([h[0], h[1] + q]);
+
+            }
+          }
+        }
+        num++;
+      }
+    }
+  }
+
+  return num;
+};
+
+console.log(numIslands([["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]));
