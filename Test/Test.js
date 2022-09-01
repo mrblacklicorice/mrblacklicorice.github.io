@@ -2428,4 +2428,25 @@ var numIslands = function (grid) {
   return num;
 };
 
-console.log(numIslands([["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]));
+// console.log(numIslands([["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]));
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var goodNodes = function (root, max) {
+  if (root == null) return 0;
+
+  if (max == undefined) max = root.val;
+
+  if (root.val >= max) return 1 + goodNodes(root.left, root.val) + goodNodes(root.right, root.val);
+  else return goodNodes(root.left, max) + goodNodes(root.right, max);
+};
