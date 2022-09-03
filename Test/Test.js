@@ -2450,3 +2450,36 @@ var goodNodes = function (root, max) {
   if (root.val >= max) return 1 + goodNodes(root.left, root.val) + goodNodes(root.right, root.val);
   else return goodNodes(root.left, max) + goodNodes(root.right, max);
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var averageOfLevels = function (root) {
+  var queue = [[root, 1]];
+
+  var result = [];
+
+  while (queue.length > 0) {
+    var h = queue.shift();
+
+    if (result[h[1] - 1] == undefined) result[h[1] - 1] = [h[0].val, 1];
+    else {
+      result[h[1] - 1][0] += h[0].val;
+      result[h[1] - 1][1]++;
+    }
+
+    if (h[0].left != null) queue.push([h[0].left, h[1] + 1]);
+    if (h[0].right != null) queue.push([h[0].right, h[1] + 1]);
+  }
+
+  return result.map(ele => ele[0] / (ele[1] * 1.0));
+};
