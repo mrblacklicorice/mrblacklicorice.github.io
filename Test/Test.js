@@ -2483,3 +2483,59 @@ var averageOfLevels = function (root) {
 
   return result.map(ele => ele[0] / (ele[1] * 1.0));
 };
+
+function pairing(d) {
+  var oL = d.sort((a, b) => a - b);
+
+  var hist = {};
+
+  var curr;
+  var unique = 0;
+
+  for (let i = 0; i < oL.length / 2; i++) {
+    curr = (oL[i] + oL[oL.length - i - 1]) / 2
+    if (hist[curr] == undefined) {
+      unique++;
+      hist[curr] = true;
+    }
+  }
+
+  return unique;
+}
+
+// console.log(pairing([1, 4, 1, 3, 5, 6]));
+
+function pScore(username1, username2, p) {
+  var curr;
+  var total = 0;
+
+  var dict = {};
+
+  for (let i = 0; i < username2.length; i++) {
+    if (dict[username2[i]] == undefined) dict[username2[i]] = 1;
+    else dict[username2[i]]++;
+  }
+
+  var temp;
+
+  for (let j = 0; j < username1.length - ((username2.length - 1) * p); j++) {
+    temp = { ...dict };
+    curr = "";
+    for (let i = j; (i < username1.length && curr.length < username2.length); i += p) {
+      curr += username1[i];
+    }
+
+    for (let i = 0; i < curr.length; i++) {
+      if (temp[curr[i]] == undefined || temp[curr[i]] == 0) break;
+      else {
+        temp[curr[i]]--;
+        if (i == curr.length - 1) total++;
+      }
+    }
+  }
+
+  return total;
+}
+
+// console.log(pScore('zxyzxxyz', 'xxzy', 1))
+
