@@ -2537,5 +2537,51 @@ function pScore(username1, username2, p) {
   return total;
 }
 
-// console.log(pScore('zxyzxxyz', 'xxzy', 1))
+// console.log(pScore('zxyzxxyz', 'xxzy', 1));
 
+/**
+ * 1480. Running Sum of 1d Array
+ * 
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var runningSum = function (nums) {
+  var result = [nums[0]];
+
+  for (let i = 1; i < nums.length; i++) {
+    result.push(result[i - 1] + nums[i]);
+  }
+
+  return result;
+};
+
+// console.log(runningSum([1, 2, 3, 4]));
+
+/**
+ * 724. Find Pivot Index
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var pivotIndex = function (nums) {
+  var result = [nums[0]];
+
+  for (let i = 1; i < nums.length; i++) {
+    result.push(result[i - 1] + nums[i]);
+  }
+
+  if (result.length == 1 || (result.length > 1 && result[1] == 0))
+    return 0;
+
+  for (let i = 1; i < result.length - 1; i++) {
+    if (result[i - 1] == result[result.length - 1] - result[i])
+      return i;
+  }
+
+  if (result[result.length - 2] == 0)
+    return result.length - 1;
+
+  return -1;
+};
+
+// console.log(pivotIndex([1, 7, 3, 6, 5, 6]));
