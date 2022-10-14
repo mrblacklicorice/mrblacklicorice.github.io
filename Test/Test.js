@@ -2594,18 +2594,35 @@ var pivotIndex = function (nums) {
  * @return {boolean}
  */
 var isIsomorphic = function (s, t) {
-  var dict = {};
-  var counter = 'a'
-  var target = "";
+  var dict1 = {};
+  var dict2 = {};
+  var counter = 'a';
 
   for (let i = 0; i < s.length; i++) {
-    if (dict[s[i]] != null) {
-      target += dict[s[i]];
-    } else {
-      dict[s[i]] = counter;
-      target += counter;
+    if (dict1[s[i]] == null && dict2[t[i]] == null) {
+      dict1[s[i]] = counter;
+      dict2[t[i]] = counter;
       counter = String.fromCharCode(counter.charCodeAt(0) + 1);
+    } else {
+      if (dict2[t[i]] != dict1[s[i]])
+        return false;
     }
-
   }
+
+  return true;
 };
+
+// console.log(isIsomorphic("foo", "bar"));
+
+/**
+ * 392. Is Subsequence
+ * 
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isSubsequence = function (s, t) {
+
+};
+
+// console.log(isSubsequence("abc", "ahbgdc"));
