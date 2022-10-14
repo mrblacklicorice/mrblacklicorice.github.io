@@ -2570,7 +2570,7 @@ var pivotIndex = function (nums) {
     result.push(result[i - 1] + nums[i]);
   }
 
-  if (result.length == 1 || (result.length > 1 && result[1] == 0))
+  if (result[result.length - 1] == result[0])
     return 0;
 
   for (let i = 1; i < result.length - 1; i++) {
@@ -2585,3 +2585,27 @@ var pivotIndex = function (nums) {
 };
 
 // console.log(pivotIndex([1, 7, 3, 6, 5, 6]));
+
+/**
+ * 205. Isomorphic Strings
+ * 
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isIsomorphic = function (s, t) {
+  var dict = {};
+  var counter = 'a'
+  var target = "";
+
+  for (let i = 0; i < s.length; i++) {
+    if (dict[s[i]] != null) {
+      target += dict[s[i]];
+    } else {
+      dict[s[i]] = counter;
+      target += counter;
+      counter = String.fromCharCode(counter.charCodeAt(0) + 1);
+    }
+
+  }
+};
