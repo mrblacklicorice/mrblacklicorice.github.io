@@ -2622,7 +2622,49 @@ var isIsomorphic = function (s, t) {
  * @return {boolean}
  */
 var isSubsequence = function (s, t) {
+  var curr = 0;
 
+  for (let i = 0; i < t.length; i++) {
+    if (s[curr] == t[i]) curr++;
+  }
+
+  return curr == s.length;
 };
 
 // console.log(isSubsequence("abc", "ahbgdc"));
+
+/**
+ * 21. Merge Two Sorted Lists
+ * 
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+  var head = new ListNode();
+  var curr = head;
+
+  while (list1 != null && list2 != null) {
+    if (list1.val > list2.val) {
+      curr.next = new ListNode(list2.val);
+      list2 = list2.next;
+    } else {
+      curr.next = new ListNode(list1.val);
+      list1 = list1.next;
+    }
+
+    curr = curr.next;
+  }
+
+  if (list1 != null) curr.next = list1;
+  if (list2 != null) curr.next = list2;
+
+  return head.next;
+};
