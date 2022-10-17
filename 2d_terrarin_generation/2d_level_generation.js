@@ -135,10 +135,6 @@ function main() {
     document.getElementById('generate').removeAttribute("disabled");
 }
 
-function shift() {
-
-}
-
 function map(input, rmin, rmax, min, max) {
     return (input - rmin) * (max - min) / (rmax - rmin) + min;
 }
