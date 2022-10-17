@@ -2668,3 +2668,85 @@ var mergeTwoLists = function (list1, list2) {
 
   return head.next;
 };
+
+/**
+ * 876. Middle of the Linked List
+ * 
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var middleNode = function (head) {
+  var count = 0;
+
+  var curr = head;
+
+  while (curr != null) {
+    curr = curr.next;
+    count++;
+  }
+
+  var mid = Math.floor(count / 2);
+  curr = head;
+
+  for (let i = 0; i < mid; i++) {
+    curr = curr.next;
+  }
+
+  return curr;
+};
+
+/**
+ * 142. Linked List Cycle II
+ * 
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var detectCycle = function (head) {
+  var set = new Set();
+
+  while (head != null) {
+    if (set.has(head)) {
+      return head;
+    }
+
+    set.add(head);
+
+    head = head.next;
+  }
+  return null;
+};
+
+/**
+ * 121. Best Time to Buy and Sell Stock
+ * 
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+
+};
+
+/**
+ * 409. Longest Palindrome
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var longestPalindrome = function (s) {
+
+};
