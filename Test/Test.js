@@ -1,3 +1,5 @@
+const { result } = require("lodash");
+
 var binaryPrint = function (root, n) {
   let q = [root];
   let r = [];
@@ -2738,8 +2740,23 @@ var detectCycle = function (head) {
  * @return {number}
  */
 var maxProfit = function (prices) {
+  var l = 0;
+  var r = 1;
+  var max = 0;
 
+  while (r < prices.length) {
+    if (prices[r] > prices[l]) {
+      max = (max > prices[r] - prices[l]) ? max : prices[r] - prices[l];
+    } else {
+      l = r;
+    }
+    r++;
+  }
+
+  return max;
 };
+
+// console.log(maxProfit([7, 1, 5, 3, 6, 4]));
 
 /**
  * 409. Longest Palindrome
@@ -2748,5 +2765,135 @@ var maxProfit = function (prices) {
  * @return {number}
  */
 var longestPalindrome = function (s) {
+  var count = 0;
+  var dict = {};
 
+  for (let i = 0; i < s.length; i++) {
+    if (dict[s[i]] == null) {
+      dict[s[i]] = true;
+    } else {
+      delete dict[s[i]];
+      count += 2;
+    }
+  }
+
+  return count + (Object.keys(dict).length > 0 ? 1 : 0);
+};
+
+// console.log(longestPalindrome("abccccdd"));
+
+/**
+ * // Definition for a Node.
+ * function Node(val, children) {
+ *    this.val = val;
+ *    this.children = children;
+ * };
+ */
+
+/**
+ * 589. N-ary Tree Preorder Traversal
+ * 
+ * @param {Node|null} root
+ * @return {number[]}
+ */
+var preorder = function (root, result) {
+  if (result == null) {
+    result = [];
+  }
+
+  if (root != null && root.children != null) {
+    result.push(root.val);
+    for (let i = 0; i < root.children.length; i++) {
+      preorder(root.children[i], result);
+    }
+  }
+
+  return result;
+};
+
+/**
+ * 704. Binary Search
+ * 
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var search = function (nums, target) {
+  var start = 0;
+  var end = nums.length - 1;
+
+  while (start <= end) {
+    var mid = Math.floor((start + end) / 2);
+
+    if (nums[mid] === target)
+      return mid;
+    else if (nums[mid] < target)
+      start = mid + 1;
+    else
+      end = mid - 1;
+  }
+
+  return -1;
+};
+
+// console.log(search([-1, 0, 3, 5, 9, 12], 9));
+
+/**
+ * Definition for isBadVersion()
+ * 
+ * @param {integer} version number
+ * @return {boolean} whether the version is bad
+ * isBadVersion = function(version) {
+ *     ...
+ * };
+ */
+
+/**
+ * 278. First Bad Version
+ * 
+ * @param {function} isBadVersion()
+ * @return {function}
+ */
+var solution = function (isBadVersion) {
+  /**
+   * @param {integer} n Total versions
+   * @return {integer} The first bad version
+   */
+  return function (n) {
+    var start = 0;
+    var end = n;
+
+    while (start <= end) {
+      var mid = Math.floor((start + end) / 2);
+
+      if (isBadVersion(mid)) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    }
+
+    return start;
+  };
+};
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root, min, max) {
+  if (root == null) return true;
+
+  if (min != null && root.val <= min) return false;
+  if (max != null && root.val >= max) return false;
+
+  return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
 };
