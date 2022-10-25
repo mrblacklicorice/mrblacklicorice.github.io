@@ -2897,3 +2897,33 @@ var isValidBST = function (root, min, max) {
 
   return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
 };
+
+/**
+ * 733. Flood Fill
+ * 
+ * @param {number[][]} image
+ * @param {number} sr
+ * @param {number} sc
+ * @param {number} color
+ * @return {number[][]}
+ */
+var floodFill = function (image, sr, sc, color) {
+  var num = image[sr][sc];
+  image[sr][sc] = color;
+
+  if (sr > 0 && image[sr - 1][sc] != color && image[sr - 1][sc] == num)
+    image = floodFill(image, sr - 1, sc, color);
+
+  if (sr < image.length - 1 && image[sr + 1][sc] != color && image[sr + 1][sc] == num)
+    image = floodFill(image, sr + 1, sc, color);
+
+  if (sc > 0 && image[sr][sc - 1] != color && image[sr][sc - 1] == num)
+    image = floodFill(image, sr, sc - 1, color);
+
+  if (sc < image[sr].length - 1 && image[sr][sc + 1] != color && image[sr][sc + 1] == num)
+    image = floodFill(image, sr, sc + 1, color);
+
+  return image;
+};
+
+console.log(floodFill([[1, 1, 1], [1, 1, 0], [1, 0, 1]], 1, 1, 2));
