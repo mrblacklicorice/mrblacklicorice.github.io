@@ -3008,6 +3008,6 @@ var findAnagrams = function (s, p) {
   return result;
 };
 
-console.log(findAnagrams("cbaebabacd", "abc"));
+// console.log(findAnagrams("cbaebabacd", "abc"));
 
 
