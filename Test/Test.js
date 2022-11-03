@@ -15,16 +15,25 @@ var binaryPrint = function (root, n) {
   return r;
 }
 
-function fib(n, mem) {
+/**
+ * 509. Fibonacci Number
+ * 
+ * @param {number} n
+ * @return {number}
+ */
+function fib(n, mem = [0, 1]) {
   if (mem[n] != null) return mem[n];
+
   if (n == 1 || n == 2) {
     mem[n] = 1;
     return 1;
-  } else {
-    mem[n] = fib(n - 1, mem) + fib(n - 2, mem);
-    return mem[n];
   }
+
+  mem[n] = fib(n - 1, mem) + fib(n - 2, mem);
+  return mem[n];
 }
+
+// console.log(fib(2));
 
 function isTravelPossible(towers) {
   if (towers[0] == 0) return false;
@@ -2104,6 +2113,7 @@ NumArray.prototype.sumRange = function (l, r) {
 
 /**
  * 62. Unique Paths
+ * 
  * @param {number} m
  * @param {number} n
  * @return {number}
@@ -2926,4 +2936,78 @@ var floodFill = function (image, sr, sc, color) {
   return image;
 };
 
-console.log(floodFill([[1, 1, 1], [1, 1, 0], [1, 0, 1]], 1, 1, 2));
+// console.log(floodFill([[1, 1, 1], [1, 1, 0], [1, 0, 1]], 1, 1, 2));
+
+/**
+ * 70. Climbing Stairs
+ * 
+ * @param {number} n
+ * @return {number}
+ */
+var climbStairs = function (n) {
+  if (n < 3) return n;
+
+  var list = [1, 2];
+
+  for (let i = 2; i < n; i++) {
+    list.push(list[i - 1] + list[i - 2]);
+  }
+
+  return list.pop();
+};
+
+// console.log(climbStairs(3));
+
+/**
+ * 746. Min Cost Climbing Stairs
+ * 
+ * @param {number[]} cost
+ * @return {number}
+ */
+var minCostClimbingStairs = function (cost) {
+  var list = [cost[0], cost[1]];
+
+  for (let i = 2; i < cost.length; i++) {
+    list.push(Math.min(list[i - 1], list[i - 2]) + cost[i]);
+  }
+
+  return Math.min(list.pop(), list.pop());
+};
+
+// console.log(minCostClimbingStairs([10, 15, 20]));
+
+/**
+ * 438. Find All Anagrams in a String
+ * 
+ * @param {string} s
+ * @param {string} p
+ * @return {number[]}
+ */
+var findAnagrams = function (s, p) {
+  var result = [];
+  var hist = new Array(26).fill(0);
+
+  for (let i = 0; i < p.length; i++) {
+    hist[p.charCodeAt(i) - 97]++;
+  }
+
+  for (let i = 0; i < p.length; i++) {
+    hist[s.charCodeAt(i) - 97]--;
+  }
+
+  if (hist.every((ele) => ele == 0))
+    result.push(0);
+
+  for (let i = 1; i < s.length - p.length + 1; i++) {
+    hist[s.charCodeAt(i - 1) - 97]++;
+    hist[s.charCodeAt(i + p.length - 1) - 97]--;
+    if (hist.every((ele) => ele == 0))
+      result.push(i);
+  }
+
+  return result;
+};
+
+console.log(findAnagrams("cbaebabacd", "abc"));
+
+
