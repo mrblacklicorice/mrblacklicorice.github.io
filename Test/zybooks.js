@@ -74,7 +74,12 @@ function waitForScopedSelector(selector, scopeElement) {
                     // play button
                     await ani[i].$eval(".start-button", ele => ele.click());
 
-                    await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
+                    try {
+                        await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
+                    } catch (err) {
+                        console.log("Took longer than 30 seconds");
+                        await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
+                    }
 
                     // play button
                     playButton = await ani[i].$(".play-button");
