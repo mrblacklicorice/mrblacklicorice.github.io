@@ -50,7 +50,7 @@ function waitForScopedSelector(selector, scopeElement) {
         }
 
         console.log("selcting chapter " + chapter);
-        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI300Fall2022/chapter/${chapter}/section/12`, { waitUntil: "domcontentloaded" });
+        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI300Fall2022/chapter/${chapter}/section/2`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
         var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
@@ -68,6 +68,8 @@ function waitForScopedSelector(selector, scopeElement) {
                 var ani = await page.$$(".animation-player-content-resource");
 
                 for (let i = 0; i < ani.length; i++) {
+                    if (ani[i].$(".large.orange.filled")) break;
+
                     // x2 button
                     await ani[i].$eval("input", ele => ele.click());
 
@@ -97,64 +99,68 @@ function waitForScopedSelector(selector, scopeElement) {
                     await page.$$eval(".animation-player-content-resource .normalize-controls", ele => ele[0].click());
                     await delay(1000);
 
-                    // await page.waitForSelector(".large.orange.filled", animation[i]);
+                    await page.waitForSelector(".large.orange.filled", ani[i]);
                     console.log("animation " + i + " completed");
                 }
             }
 
-            // if (types.includes("multiple-choice-content-resource")) {
-            //     // multiple choice
-            //     await page.waitForSelector(".multiple-choice-content-resource");
-            //     var mC = await page.$$(".multiple-choice-content-resource");
+            if (types.includes("multiple-choice-content-resource")) {
+                // multiple choice
+                await page.waitForSelector(".multiple-choice-content-resource");
+                var mC = await page.$$(".multiple-choice-content-resource");
 
-            //     for (let i = 0; i < mC.length; i++) {
-            //         var mCQ = await mC[i].$$(".question-choices");
-            //         var big = await mC[i].$$(".question-set-question");
+                for (let i = 0; i < mC.length; i++) {
+                    if (mC.$(".large.orange.filled")) break;
 
-            //         for (let j = 0; j < mCQ.length; j++) {
-            //             var options = await mCQ[j].$$("div > input");
+                    var mCQ = await mC[i].$$(".question-choices");
+                    var big = await mC[i].$$(".question-set-question");
 
-            //             for (let k = 0; k < options.length; k++) {
-            //                 await page.evaluate((options) => { options.click() }, options[k]);
-            //                 await waitForScopedSelector(".message", big[j]);
+                    for (let j = 0; j < mCQ.length; j++) {
+                        var options = await mCQ[j].$$("div > input");
 
-            //                 if (await big[j].$eval(".message", ele => ele.innerText == "Correct")) break;
-            //             }
-            //         }
+                        for (let k = 0; k < options.length; k++) {
+                            await page.evaluate((options) => { options.click() }, options[k]);
+                            await waitForScopedSelector(".message", big[j]);
 
-            //         // await page.waitForSelector(".large.orange.filled", mC[i]);
-            //         console.log("multiple choice " + i + " completed");
-            //     }
-            // }
+                            if (await big[j].$eval(".message", ele => ele.innerText == "Correct")) break;
+                        }
+                    }
 
-            // if (types.includes("short-answer-content-resource")) {
-            //     // short answer
-            //     await page.waitForSelector(".short-answer-content-resource");
-            //     var sA = await page.$$(".short-answer-content-resource");
+                    await page.waitForSelector(".large.orange.filled", mC[i]);
+                    console.log("multiple choice " + i + " completed");
+                }
+            }
 
-            //     for (let i = 0; i < sA.length; i++) {
-            //         var sAQ = await sA[i].$$(".input");
-            //         var big = await sA[i].$$(".question-set-question");
+            if (types.includes("short-answer-content-resource")) {
+                // short answer
+                await page.waitForSelector(".short-answer-content-resource");
+                var sA = await page.$$(".short-answer-content-resource");
 
-            //         for (let j = 0; j < sAQ.length; j++) {
-            //             await sAQ[j].$eval(".show-answer-button", (ele) => { ele.click(); ele.click(); });
+                for (let i = 0; i < sA.length; i++) {
+                    if (sA[i].$(".large.orange.filled")) break;
 
-            //             await waitForScopedSelector(".forfeit-answer", big[j]);
-            //             var answer = await big[j].$eval(".forfeit-answer", ele => ele.innerHTML);
-            //             var txt = await sAQ[j].$("textarea");
-            //             await txt.type(answer, { delay: 20 });
+                    var sAQ = await sA[i].$$(".input");
+                    var big = await sA[i].$$(".question-set-question");
 
-            //             await delay(1000);
+                    for (let j = 0; j < sAQ.length; j++) {
+                        await sAQ[j].$eval(".show-answer-button", (ele) => { ele.click(); ele.click(); });
 
-            //             await sAQ[j].$eval("button.raised", (ele) => ele.click());
+                        await waitForScopedSelector(".forfeit-answer", big[j]);
+                        var answer = await big[j].$eval(".forfeit-answer", ele => ele.innerHTML);
+                        var txt = await sAQ[j].$("textarea");
+                        await txt.type(answer, { delay: 20 });
 
-            //         }
+                        await delay(1000);
 
-            //         await delay(1000);
-            //         // await page.waitForSelector(".large.orange.filled", sA[i]);
-            //         console.log("short answer " + i + " completed");
-            //     }
-            // }
+                        await sAQ[j].$eval("button.raised", (ele) => ele.click());
+
+                    }
+
+                    await delay(1000);
+                    await page.waitForSelector(".large.orange.filled", sA[i]);
+                    console.log("short answer " + i + " completed");
+                }
+            }
 
             nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
             console.log(nxt[0] + "." + nxt[1].split(" ")[0]);
