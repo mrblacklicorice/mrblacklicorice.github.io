@@ -50,7 +50,7 @@ function waitForScopedSelector(selector, scopeElement) {
         }
 
         console.log("selcting chapter " + chapter);
-        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI300Fall2022/chapter/${chapter}/section/2`, { waitUntil: "domcontentloaded" });
+        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI300Fall2022/chapter/${chapter}/section/1`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
         var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
