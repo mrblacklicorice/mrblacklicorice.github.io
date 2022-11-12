@@ -17,7 +17,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var login = ["gdodda@wisc.edu", "Vijayawada2004!"];
 
-    var chapter = 10;
+    var chapter = 11;
 
     try {
         console.log("Opening chrome browser");
@@ -68,7 +68,7 @@ function waitForScopedSelector(selector, scopeElement) {
                 var ani = await page.$$(".animation-player-content-resource");
 
                 for (let i = 0; i < ani.length; i++) {
-                    if (ani[i].$(".large.orange.filled")) break;
+                    // if (ani[i].$(".large.orange.filled")) break;
 
                     // x2 button
                     await ani[i].$eval("input", ele => ele.click());
@@ -110,7 +110,7 @@ function waitForScopedSelector(selector, scopeElement) {
                 var mC = await page.$$(".multiple-choice-content-resource");
 
                 for (let i = 0; i < mC.length; i++) {
-                    if (mC.$(".large.orange.filled")) break;
+                    // if (mC[i].$(".large.orange.filled")) break;
 
                     var mCQ = await mC[i].$$(".question-choices");
                     var big = await mC[i].$$(".question-set-question");
@@ -137,7 +137,7 @@ function waitForScopedSelector(selector, scopeElement) {
                 var sA = await page.$$(".short-answer-content-resource");
 
                 for (let i = 0; i < sA.length; i++) {
-                    if (sA[i].$(".large.orange.filled")) break;
+                    // if (sA[i].$(".large.orange.filled")) break;
 
                     var sAQ = await sA[i].$$(".input");
                     var big = await sA[i].$$(".question-set-question");
