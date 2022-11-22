@@ -1,0 +1,266 @@
+[_nghost-jih-c63] {
+    display: block
+}
+
+.scroll-strategy-fixed[_nghost-jih-c63] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0
+}
+
+.scroll-strategy-fixed[_nghost-jih-c63] cse-header[_ngcontent-jih-c63] {
+    position: absolute
+}
+
+.scroll-strategy-fixed[_nghost-jih-c63] main[_ngcontent-jih-c63] {
+    bottom: 0
+}
+
+.scroll-strategy-normal[_nghost-jih-c63] {
+    position: static
+}
+
+.scroll-strategy-normal[_nghost-jih-c63] cse-header[_ngcontent-jih-c63] {
+    position: fixed
+}
+
+.registrar-message[_ngcontent-jih-c63] {
+    height: 40px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 999
+}
+
+.registrar-message[_ngcontent-jih-c63] mat-icon[_ngcontent-jih-c63] {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin: 0 .5rem 0 1rem;
+    font-size: 1.3rem;
+    color: #0479a8
+}
+
+.registrar-message[_ngcontent-jih-c63] span[_ngcontent-jih-c63] {
+    flex-grow: 1;
+    font-size: .9rem;
+    color: #212121
+}
+
+.registrar-message[_ngcontent-jih-c63] a:link,
+.registrar-message[_ngcontent-jih-c63] a:visited {
+    color: #0479a8;
+    text-decoration: none
+}
+
+.registrar-message[_ngcontent-jih-c63] .dismiss-banner-button[_ngcontent-jih-c63] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-right: 1rem;
+    padding: 0;
+    background: none;
+    border-style: none;
+    font-family: inherit;
+    color: #0479a8;
+    font-size: .9rem;
+    cursor: pointer
+}
+
+.registrar-message[_ngcontent-jih-c63] .dismiss-banner-button[_ngcontent-jih-c63]:active {
+    color: #212121
+}
+
+cse-header[_ngcontent-jih-c63] {
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100
+}
+
+.registrar-message[_ngcontent-jih-c63]~cse-header[_ngcontent-jih-c63] {
+    top: 40px
+}
+
+#app-header[_ngcontent-jih-c63] {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 500
+}
+
+main[_ngcontent-jih-c63] {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0
+}
+
+@media (min-width: 600px) {
+    cse-header[_ngcontent-jih-c63] {
+        height: 56px
+    }
+
+    main[_ngcontent-jih-c63] {
+        top: 56px
+    }
+
+    .registrar-message[_ngcontent-jih-c63]~main[_ngcontent-jih-c63] {
+        top: 96px
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    cse-header[_ngcontent-jih-c63] {
+        height: 64px
+    }
+
+    main[_ngcontent-jih-c63] {
+        top: 64px
+    }
+
+    .registrar-message[_ngcontent-jih-c63]~main[_ngcontent-jih-c63] {
+        top: 104px
+    }
+}
+
+@media screen and (max-width: 1279px) {
+    cse-header[_ngcontent-jih-c63] {
+        height: 64px
+    }
+
+    main[_ngcontent-jih-c63] {
+        top: 64px
+    }
+
+    .registrar-message[_ngcontent-jih-c63]~main[_ngcontent-jih-c63] {
+        top: 104px
+    }
+}
+
+@media (max-width: 599px) {
+    cse-header[_ngcontent-jih-c63] {
+        height: 56px
+    }
+
+    main[_ngcontent-jih-c63] {
+        top: 56px
+    }
+
+    .registrar-message[_ngcontent-jih-c63]~main[_ngcontent-jih-c63] {
+        top: 96px
+    }
+}
+
+@media print {
+    .registrar-message[_ngcontent-jih-c63] {
+        display: none
+    }
+
+    cse-header[_ngcontent-jih-c63] {
+        display: none
+    }
+}
+
+[_nghost-jih-c62] {
+    width: 100vw;
+    display: block;
+    background: #c5050c;
+    color: #fff
+}
+
+header[_ngcontent-jih-c62] {
+    height: 100%;
+    margin: 0 1rem;
+    display: flex;
+    align-items: center
+}
+
+.crest[_ngcontent-jih-c62] {
+    height: 75%;
+    display: block
+}
+
+.desktop[_ngcontent-jih-c62],
+.mobile[_ngcontent-jih-c62] {
+    margin-left: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.links[_ngcontent-jih-c62] {
+    margin: 0 1rem 0 0;
+    padding: 0;
+    flex-grow: 1;
+    list-style: none
+}
+
+.links[_ngcontent-jih-c62] li[_ngcontent-jih-c62] {
+    display: inline-block
+}
+
+.links[_ngcontent-jih-c62] li[_ngcontent-jih-c62]+li[_ngcontent-jih-c62] {
+    margin-left: 1rem
+}
+
+.links[_ngcontent-jih-c62] a[_ngcontent-jih-c62]:link {
+    padding: .25rem;
+    box-sizing: border-box;
+    cursor: pointer
+}
+
+.links[_ngcontent-jih-c62] a[_ngcontent-jih-c62]:link,
+.links[_ngcontent-jih-c62] a[_ngcontent-jih-c62]:hover,
+.links[_ngcontent-jih-c62] a[_ngcontent-jih-c62]:active,
+.links[_ngcontent-jih-c62] a[_ngcontent-jih-c62]:visited {
+    color: inherit;
+    text-decoration: none
+}
+
+.links[_ngcontent-jih-c62] a.active[_ngcontent-jih-c62] {
+    border-bottom: 2px solid white
+}
+
+.profile[_ngcontent-jih-c62] {
+    width: 34px;
+    height: 34px;
+    margin: 0 0 0 .75rem;
+    padding: 0;
+    font-size: 18px;
+    background-color: #fb686d;
+    color: #fff;
+    border-style: none;
+    border-radius: 50%;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer
+}
+
+.actions[_ngcontent-jih-c62] {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.name[_ngcontent-jih-c62] {
+    flex-grow: 1
+}
+
+.mobile[_ngcontent-jih-c62] .name[_ngcontent-jih-c62] {
+    margin: 0 0 0 .5rem;
+    padding: 0
+}
+
+a[_ngcontent-jih-c62]:link,
+a[_ngcontent-jih-c62]:visited {
+    color: inherit
+}

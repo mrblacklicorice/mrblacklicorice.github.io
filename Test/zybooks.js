@@ -17,7 +17,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var login = ["gdodda@wisc.edu", "Vijayawada2004!"];
 
-    var chapter = 11;
+    var chapter = 13;
 
     try {
         console.log("Opening chrome browser");
