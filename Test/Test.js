@@ -3010,4 +3010,24 @@ var findAnagrams = function (s, p) {
 
 // console.log(findAnagrams("cbaebabacd", "abc"));
 
+/**
+ * 198. House Robber
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  // console.log(nums);
+  var temp = 0, max = 0, temp2 = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    temp2 = Math.max(temp + nums[i], max);
+    temp = max;
+    max = temp2;
+  }
+
+  return max;
+};
+
+// console.log(rob([1, 2, 3, 1]));
 
