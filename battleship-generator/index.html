@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon"
+        href="https://w1.pngwing.com/pngs/249/974/png-transparent-red-circle-minesweeper-minesweeper-deluxe-minesweeper-adfree-video-games-land-mine-naval-mine-android-thumbnail.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>mine-sweeper</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Courier+Prime&.css" rel="stylesheet" />
+    <style>
+        * {
+            font-size: 30px;
+            font-family: 'Courier New', Courier, monospace;
+            color: antiquewhite
+        }
+
+        .container {
+            display: table;
+            margin: 0 auto;
+            /* border: 1px solid black; */
+            padding: 1%;
+        }
+
+        .button {
+            background-color: #316879;
+            /* color: black; */
+            border: 0px solid #f47a60;
+            padding: 15px 50px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 25px;
+            display: table;
+            margin: 0 auto;
+        }
+
+        .button {
+            transition-duration: 0.4s;
+        }
+
+        .button:hover {
+            background-color: #f47a60;
+            cursor: pointer;
+            /* color: #316879; */
+        }
+
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .seed {
+            width: 150px;
+            outline: none;
+            background-color: #dc664e;
+        }
+
+        .seed:focus {
+            background-color: #f47a60;
+        }
+
+        .random {
+            width: 150px;
+            outline: none;
+            background-color: #316879;
+        }
+
+        .random:focus {
+            background-color: #447a8b;
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            input[type='range'] {
+                overflow: hidden;
+                width: 80px;
+                /* -ms-transform: translateY(-50%); */
+                /* transform: translateY(-50%); */
+                position: relative;
+                top: 50%;
+                left: 50%;
+                -webkit-appearance: none;
+                background-color: #316879;
+            }
+
+            input[type='range']::-webkit-slider-runnable-track {
+                height: 20px;
+                -webkit-appearance: none;
+                color: #f47a60;
+                margin-top: -1px;
+            }
+
+            input[type='range']::-webkit-slider-thumb {
+                width: 10px;
+                -webkit-appearance: none;
+                height: 20px;
+                cursor: ew-resize;
+                background: antiquewhite;
+                box-shadow: -80px 0 0 80px #f47a60;
+            }
+
+        }
+    </style>
+</head>
+
+<body style="background-color:#222222;">
+    <div class="container">
+        <div>
+            <div>
+                Game Code
+                <input type="number" id="gamecode" class="seed" value="" min="10000" max="99999">
+            </div>
+        </div>
+        <br>
+
+        <div>
+            <div>
+                <button class="button" id="join_game">Join Game</button>
+            </div>
+            <br>
+            <div>
+                <button class="button" id="new_game">New Game</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="app.js"></script>
+
+</html>
