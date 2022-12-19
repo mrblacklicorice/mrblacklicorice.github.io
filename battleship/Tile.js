@@ -19,7 +19,21 @@ class Tile {
         strokeWeight(1);
         // stroke(colors_bor[this.c]);
         fill("white");
+
         stroke(0);
         rect(this.x, this.y, this.l, this.l);
+
+        if (this.c == 1) {
+            fill("#316879");
+            ellipse(this.x + Math.floor(this.l / 2), this.y + Math.floor(this.l / 2), 2 * Math.floor(this.l / 3), 2 * Math.floor(this.l / 3));
+        }
+    }
+
+    click = () => {
+        if (this.c == 0) {
+            this.c = 1;
+            return true;
+        }
+        return false;
     }
 }

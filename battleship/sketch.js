@@ -6,7 +6,7 @@ var pixel = 45;
 
 var offset = pixel / 5;
 
-let side_bar = pixel;
+let side_bar = pixel / 4;
 
 var rows = 10;
 
@@ -30,7 +30,7 @@ function setup() {
     for (let i = 0; i < rows; i++) {
         tiles[i] = [];
         for (let j = 0; j < cols; j++) {
-            tiles[i][j] = new Tile(i, j, 0, pixel, offset, side_bar);
+            tiles[i][j] = new Tile(i, j, 0, pixel, offset);
         }
     }
 }
@@ -42,6 +42,18 @@ function draw() {
         for (let j = 0; j < cols; j++) {
             tiles[i][j].show();
         }
+    }
+
+    rect(pixel * cols + (offset * 2), 0, (side_bar * offset * 2), pixel * rows);
+
+    var index = hover(mouseX, mouseY);
+
+
+    if (index != -1) {
+        stroke('#222222');
+        strokeWeight(2);
+        noFill();
+        rect(pixel * (index % cols), pixel * Math.floor(index / rows), pixel, pixel);
     }
 
     textAlign(LEFT, CENTER);
@@ -68,3 +80,23 @@ function makeid(length) {
     return result.join('');
 }
 
+function hover(mouse_X, mouse_Y) {
+    if (mouse_X > 0 && mouse_X < pixel * cols && mouse_Y > 0 && mouse_Y < pixel * rows) {
+        xindex = Math.floor(mouse_X / pixel);
+        yindex = Math.floor(mouse_Y / pixel);
+
+        return xindex + yindex * cols;
+    }
+    return -1;
+}
+
+function mousePressed() {
+    var index = hover(mouseX, mouseY);
+    if (mouseButton == "left") {
+        if (index != -1) {
+            tiles[index % cols][Math.floor(index / rows)].click();
+        }
+    } else if (mouseButton == "right") {
+        // grid.right_click(mouseX, mouseY);
+    }
+}
