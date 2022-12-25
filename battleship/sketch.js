@@ -35,7 +35,7 @@ var turn = false; // 0 player, 1 opponent
 
 var consoleText = "";
 
-var peer = (new_game) ? new Peer(gamecode) : new Peer();
+var peer = (new_game) ? new Peer(gamecode, { debug: 3 }) : new Peer("", { debug: 3 });
 var conn = null;
 var lastPeerId = null;
 var peerId = null;
