@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon"
-        href="https://w1.pngwing.com/pngs/249/974/png-transparent-red-circle-minesweeper-minesweeper-deluxe-minesweeper-adfree-video-games-land-mine-naval-mine-android-thumbnail.png">
+    <link rel="icon" href="battleship.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>BattleShip</title>
 
     <link href="https://fonts.googleapis.com/css?family=Courier+Prime&.css" rel="stylesheet" />
 
+    <script src="libraries/peer.min.js"></script>
     <script src="libraries/p5.js"></script>
     <script src="libraries/p5.dom.js"></script>
     <script src="libraries/p5.sound.js"></script>
@@ -27,6 +27,41 @@
 
         canvas {
             margin: auto;
+        }
+
+        * {
+            font-size: 30px;
+            font-family: 'Courier New', Courier, monospace;
+            color: antiquewhite
+        }
+
+        .container {
+            display: table;
+            margin: 0 auto;
+            /* border: 1px solid black; */
+            padding: 1%;
+        }
+
+        .button {
+            background-color: #316879;
+            /* color: black; */
+            border: 0px solid #f47a60;
+            padding: 15px 50px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 25px;
+            display: table;
+            margin: 0 auto;
+        }
+
+        .button {
+            transition-duration: 0.4s;
+        }
+
+        .button:hover {
+            background-color: #f47a60;
+            cursor: pointer;
+            /* color: #316879; */
         }
     </style>
 </head>
