@@ -76,23 +76,25 @@ if (new_game) {
             return;
         }
 
-        setTimeout(() => {
-            c.on('open', function () {
-                console.log(c.id);
+        c.peerConnection.canTrickleIceCandidates = false;
 
-                c.on('data', function (data) {
-                    console.log(data);
-                });
-            });
+        // setTimeout(() => {
+        c.on('open', function () {
+            console.log(c.id);
 
             c.on('data', function (data) {
                 console.log(data);
             });
+        });
 
-            conn = c;
-            turn = true;
-            console.log("start player 1");
-        }, 1000);
+        c.on('data', function (data) {
+            console.log(data);
+        });
+
+        conn = c;
+        turn = true;
+        console.log("start player 1");
+        // }, 1000);
     });
 } else {
     peer.on('open', function (id) {
@@ -104,14 +106,10 @@ if (new_game) {
         });
         console.log(conn);
         // conn.send("Hello");
+        conn.peerConnection.canTrickleIceCandidates = false;
 
         conn.on('error', (error) => {
             console.error(error);
-        });
-
-
-        conn.on('data', function (data) {
-            console.log(data);
         });
 
         turn = false;
