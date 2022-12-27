@@ -35,10 +35,99 @@ var turn = false; // 0 player, 1 opponent
 
 var consoleText = "";
 
-var peer = (new_game) ? new Peer(gamecode, { debug: 3 }) : new Peer("", { debug: 3 });
+var peer = (new_game) ? new Peer("", { host: "0.peerjs.com", port: 443, path: "/", pingInterval: 5000, debug: 3 }) : new Peer("", { host: "0.peerjs.com", port: 443, path: "/", pingInterval: 5000, debug: 3 });
 var conn = null;
 var lastPeerId = null;
 var peerId = null;
+
+// initialize
+{
+    peer.on('disconnected', function () {
+        console.log('Connection lost. Please reconnect');
+
+        // Workaround for peer.reconnect deleting previous id
+        peer.id = lastPeerId;
+        peer._lastServerId = lastPeerId;
+        peer.reconnect();
+    });
+
+    peer.on('close', function () {
+        conn = null;
+        console.log('Connection destroyed');
+    });
+
+    peer.on('error', function (err) {
+        console.log(err);
+        alert('' + err);
+    });
+}
+
+if (new_game) {
+    peer.on('open', function (id) {
+        peerId = id;
+
+        console.log(peerId);
+        alert('Ask your friend to join using your peer ID: ' + peerId);
+    });
+
+    peer.on('connection', function (c) {
+        if (conn) {
+            c.close();
+            return;
+        }
+
+        setTimeout(() => {
+            c.on('open', function () {
+                console.log(c.id);
+
+                c.on('data', function (data) {
+                    console.log(data);
+                });
+            });
+
+            c.on('data', function (data) {
+                console.log(data);
+            });
+
+            conn = c;
+            turn = true;
+            console.log("start player 1");
+        }, 1000);
+    });
+} else {
+    peer.on('open', function (id) {
+        peerId = id;
+
+        var destId = prompt("Opponent's peer ID:");
+        conn = peer.connect(destId, {
+            // reliable: true
+        });
+        console.log(conn);
+        // conn.send("Hello");
+
+        conn.on('error', (error) => {
+            console.error(error);
+        });
+
+
+        conn.on('data', function (data) {
+            console.log(data);
+        });
+
+        turn = false;
+        console.log("start");
+
+        conn.on('open', function () {
+            conn.on('data', function (data) {
+                console.log(data);
+            });
+
+            turn = false;
+            console.log("start");
+        });
+
+    });
+}
 
 function setup() {
     canvas = createCanvas(pixel * cols + (offset * 2) + (side_bar * offset * 1.5), pixel * rows + (offset * 2) + (offset * 15));
@@ -54,76 +143,6 @@ function setup() {
         for (let j = 0; j < cols; j++) {
             tiles[i][j] = new Tile(i, j, pixel);
         }
-    }
-
-    // initialize
-    {
-        peer.on('open', function (id) {
-            peerId = id
-        })
-
-        peer.on('disconnected', function () {
-            console.log('Connection lost. Please reconnect');
-
-            // Workaround for peer.reconnect deleting previous id
-            peer.id = lastPeerId;
-            peer._lastServerId = lastPeerId;
-            peer.reconnect();
-        });
-
-        peer.on('close', function () {
-            conn = null;
-            console.log('Connection destroyed');
-        });
-
-        peer.on('error', function (err) {
-            console.log(err);
-            alert('' + err);
-        });
-    }
-
-    if (new_game) {
-        peer.on('open', function () {
-            console.log(peerId);
-            alert('Ask your friend to join using your peer ID: ' + peerId);
-        });
-
-        peer.on('connection', function (c) {
-            if (conn) {
-                c.close();
-                return;
-            }
-
-            c.on('open', function () {
-                console.log("start");
-
-                c.on('data', function (data) {
-                    console.log(data);
-                });
-            });
-
-            conn = c;
-            turn = true;
-            console.log("start player 1");
-        });
-    } else {
-        peer.on('open', function () {
-            var destId = prompt("Opponent's peer ID:");
-            conn = peer.connect(destId, {
-                reliable: true
-            });
-            // conn.send("Hello");
-            conn.on('open', function () {
-                conn.on('data', function (data) {
-                    console.log(data);
-                });
-
-                opponent.peerId = destId;
-                turn = false;
-                console.log("start");
-            });
-
-        });
     }
 }
 
