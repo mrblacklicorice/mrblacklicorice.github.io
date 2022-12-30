@@ -8,6 +8,6 @@ new_game.addEventListener("click", () => {
 });
 
 join_game.addEventListener("click", () => {
-    if (!(gamecode.valueAsNumber > 99999 || gamecode.valueAsNumber < 10000))
+    if (!(gamecode.valueAsNumber > 99999 || gamecode.valueAsNumber < 10000) && !Number.isNaN(gamecode.valueAsNumber))
         window.location.href = "https://battleship-53140.web.app/?g=" + gamecode.valueAsNumber;
 });
