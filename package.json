@@ -41,7 +41,7 @@
     "file-saver": "^2.0.2",
     "fill-range": "7.0.1",
     "find-up": "3.0.0",
-    "flat": "4.1.0",
+    "flat": "5.0.1",
     "fs": "0.0.1-security",
     "fs.realpath": "1.0.0",
     "function-bind": "1.1.1",
