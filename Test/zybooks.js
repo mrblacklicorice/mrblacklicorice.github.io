@@ -15,9 +15,10 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser, element, text = "", randomWaitTime;
 
-    var login = ["gdodda@wisc.edu", "Vijayawada2004!"];
+    var login = ["rtraghunath2@wisc.edu", "Admission22$"];
 
-    var chapter = 13;
+    var chapter = 6;
+    var section = 14;
 
     try {
         console.log("Opening chrome browser");
@@ -50,7 +51,8 @@ function waitForScopedSelector(selector, scopeElement) {
         }
 
         console.log("selcting chapter " + chapter);
-        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI300Fall2022/chapter/${chapter}/section/1`, { waitUntil: "domcontentloaded" });
+        console.log("selecting section " + section);
+        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI200WilliamsSpring2023/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
         var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
