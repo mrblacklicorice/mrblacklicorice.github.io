@@ -1,5 +1,9 @@
+var fs = require('fs');
+
 const puppeteer = require('puppeteer');
 var page;
+
+var login = JSON.parse(fs.readFileSync("C:/Users/giris/Desktop/Repos/mrblacklicorice.github.io/Test/login.json", 'utf-8'));
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -15,10 +19,8 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser, element, text = "", randomWaitTime;
 
-    var login = ["rtraghunath2@wisc.edu", "Admission22$"];
-
-    var chapter = 6;
-    var section = 14;
+    var chapter = 10;
+    var section = 6;
 
     try {
         console.log("Opening chrome browser");
