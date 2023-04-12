@@ -2966,16 +2966,20 @@ button.alt:active,
 
 @media screen and (max-width: 1680px) {
 	.date {
-		top: 2%;
+		flex: 1;
 	}
 
-	.left-date {
-		left: 1%;
+	.date-title {
+		flex: 1;
+	}
+
+	.date-container-left {
+		display: flex;
+		flex-direction: row-reverse;
 	}
 }
 
 @media screen and (max-width: 1280px) {
-
 	.feature {
 		margin-bottom: 4em;
 	}
@@ -2985,11 +2989,16 @@ button.alt:active,
 	}
 
 	.date {
-		top: 2%;
+		flex: 1;
 	}
 
-	.left-date {
-		left: 1%;
+	.date-title {
+		flex: 1;
+	}
+
+	.date-container-left {
+		display: flex;
+		flex-direction: row-reverse;
 	}
 }
 
