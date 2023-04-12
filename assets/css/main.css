@@ -2940,6 +2940,7 @@ button.alt:active,
 	-webkit-flex-direction: row;
 	-ms-flex-direction: row;
 	flex-direction: row;
+	position: relative;
 }
 
 .feature.right {
@@ -2947,6 +2948,7 @@ button.alt:active,
 	-webkit-flex-direction: row-reverse;
 	-ms-flex-direction: row-reverse;
 	flex-direction: row-reverse;
+	position: relative;
 }
 
 .feature .image {
@@ -2958,9 +2960,18 @@ button.alt:active,
 }
 
 .feature .content {
-	position: relative;
 	padding: 2em 3em 0.1em 3em;
 	width: 52%;
+}
+
+@media screen and (max-width: 1680px) {
+	.date {
+		top: 2%;
+	}
+
+	.left-date {
+		left: 1%;
+	}
 }
 
 @media screen and (max-width: 1280px) {
@@ -2970,8 +2981,15 @@ button.alt:active,
 	}
 
 	.feature .content {
-		position: relative;
 		padding: 1em 2em 0.1em 2em;
+	}
+
+	.date {
+		top: 2%;
+	}
+
+	.left-date {
+		left: 1%;
 	}
 }
 
@@ -2994,11 +3012,17 @@ button.alt:active,
 	}
 
 	.feature .content {
-		position: relative;
 		padding: 2em 2em 0.1em 2em;
 		width: 100%;
 	}
 
+	.date {
+		top: 93%;
+	}
+
+	.left-date {
+		left: 85%;
+	}
 }
 
 @media screen and (max-width: 736px) {
@@ -3008,21 +3032,29 @@ button.alt:active,
 	}
 
 	.feature .content {
-		position: relative;
 		padding: 2em 1em 0.1em 1em;
 	}
 
+	.date {
+		top: 93%;
+	}
+
+	.left-date {
+		left: 85%;
+	}
 }
 
 .date {
 	position: absolute;
-	top: 1%;
-	right: 1%;
 	border: 2px solid #51BAA4;
 	border-radius: 15px;
 	font-weight: 800;
 	color: #51BAA4;
 	padding: 0.5%;
+}
+
+.right-date {
+	right: 1%;
 }
 
 .feature {
