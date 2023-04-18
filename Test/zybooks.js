@@ -3,7 +3,7 @@ var fs = require('fs');
 const puppeteer = require('puppeteer');
 var page;
 
-var login = JSON.parse(fs.readFileSync("C:/Users/giris/Desktop/Repos/mrblacklicorice.github.io/Test/login.json", 'utf-8'));
+var login = JSON.parse(fs.readFileSync("C:/Users/giris/Repos/mrblacklicorice.github.io/Test/login.json", 'utf-8'));
 
 function delay(time) {
     return new Promise(function (resolve) {
