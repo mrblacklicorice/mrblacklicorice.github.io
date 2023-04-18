@@ -17,10 +17,10 @@ function waitForScopedSelector(selector, scopeElement) {
 
 (async () => {
 
-    var browser, element, text = "", randomWaitTime;
+    var browser;
 
-    var chapter = 10;
-    var section = 6;
+    var chapter = 11;
+    var section = 1;
 
     try {
         console.log("Opening chrome browser");
