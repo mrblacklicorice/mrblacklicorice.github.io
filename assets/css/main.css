@@ -2977,6 +2977,10 @@ button.alt:active,
 		display: flex;
 		flex-direction: row-reverse;
 	}
+
+	.top-date {
+		visibility: visible;
+	}
 }
 
 @media screen and (max-width: 1280px) {
@@ -2999,6 +3003,10 @@ button.alt:active,
 	.date-container-left {
 		display: flex;
 		flex-direction: row-reverse;
+	}
+
+	.top-date {
+		visibility: visible;
 	}
 }
 
@@ -3032,6 +3040,10 @@ button.alt:active,
 	.left-date {
 		right: 1em;
 	}
+
+	.top-date {
+		visibility: hidden;
+	}
 }
 
 @media screen and (max-width: 736px) {
@@ -3050,6 +3062,10 @@ button.alt:active,
 
 	.left-date {
 		right: 1em;
+	}
+
+	.top-date {
+		visibility: hidden;
 	}
 }
 

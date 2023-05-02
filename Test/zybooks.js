@@ -21,7 +21,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 12;
+    var chapter = 13;
 
     var section = 1;
 
@@ -64,7 +64,18 @@ function waitForScopedSelector(selector, scopeElement) {
         console.log(nxt[0] + "." + nxt[1].split(" ")[0]);
 
         while (nxt[0] == chapter) {
-            await page.waitForSelector(".participation");
+            try {
+                await page.waitForSelector(".participation");
+            } catch (err) {
+                console.log("No participation, moving on");
+                nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
+                console.log(nxt[0] + "." + nxt[1].split(" ")[0]);
+
+                if (nxt[0] == chapter) {
+                    await page.click(".nav-text.next");
+                    await page.waitForNavigation();
+                }
+            }
 
             var types = await page.$$eval(".participation", ele => ele.map(e => e.classList[1]));
             console.log(types);
