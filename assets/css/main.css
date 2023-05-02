@@ -2591,7 +2591,7 @@ ul.actions.fit.small>li {
 	}
 
 	ul.actions>li>* {
-		width: 100%;
+		/* width: 100%; */
 		margin: 0 !important;
 	}
 
@@ -3030,7 +3030,7 @@ button.alt:active,
 	}
 
 	.left-date {
-		left: 85%;
+		right: 1em;
 	}
 }
 
@@ -3049,7 +3049,7 @@ button.alt:active,
 	}
 
 	.left-date {
-		left: 85%;
+		right: 1em;
 	}
 }
 
@@ -3063,7 +3063,7 @@ button.alt:active,
 }
 
 .right-date {
-	right: 1%;
+	right: 1em;
 }
 
 .feature {

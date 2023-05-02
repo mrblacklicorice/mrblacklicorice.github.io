@@ -19,9 +19,10 @@ function waitForScopedSelector(selector, scopeElement) {
 
 (async () => {
 
-    var browser, element, text = "", randomWaitTime;
+    var browser;
 
     var chapter = 12;
+
     var section = 1;
 
     try {
