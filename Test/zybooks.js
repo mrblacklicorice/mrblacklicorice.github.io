@@ -3,7 +3,9 @@ var fs = require('fs');
 const puppeteer = require('puppeteer');
 var page;
 
-var login = JSON.parse(fs.readFileSync("C:/Users/giris/Desktop/Repos/mrblacklicorice.github.io/Test/login.json", 'utf-8'));
+var login = JSON.parse(fs.readFileSync(__dirname + "\\login.json", 'utf-8'));
+console.log(login);
+
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -19,8 +21,8 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser, element, text = "", randomWaitTime;
 
-    var chapter = 10;
-    var section = 6;
+    var chapter = 12;
+    var section = 1;
 
     try {
         console.log("Opening chrome browser");
@@ -41,12 +43,12 @@ function waitForScopedSelector(selector, scopeElement) {
 
         // await page.screenshot({path: 'screenshots/beforeVoting.png', fullPage: true});
 
-        signin = await page.$("input#ember9").then(res => !!res);
+        signin = await page.$("input[type=email]").then(res => !!res);
 
         if (signin) {
             console.log("signing in");
-            await page.type('input#ember9', login[0], { delay: 20 });
-            await page.type('input#ember11', login[1], { delay: 20 });
+            await page.type('input[type=email]', login[0], { delay: 20 });
+            await page.type('input[type=password]', login[1], { delay: 20 });
             await page.click(".signin-button");
             await page.waitForNavigation();
             console.log("signed in");
