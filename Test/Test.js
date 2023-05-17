@@ -1,5 +1,3 @@
-const { result } = require("lodash");
-
 var binaryPrint = function (root, n) {
   let q = [root];
   let r = [];
@@ -3031,3 +3029,335 @@ var rob = function (nums) {
 
 // console.log(rob([1, 2, 3, 1]));
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 1721. Swapping Nodes in a Linked List
+ * 
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var swapNodes = function (head, k) {
+  var start = head;
+  var left;
+  var length = 1;
+
+  while (start != null) {
+    if (length == k) left = start;
+
+    start = start.next;
+    length++;
+  }
+
+  start = head;
+
+  while (start != null) {
+    if (length - 1 == k) break;
+
+    start = start.next;
+    length--;
+  }
+
+
+  if (start != null && left != null) {
+    var temp = start.val;
+    start.val = left.val;
+    left.val = temp;
+  }
+  return head;
+};
+
+// Input: head = [1,2,3,4,5], k = 2
+// Output: [1, 4, 3, 2, 5]
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 24. Swap Nodes in Pairs
+ * 
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function (head) {
+  var p = null, a, b, n;
+
+  if (head == null || head.next == null) return head;
+  a = head;
+  b = a.next;
+  n = b.next;
+
+  do {
+    if (p != null) p.next = b;
+    else head = b;
+
+    b.next = a;
+    a.next = n;
+
+    p = a;
+    a = n;
+    if (a == null || a.next == null) return head;
+    b = a.next;
+    n = b.next;
+  } while (b != null)
+
+  return head;
+};
+
+// Input: head = [1, 2, 3, 4]
+// Output: [2, 1, 4, 3]
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 2130. Maximum Twin Sum of a Linked List
+ * 
+ * @param {ListNode} head
+ * @return {number}
+ */
+var pairSum = function (head) {
+  var arr = [];
+  var t = 0;
+
+  while (head != null) {
+    arr.push(head.val);
+    head = head.next;
+  }
+
+  for (let i = 0; i < arr.length / 2; i++) {
+    t = Math.max(t, arr[i] + arr[arr.length - 1 - i]);
+  }
+
+  return t;
+};
+
+// Input: head = [5, 4, 2, 1]
+// Output: 6
+
+/**
+ * 841. Keys and Rooms
+ * 
+ * @param {number[][]} rooms
+ * @return {boolean}
+ */
+var canVisitAllRooms = function (rooms) {
+  var roomState = new Array(rooms.length).fill(false);
+
+  var keys = rooms[0];
+  roomState[0] = true;
+  var key;
+
+  while (keys.length != 0) {
+    key = keys.shift();
+    if (!roomState[key]) {
+      roomState[key] = true;
+      (rooms[key]).forEach(e => {
+        keys.push(e);
+      });
+    }
+  }
+
+  return roomState.every(v => v === true);
+};
+
+// console.log(canVisitAllRooms([[1, 3], [3, 0, 1], [2], [0]]));
+
+/**
+ * 2667. Create Hello World Function
+ * 
+ * @return {Function}
+ */
+var createHelloWorld = function () {
+  return function (...args) {
+    return "Hello World";
+  }
+};
+
+/**
+ * const f = createHelloWorld();
+ * f(); // "Hello World"
+ */
+
+/**
+ * 2620. Counter
+ * 
+ * @param {number} n
+ * @return {Function} counter
+ */
+var createCounter = function (n) {
+  return function () {
+    return n++;
+  };
+};
+
+/** 
+ * const counter = createCounter(10)
+ * counter() // 10
+ * counter() // 11
+ * counter() // 12
+ */
+
+/**
+ * @param {integer} init
+ * @return { increment: Function, decrement: Function, reset: Function }
+ */
+var createCounter = function (init) {
+  var obj = {};
+
+  obj.curr = init;
+  obj.increment = () => { obj.curr++; return obj.curr; };
+  obj.decrement = () => { obj.curr--; return obj.curr; };
+  obj.reset = () => { obj.curr = init; return obj.curr; }
+
+  return obj;
+};
+
+/**
+ * const counter = createCounter(5)
+ * counter.increment(); // 6
+ * counter.reset(); // 5
+ * counter.decrement(); // 4
+ */
+
+/**
+ * 2635. Apply Transform Over Each Element in Array
+ * 
+ * @param {number[]} arr
+ * @param {Function} fn
+ * @return {number[]}
+ */
+var map = function (arr, fn) {
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = fn(arr[i], i);
+  }
+
+  return arr;
+};
+
+// console.log(map([1, 2, 3], function plusone(n) { return n + 1; }));
+
+/**
+ * 2634. Filter Elements from Array
+ * 
+ * @param {number[]} arr
+ * @param {Function} fn
+ * @return {number[]}
+ */
+var filter = function (arr, fn) {
+  var newArr = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    if (fn(arr[i], i)) newArr.push(arr[i])
+  }
+
+  return newArr;
+};
+
+/**
+ * 2626. Array Reduce Transformation
+ * 
+ * @param {number[]} nums
+ * @param {Function} fn
+ * @param {number} init
+ * @return {number}
+ */
+var reduce = function (nums, fn, init) {
+  var val = init;
+
+  for (let i = 0; i < nums.length; i++) {
+    val = fn(val, nums[i]);
+  }
+
+  return val;
+};
+
+/**
+ * 2629. Function Composition
+ * 
+ * @param {Function[]} functions
+ * @return {Function}
+ */
+var compose = function (functions) {
+  return function (x) {
+    var temp = x;
+    for (let i = functions.length - 1; i >= 0; i--) {
+      temp = functions[i](temp);
+    }
+
+    return temp;
+  }
+};
+
+/**
+ * const fn = compose([x => x + 1, x => 2 * x])
+ * fn(4) // 9
+ */
+
+/**
+ * 2666. Allow One Function Call
+ * 
+ * @param {Function} fn
+ * @return {Function}
+ */
+var once = function (fn) {
+  var o = false;
+  return function (...args) {
+    if (!o) {
+      o = true;
+      return fn(...args)
+    }
+  }
+};
+
+/**
+ * let fn = (a,b,c) => (a + b + c)
+ * let onceFn = once(fn)
+ *
+ * onceFn(1,2,3); // 6
+ * onceFn(2,3,6); // returns undefined without calling fn
+ */
+
+/**
+ * 2623. Memoize
+ * 
+ * @param {Function} fn
+ */
+function memoize(fn) {
+  var hist = {};
+  return function (...args) {
+    var p = JSON.stringify(args);
+    if (hist[p] != null) {
+      return hist[p];
+    } else {
+      hist[p] = fn(...args);
+      return hist[p];
+    }
+  }
+}
+
+
+/** 
+ * let callCount = 0;
+ * const memoizedFn = memoize(function (a, b) {
+ *	 callCount += 1;
+ *   return a + b;
+ * })
+ * memoizedFn(2, 3) // 5
+ * memoizedFn(2, 3) // 5
+ * console.log(callCount) // 1 
+ */
