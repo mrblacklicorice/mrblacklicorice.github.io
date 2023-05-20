@@ -3361,3 +3361,213 @@ function memoize(fn) {
  * memoizedFn(2, 3) // 5
  * console.log(callCount) // 1 
  */
+
+/**
+ *  2632. Curry
+ * @param {Function} fn
+ * @return {Function}
+ */
+var curry = function (fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    } else {
+      return function (...args2) {
+        return curried.apply(this, args.concat(args2));
+      }
+    }
+  }
+};
+
+/**
+ * 2621. Sleep
+ * 
+ * @param {number} millis
+ */
+async function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}
+
+/** 
+ * let t = Date.now()
+ * sleep(100).then(() => console.log(Date.now() - t)) // 100
+ */
+
+/**
+ * 2637. Promise Time Limit
+ * 
+ * @param {Function} fn
+ * @param {number} t
+ * @return {Function}
+ */
+var timeLimit = function (fn, t) {
+  return async function (...args) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject("Time Limit Exceeded")
+      }, t)
+      fn(...args).then(resolve).catch(reject);
+    })
+  }
+};
+
+/**
+ * const limited = timeLimit((t) => new Promise(res => setTimeout(res, t)), 100);
+ * limited(150).catch(console.log) // "Time Limit Exceeded" at t=100ms
+ */
+
+/**
+ * 1557. Minimum Number of Vertices to Reach All Nodes
+ * 
+ * @param {number} n
+ * @param {number[][]} edges
+ * @return {number[]}
+ */
+var findSmallestSetOfVertices = function (n, edges) {
+  var arr = new Array(n);
+
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = i;
+  }
+
+  for (let i = 0; i < edges.length; i++) {
+    if (arr[edges[i][1]] != -1) arr[edges[i][1]] = -1;
+  }
+
+  console.log(arr);
+
+  return arr.filter(e => e != -1);
+};
+
+// console.log(findSmallestSetOfVertices(6, [[0, 1], [0, 2], [2, 5], [3, 4], [4, 2]]));
+
+/**
+ * 2636. Promise Pool
+ * 
+ * @param {Function[]} functions
+ * @param {number} n
+ * @return {Function}
+ */
+var promisePool = async function (functions, n) {
+  return new Promise((resolve) => {
+    var count = 0;
+    var i = 0;
+
+    function t() {
+      if (count == 0 && i == functions.length) {
+        resolve();
+        return;
+      }
+
+      while (count < n && i < functions.length) {
+        count++;
+        var p = functions[i]();
+        i++;
+        p.then(() => {
+          count--;
+          t();
+        })
+      }
+    }
+
+    t();
+  })
+};
+
+/**
+ * const sleep = (t) => new Promise(res => setTimeout(res, t));
+ * promisePool([() => sleep(500), () => sleep(400)], 1)
+ *   .then(console.log) // After 900ms
+ */
+
+
+/**
+ * 2622. Cache With Time Limit
+ */
+var TimeLimitedCache = function () {
+  this.dict = {};
+};
+
+/** 
+ * @param {number} key
+ * @param {number} value
+ * @param {number} time until expiration in ms
+ * @return {boolean} if un-expired key already existed
+ */
+TimeLimitedCache.prototype.set = function (key, value, duration) {
+  if (this.dict[key] != undefined) {
+    clearTimeout(this.dict[key][1]);
+    var t = setTimeout(() => { delete this.dict[key] }, duration)
+    this.dict[key] = [value, t];
+    return true;
+  } else {
+    var t = setTimeout(() => { delete this.dict[key] }, duration)
+    this.dict[key] = [value, t];
+    return false;
+  }
+};
+
+/** 
+ * @param {number} key
+ * @return {number} value associated with key
+ */
+TimeLimitedCache.prototype.get = function (key) {
+  if (this.dict[key] != undefined) return this.dict[key][0];
+  return -1;
+};
+
+/** 
+ * @return {number} count of non-expired keys
+ */
+TimeLimitedCache.prototype.count = function () {
+  return Object.keys(this.dict).length;
+};
+
+/**
+ * Your TimeLimitedCache object will be instantiated and called as such:
+ * var obj = new TimeLimitedCache()
+ * obj.set(1, 42, 1000); // false
+ * obj.get(1) // 42
+ * obj.count() // 1
+ */
+
+/**
+ * 785. Is Graph Bipartite?
+ * 
+ * @param {number[][]} graph
+ * @return {boolean}
+ */
+var isBipartite = function (graph) {
+  var track = new Array(graph.length).fill(-1);
+
+  track[0] = 0;
+
+  var queue = [0];
+
+  while (queue.length != 0) {
+    var node = queue.shift();
+
+    for (let i = 0; i < graph[node].length; i++) {
+      if (track[graph[node][i]] == -1) {
+        track[graph[node][i]] = (track[node] == 0) ? 1 : 0;
+        queue.push(graph[node][i]);
+      } else if (track[graph[node][i]] == track[node]) {
+        return false;
+      }
+    }
+
+    if (graph[node].length == 0 || queue.length == 0) {
+      for (let i = 0; i < track.length; i++) {
+        if (track[i] == -1) {
+          track[i] = 0;
+          queue.push(i);
+          break;
+        }
+      }
+    }
+  }
+
+  return true;
+};
+
+// console.log(isBipartite([[2, 4], [2, 3, 4], [0, 1], [1], [0, 1], [7], [9], [5], [], [6], [12, 14], [], [10], [], [10], [19], [18], [], [16], [15], [23], [23], [], [20, 21], [], [], [27], [26], [], [], [34], [33, 34], [], [31], [30, 31], [38, 39], [37, 38, 39], [36], [35, 36], [35, 36], [43], [], [], [40], [], [49], [47, 48, 49], [46, 48, 49], [46, 47, 49], [45, 46, 47, 48]]));
