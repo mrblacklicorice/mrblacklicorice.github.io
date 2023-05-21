@@ -3571,3 +3571,126 @@ var isBipartite = function (graph) {
 };
 
 // console.log(isBipartite([[2, 4], [2, 3, 4], [0, 1], [1], [0, 1], [7], [9], [5], [], [6], [12, 14], [], [10], [], [10], [19], [18], [], [16], [15], [23], [23], [], [20, 21], [], [], [27], [26], [], [], [34], [33, 34], [], [31], [30, 31], [38, 39], [37, 38, 39], [36], [35, 36], [35, 36], [43], [], [], [40], [], [49], [47, 48, 49], [46, 48, 49], [46, 47, 49], [45, 46, 47, 48]]));
+
+/**
+ * 399. Evaluate Division
+ * 
+ * @param {string[][]} equations
+ * @param {number[]} values
+ * @param {string[][]} queries
+ * @return {number[]}
+ */
+var calcEquation = function (equations, values, queries) {
+  var obj = {};
+
+  for (let i = 0; i < equations.length; i++) {
+    if (obj[equations[i][0]] == undefined) obj[equations[i][0]] = [[equations[i][0], 1]];
+    if (obj[equations[i][1]] == undefined) obj[equations[i][1]] = [[equations[i][1], 1]];
+
+    obj[equations[i][0]].push([equations[i][1], values[i]]);
+    obj[equations[i][1]].push([equations[i][0], 1 / values[i]]);
+  }
+
+  var result = new Array(queries.length).fill(-1);
+
+  for (let q = 0; q < queries.length; q++) {
+    if (obj[queries[q][0]] == undefined || obj[queries[q][1]] == undefined) continue;
+
+    var visited = {};
+    visited[queries[q][0]] = true;
+    var queue = [queries[q][0]];
+    var valueQ = [1];
+
+    while (queue.length != 0) {
+      var node = queue.shift();
+      var val = valueQ.shift();
+      for (let a = 0; a < obj[node].length; a++) {
+        if (obj[node][a][0] == queries[q][1]) {
+          result[q] = obj[node][a][1] * val;
+          continue;
+        } else if (visited[obj[node][a][0]] == undefined) {
+          queue.push(obj[node][a][0]);
+          valueQ.push(obj[node][a][1] * val);
+          visited[obj[node][a][0]] = true;
+        }
+      }
+    }
+  }
+
+  return result;
+};
+
+// console.log(calcEquation([["x1", "x2"], ["x2", "x3"], ["x3", "x4"], ["x4", "x5"]], [3.0, 4.0, 5.0, 6.0], [["x1", "x5"], ["x5", "x2"], ["x2", "x4"], ["x2", "x2"], ["x2", "x9"], ["x9", "x9"]]));
+// console.log(calcEquation([["a", "b"], ["b", "c"]], [2.0, 3.0], [["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"]]))
+
+/**
+ * 934. Shortest Bridge
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var shortestBridge = function (grid) {
+  function recur(x, y) {
+    queue = [[x, y]];
+    var s = [];
+    while (queue.length != 0) {
+      var n = queue.shift();
+      grid[n[0]][n[1]] = 0;
+      s.push(JSON.stringify(n));
+
+      if (n[0] != 0 && grid[n[0] - 1][n[1]] == 1) {
+        queue.push([n[0] - 1, n[1]]);
+      }
+      if (n[1] != 0 && grid[n[0]][n[1] - 1] == 1) {
+        queue.push([n[0], n[1] - 1]);
+      }
+      if (n[0] != grid.length - 1 && grid[n[0] + 1][n[1]] == 1) {
+        queue.push([n[0] + 1, n[1]]);
+      }
+      if (n[1] != grid.length - 1 && grid[n[0]][n[1] + 1] == 1) {
+        queue.push([n[0], n[1] + 1]);
+      }
+    }
+
+    var list = [];
+
+    for (let i = 0; i < s.length; i++) {
+      var n = JSON.parse(s[i]);
+
+      if (!(
+        (n[0] == 0 || s.includes(JSON.stringify([n[0] - 1, n[1]]))) &&
+        (n[1] == 0 || s.includes(JSON.stringify([n[0], n[1] - 1]))) &&
+        (n[0] == grid.length - 1 || s.includes(JSON.stringify([n[0] + 1, n[1]]))) &&
+        (n[1] == grid.length - 1 || s.includes(JSON.stringify([n[0], n[1] + 1])))
+      )) list.push(n);
+    }
+
+    return list;
+  }
+
+  console.table(grid);
+
+  var arr = [];
+  var res = [];
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] == 1) {
+        arr.push(recur(i, j));
+      }
+    }
+  }
+
+  for (let i = 0; i < arr[0].length; i++) {
+    for (let j = 0; j < arr[1].length; j++) {
+      res.push(Math.abs(arr[0][i][0] - arr[1][j][0]) + Math.abs(arr[0][i][1] - arr[1][j][0]) - 1);
+    }
+  }
+
+
+  console.log(res.sort((a, b) => a - b));
+  return res.sort((a, b) => a - b)[0];
+};
+
+console.log(shortestBridge([[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]]));
+console.log(shortestBridge([[1, 0, 0], [0, 0, 0], [0, 0, 1]]));
