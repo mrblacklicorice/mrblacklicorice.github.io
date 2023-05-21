@@ -3683,7 +3683,7 @@ var shortestBridge = function (grid) {
 
   for (let i = 0; i < arr[0].length; i++) {
     for (let j = 0; j < arr[1].length; j++) {
-      res.push(Math.abs(arr[0][i][0] - arr[1][j][0]) + Math.abs(arr[0][i][1] - arr[1][j][0]) - 1);
+      res.push(Math.abs(arr[0][i][0] - arr[1][j][0]) + Math.abs(arr[0][i][1] - arr[1][j][1]) - 1);
     }
   }
 
