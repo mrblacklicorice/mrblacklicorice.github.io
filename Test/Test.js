@@ -3712,3 +3712,160 @@ var shortestBridge = function (grid) {
 };
 
 // console.log(shortestBridge([[1, 0, 0], [0, 0, 0], [0, 0, 1]]));
+
+/**
+ * 347. Top K Frequent Elements
+ * 
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var topKFrequent = function (nums, k) {
+  var obj = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    if (obj[nums[i]] == undefined) obj[nums[i]] = 0;
+    obj[nums[i]]++;
+  }
+
+  var arr = [];
+  for (const val in obj) {
+    if (Object.hasOwnProperty.call(obj, val)) {
+      arr.push(Number(val));
+    }
+  }
+
+  return arr.sort((a, b) => obj[b] - obj[a]).slice(0, k);
+};
+
+// console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
+
+/**
+ * 2633. Convert Object to JSON String
+ * 
+ * @param {any} object
+ * @return {string}
+ */
+var jsonStringify = function (object) {
+  if (Array.isArray(object)) {
+    if (object.length == 0) return "[]";
+    var str = "[";
+
+    for (let i = 0; i < object.length; i++) {
+      str += jsonStringify(object[i]) + ",";
+    }
+    return str.slice(0, -1) + "]";
+  } else if (typeof object == "object") {
+    if (object == null) return null;
+
+    var keys = Object.keys(object);
+    if (keys.length == 0) return "{}";
+
+    var str = "{"
+    for (let i = 0; i < keys.length; i++) {
+      str += `"${keys[i]}":${jsonStringify(object[keys[i]])},`;
+    }
+
+    return str.slice(0, -1) + "}";
+  } else if (typeof object == "string") {
+    return `"${object}"`;
+  } else return object;
+};
+
+// console.log(jsonStringify({ "key": { "a": 1, "b": [{}, null, "Hello"] } }));
+
+/**
+ * 2628. JSON Deep Equal
+ * 
+ * @param {any} o1
+ * @param {any} o2
+ * @return {boolean}
+ */
+var areDeeplyEqual = function (o1, o2) {
+  if (Array.isArray(o1)) {
+    if (!Array.isArray(o2)) return false;
+    if (o1.length != o2.length) return false;
+
+    for (let i = 0; i < o1.length; i++) {
+      if (!areDeeplyEqual(o1[i], o2[i])) return false;
+    }
+  } else if (typeof o1 == "object") {
+    if (o1 == null || o2 == null) return o1 == o2;
+    if (typeof o2 != "object" || Array.isArray(o2)) return false;
+
+    var o1Keys = Object.keys(o1);
+    if (o1Keys.length != Object.keys(o2).length) return false;
+
+    for (let i = 0; i < o1Keys.length; i++) {
+      if (o2[o1Keys[i]] === undefined) return false;
+      if (!areDeeplyEqual(o1[o1Keys[i]], o2[o1Keys[i]])) return false;
+    }
+  } else {
+    return o1 === o2;
+  }
+
+  return true;
+};
+
+// console.log(areDeeplyEqual({ "x": null, "L": [1, 2, 3] }, { "x": null, "L": ["1", "2", "3"] }));
+
+/**
+ * 2627. Debounce
+ * 
+ * @param {Function} fn
+ * @param {number} t milliseconds
+ * @return {Function}
+ */
+var debounce = function (fn, t) {
+  var id = null;
+  return function (...args) {
+    if (id != null) {
+      clearTimeout(id);
+    }
+    id = setTimeout(() => { fn(...args); id = null; }, t);
+  }
+};
+
+/**
+ * const log = debounce(console.log, 100);
+ * log('Hello'); // cancelled
+ * log('Hello'); // cancelled
+ * log('Hello'); // Logged at t=100ms
+ */
+
+/**
+ * 2676. Throttle
+ * 
+ * @param {Function} fn
+ * @param {number} t
+ * @return {Function}
+ */
+var throttle = function (fn, t) {
+  var g = true;
+  var cal = false;
+  var arg;
+  return function (...args) {
+    arg = args;
+    if (g) {
+      fn(...arg);
+      g = false;
+      setTimeout(thing, t);
+    } else cal = true;
+  }
+
+  function thing() {
+    g = true;
+    if (cal) {
+      fn(...arg)
+      g = false;
+      cal = false;
+      setTimeout(thing, t);
+    }
+  }
+};
+
+/**
+ * const throttled = throttle(console.log, 100);
+ * throttled("log"); // logged immediately.
+ * throttled("log"); // logged at t=100ms.
+ */
