@@ -3630,67 +3630,85 @@ var calcEquation = function (equations, values, queries) {
  * @return {number}
  */
 var shortestBridge = function (grid) {
-  function recur(x, y) {
-    queue = [[x, y]];
-    var s = [];
-    while (queue.length != 0) {
-      var n = queue.shift();
-      grid[n[0]][n[1]] = 0;
-      s.push(JSON.stringify(n));
+  var s = [];
 
-      if (n[0] != 0 && grid[n[0] - 1][n[1]] == 1) {
-        queue.push([n[0] - 1, n[1]]);
-      }
-      if (n[1] != 0 && grid[n[0]][n[1] - 1] == 1) {
-        queue.push([n[0], n[1] - 1]);
-      }
-      if (n[0] != grid.length - 1 && grid[n[0] + 1][n[1]] == 1) {
-        queue.push([n[0] + 1, n[1]]);
-      }
-      if (n[1] != grid.length - 1 && grid[n[0]][n[1] + 1] == 1) {
-        queue.push([n[0], n[1] + 1]);
-      }
-    }
-
-    var list = [];
-
-    for (let i = 0; i < s.length; i++) {
-      var n = JSON.parse(s[i]);
-
-      if (!(
-        (n[0] == 0 || s.includes(JSON.stringify([n[0] - 1, n[1]]))) &&
-        (n[1] == 0 || s.includes(JSON.stringify([n[0], n[1] - 1]))) &&
-        (n[0] == grid.length - 1 || s.includes(JSON.stringify([n[0] + 1, n[1]]))) &&
-        (n[1] == grid.length - 1 || s.includes(JSON.stringify([n[0], n[1] + 1])))
-      )) list.push(n);
-    }
-
-    return list;
-  }
-
-  console.table(grid);
-
-  var arr = [];
-  var res = [];
-
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
+  for (let i = 0; i < grid.length && s.length == 0; i++) {
+    for (let j = 0; j < grid[i].length && s.length == 0; j++) {
       if (grid[i][j] == 1) {
-        arr.push(recur(i, j));
+        queue = [[i, j]];
+        grid[i][j] = 2;
+        while (queue.length != 0) {
+          var n = queue.shift();
+
+          if (!(
+            (n[0] == 0 || grid[n[0] - 1][n[1]]) &&
+            (n[1] == 0 || grid[n[0]][n[1] - 1]) &&
+            (n[0] == grid.length - 1 || grid[n[0] + 1][n[1]]) &&
+            (n[1] == grid.length - 1 || grid[n[0]][n[1] + 1])
+          )) s.push(n);
+
+          if (n[0] != 0 && grid[n[0] - 1][n[1]] == 1) {
+            queue.push([n[0] - 1, n[1]]);
+            grid[n[0] - 1][n[1]] = 2;
+          }
+          if (n[1] != 0 && grid[n[0]][n[1] - 1] == 1) {
+            queue.push([n[0], n[1] - 1]);
+            grid[n[0]][n[1] - 1] = 2;
+          }
+          if (n[0] != grid.length - 1 && grid[n[0] + 1][n[1]] == 1) {
+            queue.push([n[0] + 1, n[1]]);
+            grid[n[0] + 1][n[1]] = 2;
+          }
+          if (n[1] != grid.length - 1 && grid[n[0]][n[1] + 1] == 1) {
+            queue.push([n[0], n[1] + 1]);
+            grid[n[0]][n[1] + 1] = 2;
+          }
+        }
       }
     }
   }
+  var n;
+  var narr = [];
 
-  for (let i = 0; i < arr[0].length; i++) {
-    for (let j = 0; j < arr[1].length; j++) {
-      res.push(Math.abs(arr[0][i][0] - arr[1][j][0]) + Math.abs(arr[0][i][1] - arr[1][j][1]) - 1);
+  var i = 0;
+
+  while (true) {
+    while (s.length != 0) {
+      n = s.shift();
+      if (n[0] != 0) {
+        if (grid[n[0] - 1][n[1]] == 0) {
+          narr.push([n[0] - 1, n[1]]);
+          grid[n[0] - 1][n[1]] = -1
+        }
+        else if (grid[n[0] - 1][n[1]] == 1) return i;
+      }
+      if (n[1] != 0) {
+        if (grid[n[0]][n[1] - 1] == 0) {
+          narr.push([n[0], n[1] - 1]);
+          grid[n[0]][n[1] - 1] = -1
+        }
+        if (grid[n[0]][n[1] - 1] == 1) return i;
+      }
+      if (n[0] != grid.length - 1) {
+        if (grid[n[0] + 1][n[1]] == 0) {
+          narr.push([n[0] + 1, n[1]]);
+          grid[n[0] + 1][n[1]] = -1
+        }
+        if (grid[n[0] + 1][n[1]] == 1) return i;
+      }
+      if (n[1] != grid.length - 1) {
+        if (grid[n[0]][n[1] + 1] == 0) {
+          narr.push([n[0], n[1] + 1]);
+          grid[n[0]][n[1] + 1] = -1
+        }
+        if (grid[n[0]][n[1] + 1] == 1) return i;
+      }
     }
+
+    s = narr;
+    narr = [];
+    i++;
   }
-
-
-  console.log(res.sort((a, b) => a - b));
-  return res.sort((a, b) => a - b)[0];
 };
 
-console.log(shortestBridge([[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]]));
-console.log(shortestBridge([[1, 0, 0], [0, 0, 0], [0, 0, 1]]));
+// console.log(shortestBridge([[1, 0, 0], [0, 0, 0], [0, 0, 1]]));
