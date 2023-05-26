@@ -159,6 +159,8 @@ function getUserData() {
             console.log(data);
             document.getElementById('login').style.display = 'none';
             document.getElementById('loggedin').style.display = 'unset';
+            document.getElementById('playlistLink').style.display = 'unset';
+            document.getElementById('getPlaylist').style.display = 'unset';
             mainPlaceholder.innerHTML = userProfileTemplate(data);
         })
         .catch((error) => {
@@ -182,8 +184,6 @@ function getPlaylistData() {
         })
         .then((data) => {
             console.log(data);
-            document.getElementById('playlistLink').style.display = 'unset';
-            document.getElementById('getPlaylist').style.display = 'unset';
             playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
         })
         .catch((error) => {
