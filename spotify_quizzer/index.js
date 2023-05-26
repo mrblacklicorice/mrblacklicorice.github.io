@@ -214,8 +214,8 @@
 
     // Your client id from your app in the spotify dashboard:
     // https://developer.spotify.com/dashboard/applications
-    const client_id = 'CLIENT_ID';
-    const redirect_uri = 'http://127.0.0.1:8080/'; // Your redirect uri
+    const client_id = '3fd2f3455a9d44c892ff4547a8b354c8';
+    const redirect_uri = 'https://mrblacklicorice.github.io/spotify_quizzer/'; // Your redirect uri
 
     // Restore tokens from localStorage
     let access_token = localStorage.getItem('access_token') || null;
