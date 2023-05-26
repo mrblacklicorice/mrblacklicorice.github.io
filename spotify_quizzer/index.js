@@ -42,7 +42,7 @@ function redirectToSpotifyAuthorizeEndpoint() {
             {
                 response_type: 'code',
                 client_id,
-                scope: 'user-read-private user-read-email',
+                scope: 'user-read-private user-read-email playlist-read-private playlist-read-collaborative',
                 code_challenge_method: 'S256',
                 code_challenge,
                 redirect_uri,
@@ -115,7 +115,8 @@ async function addThrowErrorToFetch(response) {
 
 function logout() {
     localStorage.clear();
-    window.location.reload();
+    // window.location.reload();
+    window.location.href = redirect_uri;
 }
 
 function processTokenResponse(data) {
@@ -158,13 +159,36 @@ function getUserData() {
             console.log(data);
             document.getElementById('login').style.display = 'none';
             document.getElementById('loggedin').style.display = 'unset';
-            document.getElementById('playlist').style.display = 'unset';
-            document.getElementById('getPlaylist').style.display = 'unset';
             mainPlaceholder.innerHTML = userProfileTemplate(data);
         })
         .catch((error) => {
             console.error(error);
             mainPlaceholder.innerHTML = errorTemplate(error.error);
+        });
+}
+
+function getPlaylistData() {
+    fetch('https://api.spotify.com/v1/me', {
+        headers: {
+            Authorization: 'Bearer ' + access_token,
+        },
+    })
+        .then(async (response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw await response.json();
+            }
+        })
+        .then((data) => {
+            console.log(data);
+            document.getElementById('playlistLink').style.display = 'unset';
+            document.getElementById('getPlaylist').style.display = 'unset';
+            playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
+        })
+        .catch((error) => {
+            console.error(error);
+            playlistPlaceholder.innerHTML = errorTemplate(error.error);
         });
 }
 
@@ -179,6 +203,17 @@ function userProfileTemplate(data) {
           <tr><td>Profile Image</td><td><a href="${data.images[0].url}">${data.images[0].url}</a></td></tr>
           <tr><td>Country</td><td>${data.country}</td></tr>
       </table>`;
+}
+
+// https://open.spotify.com/playlist/4vHvIsQ4sxeRJyggYx3frl
+
+function userPlaylistTemplate(data) {
+    console.log(data);
+    return ``;
+}
+
+function userPlaylistItem(item) {
+    return ``;
 }
 
 function oAuthTemplate(data) {
@@ -226,6 +261,12 @@ let expires_at = localStorage.getItem('expires_at') || null;
 // References for HTML rendering
 const mainPlaceholder = document.getElementById('main');
 const oauthPlaceholder = document.getElementById('oauth');
+const playlistPlaceholder = document.getElementById('playlist');
+
+// Playlist inputs
+const playlistLink = document.getElementById('playlistLink');
+const getPlaylist = document.getElementById('getPlaylist');
+getPlaylist.addEventListener('click', getPlaylistData);
 
 // If the user has accepted the authorize request spotify will come back to your application with the code in the response query string
 // Example: http://127.0.0.1:8080/?code=NApCCg..BkWtQ&state=profile%2Factivity
@@ -262,3 +303,5 @@ document
 document
     .getElementById('logout-button')
     .addEventListener('click', logout, false);
+
+
