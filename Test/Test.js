@@ -3869,3 +3869,220 @@ var throttle = function (fn, t) {
  * throttled("log"); // logged immediately.
  * throttled("log"); // logged at t=100ms.
  */
+
+/**
+ * @param {number} k
+ * @param {number[]} nums
+ */
+var KthLargest = function (k, nums) {
+  this.main = new MinPriorityQueue();
+  for (let i = 0; i < nums.length; i++) {
+    this.main.enqueue(nums[i]);
+  }
+  this.k = k;
+  while (this.main.size() > k) this.main.dequeue().element;
+};
+
+/** 
+ * @param {number} val
+ * @return {number}
+ */
+KthLargest.prototype.add = function (val) {
+  this.main.enqueue(val);
+  if (this.main.size() > this.k) this.main.dequeue().element;
+  return this.main.front().element;
+};
+
+/**
+ * @param {Array} arr
+ * @return {Matrix}
+ */
+var jsonToMatrix = function (arr) {
+  var keys = {};
+  var mat = [[]];
+
+  for (let i = 0; i < arr.length; i++) {
+    mat.push(new Array(mat[0].length).fill(""));
+    parse(arr[i], "");
+  }
+
+  function parse(object, key) {
+    if (Array.isArray(object)) {
+      for (let i = 0; i < object.length; i++) {
+        parse(object[i], key + ((key == "") ? "" : ".") + i);
+      }
+    } else if (object != null && typeof object == "object") {
+      var objKeys = Object.keys(object);
+
+      for (let i = 0; i < objKeys.length; i++) {
+        parse(object[objKeys[i]], key + ((key == "") ? "" : ".") + objKeys[i]);
+      }
+    } else {
+      if (keys[key] == undefined) {
+        keys[key] = sortedIndex(mat[0], key);
+        mat[0].splice(keys[key], 0, key);
+
+        for (let i = keys[key] + 1; i < mat[0].length; i++) {
+          keys[mat[0][i]]++;
+        }
+
+        for (let i = 1; i < mat.length; i++) {
+          mat[i].splice(keys[key], 0, "");
+        }
+      }
+
+      mat[mat.length - 1].splice(keys[key], 1, object);
+    }
+  }
+
+  function sortedIndex(array, value) {
+    var low = 0,
+      high = array.length;
+
+    while (low < high) {
+      var mid = (low + high) >>> 1;
+      if (array[mid] < value) low = mid + 1;
+      else high = mid;
+    }
+    return low;
+  }
+
+  return mat;
+};
+
+// console.log(jsonToMatrix([{ "b": 1, "a": 2 }, { "b": 3, "a": 4 }]));
+
+/**
+ * 2542. Maximum Subsequence Score
+ * 
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @param {number} k
+ * @return {number}
+ */
+var maxScore = function (nums1, nums2, k) {
+  var obj = {};
+
+  for (let i = 0; i < nums1.length; i++) {
+    if (obj[nums2[i]] == undefined) obj[nums2[i]] = [];
+    obj[nums2[i]].push(nums1[i]);
+  }
+
+  nums2 = nums2.sort((a, b) => a - b);
+  var arr = [];
+
+  for (let i = 0; i < nums2.length; i++) {
+    if (obj[nums2[i]] == undefined) continue;
+    arr.push(...obj[nums2[i]]);
+    obj[nums2[i]] = undefined;
+  }
+
+  var high = 0;
+  var val;
+
+  var sum = 0;
+  var index;
+
+  newNums = nums1.sort((a, b) => b - a);
+
+  for (let i = 0; i < k - 1; i++) {
+    sum += newNums[i];
+  }
+
+  for (let i = 0; i < nums2.length - (k - 1); i++) {
+    // console.log(newNums);
+    index = newNums.indexOf(arr[i]);
+
+    if (index < k - 1) {
+      sum -= arr[i];
+      newNums.splice(index, 1);
+      sum += newNums[k - 2];
+    } else {
+      newNums.splice(index, 1);
+    }
+
+    val = (arr[i] + sum) * nums2[i];
+    if (val > high) high = val;
+  }
+
+  return high;
+};
+
+// console.log(maxScore([4, 2, 3, 1, 1], [7, 5, 10, 9, 6], 1));
+
+/**
+ * 2700. Differences Between Two Objects
+ * 
+ * @param {object} obj1
+ * @param {object} obj2
+ * @return {object}
+ */
+function objDiff(obj1, obj2) {
+  var obj = {};
+  var result;
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    var length = (obj1.length > obj2.length) ? obj2.length : obj1.length;
+    for (let i = 0; i < length; i++) {
+      result = objDiff(obj1[i], obj2[i]);
+      if (Object.keys(result).length != 0) obj[i] = result;
+    }
+  } else if (typeof obj1 == "object" && obj1 != null && !Array.isArray(obj1) && !Array.isArray(obj2) && typeof obj2 == "object" && obj2 != null) {
+    obj = {};
+    for (const key in obj1) {
+      if (Object.hasOwnProperty.call(obj1, key) && Object.hasOwnProperty.call(obj2, key)) {
+        result = objDiff(obj1[key], obj2[key]);
+        if (Object.keys(result).length != 0) obj[key] = result;
+      }
+    }
+  } else if (obj1 !== obj2) return [obj1, obj2];
+  return obj;
+};
+
+// console.log(objDiff({ "a": 1, "v": 3, "x": [], "z": { "a": null } }, { "a": 2, "v": 4, "x": [], "z": { "a": 2 } }));
+
+/**
+ * 837. New 21 Game
+ * 
+ * @param {number} n
+ * @param {number} k
+ * @param {number} maxPts
+ * @return {number}
+ */
+var new21Game = function (n, k, maxPts) {
+  var arr = new Array(n + 1);
+  arr[0] = 1;
+
+  var sum = k > 0 ? 1 : 0;
+  var res = k > 0 ? 0 : 1;
+  for (let i = 1; i <= n; i++) {
+    arr[i] = sum / maxPts;
+    if (i < k) sum += arr[i];
+    else res += arr[i];
+    if (i - maxPts >= 0 && i - maxPts < k) sum -= arr[i - maxPts];
+  }
+
+  return res;
+};
+
+// console.log(new21Game(6, 1, 10))
+
+/**
+ * 2677. Chunk Array
+ * 
+ * @param {Array} arr
+ * @param {number} size
+ * @return {Array[]}
+ */
+var chunk = function (arr, size) {
+  var result = [];
+
+  for (let i = 0; i < Math.floor(arr.length / size); i++) {
+    result.push(arr.slice(i * size, (i + 1) * size));
+  }
+
+  if (arr.length % size != 0) result.push(arr.slice(Math.floor(arr.length / size) * size))
+
+  return result;
+};
+
+console.log(chunk([1, 2, 3, 4, 5], 1));
