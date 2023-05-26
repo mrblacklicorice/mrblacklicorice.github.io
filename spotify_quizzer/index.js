@@ -29,7 +29,7 @@ function generateUrlWithSearchParams(url, params) {
 }
 
 function redirectToSpotifyAuthorizeEndpoint() {
-    const codeVerifier = generateRandomString(64);
+    const codeVerifier = generateRandomString(18);
 
     generateCodeChallenge(codeVerifier).then((code_challenge) => {
         window.localStorage.setItem('code_verifier', codeVerifier);
@@ -158,6 +158,8 @@ function getUserData() {
             console.log(data);
             document.getElementById('login').style.display = 'none';
             document.getElementById('loggedin').style.display = 'unset';
+            document.getElementById('playlist').style.display = 'unset';
+            document.getElementById('getPlaylist').style.display = 'unset';
             mainPlaceholder.innerHTML = userProfileTemplate(data);
         })
         .catch((error) => {
