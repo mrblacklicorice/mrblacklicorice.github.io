@@ -266,7 +266,8 @@ const playlistPlaceholder = document.getElementById('playlist');
 // Playlist inputs
 const playlistLink = document.getElementById('playlistLink');
 const getPlaylist = document.getElementById('getPlaylist');
-getPlaylist.addEventListener('click', getPlaylistData);
+// getPlaylist.addEventListener('click', getPlaylistData);
+getPlaylist.addEventListener('click', () => { console.log(playlistLink.value) });
 
 // If the user has accepted the authorize request spotify will come back to your application with the code in the response query string
 // Example: http://127.0.0.1:8080/?code=NApCCg..BkWtQ&state=profile%2Factivity
