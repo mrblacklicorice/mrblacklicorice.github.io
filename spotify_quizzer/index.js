@@ -147,49 +147,61 @@ function getUserData() {
         headers: {
             Authorization: 'Bearer ' + access_token,
         },
-    })
-        .then(async (response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw await response.json();
-            }
-        })
-        .then((data) => {
-            console.log(data);
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('loggedin').style.display = 'unset';
-            document.getElementById('playlistLink').style.display = 'unset';
-            document.getElementById('getPlaylist').style.display = 'unset';
-            mainPlaceholder.innerHTML = userProfileTemplate(data);
-        })
-        .catch((error) => {
-            console.error(error);
-            mainPlaceholder.innerHTML = errorTemplate(error.error);
-        });
+    }).then(async (response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    }).then((data) => {
+        console.log(data);
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('loggedin').style.display = 'unset';
+        document.getElementById('playlistLink').style.display = 'unset';
+        document.getElementById('getPlaylist').style.display = 'unset';
+        mainPlaceholder.innerHTML = userProfileTemplate(data);
+    }).catch((error) => {
+        console.error(error);
+        mainPlaceholder.innerHTML = errorTemplate(error.error);
+    });
 }
 
-function getPlaylistData() {
-    fetch('https://api.spotify.com/v1/me', {
+function getPlaylistData(playlistID) {
+    var metadata;
+    fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
             Authorization: 'Bearer ' + access_token,
         },
-    })
-        .then(async (response) => {
+    }).then(async (response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    }).then((metadata) => {
+        fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
+            headers: {
+                Authorization: 'Bearer ' + access_token,
+            },
+        }).then(async (response) => {
             if (response.ok) {
                 return response.json();
             } else {
                 throw await response.json();
             }
-        })
-        .then((data) => {
-            console.log(data);
-            playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
-        })
-        .catch((error) => {
+        }).then((data) => {
+            console.log(metadata, data);
+            playlistPlaceholder.innerHTML = userPlaylistTemplate(metadata, data);
+        }).catch((error) => {
             console.error(error);
             playlistPlaceholder.innerHTML = errorTemplate(error.error);
         });
+    }).catch((error) => {
+        console.error(error);
+        playlistPlaceholder.innerHTML = errorTemplate(error.error);
+    });
+
+
 }
 
 function userProfileTemplate(data) {
@@ -207,8 +219,8 @@ function userProfileTemplate(data) {
 
 // https://open.spotify.com/playlist/4vHvIsQ4sxeRJyggYx3frl
 
-function userPlaylistTemplate(data) {
-    console.log(data);
+function userPlaylistTemplate(metadata, data) {
+    console.log(metadata, data);
     return ``;
 }
 
@@ -267,7 +279,7 @@ const playlistPlaceholder = document.getElementById('playlist');
 const playlistLink = document.getElementById('playlistLink');
 const getPlaylist = document.getElementById('getPlaylist');
 // getPlaylist.addEventListener('click', getPlaylistData);
-getPlaylist.addEventListener('click', () => { console.log(playlistLink.value) });
+getPlaylist.addEventListener('click', () => getPlaylistData(playlistLink.value.match(/playlist\/(\w+)$/)[1]));
 
 // If the user has accepted the authorize request spotify will come back to your application with the code in the response query string
 // Example: http://127.0.0.1:8080/?code=NApCCg..BkWtQ&state=profile%2Factivity
