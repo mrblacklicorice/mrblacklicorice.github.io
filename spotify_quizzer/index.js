@@ -29,7 +29,7 @@ function generateUrlWithSearchParams(url, params) {
 }
 
 function redirectToSpotifyAuthorizeEndpoint() {
-    const codeVerifier = generateRandomString(18);
+    const codeVerifier = generateRandomString(128);
 
     generateCodeChallenge(codeVerifier).then((code_challenge) => {
         window.localStorage.setItem('code_verifier', codeVerifier);
