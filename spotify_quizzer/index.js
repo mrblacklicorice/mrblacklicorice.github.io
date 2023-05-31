@@ -157,17 +157,37 @@ function getUserData() {
         console.log(data);
         document.getElementById('login').style.display = 'none';
         document.getElementById('loggedin').style.display = 'unset';
-        document.getElementById('playlistLink').style.display = 'unset';
-        document.getElementById('getPlaylist').style.display = 'unset';
         mainPlaceholder.innerHTML = userProfileTemplate(data);
+
+        getUserPlaylistData();
     }).catch((error) => {
         console.error(error);
         mainPlaceholder.innerHTML = errorTemplate(error.error);
     });
 }
 
+function getUserPlaylistData() {
+    fetch('https://api.spotify.com/v1/me', {
+        headers: {
+            Authorization: 'Bearer ' + access_token,
+        },
+    }).then(async (response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    }).then((data) => {
+        console.log(data);
+        document.getElementById('playlistsContainer').style.display = 'none';
+        allPlaylistsPlaceholder.innerHTML = userAllPlaylistsTemplate(data);
+    }).catch((error) => {
+        console.error(error);
+        allPlaylistsPlaceholder.innerHTML = errorTemplate(error.error);
+    });
+}
+
 function getPlaylistData(playlistID) {
-    var metadata;
     fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
             Authorization: 'Bearer ' + access_token,
@@ -219,13 +239,20 @@ function userProfileTemplate(data) {
 
 // https://open.spotify.com/playlist/4vHvIsQ4sxeRJyggYx3frl
 
+function userAllPlaylistsTemplate(data) {
+    console.log(data);
+    function userAllPlaylistItem(item) {
+
+    }
+}
+
 function userPlaylistTemplate(metadata, data) {
     console.log(metadata, data);
     return ``;
-}
 
-function userPlaylistItem(item) {
-    return ``;
+    function userPlaylistItem(item) {
+        return ``;
+    }
 }
 
 function oAuthTemplate(data) {
@@ -272,6 +299,7 @@ let expires_at = localStorage.getItem('expires_at') || null;
 
 // References for HTML rendering
 const mainPlaceholder = document.getElementById('main');
+const allPlaylistsPlaceholder = document.getElementById('playlistsContainer');
 const oauthPlaceholder = document.getElementById('oauth');
 const playlistPlaceholder = document.getElementById('playlist');
 

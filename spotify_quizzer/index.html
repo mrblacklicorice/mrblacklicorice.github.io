@@ -9,8 +9,7 @@
     <style type="text/css">
         #login,
         #loggedin,
-        #playlistLink,
-        #getPlaylist {
+        #playlistsContainer {
             display: none;
         }
 
@@ -46,11 +45,11 @@
                 Logout
             </button>
             <div>
-                <h2>Retrieve Playlist</h2>
-                <input type="text" id="playlistLink" placeholder="playlist link">
-                <button id="getPlaylist">
-                    Get Playlist
-                </button>
+                <h2>Your Playlists</h2>
+                <div id="playlistsContainer">
+
+                </div>
+                <!-- <button id="getPlaylist">Get Playlist</button> -->
             </div>
             <div id="playlist"></div>
         </div>
