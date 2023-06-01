@@ -192,6 +192,7 @@ function getPlaylistData(playlistID, fetchURL) {
         }
     }).then((data) => {
         if (offset == 0) {
+            playlistPlaceholder.style.display = 'none';
             playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
         }
 
