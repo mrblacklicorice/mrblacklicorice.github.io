@@ -241,7 +241,7 @@ function userAllPlaylistsTemplate(data) {
     var string = "";
 
     for (var i = 0; i < data.items.length; i++) {
-        string += `<button onclick="getPlaylistData('${data.items[i].id}')">${data.items[i].name}</button>`;
+        string += `<button onclick="getPlaylistData('${data.items[i].id}')">${data.items[i].name}</button>\n`;
     }
 
     return string;
@@ -249,43 +249,65 @@ function userAllPlaylistsTemplate(data) {
 
 function userPlaylistTemplate(metadata, data) {
     console.log(metadata, data);
-    return ``;
+
+    var header = `<h2>${metadata.name}</h2>
+                <p>${metadata.description}</p>
+                <p>Author: ${metadata.owner.display_name}</p>
+                <table>`;
+
+    for (let i = 0; i < metadata.items.length; i++) {
+        header += userPlaylistItem(metadata.items[i]);
+    }
+
+    return header + `</table>`;
 
     function userPlaylistItem(item) {
-        return ``;
+        if (item.track) {
+            return `<tr>
+                <td><img src="${item.track.album.images[0].url}" width="100px"></td>
+                <td>${item.track.name}</td>
+                <td>${item.track.artists[0].name}</td>
+                <td>${item.track.album.name}</td>
+                <td>${item.track.duration_ms}</td>
+                <td> 
+                    <audio controls src="${item.track.uri}">
+                </td>
+            </tr>`;
+        }
+        return `<tr> <td colspan="5">Empty track</td> </tr>`;
     }
 }
 
 function oAuthTemplate(data) {
     return `<h2>oAuth info</h2>
-      <table>
-        <tr>
-            <td>Access token</td>
-            <td>${data.access_token}</td>
-        </tr>
-        <tr>
-            <td>Refresh token</td>
-            <td>${data.refresh_token}</td>
-        </tr>
-        <tr>
-            <td>Expires at</td>
-            <td>${new Date(parseInt(data.expires_at, 10)).toLocaleString()}</td>
-        </tr>
-      </table>`;
+        <table>
+            <tr>
+                <td>Access token</td>
+                <td>${data.access_token}</td>
+            </tr>
+            <tr>
+                <td>Refresh token</td>
+                <td>${data.refresh_token}</td>
+            </tr>
+            <tr>
+                <td>Expires at</td>
+                <td>${new Date(parseInt(data.expires_at, 10)).toLocaleString()}</td>
+            </tr>
+        </table>`;
 }
 
 function errorTemplate(data) {
-    return `<h2>Error info</h2>
-      <table>
-        <tr>
-            <td>Status</td>
-            <td>${data.status}</td>
-        </tr>
-        <tr>
-            <td>Message</td>
-            <td>${data.message}</td>
-        </tr>
-      </table>`;
+    return `< h2 > Error info</h2 >
+        <table>
+            <tr>
+                <td>Status</td>
+                <td>${data.status}</td>
+            </tr>
+            <tr>
+                <td>Message</td>
+                <td>${data.message}</td>
+            </tr>
+        </table>`;
 }
 
 // Your client id from your app in the spotify dashboard:
