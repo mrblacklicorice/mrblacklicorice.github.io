@@ -69,15 +69,12 @@ function exchangeToken(code) {
             redirect_uri,
             code_verifier,
         }),
-    })
-        .then(addThrowErrorToFetch)
-        .then((data) => {
-            processTokenResponse(data);
+    }).then(addThrowErrorToFetch).then((data) => {
+        processTokenResponse(data);
 
-            // clear search query params in the url
-            window.history.replaceState({}, document.title, '/');
-        })
-        .catch(handleError);
+        // clear search query params in the url
+        window.history.replaceState({}, document.title, '/');
+    }).catch(handleError);
 }
 
 function refreshToken() {
@@ -91,10 +88,7 @@ function refreshToken() {
             grant_type: 'refresh_token',
             refresh_token,
         }),
-    })
-        .then(addThrowErrorToFetch)
-        .then(processTokenResponse)
-        .catch(handleError);
+    }).then(addThrowErrorToFetch).then(processTokenResponse).catch(handleError);
 }
 
 function handleError(error) {
@@ -270,7 +264,7 @@ function userPlaylistTemplate(metadata, data) {
                 <td>${item.track.album.name}</td>
                 <td>${item.track.duration_ms}</td>
                 <td> 
-                    <audio controls src="${item.track.uri}">
+                    <audio controls src="${item.track.preview_url}">
                 </td>
             </tr>`;
         }
