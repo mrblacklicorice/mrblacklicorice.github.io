@@ -154,7 +154,6 @@ function getUserData() {
             throw await response.json();
         }
     }).then((data) => {
-        console.log(data);
         document.getElementById('login').style.display = 'none';
         document.getElementById('loggedin').style.display = 'unset';
         mainPlaceholder.innerHTML = userProfileTemplate(data);
@@ -178,7 +177,6 @@ function getUserPlaylistData() {
             throw await response.json();
         }
     }).then((data) => {
-        console.log(data);
         document.getElementById('playlistsContainer').style.display = 'none';
         allPlaylistsPlaceholder.innerHTML = userAllPlaylistsTemplate(data);
     }).catch((error) => {
@@ -210,7 +208,7 @@ function getPlaylistData(playlistID) {
                 throw await response.json();
             }
         }).then((data) => {
-            console.log(metadata, data);
+            // console.log(metadata, data);
             playlistPlaceholder.innerHTML = userPlaylistTemplate(metadata, data);
         }).catch((error) => {
             console.error(error);
@@ -220,8 +218,6 @@ function getPlaylistData(playlistID) {
         console.error(error);
         playlistPlaceholder.innerHTML = errorTemplate(error.error);
     });
-
-
 }
 
 function userProfileTemplate(data) {
@@ -241,9 +237,14 @@ function userProfileTemplate(data) {
 
 function userAllPlaylistsTemplate(data) {
     console.log(data);
-    function userAllPlaylistItem(item) {
 
+    var string = "";
+
+    for (var i = 0; i < data.items.length; i++) {
+        string += `<button onclick="()=>getPlaylistData(${item.id})">${item.name}</button>`;
     }
+
+    return string;
 }
 
 function userPlaylistTemplate(metadata, data) {
