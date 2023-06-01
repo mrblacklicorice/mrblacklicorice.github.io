@@ -255,8 +255,8 @@ function userPlaylistTemplate(metadata, data) {
                 <p>Author: ${metadata.owner.display_name}</p>
                 <table>`;
 
-    for (let i = 0; i < metadata.items.length; i++) {
-        header += userPlaylistItem(metadata.items[i]);
+    for (let i = 0; i < data.items.length; i++) {
+        header += userPlaylistItem(data.items[i]);
     }
 
     return header + `</table>`;
@@ -297,7 +297,7 @@ function oAuthTemplate(data) {
 }
 
 function errorTemplate(data) {
-    return `< h2 > Error info</h2 >
+    return `<h2> Error info</h2>
         <table>
             <tr>
                 <td>Status</td>
@@ -325,12 +325,6 @@ const mainPlaceholder = document.getElementById('main');
 const allPlaylistsPlaceholder = document.getElementById('playlistsContainer');
 const oauthPlaceholder = document.getElementById('oauth');
 const playlistPlaceholder = document.getElementById('playlist');
-
-// Playlist inputs
-// const playlistLink = document.getElementById('playlistLink');
-// const getPlaylist = document.getElementById('getPlaylist');
-// getPlaylist.addEventListener('click', getPlaylistData);
-// getPlaylist.addEventListener('click', () => getPlaylistData(playlistLink.value.match(/playlist\/(\w+)$/)[1]));
 
 // If the user has accepted the authorize request spotify will come back to your application with the code in the response query string
 // Example: http://127.0.0.1:8080/?code=NApCCg..BkWtQ&state=profile%2Factivity
