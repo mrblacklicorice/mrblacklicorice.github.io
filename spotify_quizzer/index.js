@@ -241,7 +241,7 @@ function userAllPlaylistsTemplate(data) {
     var string = "";
 
     for (var i = 0; i < data.items.length; i++) {
-        string += `<button onclick="()=>getPlaylistData(${data.items[i].id})">${data.items[i].name}</button>`;
+        string += `<button onclick="getPlaylistData(${data.items[i].id})">${data.items[i].name}</button>`;
     }
 
     return string;
