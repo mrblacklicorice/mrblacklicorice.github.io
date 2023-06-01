@@ -177,7 +177,7 @@ function getUserPlaylistData() {
             throw await response.json();
         }
     }).then((data) => {
-        document.getElementById('playlistsContainer').style.display = 'none';
+        document.getElementById('playlistsContainer').style.display = 'unset';
         allPlaylistsPlaceholder.innerHTML = userAllPlaylistsTemplate(data);
     }).catch((error) => {
         console.error(error);
