@@ -196,13 +196,13 @@ function getPlaylistData(playlistID, offset = 0) {
         }
 
         for (let i = 0; i < data.tracks.items.length; i++) {
-            playlistPlaceholder += userPlaylistItem(data.tracks.items[i]);
+            playlistPlaceholder.innerHTML += userPlaylistItem(data.tracks.items[i]);
         }
 
         if (data.tracks.total - offset > 100) {
             getPlaylistData(playlistID, offset + 100);
         } else {
-            playlistPlaceholder += "</table>";
+            playlistPlaceholder.innerHTML += "</table>";
         }
     }).catch((error) => {
         console.error(error);
