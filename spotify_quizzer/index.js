@@ -179,8 +179,8 @@ function getUserPlaylistData() {
     });
 }
 
-function getPlaylistData(playlistID, offset = 0) {
-    fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
+function getPlaylistData(playlistID, fetchURL) {
+    fetch((fetchURL) ? fetchURL : `https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
             Authorization: 'Bearer ' + access_token,
         },
@@ -199,10 +199,11 @@ function getPlaylistData(playlistID, offset = 0) {
             playlistPlaceholder.innerHTML += userPlaylistItem(data.tracks.items[i]);
         }
 
-        if (data.tracks.total - offset > 100) {
-            getPlaylistData(playlistID, offset + 100);
+        if (data.tracks.next) {
+            getPlaylistData(playlistID, data.tracks.next);
         } else {
             playlistPlaceholder.innerHTML += "</table>";
+            playlistPlaceholder.style.display = 'unset';
         }
     }).catch((error) => {
         console.error(error);
@@ -243,6 +244,7 @@ function userPlaylistTemplate(data) {
     return `<h2>${data.name}</h2>
                 <p>${data.description}</p>
                 <p>Author: ${data.owner.display_name}</p>
+                <p>Tracks: ${data.tracks.total}</p>
                 <table>`;
 }
 
