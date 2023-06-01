@@ -179,7 +179,7 @@ function getUserPlaylistData() {
     });
 }
 
-function getPlaylistData(playlistID) {
+function getPlaylistData(playlistID, offset = 0) {
     fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
             Authorization: 'Bearer ' + access_token,
@@ -190,24 +190,20 @@ function getPlaylistData(playlistID) {
         } else {
             throw await response.json();
         }
-    }).then((metadata) => {
-        fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
-            headers: {
-                Authorization: 'Bearer ' + access_token,
-            },
-        }).then(async (response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw await response.json();
-            }
-        }).then((data) => {
-            // console.log(metadata, data);
-            playlistPlaceholder.innerHTML = userPlaylistTemplate(metadata, data);
-        }).catch((error) => {
-            console.error(error);
-            playlistPlaceholder.innerHTML = errorTemplate(error.error);
-        });
+    }).then((data) => {
+        if (offset == 0) {
+            playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
+        }
+
+        for (let i = 0; i < data.tracks.items.length; i++) {
+            playlistPlaceholder += userPlaylistItem(data.tracks.items[i]);
+        }
+
+        if (data.tracks.total - offset > 100) {
+            getPlaylistData(playlistID, offset + 100);
+        } else {
+            playlistPlaceholder += "</table>";
+        }
     }).catch((error) => {
         console.error(error);
         playlistPlaceholder.innerHTML = errorTemplate(error.error);
@@ -241,24 +237,19 @@ function userAllPlaylistsTemplate(data) {
     return string;
 }
 
-function userPlaylistTemplate(metadata, data) {
-    console.log(metadata, data);
+function userPlaylistTemplate(data) {
+    console.log(data);
 
-    var header = `<h2>${metadata.name}</h2>
-                <p>${metadata.description}</p>
-                <p>Author: ${metadata.owner.display_name}</p>
+    return `<h2>${data.name}</h2>
+                <p>${data.description}</p>
+                <p>Author: ${data.owner.display_name}</p>
                 <table>`;
+}
 
-    for (let i = 0; i < data.items.length; i++) {
-        header += userPlaylistItem(data.items[i]);
-    }
-
-    return header + `</table>`;
-
-    function userPlaylistItem(item) {
-        const defImg = 'https://play-lh.googleusercontent.com/eN0IexSzxpUDMfFtm-OyM-nNs44Y74Q3k51bxAMhTvrTnuA4OGnTi_fodN4cl-XxDQc';
-        if (item.track && item.track.name != null) {
-            return `<tr>
+function userPlaylistItem(item) {
+    const defImg = 'https://play-lh.googleusercontent.com/eN0IexSzxpUDMfFtm-OyM-nNs44Y74Q3k51bxAMhTvrTnuA4OGnTi_fodN4cl-XxDQc';
+    if (item.track && item.track.name != null) {
+        return `<tr>
                 <td><img src="${(item.track.album.images != 0) ? item.track.album.images[0].url : defImg}" width="100px"></td>
                 <td>${item.track.name}</td>
                 <td>${item.track.artists[0].name}</td>
@@ -267,9 +258,8 @@ function userPlaylistTemplate(metadata, data) {
                     <audio controls src="${item.track.preview_url}">
                 </td>
             </tr>`;
-        }
-        return `<tr> <td colspan="5">Empty track</td> </tr>`;
     }
+    return `<tr> <td colspan="5">Empty track</td> </tr>`;
 }
 
 function oAuthTemplate(data) {
