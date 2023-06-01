@@ -191,7 +191,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((data) => {
-        if (offset == 0) {
+        if (fetchURL == null) {
             playlistPlaceholder.style.display = 'none';
             playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
         }
