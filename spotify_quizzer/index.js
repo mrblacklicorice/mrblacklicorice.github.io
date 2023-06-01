@@ -257,7 +257,7 @@ function userPlaylistTemplate(metadata, data) {
 
     function userPlaylistItem(item) {
         const defImg = 'https://play-lh.googleusercontent.com/eN0IexSzxpUDMfFtm-OyM-nNs44Y74Q3k51bxAMhTvrTnuA4OGnTi_fodN4cl-XxDQc';
-        if (item.track) {
+        if (item.track && item.track.name != null) {
             return `<tr>
                 <td><img src="${(item.track.album.images != 0) ? item.track.album.images[0].url : defImg}" width="100px"></td>
                 <td>${item.track.name}</td>
