@@ -258,11 +258,10 @@ function userPlaylistTemplate(metadata, data) {
     function userPlaylistItem(item) {
         if (item.track) {
             return `<tr>
-                <td><img src="${item.track.album.images[0].url}" width="100px"></td>
+                <td><img src="${item.track.album.images.pop().url}" width="100px"></td>
                 <td>${item.track.name}</td>
                 <td>${item.track.artists[0].name}</td>
                 <td>${item.track.album.name}</td>
-                <td>${item.track.duration_ms}</td>
                 <td> 
                     <audio controls src="${item.track.preview_url}">
                 </td>
