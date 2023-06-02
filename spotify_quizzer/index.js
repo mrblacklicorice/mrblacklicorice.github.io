@@ -196,7 +196,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((d) => {
-        console.log(d);
+        // console.log(d);
         var data = {};
         if (d.tracks == undefined) data.tracks = d;
         else data = d;
@@ -267,9 +267,7 @@ function userPlaylistItem(item) {
                 <td>${item.track.name}</td>
                 <td>${item.track.artists[0].name}</td>
                 <td>${item.track.album.name}</td>
-                <td> 
-                    <audio controls src="${item.track.preview_url}">
-                </td>
+                ${item.track.preview_url ? `<td><audio controls><source src="${item.track.preview_url}" type="audio/mpeg"></audio></td>` : `<td>No Song Found</td>`}
                 </tr>`;
     }
     return `<tr> <td colspan="5">Empty track</td> </tr>`;
