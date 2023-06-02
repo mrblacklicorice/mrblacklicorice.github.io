@@ -196,7 +196,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((d) => {
-        // console.log(d);
+        console.log(d);
         var data = {};
         if (d.tracks == undefined) data.tracks = d;
         else data = d;
@@ -215,7 +215,7 @@ function getPlaylistData(playlistID, fetchURL) {
             }, 100);
         } else {
             tempPlaylists += "</table>";
-            console.log(tempPlaylists);
+            // console.log(tempPlaylists);
             playlistPlaceholder.innerHTML = tempPlaylists;
         }
     }).catch((error) => {
