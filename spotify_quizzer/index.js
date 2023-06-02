@@ -210,7 +210,9 @@ function getPlaylistData(playlistID, fetchURL) {
         }
 
         if (data.tracks.next) {
-            getPlaylistData(playlistID, data.tracks.next);
+            setTimeout(() => {
+                getPlaylistData(playlistID, data.tracks.next);
+            }, 100);
         } else {
             tempPlaylists += "</table>";
             console.log(tempPlaylists);
