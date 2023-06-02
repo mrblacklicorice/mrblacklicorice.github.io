@@ -194,22 +194,23 @@ function getPlaylistData(playlistID, fetchURL) {
         } else {
             throw await response.json();
         }
-    }).then((data) => {
-        console.log(data);
+    }).then((d) => {
+        console.log(d);
+        var data = {};
+        if (d.tracks == undefined) data.tracks = d;
+        else data = d;
+
         if (!fetchURL) {
             playlistPlaceholder.style.display = 'none';
             tempPlaylists = userPlaylistTemplate(data);
-            for (let i = 0; i < data.tracks.items.length; i++) {
-                tempPlaylists += userPlaylistItem(data.tracks.items[i]);
-            }
-        } else {
-            for (let i = 0; i < data.items.length; i++) {
-                tempPlaylists += userPlaylistItem(data.items[i]);
-            }
         }
 
-        if (data.next) {
-            getPlaylistData(playlistID, data.next);
+        for (let i = 0; i < data.tracks.items.length; i++) {
+            tempPlaylists += userPlaylistItem(data.tracks.items[i]);
+        }
+
+        if (data.tracks.next) {
+            getPlaylistData(playlistID, data.tracks.next);
         } else {
             tempPlaylists += "</table>";
             console.log(tempPlaylists);
