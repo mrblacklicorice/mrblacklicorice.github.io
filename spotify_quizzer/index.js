@@ -184,6 +184,7 @@ function getUserPlaylistData() {
 }
 
 function getPlaylistData(playlistID, fetchURL) {
+    console.log(playlistID, fetchURL);
     fetch((fetchURL) ? fetchURL : `https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
             Authorization: 'Bearer ' + access_token,
@@ -201,7 +202,6 @@ function getPlaylistData(playlistID, fetchURL) {
         else data = d;
 
         if (!fetchURL) {
-            playlistPlaceholder.style.display = 'none';
             tempPlaylists = userPlaylistTemplate(data);
         }
 
@@ -217,7 +217,6 @@ function getPlaylistData(playlistID, fetchURL) {
             tempPlaylists += "</table>";
             console.log(tempPlaylists);
             playlistPlaceholder.innerHTML = tempPlaylists;
-            playlistPlaceholder.style.display = 'unset';
         }
     }).catch((error) => {
         console.error(error);
