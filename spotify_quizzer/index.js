@@ -195,6 +195,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((data) => {
+        console.log(data);
         if (!fetchURL) {
             playlistPlaceholder.style.display = 'none';
             tempPlaylists = userPlaylistTemplate(data);
@@ -249,8 +250,6 @@ function userAllPlaylistsTemplate(data) {
 }
 
 function userPlaylistTemplate(data) {
-    console.log(data);
-
     return `<h2>${data.name}</h2>
                 <p>${data.description}</p>
                 <p>Author: ${data.owner.display_name}</p>
