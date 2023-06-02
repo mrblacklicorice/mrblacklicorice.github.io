@@ -197,18 +197,19 @@ function getPlaylistData(playlistID, fetchURL) {
     }).then((data) => {
         if (!fetchURL) {
             playlistPlaceholder.style.display = 'none';
-            playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
+            tempPlaylists = userPlaylistTemplate(data);
         }
 
         for (let i = 0; i < data.tracks.items.length; i++) {
-            playlistPlaceholder.innerHTML += userPlaylistItem(data.tracks.items[i]);
+            tempPlaylists += userPlaylistItem(data.tracks.items[i]);
         }
 
         if (data.tracks.next) {
             getPlaylistData(playlistID, data.tracks.next);
         } else {
-            playlistPlaceholder.innerHTML += "</table>";
-            console.log(playlistPlaceholder);
+            tempPlaylists += "</table>";
+            console.log(tempPlaylists);
+            playlistPlaceholder.innerHTML = tempPlaylists;
             playlistPlaceholder.style.display = 'unset';
         }
     }).catch((error) => {
@@ -317,6 +318,9 @@ const mainPlaceholder = document.getElementById('main');
 const allPlaylistsPlaceholder = document.getElementById('playlistsContainer');
 const oauthPlaceholder = document.getElementById('oauth');
 const playlistPlaceholder = document.getElementById('playlist');
+
+//playlistsPlaceholder temp
+var tempPlaylists = "";
 
 // If the user has accepted the authorize request spotify will come back to your application with the code in the response query string
 // Example: http://127.0.0.1:8080/?code=NApCCg..BkWtQ&state=profile%2Factivity
