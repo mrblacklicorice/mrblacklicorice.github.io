@@ -191,7 +191,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((data) => {
-        if (fetchURL == null) {
+        if (!fetchURL) {
             playlistPlaceholder.style.display = 'none';
             playlistPlaceholder.innerHTML = userPlaylistTemplate(data);
         }
@@ -204,6 +204,7 @@ function getPlaylistData(playlistID, fetchURL) {
             getPlaylistData(playlistID, data.tracks.next);
         } else {
             playlistPlaceholder.innerHTML += "</table>";
+            console.log(playlistPlaceholder);
             playlistPlaceholder.style.display = 'unset';
         }
     }).catch((error) => {
@@ -260,7 +261,7 @@ function userPlaylistItem(item) {
                 <td> 
                     <audio controls src="${item.track.preview_url}">
                 </td>
-            </tr>`;
+                </tr>`;
     }
     return `<tr> <td colspan="5">Empty track</td> </tr>`;
 }
