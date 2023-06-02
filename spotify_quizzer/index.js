@@ -154,8 +154,12 @@ function getUserData() {
 
         getUserPlaylistData();
     }).catch((error) => {
-        console.error(error);
-        mainPlaceholder.innerHTML = errorTemplate(error.error);
+        if (error.error.status === 401) {
+            refreshToken();
+        } else {
+            console.error(error);
+            mainPlaceholder.innerHTML = errorTemplate(error.error);
+        }
     });
 }
 
