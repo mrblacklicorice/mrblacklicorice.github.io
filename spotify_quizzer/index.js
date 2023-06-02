@@ -207,8 +207,8 @@ function getPlaylistData(playlistID, fetchURL) {
             }
         }
 
-        if (data.tracks.next) {
-            getPlaylistData(playlistID, data.tracks.next);
+        if (data.next) {
+            getPlaylistData(playlistID, data.next);
         } else {
             tempPlaylists += "</table>";
             console.log(tempPlaylists);
