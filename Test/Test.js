@@ -4085,4 +4085,110 @@ var chunk = function (arr, size) {
   return result;
 };
 
-console.log(chunk([1, 2, 3, 4, 5], 1));
+// console.log(chunk([1, 2, 3, 4, 5], 1));
+
+
+/**
+ * 2619. Array Prototype Last 
+ * */
+Array.prototype.last = function () {
+  if (this.length == 0) return -1;
+  return this[this.length - 1];
+};
+
+/**
+ * const arr = [1, 2, 3];
+ * arr.last(); // 3
+ */
+
+/**
+ * 744. Find Smallest Letter Greater Than Target
+ * 
+ * @param {character[]} letters
+ * @param {character} target
+ * @return {character}
+ */
+var nextGreatestLetter = function (letters, target) {
+  var low = 0,
+    high = letters.length;
+
+  while (low < high) {
+    var mid = (low + high) >>> 1;
+    if (letters[mid] <= target) low = mid + 1;
+    else high = mid;
+  }
+
+  return letters[low % letters.length];
+};
+
+// console.log(nextGreatestLetter(["x", "x", "y", "y"], "z"));
+
+/**
+ * 1502. Can Make Arithmetic Progression From Sequence
+ * 
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var canMakeArithmeticProgression = function (arr) {
+  var array = arr.sort((a, b) => a - b);
+  const diff = array[0] - array[1];
+
+  for (let i = 1; i < array.length - 1; i++) {
+    if (diff != array[i] - array[i + 1]) return false;
+  }
+
+  return true;
+};
+
+// console.log(canMakeArithmeticProgression([3, 5, 1]));
+
+/**
+ * 1146. Snapshot Array
+ * 
+ * @param {number} length
+ */
+var SnapshotArray = function (length) {
+  this.curr = {};
+  this.hist = [];
+  this.changes = false;
+};
+
+/** 
+ * @param {number} index 
+ * @param {number} val
+ * @return {void}
+ */
+SnapshotArray.prototype.set = function (index, val) {
+  this.curr[index] = val;
+  this.changes = true;
+};
+
+/**
+ * @return {number}
+ */
+SnapshotArray.prototype.snap = function () {
+  if (this.changes || this.hist.length === 0) {
+    this.hist.push({ ...this.curr });
+  } else {
+    this.hist.push(this.hist[this.hist.length - 1])
+  }
+  this.changes = false;
+  return this.hist.length - 1;
+};
+
+/** 
+ * @param {number} index 
+ * @param {number} snap_id
+ * @return {number}
+ */
+SnapshotArray.prototype.get = function (index, snap_id) {
+  return this.hist[snap_id][index] || 0;
+};
+
+/** 
+ * Your SnapshotArray object will be instantiated and called as such:
+ * var obj = new SnapshotArray(length)
+ * obj.set(index,val)
+ * var param_2 = obj.snap()
+ * var param_3 = obj.get(index,snap_id)
+ */
