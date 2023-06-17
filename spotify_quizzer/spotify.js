@@ -1,6 +1,5 @@
 var intro = document.getElementById("intro");
 var playlistQuiz = document.getElementById("playlistQuiz");
-var results = document.getElementById("results");
 
 var login = document.getElementById("login");
 var allPlaylists = document.getElementById("allPlaylists");
@@ -17,7 +16,7 @@ var albumOpt = document.getElementById("albumOpt");
 var numQuestions = document.getElementById("numQuestions");
 
 var tracker = document.getElementById("tracker");
-var answerButtons = document.getElementById("answers").querySelectorAll("button");
+var answerBtnCont = document.getElementById("answers");
 var questionPrompt = document.getElementById("question-prompt");
 
 var currentQuestion = 0;
@@ -65,11 +64,42 @@ generateQuizBtn.addEventListener("click", function () {
 });
 
 function displayQuestions() {
-    tracker.querySelectorAll("span")[currentQuestion].className = "curr";
+    console.log(currentQuestion);
+    tracker.querySelectorAll("span")[currentQuestion].className = "cur";
 
     var question = { question: "What is the album", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", answers: ["option 1", "option 2", "option 3", "option 4"], correct: 0 };
+    var answerButtons = answerBtnCont.querySelectorAll("button");
+    questionPrompt.querySelector("img").src = question.url;
+    questionPrompt.querySelector("p").innerHTML = question.question;
 
+    for (let i = 0; i < 4; i++) {
+        answerButtons[i].innerText = question.answers[i];
+        answerButtons[i].addEventListener("click", function callback() {
+            if (i == question.correct) {
+                correctAnswers++;
+                tracker.querySelectorAll("span")[currentQuestion].className = "cr";
+            } else {
+                tracker.querySelectorAll("span")[currentQuestion].className = "icr";
+            }
 
+            for (let j = 0; j < answerButtons.length; j++) {
+                if (j == question.correct) answerButtons[j].style.backgroundColor = "#1ED760";
+                else answerButtons[j].style.backgroundColor = "#ee5151";
+
+                answerButtons[j].disabled = true;
+            }
+
+            setTimeout(function () {
+                if (currentQuestion == maxQuestions - 1) {
+                    playlistQuiz.innerHTML = `<h2>You got ${correctAnswers} out of ${maxQuestions} correct!</h2><button onclick="location.reload()">Start Over</button>`;
+                } else {
+                    currentQuestion++;
+                    answerBtnCont.innerHTML = `<button></button><button></button><button></button><button></button>`;
+                    displayQuestions();
+                }
+            }, 500);
+        });
+    }
 }
 
 
@@ -94,7 +124,7 @@ function helperPlaylistTemplate(playlist) {
                     <div class="playlist-container" onclick="displayPlaylistOptions('${playlist.id}')">
                         <img src="${playlist.url}"
                             alt="logo">
-                        <p>${playlist.name}</p>
+                            <p>${playlist.name}</p>
                     </div>
                 </div>
             </li>`
@@ -102,7 +132,7 @@ function helperPlaylistTemplate(playlist) {
 
 function helperOptionTemplate(data) {
     return `<div class="col">
-                <h2>${data.title}</h2>
+                        <h2>${data.title}</h2>
             </div>
             <div class="col">
                 <p>${data.description}</p>
