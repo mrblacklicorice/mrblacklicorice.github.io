@@ -197,7 +197,7 @@ button {
     background-color: #ee5151;
 }
 
-.curr {
+.cur {
     border-style: solid;
     background-color: #777777;
 }
@@ -215,6 +215,7 @@ button {
 }
 
 .answers>button {
+    background-color: #777777;
     flex-basis: 45%;
     flex-grow: 1;
 }

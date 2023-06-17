@@ -16,9 +16,13 @@ var artistOpt = document.getElementById("artistOpt");
 var albumOpt = document.getElementById("albumOpt");
 var numQuestions = document.getElementById("numQuestions");
 
+var tracker = document.getElementById("tracker");
+var answerButtons = document.getElementById("answers").querySelectorAll("button");
+var questionPrompt = document.getElementById("question-prompt");
+
 var currentQuestion = 0;
 var correctAnswers = 0;
-var maxAnswers = 0;
+var maxQuestions = 0;
 
 loginBtn.addEventListener("click", function () {
     // set login to not active
@@ -41,7 +45,7 @@ generateQuizBtn.addEventListener("click", function () {
     if ((titleOpt.checked || artistOpt.checked || albumOpt.checked) && numQuestions.value >= 1 && numQuestions.value < 101) {
         numQuestions.value = String(Math.floor(Number(numQuestions.value)));
         console.log(numQuestions.value);
-        maxAnswers = Number(numQuestions.value);
+        maxQuestions = Number(numQuestions.value);
 
         // set options to not active
         options.classList.toggle("active");
@@ -49,10 +53,24 @@ generateQuizBtn.addEventListener("click", function () {
 
         intro.style.display = "none";
         playlistQuiz.style.display = "flex";
+
+        for (let i = 0; i < maxQuestions; i++) {
+            tracker.innerHTML += `<span class="fut"> </span>`;
+        }
+
+        displayQuestions();
     } else {
         alert("Please select at least one option and enter a valid number of questions");
     }
 });
+
+function displayQuestions() {
+    tracker.querySelectorAll("span")[currentQuestion].className = "curr";
+
+    var question = { question: "What is the album", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", answers: ["option 1", "option 2", "option 3", "option 4"], correct: 0 };
+
+
+}
 
 
 function displayPlaylistOptions(id) {
