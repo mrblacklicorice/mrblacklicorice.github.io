@@ -1,4 +1,6 @@
 var intro = document.getElementById("intro");
+var playlistQuiz = document.getElementById("playlistQuiz");
+var results = document.getElementById("results");
 
 var login = document.getElementById("login");
 var allPlaylists = document.getElementById("allPlaylists");
@@ -13,6 +15,10 @@ var titleOpt = document.getElementById("titleOpt");
 var artistOpt = document.getElementById("artistOpt");
 var albumOpt = document.getElementById("albumOpt");
 var numQuestions = document.getElementById("numQuestions");
+
+var currentQuestion = 0;
+var correctAnswers = 0;
+var maxAnswers = 0;
 
 loginBtn.addEventListener("click", function () {
     // set login to not active
@@ -35,12 +41,14 @@ generateQuizBtn.addEventListener("click", function () {
     if ((titleOpt.checked || artistOpt.checked || albumOpt.checked) && numQuestions.value >= 1 && numQuestions.value < 101) {
         numQuestions.value = String(Math.floor(Number(numQuestions.value)));
         console.log(numQuestions.value);
+        maxAnswers = Number(numQuestions.value);
 
         // set options to not active
         options.classList.toggle("active");
         options.nextElementSibling.classList.toggle("active-content");
 
         intro.style.display = "none";
+        playlistQuiz.style.display = "flex";
     } else {
         alert("Please select at least one option and enter a valid number of questions");
     }
@@ -64,8 +72,8 @@ function displayPlaylistOptions(id) {
 
 function helperPlaylistTemplate(playlist) {
     return `<li>
-                <div class="list-element" onclick="displayPlaylistOptions('${playlist.id}')">
-                    <div class="playlist-container">
+                <div class="list-element">
+                    <div class="playlist-container" onclick="displayPlaylistOptions('${playlist.id}')">
                         <img src="${playlist.url}"
                             alt="logo">
                         <p>${playlist.name}</p>

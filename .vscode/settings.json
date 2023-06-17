@@ -5,5 +5,9 @@
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
-    }
+    },
+    "cSpell.words": [
+        "checkmark",
+        "curr"
+    ]
 }
