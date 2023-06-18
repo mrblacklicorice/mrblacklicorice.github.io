@@ -19,6 +19,7 @@ var tracker = document.getElementById("tracker");
 var answerBtnCont = document.getElementById("answers");
 var questionPrompt = document.getElementById("question-prompt");
 var playBtn = document.getElementById("play-btn");
+var audio = document.getElementById("audio");
 
 var currentQuestion = 0;
 var correctAnswers = 0;
@@ -69,6 +70,9 @@ generateQuizBtn.addEventListener("click", function () {
 
 playBtn.addEventListener("click", function () {
     playBtn.classList.toggle("paused");
+
+    if (!playBtn.classList.contains("paused")) audio.pause();
+    else audio.play();
 });
 
 function displayQuestions() {
@@ -102,6 +106,9 @@ function displayQuestions() {
                     playlistQuiz.innerHTML = `<h2>You got ${correctAnswers} out of ${maxQuestions} correct!</h2><button onclick="location.reload()">Start Over</button>`;
                 } else {
                     currentQuestion++;
+                    audio.pause();
+                    playBtn.classList.remove("paused");
+                    audio.src = "https://p.scdn.co/mp3-preview/234b101c79bc2141a46b389c441ec1dadd5be384?cid=3fd2f3455a9d44c892ff4547a8b354c8";
                     answerBtnCont.innerHTML = `<button></button><button></button><button></button><button></button>`;
                     displayQuestions();
                 }
