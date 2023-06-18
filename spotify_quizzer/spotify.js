@@ -143,7 +143,7 @@ function displayPlaylistOptions(id) {
 function helperPlaylistTemplate(playlist) {
     return `<li>
                 <div class="list-element">
-                    <div class="playlist-container" onclick="displayPlaylistOptions('${playlist.id}')">
+                    <div class="playlist-container" onclick="getPlaylistData('${playlist.id}')">
                         <img src="${(playlist.images.length > 0) ? playlist.images[0].url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png'}"
                             alt="logo">
                             <p>${playlist.name}</p>
