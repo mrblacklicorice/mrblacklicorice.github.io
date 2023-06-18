@@ -99,6 +99,7 @@ button {
 .playlist-container p {
     margin: 0;
     padding: 0.5em;
+    max-width: 8em;
     font-size: 12px;
     text-align: center;
     color: #FFF;
