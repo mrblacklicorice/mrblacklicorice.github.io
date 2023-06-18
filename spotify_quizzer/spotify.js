@@ -21,6 +21,8 @@ var questionPrompt = document.getElementById("question-prompt");
 var playBtn = document.getElementById("play-btn");
 var audio = document.getElementById("audio");
 
+var allSongs = {};
+
 // Your client id from your app in the spotify dashboard:
 // https://developer.spotify.com/dashboard/applications
 const client_id = '3fd2f3455a9d44c892ff4547a8b354c8';
@@ -134,7 +136,6 @@ function displayPlaylistOptions(id) {
     options.nextElementSibling.classList.toggle("active-content");
 
     // set metadata to active
-    var data = { title: "Test Title", description: "this is a test playlist", author: "bobert", totalTracks: "200", validTracks: "135" };
     metadata.innerHTML = helperOptionTemplate(data);
 }
 
@@ -143,7 +144,7 @@ function helperPlaylistTemplate(playlist) {
     return `<li>
                 <div class="list-element">
                     <div class="playlist-container" onclick="displayPlaylistOptions('${playlist.id}')">
-                        <img src="${playlist.url}"
+                        <img src="${(playlist.images.length > 0) ? playlist.images[0].url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png'}"
                             alt="logo">
                             <p>${playlist.name}</p>
                     </div>
@@ -311,7 +312,7 @@ function getUserData() {
         allPlaylists.classList.toggle("active");
         allPlaylists.nextElementSibling.classList.toggle("active-content");
 
-        // getUserPlaylistData();
+        getUserPlaylistData();
     }).catch((error) => {
         if (error.error.status === 401) {
             refreshToken();
@@ -335,10 +336,10 @@ function getUserPlaylistData() {
         }
     }).then((data) => {
         console.log(data);
-        var playlist = { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", name: "test", id: "balls" };
+        var playlist = { url: "", name: "test", id: "balls" };
         // add playlists to playlistList
-        for (var i = 0; i < 8; i++) {
-            playlistList.innerHTML += helperPlaylistTemplate(playlist);
+        for (var i = 0; i < data.items; i++) {
+            playlistList.innerHTML += helperPlaylistTemplate(data.items[i]);
         }
 
         // document.getElementById('playlistsContainer').style.display = 'unset';
@@ -368,24 +369,28 @@ function getPlaylistData(playlistID, fetchURL) {
         else data = d;
 
         if (!fetchURL) {
-            tempPlaylists = userPlaylistTemplate(data);
+            allPlaylists = { ...data };
+        } else {
+            allPlaylists.tracks.items.push(...data.tracks.items);
         }
 
-        for (let i = 0; i < data.tracks.items.length; i++) {
-            tempPlaylists += userPlaylistItem(data.tracks.items[i]);
-        }
+        console.log(allPlaylists);
+
+        // for (let i = 0; i < data.tracks.items.length; i++) {
+        //     tempPlaylists += userPlaylistItem(data.tracks.items[i]);
+        // }
 
         if (data.tracks.next) {
             setTimeout(() => {
                 getPlaylistData(playlistID, data.tracks.next);
-            }, 100);
+            }, 50);
         } else {
-            tempPlaylists += "</table>";
-            // console.log(tempPlaylists);
-            playlistPlaceholder.innerHTML = tempPlaylists;
+            // tempPlaylists += "</table>";
+            // // console.log(tempPlaylists);
+            // playlistPlaceholder.innerHTML = tempPlaylists;
         }
     }).catch((error) => {
         console.error(error);
-        playlistPlaceholder.innerHTML = errorTemplate(error.error);
+        handleError(error);
     });
 }
