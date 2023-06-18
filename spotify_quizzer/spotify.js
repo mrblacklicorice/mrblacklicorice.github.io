@@ -336,9 +336,10 @@ function getUserPlaylistData() {
         }
     }).then((data) => {
         console.log(data);
-        var playlist = { url: "", name: "test", id: "balls" };
         // add playlists to playlistList
+        console.log(data.items);
         for (var i = 0; i < data.items; i++) {
+            console.log(data.items[i]);
             playlistList.innerHTML += helperPlaylistTemplate(data.items[i]);
         }
 
