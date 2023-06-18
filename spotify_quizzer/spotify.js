@@ -49,16 +49,7 @@ var currentQuestion = 0;
 var correctAnswers = 0;
 var maxQuestions = 0;
 
-loginBtn.addEventListener("click", function () {
-    redirectToSpotifyAuthorizeEndpoint();
-
-
-    var playlist = { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", name: "test", id: "balls" };
-    // add playlists to playlistList
-    for (var i = 0; i < 8; i++) {
-        playlistList.innerHTML += helperPlaylistTemplate(playlist);
-    }
-});
+loginBtn.addEventListener("click", redirectToSpotifyAuthorizeEndpoint, false);
 
 generateQuizBtn.addEventListener("click", function () {
     if ((titleOpt.checked || artistOpt.checked || albumOpt.checked) && numQuestions.value >= 1 && numQuestions.value < 51) {
@@ -320,7 +311,7 @@ function getUserData() {
         allPlaylists.classList.toggle("active");
         allPlaylists.nextElementSibling.classList.toggle("active-content");
 
-        getUserPlaylistData();
+        // getUserPlaylistData();
     }).catch((error) => {
         if (error.error.status === 401) {
             refreshToken();
@@ -328,5 +319,73 @@ function getUserData() {
             console.error(error);
             handleError(error);
         }
+    });
+}
+
+function getUserPlaylistData() {
+    fetch('https://api.spotify.com/v1/me/playlists', {
+        headers: {
+            Authorization: 'Bearer ' + access_token,
+        },
+    }).then(async (response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    }).then((data) => {
+        console.log(data);
+        var playlist = { url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", name: "test", id: "balls" };
+        // add playlists to playlistList
+        for (var i = 0; i < 8; i++) {
+            playlistList.innerHTML += helperPlaylistTemplate(playlist);
+        }
+
+        // document.getElementById('playlistsContainer').style.display = 'unset';
+        // allPlaylistsPlaceholder.innerHTML = userAllPlaylistsTemplate(data);
+    }).catch((error) => {
+        console.error(error);
+        handleError(error);
+    });
+}
+
+function getPlaylistData(playlistID, fetchURL) {
+    console.log(playlistID, fetchURL);
+    fetch((fetchURL) ? fetchURL : `https://api.spotify.com/v1/playlists/${playlistID}`, {
+        headers: {
+            Authorization: 'Bearer ' + access_token,
+        },
+    }).then(async (response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw await response.json();
+        }
+    }).then((d) => {
+        console.log(d);
+        var data = {};
+        if (d.tracks == undefined) data.tracks = d;
+        else data = d;
+
+        if (!fetchURL) {
+            tempPlaylists = userPlaylistTemplate(data);
+        }
+
+        for (let i = 0; i < data.tracks.items.length; i++) {
+            tempPlaylists += userPlaylistItem(data.tracks.items[i]);
+        }
+
+        if (data.tracks.next) {
+            setTimeout(() => {
+                getPlaylistData(playlistID, data.tracks.next);
+            }, 100);
+        } else {
+            tempPlaylists += "</table>";
+            // console.log(tempPlaylists);
+            playlistPlaceholder.innerHTML = tempPlaylists;
+        }
+    }).catch((error) => {
+        console.error(error);
+        playlistPlaceholder.innerHTML = errorTemplate(error.error);
     });
 }
