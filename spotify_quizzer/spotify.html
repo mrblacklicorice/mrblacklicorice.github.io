@@ -9,10 +9,10 @@
 <body>
     <div class="intro" id="intro">
         <button class="collapsible active" id="login">Step 1: Login</button>
-        <div class="content active-content">
+        <div class="content active-content" style="width:70%">
             <button id="loginBtn">Login</button>
         </div>
-        <button class="collapsible" id="allPlaylists">Step 2: Choose Playlist</button>
+        <button class="collapsible" id="allPlaylists">Step 2: Choose a playlist</button>
         <div class="content playlists">
             <ul id="playlistList"> </ul>
         </div>
@@ -49,7 +49,7 @@
                             <input type="checkbox" id="albumOpt" checked>
                         </label>
                         <label class="col">
-                            <h3>Number of Questions</h3>
+                            <h3>Number of Questions (1-50)</h3>
                             <input type="number" id="numQuestions" value="10" min="1" max="50">
                         </label>
                     </div>
@@ -71,9 +71,11 @@
         </div>
 
         <div class="question-prompt" id="question-prompt">
-            <div>
+            <div class="audio-cont">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png"
                     alt="">
+                <div class="white-box"></div>
+                <button class="play-btn" id="play-btn"></button>
             </div>
             <p>What is the album?</p>
         </div>

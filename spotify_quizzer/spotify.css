@@ -177,6 +177,7 @@ button {
     width: 6em;
     height: auto;
     border-radius: 10px;
+    opacity: 80%;
 }
 
 .question-prompt p {
@@ -218,4 +219,55 @@ button {
     background-color: #777777;
     flex-basis: 45%;
     flex-grow: 1;
+}
+
+.play-btn {
+    border: 0;
+    background: transparent;
+    box-sizing: border-box;
+    width: 0;
+    height: 1em;
+    border-radius: 0px;
+    padding: 0px;
+    margin: 0px;
+    opacity: 80%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-color: transparent transparent transparent #202020;
+    transition: 100ms all ease;
+    cursor: pointer;
+
+    /* play state */
+    border-style: solid;
+    border-width: 0.5em 0 0.5em 0.91em;
+
+    &.paused {
+        border-style: double;
+        border-width: 0px 0 0px 0.91em;
+    }
+
+    &:hover {
+        border-color: transparent transparent transparent #404040;
+    }
+}
+
+.audio-cont {
+    position: relative;
+    display: inline-block;
+}
+
+.white-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.82em;
+    height: 2em;
+    opacity: 80%;
+    border-radius: 0.4em;
+    background-color: #FFF;
 }

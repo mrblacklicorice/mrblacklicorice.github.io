@@ -18,6 +18,7 @@ var numQuestions = document.getElementById("numQuestions");
 var tracker = document.getElementById("tracker");
 var answerBtnCont = document.getElementById("answers");
 var questionPrompt = document.getElementById("question-prompt");
+var playBtn = document.getElementById("play-btn");
 
 var currentQuestion = 0;
 var correctAnswers = 0;
@@ -27,6 +28,9 @@ loginBtn.addEventListener("click", function () {
     // set login to not active
     login.classList.toggle("active");
     login.nextElementSibling.classList.toggle("active-content");
+
+    // greet user
+    login.innerText = "Hello mrblacklicorice";
 
     // set allPlaylists to active
     allPlaylists.classList.toggle("active");
@@ -41,7 +45,7 @@ loginBtn.addEventListener("click", function () {
 });
 
 generateQuizBtn.addEventListener("click", function () {
-    if ((titleOpt.checked || artistOpt.checked || albumOpt.checked) && numQuestions.value >= 1 && numQuestions.value < 101) {
+    if ((titleOpt.checked || artistOpt.checked || albumOpt.checked) && numQuestions.value >= 1 && numQuestions.value < 51) {
         numQuestions.value = String(Math.floor(Number(numQuestions.value)));
         console.log(numQuestions.value);
         maxQuestions = Number(numQuestions.value);
@@ -63,11 +67,15 @@ generateQuizBtn.addEventListener("click", function () {
     }
 });
 
+playBtn.addEventListener("click", function () {
+    playBtn.classList.toggle("paused");
+});
+
 function displayQuestions() {
     console.log(currentQuestion);
     tracker.querySelectorAll("span")[currentQuestion].className = "cur";
 
-    var question = { question: "What is the album", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", answers: ["option 1", "option 2", "option 3", "option 4"], correct: 0 };
+    var question = { question: "What is the album", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", answers: ["option 1", "option 2", "option 3", "option 4"], correct: "option 1" };
     var answerButtons = answerBtnCont.querySelectorAll("button");
     questionPrompt.querySelector("img").src = question.url;
     questionPrompt.querySelector("p").innerHTML = question.question;
@@ -75,7 +83,7 @@ function displayQuestions() {
     for (let i = 0; i < 4; i++) {
         answerButtons[i].innerText = question.answers[i];
         answerButtons[i].addEventListener("click", function callback() {
-            if (i == question.correct) {
+            if (answerButtons[i].innerText == question.correct) {
                 correctAnswers++;
                 tracker.querySelectorAll("span")[currentQuestion].className = "cr";
             } else {
@@ -83,7 +91,7 @@ function displayQuestions() {
             }
 
             for (let j = 0; j < answerButtons.length; j++) {
-                if (j == question.correct) answerButtons[j].style.backgroundColor = "#1ED760";
+                if (answerButtons[j].innerText == question.correct) answerButtons[j].style.backgroundColor = "#1ED760";
                 else answerButtons[j].style.backgroundColor = "#ee5151";
 
                 answerButtons[j].disabled = true;
