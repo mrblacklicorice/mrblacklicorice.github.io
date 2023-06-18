@@ -293,12 +293,6 @@ function processTokenResponse(data) {
     localStorage.setItem('refresh_token', refresh_token);
     localStorage.setItem('expires_at', expires_at);
 
-    oauthPlaceholder.innerHTML = oAuthTemplate({
-        access_token,
-        refresh_token,
-        expires_at,
-    });
-
     // load data of logged in user
     getUserData();
 }
