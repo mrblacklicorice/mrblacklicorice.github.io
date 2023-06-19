@@ -64,9 +64,11 @@ generateQuizBtn.addEventListener("click", function () {
 
         if (titleOpt.checked) {
             questionTypes.push({ type: "name", question: "What is the title of the song?" });
-        } else if (artistOpt.checked) {
+        }
+        if (artistOpt.checked) {
             questionTypes.push({ type: "artist", question: "Who is the artist of the song?" });
-        } else if (albumOpt.checked) {
+        }
+        if (albumOpt.checked) {
             questionTypes.push({ type: "album", question: "What is the album of the song?" });
         }
 
