@@ -47,6 +47,7 @@ if (code) {
 } else if (access_token && refresh_token && expires_at) {
     // we are already authorized and reload our tokens from localStorage
     // document.getElementById('loggedin').style.display = 'unset';
+    loginBtn.disabled = true;
     getUserData();
 }
 
