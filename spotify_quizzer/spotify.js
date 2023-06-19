@@ -21,7 +21,8 @@ var questionPrompt = document.getElementById("question-prompt");
 var playBtn = document.getElementById("play-btn");
 var audio = document.getElementById("audio");
 
-var allSongs = {};
+var allSongsRaw = {};
+var allSongs = [];
 
 // Your client id from your app in the spotify dashboard:
 // https://developer.spotify.com/dashboard/applications
@@ -126,7 +127,7 @@ function displayQuestions() {
 }
 
 
-function displayPlaylistOptions(id) {
+function displayPlaylistOptions(data) {
     // set allPlaylists to not active
     allPlaylists.classList.toggle("active");
     allPlaylists.nextElementSibling.classList.toggle("active-content");
@@ -154,14 +155,14 @@ function helperPlaylistTemplate(playlist) {
 
 function helperOptionTemplate(data) {
     return `<div class="col">
-                        <h2>${data.title}</h2>
+                        <h2>${data.name}</h2>
             </div>
             <div class="col">
                 <p>${data.description}</p>
             </div>
             <div class="col">
-                <p>Author: ${data.author}</p>
-                <p>Total Tracks: ${data.totalTracks}</p>
+                <p>Author: ${data.owner.display_name}</p>
+                <p>Total Tracks: ${data.tracks.total}</p>
                 <p>Valid Tracks: ${data.validTracks}</p>
             </div>`;
 }
@@ -352,6 +353,12 @@ function getUserPlaylistData() {
 }
 
 function getPlaylistData(playlistID, fetchURL) {
+    var buttons = allPlaylists.querySelectorAll("div[class='playlist-container']");
+    buttons.forEach((button) => {
+        button.onclick = "";
+        button.style.cursor = "none";
+    });
+
     console.log(playlistID, fetchURL);
     fetch((fetchURL) ? fetchURL : `https://api.spotify.com/v1/playlists/${playlistID}`, {
         headers: {
@@ -370,12 +377,12 @@ function getPlaylistData(playlistID, fetchURL) {
         else data = d;
 
         if (!fetchURL) {
-            allSongs = data;
+            allSongsRaw = data;
         } else {
-            allSongs.tracks.items.push(...data.tracks.items);
+            allSongsRaw.tracks.items.push(...data.tracks.items);
         }
 
-        console.log(allSongs);
+        console.log(allSongsRaw);
 
         // for (let i = 0; i < data.tracks.items.length; i++) {
         //     tempPlaylists += userPlaylistItem(data.tracks.items[i]);
@@ -387,10 +394,23 @@ function getPlaylistData(playlistID, fetchURL) {
             }, 50);
         } else {
             console.log("done");
-            console.log(allSongs);
-            // tempPlaylists += "</table>";
-            // // console.log(tempPlaylists);
-            // playlistPlaceholder.innerHTML = tempPlaylists;
+            console.log(allSongsRaw);
+
+            for (let i = 0; i < data.tracks.items.length; i++) {
+                if (data.tracks.items[i].track.preview_url != null)
+                    allSongs.push({
+                        id: data.tracks.items[i].track.id,
+                        name: data.tracks.items[i].track.name,
+                        artist: data.tracks.items[i].track.artists[0].name,
+                        album: data.tracks.items[i].track.album.name,
+                        image: data.tracks.items[i].track.album.images[0].url,
+                        song: data.tracks.items[i].track.preview_url,
+                    });
+            }
+
+
+            allSongsRaw.validTracks = allSongs.length
+            displayPlaylistOptions(allSongsRaw);
         }
     }).catch((error) => {
         console.error(error);
