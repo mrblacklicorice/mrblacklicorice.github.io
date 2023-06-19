@@ -102,6 +102,7 @@ function displayQuestions() {
     var answerButtons = answerBtnCont.querySelectorAll("button");
     questionPrompt.querySelector("img").src = question.image;
     questionPrompt.querySelector("p").innerHTML = question.question;
+    audio.src = question.song;
 
     for (let i = 0; i < 4; i++) {
         answerButtons[i].innerText = question.answers[i];
@@ -163,10 +164,22 @@ function generateQuestion() {
         }
     }
 
+    q.answers.shuffle();
     q.correct = allSongs[si][questionTypes[qi].type];
     q.image = allSongs[si].image;
     q.song = allSongs[si].song;
     return q;
+}
+
+Array.prototype.shuffle = function () {
+    var i = this.length;
+    while (i) {
+        var j = Math.floor(Math.random() * i);
+        var t = this[--i];
+        this[i] = this[j];
+        this[j] = t;
+    }
+    return this;
 }
 
 function displayPlaylistOptions(data) {
