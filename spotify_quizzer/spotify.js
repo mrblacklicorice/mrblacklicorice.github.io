@@ -370,26 +370,26 @@ function getPlaylistData(playlistID, fetchURL) {
         else data = d;
 
         if (!fetchURL) {
-            allPlaylists = { ...data };
+            allSongs = data;
         } else {
-            allPlaylists.tracks.items.push(...data.tracks.items);
+            allSongs.tracks.items.push(...data.tracks.items);
         }
 
-        console.log(allPlaylists);
+        console.log(allSongs);
 
         // for (let i = 0; i < data.tracks.items.length; i++) {
         //     tempPlaylists += userPlaylistItem(data.tracks.items[i]);
         // }
 
-        if (data.tracks.next) {
-            setTimeout(() => {
-                getPlaylistData(playlistID, data.tracks.next);
-            }, 50);
-        } else {
-            // tempPlaylists += "</table>";
-            // // console.log(tempPlaylists);
-            // playlistPlaceholder.innerHTML = tempPlaylists;
-        }
+        // if (data.tracks.next) {
+        //     setTimeout(() => {
+        //         getPlaylistData(playlistID, data.tracks.next);
+        //     }, 50);
+        // } else {
+        //     // tempPlaylists += "</table>";
+        //     // // console.log(tempPlaylists);
+        //     // playlistPlaceholder.innerHTML = tempPlaylists;
+        // }
     }).catch((error) => {
         console.error(error);
         handleError(error);
