@@ -139,33 +139,33 @@ function displayQuestions() {
 function generateQuestion() {
     var q = {};
     var qi = Math.floor(Math.random() * questionTypes.length);
-    q[question] = questionTypes[qi].question;
-    q[answers] = [];
+    q.question = questionTypes[qi].question;
+    q.answers = [];
     var si = Math.floor(Math.random() * allSongs.length);
 
     if (allSongs.length == 1) {
-        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type]]
+        q.answers = [allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type]]
     } else if (allSongs.length == 2) {
-        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type]];
+        q.answers = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type]];
     } else if (allSongs.length == 3) {
-        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[2][questionTypes[qi].type]];
-        q[answers].push(allSongs[Math.floor(Math.random() * 3)][questionTypes[qi].type]);
+        q.answers = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[2][questionTypes[qi].type]];
+        q.answers.push(allSongs[Math.floor(Math.random() * 3)][questionTypes[qi].type]);
     } else {
         var usedIndexs = [si];
-        q[answers].push(allSongs[si][questionTypes[qi].type]);
+        q.answers.push(allSongs[si][questionTypes[qi].type]);
 
-        while (q[answers].length < 4) {
+        while (q.answers.length < 4) {
             var ri = Math.floor(Math.random() * allSongs.length);
             if (!usedIndexs.includes(ri)) {
-                q[answers].push(allSongs[ri][questionTypes[qi].type]);
+                q.answers.push(allSongs[ri][questionTypes[qi].type]);
                 usedIndexs.push(ri);
             }
         }
     }
 
-    q[correct] = allSongs[si][questionTypes[qi].type];
-    q[image] = allSongs[si].image;
-    q[song] = allSongs[si].song;
+    q.correct = allSongs[si][questionTypes[qi].type];
+    q.image = allSongs[si].image;
+    q.song = allSongs[si].song;
     return q;
 }
 
