@@ -396,15 +396,15 @@ function getPlaylistData(playlistID, fetchURL) {
             console.log("done");
             console.log(allSongsRaw);
 
-            for (let i = 0; i < data.tracks.items.length; i++) {
-                if (data.tracks.items[i].track.preview_url != null)
+            for (let i = 0; i < allSongsRaw.tracks.items.length; i++) {
+                if (allSongsRaw.tracks.items[i].track.preview_url != null)
                     allSongs.push({
-                        id: data.tracks.items[i].track.id,
-                        name: data.tracks.items[i].track.name,
-                        artist: data.tracks.items[i].track.artists[0].name,
-                        album: data.tracks.items[i].track.album.name,
-                        image: data.tracks.items[i].track.album.images[0].url,
-                        song: data.tracks.items[i].track.preview_url,
+                        id: allSongsRaw.tracks.items[i].track.id,
+                        name: allSongsRaw.tracks.items[i].track.name,
+                        artist: allSongsRaw.tracks.items[i].track.artists[0].name,
+                        album: allSongsRaw.tracks.items[i].track.album.name,
+                        image: allSongsRaw.tracks.items[i].track.album.images[0].url,
+                        song: allSongsRaw.tracks.items[i].track.preview_url,
                     });
             }
 
