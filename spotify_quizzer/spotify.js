@@ -23,6 +23,8 @@ var audio = document.getElementById("audio");
 
 var allSongsRaw = {};
 var allSongs = [];
+var questionTypes = [];
+var currSongs = [];
 
 // Your client id from your app in the spotify dashboard:
 // https://developer.spotify.com/dashboard/applications
@@ -60,6 +62,14 @@ generateQuizBtn.addEventListener("click", function () {
         console.log(numQuestions.value);
         maxQuestions = Number(numQuestions.value);
 
+        if (titleOpt.checked) {
+            questionTypes.push({ type: "name", question: "What is the title of the song?" });
+        } else if (artistOpt.checked) {
+            questionTypes.push({ type: "artist", question: "Who is the artist of the song?" });
+        } else if (albumOpt.checked) {
+            questionTypes.push({ type: "album", question: "What is the album of the song?" });
+        }
+
         // set options to not active
         options.classList.toggle("active");
         options.nextElementSibling.classList.toggle("active-content");
@@ -88,9 +98,9 @@ function displayQuestions() {
     console.log(currentQuestion);
     tracker.querySelectorAll("span")[currentQuestion].className = "cur";
 
-    var question = { question: "What is the album", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/1982px-Spotify_icon.svg.png", answers: ["option 1", "option 2", "option 3", "option 4"], correct: "option 1" };
+    var question = generateQuestion();
     var answerButtons = answerBtnCont.querySelectorAll("button");
-    questionPrompt.querySelector("img").src = question.url;
+    questionPrompt.querySelector("img").src = question.image;
     questionPrompt.querySelector("p").innerHTML = question.question;
 
     for (let i = 0; i < 4; i++) {
@@ -117,7 +127,7 @@ function displayQuestions() {
                     currentQuestion++;
                     audio.pause();
                     playBtn.classList.remove("paused");
-                    audio.src = "https://p.scdn.co/mp3-preview/234b101c79bc2141a46b389c441ec1dadd5be384?cid=3fd2f3455a9d44c892ff4547a8b354c8";
+                    audio.src = question.song;
                     answerBtnCont.innerHTML = `<button></button><button></button><button></button><button></button>`;
                     displayQuestions();
                 }
@@ -126,6 +136,38 @@ function displayQuestions() {
     }
 }
 
+function generateQuestion() {
+    var q = {};
+    var qi = Math.floor(Math.random() * questionTypes.length);
+    q[question] = questionTypes[qi].question;
+    q[answers] = [];
+    var si = Math.floor(Math.random() * allSongs.length);
+
+    if (allSongs.length == 1) {
+        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[0][questionTypes[qi].type]]
+    } else if (allSongs.length == 2) {
+        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type]];
+    } else if (allSongs.length == 3) {
+        q[answers] = [allSongs[0][questionTypes[qi].type], allSongs[1][questionTypes[qi].type], allSongs[2][questionTypes[qi].type]];
+        q[answers].push(allSongs[Math.floor(Math.random() * 3)][questionTypes[qi].type]);
+    } else {
+        var usedIndexs = [si];
+        q[answers].push(allSongs[si][questionTypes[qi].type]);
+
+        while (q[answers].length < 4) {
+            var ri = Math.floor(Math.random() * allSongs.length);
+            if (!usedIndexs.includes(ri)) {
+                q[answers].push(allSongs[ri][questionTypes[qi].type]);
+                usedIndexs.push(ri);
+            }
+        }
+    }
+
+    q[correct] = allSongs[si][questionTypes[qi].type];
+    q[image] = allSongs[si].image;
+    q[song] = allSongs[si].song;
+    return q;
+}
 
 function displayPlaylistOptions(data) {
     // set allPlaylists to not active
@@ -408,9 +450,14 @@ function getPlaylistData(playlistID, fetchURL) {
                     });
             }
 
-
             allSongsRaw.validTracks = allSongs.length
-            displayPlaylistOptions(allSongsRaw);
+
+            if (allSongs.length == 0) {
+                alert("Playlist has no valid tracks.");
+                window.location.reload();
+            } else {
+                displayPlaylistOptions(allSongsRaw);
+            }
         }
     }).catch((error) => {
         console.error(error);
