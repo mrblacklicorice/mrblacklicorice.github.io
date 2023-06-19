@@ -364,7 +364,7 @@ function getPlaylistData(playlistID, fetchURL) {
             throw await response.json();
         }
     }).then((d) => {
-        console.log(d);
+        // console.log(d);
         var data = {};
         if (d.tracks == undefined) data.tracks = d;
         else data = d;
@@ -381,15 +381,17 @@ function getPlaylistData(playlistID, fetchURL) {
         //     tempPlaylists += userPlaylistItem(data.tracks.items[i]);
         // }
 
-        // if (data.tracks.next) {
-        //     setTimeout(() => {
-        //         getPlaylistData(playlistID, data.tracks.next);
-        //     }, 50);
-        // } else {
-        //     // tempPlaylists += "</table>";
-        //     // // console.log(tempPlaylists);
-        //     // playlistPlaceholder.innerHTML = tempPlaylists;
-        // }
+        if (data.tracks.next) {
+            setTimeout(() => {
+                getPlaylistData(playlistID, data.tracks.next);
+            }, 50);
+        } else {
+            console.log("done");
+            console.log(allSongs);
+            // tempPlaylists += "</table>";
+            // // console.log(tempPlaylists);
+            // playlistPlaceholder.innerHTML = tempPlaylists;
+        }
     }).catch((error) => {
         console.error(error);
         handleError(error);
