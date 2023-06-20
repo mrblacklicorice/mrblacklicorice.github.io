@@ -126,7 +126,7 @@ function displayQuestions() {
 
             setTimeout(function () {
                 if (currentQuestion == maxQuestions - 1) {
-                    playlistQuiz.innerHTML = `<h2>You got ${correctAnswers} out of ${maxQuestions} correct!</h2><button onclick="location.reload()">Start Over</button>`;
+                    playlistQuiz.innerHTML = `<h2>You got ${correctAnswers} out of ${maxQuestions} correct!</h2><button onclick="window.location.href = 'https://mrblacklicorice.github.io/spotify_quizzer/';">Start Over</button>`;
                 } else {
                     currentQuestion++;
                     audio.pause();
@@ -135,7 +135,7 @@ function displayQuestions() {
                     answerBtnCont.innerHTML = `<button></button><button></button><button></button><button></button>`;
                     displayQuestions();
                 }
-            }, 500);
+            }, 750);
         });
     }
 }
