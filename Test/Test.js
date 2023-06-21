@@ -4192,3 +4192,133 @@ SnapshotArray.prototype.get = function (index, snap_id) {
  * var param_2 = obj.snap()
  * var param_3 = obj.get(index,snap_id)
  */
+
+/**
+ * 2090. K Radius Subarray Averages
+ * 
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var getAverages = function (nums, k) {
+  if (nums.length <= 2 * k) return new Array(nums.length).fill(-1);
+  var result = new Array(k).fill(-1);
+  var sum = 0;
+  var denom = (k * 2) + 1;
+
+  for (let i = 0; i < nums.length - (k * 2); i++) {
+    if (i == 0) {
+      for (let j = 0; j < denom; j++) {
+        sum += nums[j];
+      }
+      result.push(Math.floor(sum / denom));
+    } else {
+      sum -= nums[i - 1];
+      sum += nums[i + (k * 2)];
+      result.push(Math.floor(sum / denom));
+    }
+  }
+
+  for (let i = 0; i < k; i++) {
+    result.push(-1);
+  }
+
+  return result;
+};
+
+// console.log(getAverages([7, 4, 3, 9, 1, 8, 5, 2, 6], 3));
+
+/**
+ * 845. Longest Mountain in Array
+ * 
+ * @param {number[]} arr
+ * @return {number}
+ */
+var longestMountain = function (arr) {
+  var max = 0;
+  var score = 0;
+  var up = true;
+
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] == arr[i + 1]) {
+      up = true;
+      score = 0;
+      continue;
+    }
+
+    if (up) {
+      if (arr[i] < arr[i + 1]) score++;
+      if (arr[i] > arr[i + 1] && score != 0) {
+        up = false;
+        score++;
+        if (score > max) max = score;
+      }
+    } else {
+      if (arr[i] > arr[i + 1]) {
+        score++;
+        if (score > max) max = score;
+      } else {
+        if (arr[i] < arr[i + 1]) score = 1;
+        else score = 0;
+        up = true;
+      }
+    }
+
+    // console.log(arr[i], arr[i + 1], score);
+  }
+
+  return (max > 1) ? max + 1 : max;
+};
+
+// console.log(longestMountain([2, 1, 4, 7, 3, 2, 5]));
+
+/**
+ * 2348. Number of Zero-Filled Subarrays
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var zeroFilledSubarray = function (nums) {
+  var total = 0;
+  var curr = 0;
+
+  for (let i = 0; i < nums.length + 1; i++) {
+    if (i < nums.length && nums[i] == 0) {
+      curr++;
+    } else if (curr != 0) {
+      total += (curr * (curr + 1)) / 2;
+      curr = 0;
+    }
+  }
+
+  return total;
+};
+
+// console.log(zeroFilledSubarray([0, 0, 0, 2, 0, 0]));
+
+/**
+ * 720. Longest Word in Dictionary
+ * 
+ * @param {string[]} words
+ * @return {string}
+ */
+var longestWord = function (words) {
+  var sort = words.sort((a, b) => {
+    if (a.length == b.length) return a.localeCompare(b);
+    else return a.length - b.length;
+  });
+  var maxWord = "";
+  var dict = { "": true };
+
+  for (let i = 0; i < sort.length; i++) {
+    if (dict[sort[i].substring(0, sort[i].length - 1)]) {
+      dict[sort[i]] = true;
+      if (maxWord.length != sort[i].length) maxWord = sort[i];
+    }
+  }
+
+  // console.log(sort);
+  return maxWord;
+};
+
+console.log(longestWord(["m", "mo", "moc", "moch", "mocha", "l", "la", "lat", "latt", "latte", "c", "ca", "cat"]));
