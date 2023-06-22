@@ -411,7 +411,7 @@ function getUserPlaylistData() {
 }
 
 function getPlaylistData(playlistID, fetchURL) {
-    var buttons = allPlaylists.querySelectorAll("div[class='playlist-container']");
+    var buttons = playlistList.querySelectorAll("div[class='playlist-container']");
     buttons.forEach((button) => {
         var newBtn = button.cloneNode(true);
         newBtn.style.cursor = "none";
