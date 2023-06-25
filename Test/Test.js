@@ -4321,4 +4321,40 @@ var longestWord = function (words) {
   return maxWord;
 };
 
-console.log(longestWord(["m", "mo", "moc", "moch", "mocha", "l", "la", "lat", "latt", "latte", "c", "ca", "cat"]));
+// console.log(longestWord(["m", "mo", "moc", "moch", "mocha", "l", "la", "lat", "latt", "latte", "c", "ca", "cat"]));
+
+/**
+ * 1027. Longest Arithmetic Subsequence
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var longestArithSeqLength = function (nums) {
+  var diff = 0;
+  var max = 2;
+  var currCount = 0;
+  var curr = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      diff = nums[j] - nums[i];
+      currCount = 2;
+      curr = nums[j];
+
+      for (let k = j + 1; k < nums.length; k++) {
+        if (nums[k] - curr == diff) {
+          currCount++;
+          curr = nums[k];
+        }
+      }
+
+      if (currCount > max) {
+        max = currCount;
+      }
+    }
+  }
+
+  return max;
+};
+
+// console.log(longestArithSeqLength([9, 4, 7, 2, 10]));
