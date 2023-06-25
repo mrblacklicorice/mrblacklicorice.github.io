@@ -4358,3 +4358,33 @@ var longestArithSeqLength = function (nums) {
 };
 
 // console.log(longestArithSeqLength([9, 4, 7, 2, 10]));
+
+/**
+ * 3. Longest Substring Without Repeating Characters
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+  var dict = {};
+  var start = 0;
+  var temp = 0;
+  var max = 0;
+
+  while (start + temp < s.length) {
+    // console.log(dict, str, start);
+    if (dict[s[start + temp]] == undefined) {
+      dict[s[start + temp]] = true;
+      temp++;
+      if (temp > max) max = temp;
+    } else {
+      dict[s[start]] = undefined;
+      temp--;
+      start++;
+    }
+  }
+
+  return max;
+};
+
+console.log(lengthOfLongestSubstring("abcabcbb"));
