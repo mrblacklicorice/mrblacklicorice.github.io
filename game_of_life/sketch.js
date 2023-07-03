@@ -5,16 +5,13 @@ var cols = 50;
 var canvas;
 
 var idX, idY;
-var dim = 5000;
+var dim = 2500;
 var offsetX = dim / 2;
 var offsetY = dim / 2;
 
-// To detect when mouse is dragged
-// Used to not create a circle on the screen when panned
 let isMouseDragged = false;
 let pmouseX = null;
 let pmouseY = null;
-const mouseDragDetectionThreshold = 10;
 
 var buttons = [
 	{ name: "Start", x1: 0, y1: 0, x2: 0, y2: 0, function: "startBtn", hover: false },
@@ -56,18 +53,23 @@ function draw() {
 	}
 
 	for (let i = 0; i < buttons.length; i++) {
-		if (buttons.x1 < mouseX && mouseX < buttons.x2 && buttons.y1 < mouseY && mouseY < buttons.y2) {
-			fill(100, 100, 100);
-			buttons.hover = false;
+		if (buttons[i].x1 < mouseX && mouseX < buttons[i].x2 && buttons[i].y1 < mouseY && mouseY < buttons[i].y2 && !isMouseDragged) {
+			fill(200, 200, 200);
+			buttons[i].hover = true;
 		} else {
-			fill(255, 255, 255);
-			buttons.hover = true;
+			fill(150, 150, 150);
+			buttons[i].hover = false;
 		}
 
 		rect(buttons[i].x1, buttons[i].y1, buttons[i].x2 - buttons[i].x1, buttons[i].y2 - buttons[i].y1);
+
+		rectMode(CENTER);
+		fill(0);
+		text(buttons[i].name, (buttons[i].x2 + buttons[i].x1) / 2, (buttons[i].y2 + buttons[i].y1) / 2);
+		rectMode(CORNER);
 	}
 
-	if (!isMouseDragged && buttons.every((button) => !button.hover)) {
+	if (!isMouseDragged && buttons.every((button) => !button.hover) && 0 <= idX && idX < rows && 0 <= idY && idY < cols) {
 		stroke(pixel / 5);
 		fill(0, 0, 0, 100);
 		rect(idX * pixel, idY * pixel, pixel, pixel);
@@ -75,12 +77,22 @@ function draw() {
 }
 
 function startBtn() {
+	console.log("start");
 }
 
 function importBtn() {
+	console.log("import");
 }
 
 function exportBtn() {
+	console.log("export");
+
+	noLoop();
+	var blob = new Blob([JSON.stringify(board)], {
+		type: "text/plain;charset=utf-8"
+	});
+	saveAs(blob, `${prompt("Enter a file name", "gol_board")}.json`);
+	loop();
 }
 
 function windowResized() {
@@ -99,6 +111,9 @@ function windowResized() {
 		buttons[i].x2 = ((i + 1) * (canvas.width / buttons.length)) - (canvas.width / 100);
 		buttons[i].y2 = canvas.height - (canvas.height / 60);
 	}
+
+	textSize(canvas.height / 25);
+	textAlign(CENTER, CENTER);
 }
 
 function mouseMoved() {
@@ -109,7 +124,6 @@ function mouseMoved() {
 function mousePressed() {
 	pmouseX = mouseX;
 	pmouseY = mouseY;
-	console.log(pmouseX + ", " + pmouseY);
 }
 
 function mouseDragged() {
@@ -135,9 +149,8 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-
 	for (let i = 0; i < buttons.length; i++) {
-		if (buttons) {
+		if (buttons[i].hover) {
 			window[buttons[i].function]();
 		}
 	}
@@ -152,9 +165,6 @@ function mouseReleased() {
 }
 
 function mouseWheel(event) {
-	// Determine the scale factor based on zoom sensitivity
-	console.log(event);
-
 	var tempX = Math.round(mouseX / pixel);
 	var tempY = Math.round(mouseY / pixel);
 	var tempP = pixel;
