@@ -4387,4 +4387,41 @@ var lengthOfLongestSubstring = function (s) {
   return max;
 };
 
-console.log(lengthOfLongestSubstring("abcabcbb"));
+// console.log(lengthOfLongestSubstring("abcabcbb"));
+
+/**
+ * 2462. Total Cost to Hire K Workers
+ * 
+ * @param {number[]} costs
+ * @param {number} k
+ * @param {number} candidates
+ * @return {number}
+ */
+var totalCost = function (costs, k, candidates) {
+  var total = 0;
+  var heap = new Array(candidates * 2);
+
+  for (let i = 0; i < candidates; i++) {
+    heap[sortedIndex(heap, costs[i])] = i;
+    heap[0];
+  }
+
+  while (k > 0) {
+
+  }
+
+
+  function sortedIndex(array, value) {
+    var low = 0,
+      high = array.length;
+
+    while (low < high) {
+      var mid = (low + high) >>> 1;
+      if (costs[array[mid]] < value) low = mid + 1;
+      else high = mid;
+    }
+    return low;
+  }
+};
+
+console.log([17, 12, 10, 2, 7, 2, 11, 20, 8], 3, 4);
