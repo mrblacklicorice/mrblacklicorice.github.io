@@ -17,9 +17,9 @@ let pmouseY = null;
 const mouseDragDetectionThreshold = 10;
 
 var buttons = [
-	{ name: "Start", x1: 0, y1: 0, x2: 0, y2: 0 },
-	{ name: "Import", x1: 0, y1: 0, x2: 0, y2: 0 },
-	{ name: "Export", x1: 0, y1: 0, x2: 0, y2: 0 }];
+	{ name: "Start", x1: 0, y1: 0, x2: 0, y2: 0, function: "startBtn", hover: false },
+	{ name: "Import", x1: 0, y1: 0, x2: 0, y2: 0, function: "importBtn", hover: false },
+	{ name: "Export", x1: 0, y1: 0, x2: 0, y2: 0, function: "exportBtn", hover: false }];
 
 var board = new Array(dim);
 
@@ -56,11 +56,18 @@ function draw() {
 	}
 
 	for (let i = 0; i < buttons.length; i++) {
-		fill(100, 100, 100);
+		if (buttons.x1 < mouseX && mouseX < buttons.x2 && buttons.y1 < mouseY && mouseY < buttons.y2) {
+			fill(100, 100, 100);
+			buttons.hover = false;
+		} else {
+			fill(255, 255, 255);
+			buttons.hover = true;
+		}
+
 		rect(buttons[i].x1, buttons[i].y1, buttons[i].x2 - buttons[i].x1, buttons[i].y2 - buttons[i].y1);
 	}
 
-	if (!isMouseDragged) {
+	if (!isMouseDragged && buttons.every((button) => !button.hover)) {
 		stroke(pixel / 5);
 		fill(0, 0, 0, 100);
 		rect(idX * pixel, idY * pixel, pixel, pixel);
@@ -128,8 +135,14 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-	if (!isMouseDragged) {
 
+	for (let i = 0; i < buttons.length; i++) {
+		if (buttons) {
+			window[buttons[i].function]();
+		}
+	}
+
+	if (!isMouseDragged && buttons.every((button) => !button.hover)) {
 		board[offsetX + idX][offsetY + idY] = !board[offsetX + idX][offsetY + idY];
 	}
 
