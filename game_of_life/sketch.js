@@ -65,15 +65,22 @@ function draw() {
 
 		rectMode(CENTER);
 		fill(0);
+		textAlign(CENTER, CENTER);
+		textSize((canvas.width / 40) + (canvas.width / 200));
 		text(buttons[i].name, (buttons[i].x2 + buttons[i].x1) / 2, (buttons[i].y2 + buttons[i].y1) / 2);
 		rectMode(CORNER);
 	}
 
 	if (!isMouseDragged && buttons.every((button) => !button.hover) && 0 <= idX && idX < rows && 0 <= idY && idY < cols) {
-		stroke(pixel / 5);
+		// stroke(pixel / 5);
 		fill(0, 0, 0, 100);
 		rect(idX * pixel, idY * pixel, pixel, pixel);
 	}
+
+	fill(0);
+	textAlign(LEFT, TOP);
+	textSize(((canvas.width / 25) + (canvas.width / 200)) / 2);
+	text("[" + offsetX + ", " + offsetY + "]", canvas.width / 75, canvas.width / 75);
 }
 
 function startBtn() {
@@ -81,26 +88,56 @@ function startBtn() {
 }
 
 function importBtn() {
-	console.log("import");
+	document.getElementById("file_upload").click();
 }
 
-function exportBtn() {
-	console.log("export");
+document.getElementById("file_upload").addEventListener("change", function () {
+	noLoop();
 
+	if (this.value) {
+		let reader = new FileReader();
+		reader.readAsText(this.files[0]);
+		reader.onload = function () {
+			var tempBoard = JSON.parse(reader.result);
+
+			if (tempBoard.length == dim && tempBoard.every((row) => row.length == dim)) {
+				for (let i = 0; i < tempBoard.length; i++) {
+					for (let j = 0; j < tempBoard.length; j++) {
+						if (typeof tempBoard[i][j] != "boolean") {
+							alert("Invalid file");
+							return;
+						}
+					}
+				}
+
+				board = tempBoard;
+			} else {
+				alert("Invalid file");
+			}
+		};
+		reader.onerror = function () {
+			alert(reader.error);
+		};
+	}
+
+	loop();
+});
+
+function exportBtn() {
 	noLoop();
 	var blob = new Blob([JSON.stringify(board)], {
 		type: "text/plain;charset=utf-8"
 	});
-	saveAs(blob, `${prompt("Enter a file name", "gol_board")}.json`);
+	var name = prompt("Enter a file name", "gol_board");
+	if (name != null) {
+		saveAs(blob, `${name}.json`);
+	}
 	loop();
 }
 
 function windowResized() {
 	rows = Math.floor((windowWidth - padding) / pixel);
 	cols = Math.floor((windowHeight - padding) / pixel);
-
-	// alert(rows + "" + cols)
-	console.log(rows + ", " + cols)
 
 	canvas = createCanvas(rows * pixel, cols * pixel);
 	document.getElementById("defaultCanvas0").addEventListener("contextmenu", (e) => e.preventDefault());
@@ -112,7 +149,6 @@ function windowResized() {
 		buttons[i].y2 = canvas.height - (canvas.height / 60);
 	}
 
-	textSize(canvas.height / 25);
 	textAlign(CENTER, CENTER);
 }
 
