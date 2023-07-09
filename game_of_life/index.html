@@ -53,6 +53,18 @@
 			vertical-align: middle;
 			border-color: inherit;
 		}
+
+		.closeBtn {
+			font-size: 45px;
+			font-weight: 600;
+			display: inline-block;
+			float: left;
+			margin-right: 0.2em;
+			margin-left: -0.2em;
+			margin-top: -0.5em;
+			cursor: pointer;
+
+		}
 	</style>
 </head>
 
@@ -61,11 +73,7 @@
 
 
 	<dialog id="details">
-		<span aria-hidden="true"
-			style="font-size: 45px; font-weight: 600; display: inline-block; float: left; margin-right: 0.2em; margin-left: -0.2em; margin-top: -0.5em; cursor: pointer;"
-			onclick="patternBtn()">
-			&times;
-		</span>
+		<span class="closeBtn" aria-hidden="true" onclick="patternBtn()">&times;</span>
 		<div style="display: inline-block;">
 			<table class="multicol" role="presentation"
 				style="border-collapse: collapse; padding: 0; border: 0; background:transparent; width:auto; margin:auto;">
