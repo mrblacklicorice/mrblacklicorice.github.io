@@ -2094,13 +2094,13 @@ form {
 }
 
 form ul.actions {
-	margin-top: 4em;
+	/* margin-top: 4em; */
 }
 
 @media screen and (max-width: 736px) {
 
 	form ul.actions {
-		margin-top: 2em;
+		/* margin-top: 2em; */
 	}
 
 }
@@ -2463,7 +2463,7 @@ ol li {
 
 ul {
 	list-style: disc;
-	margin: 0 0 2em 0;
+	/* margin: 0 0 2em 0; */
 	padding-left: 1em;
 }
 
@@ -2576,7 +2576,7 @@ ul.actions.fit.small>li {
 @media screen and (max-width: 480px) {
 
 	ul.actions {
-		margin: 0 0 2em 0;
+		/* margin: 0 0 2em 0; */
 	}
 
 	ul.actions>li {
@@ -2964,25 +2964,6 @@ button.alt:active,
 	width: 52%;
 }
 
-@media screen and (max-width: 1680px) {
-	.date {
-		flex: 1;
-	}
-
-	.date-title {
-		flex: 1;
-	}
-
-	.date-container-left {
-		display: flex;
-		flex-direction: row-reverse;
-	}
-
-	.top-date {
-		visibility: visible;
-	}
-}
-
 @media screen and (max-width: 1280px) {
 	.feature {
 		margin-bottom: 4em;
@@ -2990,23 +2971,6 @@ button.alt:active,
 
 	.feature .content {
 		padding: 1em 2em 0.1em 2em;
-	}
-
-	.date {
-		flex: 1;
-	}
-
-	.date-title {
-		flex: 1;
-	}
-
-	.date-container-left {
-		display: flex;
-		flex-direction: row-reverse;
-	}
-
-	.top-date {
-		visibility: visible;
 	}
 }
 
@@ -3032,18 +2996,6 @@ button.alt:active,
 		padding: 2em 2em 0.1em 2em;
 		width: 100%;
 	}
-
-	.date {
-		top: 93%;
-	}
-
-	.left-date {
-		right: 1em;
-	}
-
-	.top-date {
-		visibility: hidden;
-	}
 }
 
 @media screen and (max-width: 736px) {
@@ -3055,31 +3007,26 @@ button.alt:active,
 	.feature .content {
 		padding: 2em 1em 0.1em 1em;
 	}
+}
 
-	.date {
-		top: 93%;
-	}
-
-	.left-date {
-		right: 1em;
-	}
-
-	.top-date {
-		visibility: hidden;
-	}
+.date-cont {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 1em 0 1em 0;
 }
 
 .date {
-	position: absolute;
+	/* position: relative; */
 	border: 2px solid #51BAA4;
-	border-radius: 15px;
-	font-weight: 800;
+	border-radius: 1.5em;
+	font-weight: 700;
 	color: #51BAA4;
-	padding: 0.5%;
-}
-
-.right-date {
-	right: 1em;
+	/* padding: 0.5%; */
+	padding: 0.2em 0.5em;
+	width: fit-content;
+	block-size: fit-content;
+	height: 100%;
 }
 
 .feature {
@@ -3103,10 +3050,16 @@ button.alt:active,
 .image-grid .image {
 	margin: 0;
 	width: 25%;
+	height: 25%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .image-grid .image img {
-	width: 100%;
+	width: 80%;
+	border-radius: 2em;
+	/* margin: 0.5em 0.5em; */
 }
 
 @media screen and (max-width: 980px) {

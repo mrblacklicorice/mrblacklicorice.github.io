@@ -29,11 +29,235 @@
 		canvas {
 			margin: auto;
 		}
+
+		.wikitable {
+			background-color: #f8f9fa;
+			color: #202122;
+			margin: 1em 0;
+			border: 1px solid #a2a9b1;
+			border-collapse: collapse;
+		}
+
+		.wikitable>*>tr>th {
+			background-color: #eaecf0;
+			text-align: center;
+		}
+
+		.wikitable>*>tr>td {
+			border: 1px solid #a2a9b1;
+			padding: 0.2em 0.4em;
+		}
+
+		tbody {
+			display: table-row-group;
+			vertical-align: middle;
+			border-color: inherit;
+		}
 	</style>
 </head>
 
 <body>
 	<input type="file" id="file_upload" hidden>
+
+
+	<dialog id="details">
+		<span aria-hidden="true"
+			style="font-size: 45px; font-weight: 600; display: inline-block; float: left; margin-right: 0.2em; margin-left: -0.2em; margin-top: -0.5em; cursor: pointer;"
+			onclick="patternBtn()">
+			&times;
+		</span>
+		<div style="display: inline-block;">
+			<table class="multicol" role="presentation"
+				style="border-collapse: collapse; padding: 0; border: 0; background:transparent; width:auto; margin:auto;">
+
+				<tbody>
+					<tr>
+						<td style="text-align: left; vertical-align: top;">
+							<table class="wikitable">
+								<tbody>
+									<tr>
+										<th colspan="2">Still lifes
+										</th>
+									</tr>
+									<tr>
+										<td>Block
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_block_with_border.svg"
+												class="image"><img alt="Game of life block with border.svg"
+													src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/66px-Game_of_life_block_with_border.svg.png"
+													decoding="async" width="66" height="66"
+													srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/99px-Game_of_life_block_with_border.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Game_of_life_block_with_border.svg/132px-Game_of_life_block_with_border.svg.png 2x"
+													data-file-width="66" data-file-height="66"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Bee-<br>hive
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_beehive.svg"
+												class="image"><img alt="Game of life beehive.svg"
+													src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/98px-Game_of_life_beehive.svg.png"
+													decoding="async" width="98" height="82"
+													srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/147px-Game_of_life_beehive.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Game_of_life_beehive.svg/196px-Game_of_life_beehive.svg.png 2x"
+													data-file-width="98" data-file-height="82"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Loaf
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_loaf.svg"
+												class="image"><img alt="Game of life loaf.svg"
+													src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_of_life_loaf.svg/98px-Game_of_life_loaf.svg.png"
+													decoding="async" width="98" height="98"
+													srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_of_life_loaf.svg/147px-Game_of_life_loaf.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_of_life_loaf.svg/196px-Game_of_life_loaf.svg.png 2x"
+													data-file-width="98" data-file-height="98"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Boat
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_boat.svg"
+												class="image"><img alt="Game of life boat.svg"
+													src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Game_of_life_boat.svg/82px-Game_of_life_boat.svg.png"
+													decoding="async" width="82" height="82"
+													srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Game_of_life_boat.svg/123px-Game_of_life_boat.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Game_of_life_boat.svg/164px-Game_of_life_boat.svg.png 2x"
+													data-file-width="82" data-file-height="82"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Tub
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_flower.svg"
+												class="image"><img alt="Game of life flower.svg"
+													src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/82px-Game_of_life_flower.svg.png"
+													decoding="async" width="82" height="82"
+													srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/123px-Game_of_life_flower.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Game_of_life_flower.svg/164px-Game_of_life_flower.svg.png 2x"
+													data-file-width="82" data-file-height="82"></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td style="text-align: left; vertical-align: top; padding-left: 1em;">
+							<table class="wikitable">
+
+								<tbody>
+									<tr>
+										<th colspan="2">Oscillators
+										</th>
+									</tr>
+									<tr>
+										<td>Blinker<br>(period 2)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_blinker.gif"
+												class="image"><img alt="Game of life blinker.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif"
+													decoding="async" width="82" height="82" data-file-width="82"
+													data-file-height="82"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Toad<br>(period 2)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_toad.gif"
+												class="image"><img alt="Game of life toad.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif"
+													decoding="async" width="98" height="98" data-file-width="98"
+													data-file-height="98"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Beacon<br>(period 2)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_beacon.gif"
+												class="image"><img alt="Game of life beacon.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif"
+													decoding="async" width="98" height="98" data-file-width="98"
+													data-file-height="98"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Pulsar<br>(period 3)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_pulsar.gif"
+												class="image"><img alt="Game of life pulsar.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif"
+													decoding="async" width="137" height="137" data-file-width="137"
+													data-file-height="137"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Penta-<br>decathlon<br>(period&nbsp;15)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:I-Column.gif" class="image"><img
+													alt="I-Column.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/f/fb/I-Column.gif"
+													decoding="async" width="89" height="145" data-file-width="89"
+													data-file-height="145"></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td style="text-align: left; vertical-align: top; padding-left: 1em;">
+							<table class="wikitable">
+
+								<tbody>
+									<tr>
+										<th colspan="2">Spaceships
+										</th>
+									</tr>
+									<tr>
+										<td>Glider
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_animated_glider.gif"
+												class="image"><img alt="Game of life animated glider.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif"
+													decoding="async" width="84" height="84" data-file-width="84"
+													data-file-height="84"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Light-<br>weight<br>spaceship<br>(LWSS)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Game_of_life_animated_LWSS.gif"
+												class="image"><img alt="Game of life animated LWSS.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/3/37/Game_of_life_animated_LWSS.gif"
+													decoding="async" width="126" height="98" data-file-width="126"
+													data-file-height="98"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Middle-<br>weight<br>spaceship<br>(MWSS)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Animated_Mwss.gif"
+												class="image"><img alt="Animated Mwss.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Animated_Mwss.gif"
+													decoding="async" width="162" height="146" data-file-width="162"
+													data-file-height="146"></a>
+										</td>
+									</tr>
+									<tr>
+										<td>Heavy-<br>weight<br>spaceship<br>(HWSS)
+										</td>
+										<td><a href="https://en.wikipedia.org/wiki/File:Animated_Hwss.gif"
+												class="image"><img alt="Animated Hwss.gif"
+													src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Animated_Hwss.gif"
+													decoding="async" width="178" height="146" data-file-width="178"
+													data-file-height="146"></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<p>
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- <p style="text-align: center; font-size: 1.5em; margin: 0em;">Click anywhere to return</p> -->
+	</dialog>
+
 </body>
 
 <script src="libraries/p5.js"></script>
