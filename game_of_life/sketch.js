@@ -15,6 +15,17 @@ let isMouseDragged = false;
 let pmouseX = null;
 let pmouseY = null;
 
+var sampleData = [
+	[0, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 1, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 0], [0, 0, 1, 0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 1, 0, 0, 0],
+	[0, 0, 0, 1, 0, 0, 0, 1, 0], [0, 0, 0, 0, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 1, 1, 1, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 1, 1, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 0, 0],
+	[0, 0, 1, 1, 0, 0, 0, 0, 0]
+];
+
 var buttons = [
 	{ name: "Start", x1: 0, y1: 0, x2: 0, y2: 0, function: "startBtn", hover: false },
 	{ name: "Import", x1: 0, y1: 0, x2: 0, y2: 0, function: "importBtn", hover: false },
@@ -48,6 +59,12 @@ function setup() {
 	slider.elt.addEventListener("change", () => { if (intervalId) { startBtn(); startBtn(); } });
 
 	windowResized();
+
+	for (let i = 0; i < sampleData.length; i++) {
+		for (let j = 0; j < sampleData[i].length; j++) {
+			board[Math.floor((rows - sampleData.length) / 2) + i + offsetX][Math.floor((cols - sampleData[i].length) / 2) + j + offsetY] = (sampleData[i][j] == 1) ? true : false;
+		}
+	}
 
 	noStroke();
 	document.body.style.background = '#222222';
@@ -167,7 +184,7 @@ function startBtn() {
 			tempBoard = board;
 			board = next_board;
 			next_board = tempBoard;
-		}, 800 - (25 * slider.value()));
+		}, 500 - (15 * slider.value()));
 
 		buttons[0].name = "Stop";
 		slider.show();
