@@ -3,6 +3,8 @@ var pixel = 16;
 var rows = 50;
 var cols = 50;
 var canvas;
+var slider;
+var sliderHover = false;
 
 var idX, idY;
 var dim = 1000;
@@ -17,20 +19,33 @@ var buttons = [
 	{ name: "Start", x1: 0, y1: 0, x2: 0, y2: 0, function: "startBtn", hover: false },
 	{ name: "Import", x1: 0, y1: 0, x2: 0, y2: 0, function: "importBtn", hover: false },
 	{ name: "Export", x1: 0, y1: 0, x2: 0, y2: 0, function: "exportBtn", hover: false },
-	{ name: "Patterns", x1: 0, y1: 0, x2: 0, y2: 0, function: "patternBtn", hover: false }
+	{ name: "Patterns", x1: 0, y1: 0, x2: 0, y2: 0, function: "patternBtn", hover: false },
+	{ name: "Clear", x1: 0, y1: 0, x2: 0, y2: 0, function: "clearBtn", hover: false },
 ];
 
 var board = new Array(dim);
+var next_board = new Array(dim);
+var tempBoard;
+
+var intervalId = null;
 
 var details = document.getElementById("details");
 
 function setup() {
 	for (let i = 0; i < dim; i++) {
 		board[i] = new Array(dim);
+		next_board[i] = new Array(dim);
 		for (let j = 0; j < dim; j++) {
 			board[i][j] = false;
+			next_board[i][j] = false;
 		}
 	}
+
+	slider = createSlider(2, 31, 20);
+	slider.hide();
+	slider.elt.addEventListener("mouseout", () => { sliderHover = false; });
+	slider.elt.addEventListener("mouseover", () => { sliderHover = true; });
+	slider.elt.addEventListener("change", () => { if (intervalId) { startBtn(); startBtn(); } });
 
 	windowResized();
 
@@ -41,7 +56,6 @@ function setup() {
 
 function draw() {
 	clear();
-
 
 	// White Background
 	noStroke();
@@ -62,12 +76,24 @@ function draw() {
 
 	// Draw grid lines
 	stroke(125);
-	strokeWeight(pixel / 25);
+	// strokeWeight(pixel / 25);
 	for (let i = 0; i < rows; i++) {
+		if ((i + offsetX) % 10 == 0) {
+			strokeWeight(pixel / 12.5);
+		} else {
+			strokeWeight(pixel / 25);
+		}
+
 		line(i * pixel, 0, i * pixel, canvas.height);
 	}
 
 	for (let i = 0; i < cols; i++) {
+		if ((i + offsetY) % 10 == 0) {
+			strokeWeight(pixel / 12.5);
+		} else {
+			strokeWeight(pixel / 25);
+		}
+
 		line(0, i * pixel, canvas.width, i * pixel);
 	}
 
@@ -75,6 +101,7 @@ function draw() {
 	noStroke();
 	for (let i = 0; i < buttons.length; i++) {
 		if (buttons[i].x1 < mouseX && mouseX < buttons[i].x2 && buttons[i].y1 < mouseY && mouseY < buttons[i].y2 && !isMouseDragged) {
+			document.getElementById("defaultCanvas0").style.cursor = "pointer";
 			fill(200, 200, 200);
 			buttons[i].hover = true;
 		} else {
@@ -94,9 +121,14 @@ function draw() {
 
 	// Draw cursor
 	if (!isMouseDragged && buttons.every((button) => !button.hover) && 0 <= idX && idX < rows && 0 <= idY && idY < cols) {
-		// stroke(pixel / 5);
-		fill(0, 0, 0, 100);
-		rect(idX * pixel, idY * pixel, pixel, pixel);
+		if (intervalId == null) {
+			// stroke(pixel / 5);
+			document.getElementById("defaultCanvas0").style.cursor = "pointer";
+			fill(0, 0, 0, 100);
+			rect(idX * pixel, idY * pixel, pixel, pixel);
+		} else {
+			document.getElementById("defaultCanvas0").style.cursor = "progress";
+		}
 	}
 
 	fill(0);
@@ -107,6 +139,39 @@ function draw() {
 
 function startBtn() {
 	console.log("start");
+
+	if (intervalId) {
+		clearInterval(intervalId);
+		intervalId = null;
+
+		buttons[0].name = "Start";
+		slider.hide();
+	} else {
+		intervalId = setInterval(() => {
+
+			var aliveNeighborsCount = 0;
+
+			for (let i = 0; i < board.length; i++) {
+				for (let j = 0; j < board[i].length; j++) {
+					aliveNeighborsCount = aliveNeighbors(i, j, board);
+					if (board[i][j]) {
+						if (aliveNeighborsCount == 2 || aliveNeighborsCount == 3) next_board[i][j] = true;
+						else next_board[i][j] = false;
+					} else {
+						if (aliveNeighborsCount == 3) next_board[i][j] = true;
+						else next_board[i][j] = false;
+					}
+				}
+			}
+
+			tempBoard = board;
+			board = next_board;
+			next_board = tempBoard;
+		}, 800 - (25 * slider.value()));
+
+		buttons[0].name = "Stop";
+		slider.show();
+	}
 }
 
 function importBtn() {
@@ -174,6 +239,38 @@ function patternBtn() {
 	}
 }
 
+function clearBtn() {
+	console.log("clear");
+	noLoop();
+	for (let i = 0; i < dim; i++) {
+		for (let j = 0; j < dim; j++) {
+			board[i][j] = false;
+		}
+	}
+
+	if (intervalId != null) startBtn();
+	loop();
+}
+
+function aliveNeighbors(x, y, b) {
+	var count = 0;
+
+	for (let i = -1; i < 2; i++) {
+		for (let j = -1; j < 2; j++) {
+			if (i == 0 && j == 0) {
+				continue;
+			}
+
+			if (b[(x + i + dim) % dim][(y + j + dim) % dim]) {
+				count++;
+			}
+		}
+	}
+
+	return count;
+}
+
+
 function windowResized() {
 	if (details.open) {
 		details.close();
@@ -193,6 +290,8 @@ function windowResized() {
 		buttons[i].y2 = canvas.height - (canvas.height / 60);
 	}
 
+	slider.style("width", buttons[0].x2 - buttons[0].x1 + "px");
+	slider.position(buttons[0].x1 + canvas.width / 100, buttons[0].y1 - (canvas.height / 100));
 	textAlign(CENTER, CENTER);
 }
 
@@ -207,6 +306,7 @@ function mousePressed() {
 }
 
 function mouseDragged() {
+	if (sliderHover || !buttons.every((button) => !button.hover)) return;
 	isMouseDragged = true;
 
 	var changeX = Math.trunc((mouseX - pmouseX) / pixel);
@@ -223,8 +323,6 @@ function mouseDragged() {
 		pmouseX = mouseX;
 		offsetX = (offsetX - changeX) % dim;
 	}
-
-	console.log(changeX + ", " + changeY);
 
 	if (changeY > 0) {
 		pmouseY = mouseY;
@@ -248,7 +346,7 @@ function mouseReleased() {
 			}
 		}
 
-		if (!isMouseDragged && buttons.every((button) => !button.hover)) {
+		if (!isMouseDragged && buttons.every((button) => !button.hover && intervalId == null) && !sliderHover) {
 			board[(offsetX + idX) % dim][(offsetY + idY) % dim] = !board[(offsetX + idX) % dim][(offsetY + idY) % dim];
 		}
 
