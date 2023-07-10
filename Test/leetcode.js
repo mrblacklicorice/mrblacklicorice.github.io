@@ -4424,4 +4424,16 @@ var totalCost = function (costs, k, candidates) {
   }
 };
 
-console.log([17, 12, 10, 2, 7, 2, 11, 20, 8], 3, 4);
+// console.log([17, 12, 10, 2, 7, 2, 11, 20, 8], 3, 4);
+
+/**
+ * 2428. Maximum Sum of an Hourglass
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxSum = function (grid) {
+
+};
+
+console.log(maxSum([[6, 2, 1, 3], [4, 2, 1, 5], [9, 2, 8, 7], [4, 1, 2, 9]]));

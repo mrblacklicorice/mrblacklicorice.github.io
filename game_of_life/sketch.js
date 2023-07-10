@@ -52,7 +52,7 @@ function setup() {
 		}
 	}
 
-	slider = createSlider(2, 31, 20);
+	slider = createSlider(2, 31, 26);
 	slider.hide();
 	slider.elt.addEventListener("mouseout", () => { sliderHover = false; });
 	slider.elt.addEventListener("mouseover", () => { sliderHover = true; });
