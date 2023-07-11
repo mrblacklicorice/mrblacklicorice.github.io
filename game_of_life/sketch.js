@@ -15,6 +15,10 @@ let isMouseDragged = false;
 let pmouseX = null;
 let pmouseY = null;
 
+var prevMouse = { x: null, y: null };
+
+var shiftPressed = false;
+
 var sampleData = [
 	[0, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -137,7 +141,7 @@ function draw() {
 	}
 
 	// Draw cursor
-	if (!isMouseDragged && buttons.every((button) => !button.hover) && 0 <= idX && idX < rows && 0 <= idY && idY < cols) {
+	if (!shiftPressed && buttons.every((button) => !button.hover) && 0 <= idX && idX < rows && 0 <= idY && idY < cols) {
 		if (intervalId == null) {
 			// stroke(pixel / 5);
 			document.getElementById("defaultCanvas0").style.cursor = "pointer";
@@ -147,6 +151,7 @@ function draw() {
 			document.getElementById("defaultCanvas0").style.cursor = "progress";
 		}
 	}
+
 
 	fill(0);
 	textAlign(LEFT, TOP);
@@ -269,6 +274,20 @@ function clearBtn() {
 	loop();
 }
 
+function keyPressed() {
+	if (keyCode == SHIFT) {
+		shiftPressed = true;
+		document.getElementById("defaultCanvas0").style.cursor = "grab";
+	}
+}
+
+function keyReleased() {
+	if (keyCode == SHIFT) {
+		shiftPressed = false;
+		document.getElementById("defaultCanvas0").style.cursor = "pointer";
+	}
+}
+
 function aliveNeighbors(x, y, b) {
 	var count = 0;
 
@@ -320,39 +339,85 @@ function mouseMoved() {
 function mousePressed() {
 	pmouseX = mouseX;
 	pmouseY = mouseY;
+	prevMouse = { x: Math.floor(mouseX / pixel), y: Math.floor(mouseY / pixel) };
 }
 
+
+
 function mouseDragged() {
+	idX = Math.floor(mouseX / pixel);
+	idY = Math.floor(mouseY / pixel);
+
+	console.log(idX, idY)
 	if (sliderHover || !buttons.every((button) => !button.hover)) return;
+
 	isMouseDragged = true;
 
-	var changeX = Math.trunc((mouseX - pmouseX) / pixel);
-	var changeY = Math.trunc((mouseY - pmouseY) / pixel);
+	if (shiftPressed) {
+		document.getElementById("defaultCanvas0").style.cursor = "grabbing";
 
+		var changeX = Math.trunc((mouseX - pmouseX) / pixel);
+		var changeY = Math.trunc((mouseY - pmouseY) / pixel);
 
-	if (changeX > 0) {
-		pmouseX = mouseX;
-		offsetX = offsetX - changeX;
-		if (offsetX < 0) {
-			offsetX = dim + offsetX;
+		if (changeX > 0) {
+			pmouseX = mouseX;
+			offsetX = offsetX - changeX;
+			if (offsetX < 0) {
+				offsetX = dim + offsetX;
+			}
+		} else if (changeX < 0) {
+			pmouseX = mouseX;
+			offsetX = (offsetX - changeX) % dim;
 		}
-	} else if (changeX < 0) {
-		pmouseX = mouseX;
-		offsetX = (offsetX - changeX) % dim;
-	}
 
-	if (changeY > 0) {
-		pmouseY = mouseY;
-		offsetY = offsetY - changeY;
-		if (offsetY < 0) {
-			offsetY = dim + offsetY;
+		if (changeY > 0) {
+			pmouseY = mouseY;
+			offsetY = offsetY - changeY;
+			if (offsetY < 0) {
+				offsetY = dim + offsetY;
+			}
+		} else if (changeY < 0) {
+			pmouseY = mouseY;
+			offsetY = (offsetY - changeY) % dim;
 		}
-	} else if (changeY < 0) {
-		pmouseY = mouseY;
-		offsetY = (offsetY - changeY) % dim;
+	} else {
+		if (buttons.every((button) => !button.hover && intervalId == null) && !sliderHover) {
+			if ((prevMouse.x == mouseX && prevMouse.y == mouseY)) board[(offsetX + idX + dim) % dim][(offsetY + idY + dim) % dim] = true;
+			else plotLine(prevMouse.x, prevMouse.y, idX, idY);
+			prevMouse.x = Math.floor(mouseX / pixel);
+			prevMouse.y = Math.floor(mouseY / pixel);
+		}
 	}
-
 	// console.log(offsetX + ", " + offsetY);
+}
+
+function plotLine(x1, y1, x2, y2) {
+	const dx = Math.abs(x2 - x1);
+	const dy = Math.abs(y2 - y1);
+	const sx = (x1 < x2) ? 1 : -1;
+	const sy = (y1 < y2) ? 1 : -1;
+	let err = dx - dy;
+
+	while (true) {
+		console.log(x1, y1)
+		board[(x1 + offsetX + dim) % dim][(y1 + offsetY + dim) % dim] = true;
+
+		if (x1 === x2 && y1 === y2) {
+			break;
+		}
+
+		const err2 = 2 * err;
+
+		if (err2 > -dy) {
+			err -= dy;
+			x1 += sx;
+		}
+
+		if (err2 < dx) {
+			err += dx;
+			y1 += sy;
+		}
+	}
 }
 
 function mouseReleased() {
@@ -371,11 +436,15 @@ function mouseReleased() {
 		pmouseY = null;
 		isMouseDragged = false;
 	}
+
+	if (shiftPressed && isMouseDragged) {
+		document.getElementById("defaultCanvas0").style.cursor = "grab";
+		isMouseDragged = false;
+	}
 }
 
 function mouseWheel(event) {
 	if (isLooping()) {
-
 		var tempX = Math.round(mouseX / pixel);
 		var tempY = Math.round(mouseY / pixel);
 		var tempP = pixel;
