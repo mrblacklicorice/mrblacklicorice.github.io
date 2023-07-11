@@ -4390,50 +4390,26 @@ var lengthOfLongestSubstring = function (s) {
 // console.log(lengthOfLongestSubstring("abcabcbb"));
 
 /**
- * 2462. Total Cost to Hire K Workers
- * 
- * @param {number[]} costs
- * @param {number} k
- * @param {number} candidates
- * @return {number}
- */
-var totalCost = function (costs, k, candidates) {
-  var total = 0;
-  var heap = new Array(candidates * 2);
-
-  for (let i = 0; i < candidates; i++) {
-    heap[sortedIndex(heap, costs[i])] = i;
-    heap[0];
-  }
-
-  while (k > 0) {
-
-  }
-
-
-  function sortedIndex(array, value) {
-    var low = 0,
-      high = array.length;
-
-    while (low < high) {
-      var mid = (low + high) >>> 1;
-      if (costs[array[mid]] < value) low = mid + 1;
-      else high = mid;
-    }
-    return low;
-  }
-};
-
-// console.log([17, 12, 10, 2, 7, 2, 11, 20, 8], 3, 4);
-
-/**
  * 2428. Maximum Sum of an Hourglass
  * 
  * @param {number[][]} grid
  * @return {number}
  */
 var maxSum = function (grid) {
+  var sum = 0;
+  var high = 0;
 
+  for (let i = 1; i < grid.length - 1; i++) {
+    sum = grid[i - 1][0] + grid[i - 1][1] + grid[i - 1][2] + grid[i][1] + grid[i + 1][0] + grid[i + 1][1] + grid[i + 1][2];
+    if (sum > high) high = sum;
+    for (let j = 2; j < grid[i].length - 1; j++) {
+      sum -= grid[i - 1][j - 2] + grid[i][j - 1] + grid[i + 1][j - 2];
+      sum += grid[i - 1][j + 1] + grid[i][j] + grid[i + 1][j + 1];
+      if (sum > high) high = sum;
+    }
+  }
+
+  return high;
 };
 
 console.log(maxSum([[6, 2, 1, 3], [4, 2, 1, 5], [9, 2, 8, 7], [4, 1, 2, 9]]));
