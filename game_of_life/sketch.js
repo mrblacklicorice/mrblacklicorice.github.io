@@ -118,6 +118,9 @@ function draw() {
 		line(0, i * pixel, canvas.width, i * pixel);
 	}
 
+
+	// Draw Pointer
+
 	// Draw buttons
 	noStroke();
 	for (let i = 0; i < buttons.length; i++) {
@@ -157,6 +160,10 @@ function draw() {
 	textAlign(LEFT, TOP);
 	textSize(((canvas.width / 25) + (canvas.width / 200)) / 2);
 	text("[" + offsetX + ", " + offsetY + "]", canvas.width / 75, canvas.width / 75);
+
+	textAlign(CENTER, TOP);
+	textSize(((canvas.width / 25) + (canvas.width / 200)) / 2);
+	text("Click to toggle    Drag to draw    Hold SHIFT & drag to move", canvas.width / 2, canvas.width / 75);
 }
 
 function startBtn() {
@@ -348,14 +355,11 @@ function mouseDragged() {
 	idX = Math.floor(mouseX / pixel);
 	idY = Math.floor(mouseY / pixel);
 
-	console.log(idX, idY)
 	if (sliderHover || !buttons.every((button) => !button.hover)) return;
 
 	isMouseDragged = true;
 
 	if (shiftPressed) {
-		document.getElementById("defaultCanvas0").style.cursor = "grabbing";
-
 		var changeX = Math.trunc((mouseX - pmouseX) / pixel);
 		var changeY = Math.trunc((mouseY - pmouseY) / pixel);
 
@@ -399,7 +403,6 @@ function plotLine(x1, y1, x2, y2) {
 	let err = dx - dy;
 
 	while (true) {
-		console.log(x1, y1)
 		board[(x1 + offsetX + dim) % dim][(y1 + offsetY + dim) % dim] = true;
 
 		if (x1 === x2 && y1 === y2) {
