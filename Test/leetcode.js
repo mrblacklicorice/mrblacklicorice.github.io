@@ -13,6 +13,12 @@ var binaryPrint = function (root, n) {
   return r;
 }
 
+function TreeNode(val, left, right) {
+  this.val = (val === undefined ? 0 : val)
+  this.left = (left === undefined ? null : left)
+  this.right = (right === undefined ? null : right)
+}
+
 /**
  * 509. Fibonacci Number
  * 
@@ -4400,7 +4406,7 @@ var maxSum = function (grid) {
   var high = 0;
 
   for (let i = 1; i < grid.length - 1; i++) {
-    sum = grid[i - 1][0] + grid[i - 1][1] + grid[i - 1][2] + grid[i][1] + grid[i + 1][0] + grid[i + 1][1] + grid[i + 1][2];
+    sum = rid[i - 1][0] + grid[i - 1][1] + grid[i - 1][2] + grid[i][1] + grid[i + 1][0] + grid[i + 1][1] + grid[i + 1][2];
     if (sum > high) high = sum;
     for (let j = 2; j < grid[i].length - 1; j++) {
       sum -= grid[i - 1][j - 2] + grid[i][j - 1] + grid[i + 1][j - 2];
@@ -4412,4 +4418,88 @@ var maxSum = function (grid) {
   return high;
 };
 
-console.log(maxSum([[6, 2, 1, 3], [4, 2, 1, 5], [9, 2, 8, 7], [4, 1, 2, 9]]));
+// console.log(maxSum([[6, 2, 1, 3], [4, 2, 1, 5], [9, 2, 8, 7], [4, 1, 2, 9]]));
+
+
+/**
+ * 735. Asteroid Collision
+ * 
+ * @param {number[]} asteroids
+ * @return {number[]}
+ */
+var asteroidCollision = function (asteroids) {
+  var result = [asteroids[0]];
+  var l, r;
+  var i = 1;
+
+  while (i != asteroids.length) {
+    l = result[result.length - 1];
+    r = asteroids[i];
+    if (l > 0 && r < 0) {
+      if (Math.abs(l) >= Math.abs(r)) i++;
+      if (Math.abs(l) <= Math.abs(r)) result.pop();
+    } else {
+      result.push(r);
+      i++;
+    }
+  }
+
+  return result;
+};
+
+// console.log(asteroidCollision([10, 2, -5]));
+
+/**
+ * 9. Palindrome Number
+ * 
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+  var str = String(x);
+
+  for (let i = 0; i < Math.floor(str.length / 2); i++) {
+    if (str[i] != str[str.length - 1 - i]) return false;
+  }
+
+  return true;
+};
+
+// console.log(isPalindrome(121));
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * 894. All Possible Full Binary Trees
+ * 
+ * @param {number} n
+ * @return {TreeNode[]}
+ */
+var allPossibleFBT = function (n) {
+  if (n % 2 == 0) return [];
+  else if (n == 1) return [new TreeNode(0)];
+  else if (n == 3) return [new TreeNode(0, new TreeNode(0), new TreeNode(0))];
+
+  var result = [];
+  var tempL, tempR;
+
+  for (let i = 1; i < (n + 1) / 2; i += 2) {
+    tempL = allPossibleFBT(i)
+    tempR = allPossibleFBT(n - i - 1);
+
+    for (let l = 0; l < tempL.length; l++) {
+      for (let r = 0; r < tempR.length; r++) {
+        result.push(new TreeNode(0, tempL[l], tempR[r]));
+        if (i != n - i - 1) result.push(new TreeNode(0, tempR[r], tempL[l]));
+      }
+    }
+  }
+
+  return result;
+};
