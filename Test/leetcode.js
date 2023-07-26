@@ -4503,3 +4503,51 @@ var allPossibleFBT = function (n) {
 
   return result;
 };
+
+/**
+ * 1870. Minimum Speed to Arrive on Time
+ * 
+ * @param {number[]} dist
+ * @param {number} hour
+ * @return {number}
+ */
+var minSpeedOnTime = function (dist, hour) {
+  if (hour <= dist.length - 1) return -1;
+  var t = (n) => Math.round(n * 1000000000) / 1000000000;
+
+  var sum = dist.reduce((a, c) => a + c);
+
+  var left = Math.round(sum / Math.ceil(hour));
+  if (left < 1) left = 1;
+  if (dist.length == 1) return Math.round(sum / hour);
+
+  var i = 0;
+  var reached;
+
+  right = 10 ** 7;
+  while (left < right) {
+    reached = false;
+    let mid = Math.floor((left + right) / 2);
+
+    curr = t(hour - (t(dist.at(-1) / mid)));
+
+    for (i = 0; i < dist.length - 1; i++) {
+      curr -= Math.ceil(dist[i] / mid);
+      if (curr < dist.length - 2 - i) break;
+      // console.log("curr = " + curr);
+    }
+
+    if (i == dist.length - 1) reached = true;
+
+    if (reached) {
+      right = mid;
+    } else {
+      left = mid + 1;
+    }
+  }
+
+  return left;
+};
+
+console.log(minSpeedOnTime([1, 3, 2], 2.7));
+console.log(minSpeedOnTime([1, 5], 1.09));
