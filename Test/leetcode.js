@@ -4549,5 +4549,26 @@ var minSpeedOnTime = function (dist, hour) {
   return left;
 };
 
-console.log(minSpeedOnTime([1, 3, 2], 2.7));
-console.log(minSpeedOnTime([1, 5], 1.09));
+// console.log(minSpeedOnTime([1, 3, 2], 2.7));
+
+/**
+ * 852. Peak Index in a Mountain Array
+ * 
+ * @param {number[]} arr
+ * @return {number}
+ */
+var peakIndexInMountainArray = function (arr) {
+  let l = 0;
+  let r = arr.length - 1;
+  while (l < r) {
+    const m = Math.floor((r + l) / 2);
+    if (arr[m] < arr[m + 1]) {
+      l = m + 1;
+    } else {
+      r = m;
+    }
+  }
+  return l;
+};
+
+console.log(peakIndexInMountainArray([3, 4, 5, 1]));
