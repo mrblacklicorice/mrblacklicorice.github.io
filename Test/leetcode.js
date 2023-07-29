@@ -4571,4 +4571,35 @@ var peakIndexInMountainArray = function (arr) {
   return l;
 };
 
-console.log(peakIndexInMountainArray([3, 4, 5, 1]));
+// console.log(peakIndexInMountainArray([3, 4, 5, 1]));
+
+/**
+ * 486. Predict the Winner
+ * 
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var PredictTheWinner = function (nums, hsum, s = 0, e, p1 = 0, p2 = 0, isP1 = true) {
+  if (hsum == null) {
+    hsum = nums.reduce((a, c) => a + c) / 2;
+    e = nums.length - 1;
+  }
+
+  if (isP1) {
+    if (p1 + nums[s] > hsum || p1 + nums[e] > hsum) {
+      return true;
+    }
+
+    if (s < e) return (PredictTheWinner(nums, hsum, s + 1, e, p1 + nums[s], p2, !isP1) || PredictTheWinner(nums, hsum, s, e - 1, p1 + nums[e], p2, !isP1));
+    else return p1 >= p2
+  } else {
+    if (p2 + nums[s] > hsum || p2 + nums[e] > hsum) {
+      return false;
+    }
+
+    if (s < e - 1) return (PredictTheWinner(nums, hsum, s + 1, e, p1, p2 + nums[s], !isP1) && PredictTheWinner(nums, hsum, s, e - 1, p1, p2 + nums[e], !isP1));
+    else return p1 >= p2
+  }
+};
+
+// console.log(PredictTheWinner([1, 5, 2, 4, 6]))
