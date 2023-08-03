@@ -4603,3 +4603,37 @@ var PredictTheWinner = function (nums, hsum, s = 0, e, p1 = 0, p2 = 0, isP1 = tr
 };
 
 // console.log(PredictTheWinner([1, 5, 2, 4, 6]))
+
+/**
+ * 77. Combinations
+ * 
+ * @param {number} n
+ * @param {number} k
+ * @return {number[][]}
+ */
+var combine = function (n, k, s = 1) {
+  if (k == 1) {
+    var arr = new Array(n - s + 1);
+
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] = [i + s];
+    }
+
+    return arr;
+  }
+
+  var arr = []
+  var next = combine(n, k - 1, s + 1);
+  for (let i = s; i <= (n - k) + 1 + (s - 1); i++) {
+    for (let j = 0; j < next.length; j++) {
+      if (next[j][0] > i) {
+        arr.push([i, ...next[j]]);
+      }
+    }
+  }
+
+  return arr;
+};
+
+// console.log(combine(4, 2))
+// ['837410833', '632430250', '105119715', '175020828', '780720007', '603540455', '690579983', '988268367', '090085029']
