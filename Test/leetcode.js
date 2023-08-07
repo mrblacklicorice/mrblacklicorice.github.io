@@ -2832,7 +2832,7 @@ var preorder = function (root, result) {
  * @param {number} target
  * @return {number}
  */
-var search = function (nums, target) {
+var Bsearch = function (nums, target) {
   var start = 0;
   var end = nums.length - 1;
 
@@ -2850,7 +2850,7 @@ var search = function (nums, target) {
   return -1;
 };
 
-// console.log(search([-1, 0, 3, 5, 9, 12], 9));
+// console.log(Bsearch([-1, 0, 3, 5, 9, 12], 9));
 
 /**
  * Definition for isBadVersion()
@@ -4637,3 +4637,189 @@ var combine = function (n, k, s = 1) {
 
 // console.log(combine(4, 2))
 // ['837410833', '632430250', '105119715', '175020828', '780720007', '603540455', '690579983', '988268367', '090085029']
+
+/**
+ * 17. Letter Combinations of a Phone Number
+ * 
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function (digits) {
+  if (digits == "") return [];
+  var dict = { 1: "", 2: "abc", 3: "def", 4: "ghi", 5: "jkl", 6: "mno", 7: "pqrs", 8: "tuv", 9: "wxyz" }
+
+  var result = new Set();
+
+  if (digits.length > 1) {
+    var next = letterCombinations(digits.substring(1));
+    var arr = dict[digits.charAt(0)].split("");
+
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < next.length; j++) {
+        result.add(arr[i] + next[j]);
+      }
+    }
+  } else {
+    dict[digits.charAt(0)].split("").forEach(e => result.add(e));
+  }
+
+  return Array.from(result);
+};
+
+// console.log(letterCombinations("23"));
+
+/**
+ * 46. Permutations
+ * 
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var permute = function (nums) {
+  if (nums.length == 1) return [nums];
+  else if (nums.length == 2) return [[nums[0], nums[1]], [nums[1], nums[0]]];
+
+  var res = [];
+  var l = nums.length;
+  var f = nums.shift();
+  var next = permute(nums);
+
+  for (let i = 0; i < next.length; i++) {
+    for (let j = 0; j < l; j++) {
+      res.push([...next[i].slice(0, j), f, ...next[i].slice(j)]);
+    }
+  }
+
+  return res;
+};
+
+// console.log(permute([1, 2, 3]));
+
+/**
+ * 139. Word Break
+ * 
+ * @param {string} s
+ * @param {string[]} wordDict
+ * @return {boolean}
+ */
+var wordBreak = function (s, wordDict) {
+  var dict = {};
+  wordDict.forEach(e => dict[e] = true);
+
+  var q = [0];
+
+  var seen = new Array(s.length + 1).fill(false);
+
+  while (q.length != 0) {
+    var start = q.shift();
+    if (start == s.length) return true;
+    for (let end = start + 1; end <= s.length; end++) {
+      if (!seen[end] && dict[s.substring(start, end)]) {
+        q.push(end);
+        seen[end] = true;
+      }
+    }
+  }
+
+  return false;
+};
+
+// console.log(wordBreak("leetcode", ["leet", "code"]));
+
+/**
+ * 33. Search in Rotated Sorted Array
+ * 
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchRS = function (nums, target) {
+  var i = 0;
+
+  var start = 1;
+  var end = nums.length - 1;
+  var mid;
+
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+
+    if (nums[mid - 1] > nums[mid]) {
+      i = mid;
+      break;
+    } else if (nums[mid] < nums[0]) {
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  start = 0;
+  end = nums.length - 1;
+  while (start <= end) {
+    mid = Math.floor((start + end) / 2);
+
+    if (nums[(mid + i) % nums.length] === target) return (mid + i) % nums.length;
+    else if (nums[(mid + i) % nums.length] < target) start = mid + 1;
+    else end = mid - 1;
+  }
+
+  return -1;
+};
+
+// console.log(search([4, 5, 6, 7, 0, 1, 2], 0));
+
+/**
+ * 81. Search in Rotated Sorted Array II
+ * 
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {boolean}
+ */
+var search = function (nums, target) {
+  var i = 0;
+
+  var start = 1;
+  var end = nums.length - 1;
+
+  var once = false;
+
+  for (let j = 0; j < 2; j++) {
+    while (start <= end) {
+      var mid = Math.floor((start + end) / 2);
+      // console.log(mid, start, end);
+
+      if (nums[mid - 1] > nums[mid]) {
+        j++;
+        i = mid;
+        break;
+      } else if (nums[mid] < nums[0]) {
+        end = mid - 1;
+      } else if (nums[mid] == nums[0]) {
+        if (once) end = mid - 1;
+        else start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+    once = false;
+  }
+
+  console.log(i);
+  start = 0;
+  end = nums.length - 1;
+  while (start <= end) {
+    var mid = Math.floor((start + end) / 2);
+
+    if (nums[(mid + i) % nums.length] === target) {
+      // console.log((mid + i) % nums.length);
+      return true;
+    } else if (nums[(mid + i) % nums.length] < target) {
+      start = mid + 1;
+    } else {
+      end = mid - 1;
+    }
+  }
+
+  return false;
+};
+
+// console.log(search([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], 2));
