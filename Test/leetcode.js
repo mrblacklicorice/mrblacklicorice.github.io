@@ -4810,4 +4810,128 @@ var search = function (nums, target) {
   return false;
 };
 
-console.log(search([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], 2));
+// console.log(search([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], 2));
+
+/**
+ * 97. Interleaving String
+ * 
+ * @param {string} s1
+ * @param {string} s2
+ * @param {string} s3
+ * @return {boolean}
+ */
+var isInterleave = function (s1, s2, s3) {
+  // console.log(i1, i2)
+  if (s2.length + s1.length != s3.length) return false;
+
+  var dict = {};
+
+  function helper(i, j, k) {
+    if (k == s3.length) return true;
+
+    if (dict[i + "+" + j] != null) return dict[i + "+" + j];
+
+    var ans = false;
+
+    if (i < s1.length && s1[i] == s3[k])
+      ans = ans || helper(i + 1, j, k + 1)
+
+    if (j < s2.length && s2[j] == s3[k])
+      ans = ans || helper(i, j + 1, k + 1)
+
+    dict[i + "+" + j] = ans;
+    return ans
+  }
+
+  return helper(0, 0, 0)
+};
+
+// console.log(isInterleave("a", "b", "a"))
+
+var MyStack = function () {
+  this.q1 = [];
+  this.q2 = [];
+  this.first = true;
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function (x) {
+  if (this.first) {
+    this.q1 = [x];
+    for (let i = 0; i < this.q2.length; i++) {
+      this.q1.push(this.q2[i])
+    }
+    this.q2 = [];
+  } else {
+    this.q2 = [x];
+    for (let i = 0; i < this.q1.length; i++) {
+      this.q2.push(this.q1[i])
+    }
+    this.q1 = [];
+  }
+
+  this.first = !this.first;
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function () {
+  if (this.first) return this.q2.shift();
+  else return this.q1.shift();
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function () {
+  console.log(this.first)
+  if (this.first) return this.q2[0];
+  else return this.q1[0];
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function () {
+  if (this.first) return this.q2.length == 0;
+  else return this.q1.length == 0;
+};
+
+/** 
+ * Your MyStack object will be instantiated and called as such:
+ * var obj = new MyStack()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.empty()
+ */
+
+/**
+ * 2483. Minimum Penalty for a Shop
+ * 
+ * @param {string} customers
+ * @return {number}
+ */
+var bestClosingTime = function (customers) {
+  var score = 0;
+  var max = 0;
+  var idx = 0;
+
+  for (let i = 0; i < customers.length; i++) {
+    if (customers[i] == "Y") score++;
+    else score--;
+
+    if (score > max) {
+      max = score;
+      idx = i + 1;
+    }
+  }
+
+  return idx;
+};
+
+// console.log(bestClosingTime("YYNY"))
