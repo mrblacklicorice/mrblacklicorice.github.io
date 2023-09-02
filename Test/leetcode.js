@@ -4935,3 +4935,155 @@ var bestClosingTime = function (customers) {
 };
 
 // console.log(bestClosingTime("YYNY"))
+
+/**
+ * 199. Binary Tree Right Side View
+ * 
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function (root) {
+  if (root == null) return [];
+  var result = [];
+
+  var q = [[root, 0]];
+
+  var t;
+  while (q.length != 0) {
+    t = q.shift();
+
+    if (result[t[1]] == undefined) result[t[1]] = t[0].val;
+
+    if (t[0].right != null) q.push([t[0].right, t[1] + 1])
+    if (t[0].left != null) q.push([t[0].left, t[1] + 1])
+  }
+
+  return result;
+};
+
+
+/**
+ * 767. Reorganize String
+ * 
+ * @param {string} s
+ * @return {string}
+ */
+var reorganizeString = function (s) {
+  var large = {};
+
+  var pairs = {};
+
+  for (let i = 0; i < s.length; i++) {
+    if (large[s[i]] == undefined) large[s[i]] = 1;
+    else large[s[i]]++;
+
+    if (large[s[i]] == 2) pairs[s[i]] = true;
+    else if (pairs[s[i]]) delete pairs[s[i]];
+  }
+
+  var pKeys = Object.keys(pairs);
+
+  var target;
+
+  if (pKeys.length > 0) {
+    target = Math.floor(s.length / 2) - 1;
+    delete large[pKeys[0]];
+  } else {
+    target = Math.floor(s.length / 2)
+  }
+
+  // console.log(large);
+  // console.log(pKeys);
+  var keys = Object.keys(large)
+  const n = keys.length;
+
+
+
+  const dp = new Array(n + 1).fill(null).map(() => new Array(target + 1).fill(false));
+  dp[0][0] = true;
+
+  for (let i = 1; i <= n; i++) {
+    for (let j = 0; j <= target; j++) {
+      dp[i][j] = dp[i - 1][j];
+      if (j >= large[keys[i - 1]]) {
+        dp[i][j] = dp[i][j] || dp[i - 1][j - large[keys[i - 1]]];
+      }
+    }
+  }
+
+  if (!dp[n][target]) {
+    return "";
+  }
+
+  var small = {};
+  let i = n, j = target;
+  while (i > 0 && j > 0) {
+    if (dp[i][j] && !dp[i - 1][j]) {
+      small[keys[i - 1]] = large[keys[i - 1]];
+      j -= large[keys[i - 1]];
+      delete large[keys[i - 1]];
+    }
+    i--;
+  }
+
+  // console.log(small, large)
+
+  var result = "";
+  var sKeys = Object.keys(small);
+  var lKeys = Object.keys(large);
+  var sp = 0;
+  var lp = 0;
+
+  while (Math.floor(result.length / 2) != target) {
+    result += lKeys[lp] + sKeys[sp];
+
+    large[lKeys[lp]]--;
+    small[sKeys[sp]]--;
+
+    if (large[lKeys[lp]] == 0) lp++;
+    if (small[sKeys[sp]] == 0) sp++;
+  }
+
+  if (s.length % 2 == 1) result += lKeys[lKeys.length - 1];
+  if (pKeys.length > 0) result = pKeys[0] + result + pKeys[0];
+
+  return result;
+};
+
+console.log(reorganizeString("aabbcc"))
+
+
+/**
+ * 338. Counting Bits
+ * 
+ * @param {number} n
+ * @return {number[]}
+ */
+var countBits = function (n) {
+  if (n == 0) return [0];
+  if (n == 1) return [0, 1];
+  var result = [0, 1];
+  var len;
+
+  for (let i = 2; i <= n; i *= 2) {
+    len = result.length;
+
+    for (let j = 0; j < len; j++) {
+      result.push(result[j] + 1);
+
+      if (i + j == n) return result;
+    }
+  }
+
+  return result;
+};
+
+// console.log(countBits(5));
