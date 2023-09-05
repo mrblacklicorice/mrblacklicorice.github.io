@@ -4977,86 +4977,35 @@ var rightSideView = function (root) {
  * @return {string}
  */
 var reorganizeString = function (s) {
-  var large = {};
-
-  var pairs = {};
-
-  for (let i = 0; i < s.length; i++) {
-    if (large[s[i]] == undefined) large[s[i]] = 1;
-    else large[s[i]]++;
-
-    if (large[s[i]] == 2) pairs[s[i]] = true;
-    else if (pairs[s[i]]) delete pairs[s[i]];
+  const freqMap = {};
+  for (const c of s) {
+    freqMap[c] = (freqMap[c] || 0) + 1;
   }
 
-  var pKeys = Object.keys(pairs);
+  const maxHeap = [...Object.keys(freqMap)].sort((a, b) => freqMap[b] - freqMap[a]);
 
-  var target;
+  let res = "";
+  while (maxHeap.length >= 2) {
+    const char1 = maxHeap.shift();
+    const char2 = maxHeap.shift();
 
-  if (pKeys.length > 0) {
-    target = Math.floor(s.length / 2) - 1;
-    delete large[pKeys[0]];
-  } else {
-    target = Math.floor(s.length / 2)
+    res += char1;
+    res += char2;
+
+    if (--freqMap[char1] > 0) maxHeap.push(char1);
+    if (--freqMap[char2] > 0) maxHeap.push(char2);
+
+    maxHeap.sort((a, b) => freqMap[b] - freqMap[a]);
   }
 
-  // console.log(large);
-  // console.log(pKeys);
-  var keys = Object.keys(large)
-  const n = keys.length;
-
-
-
-  const dp = new Array(n + 1).fill(null).map(() => new Array(target + 1).fill(false));
-  dp[0][0] = true;
-
-  for (let i = 1; i <= n; i++) {
-    for (let j = 0; j <= target; j++) {
-      dp[i][j] = dp[i - 1][j];
-      if (j >= large[keys[i - 1]]) {
-        dp[i][j] = dp[i][j] || dp[i - 1][j - large[keys[i - 1]]];
-      }
-    }
+  if (maxHeap.length) {
+    const char = maxHeap[0];
+    if (freqMap[char] > 1) return "";
+    res += char;
   }
 
-  if (!dp[n][target]) {
-    return "";
-  }
-
-  var small = {};
-  let i = n, j = target;
-  while (i > 0 && j > 0) {
-    if (dp[i][j] && !dp[i - 1][j]) {
-      small[keys[i - 1]] = large[keys[i - 1]];
-      j -= large[keys[i - 1]];
-      delete large[keys[i - 1]];
-    }
-    i--;
-  }
-
-  // console.log(small, large)
-
-  var result = "";
-  var sKeys = Object.keys(small);
-  var lKeys = Object.keys(large);
-  var sp = 0;
-  var lp = 0;
-
-  while (Math.floor(result.length / 2) != target) {
-    result += lKeys[lp] + sKeys[sp];
-
-    large[lKeys[lp]]--;
-    small[sKeys[sp]]--;
-
-    if (large[lKeys[lp]] == 0) lp++;
-    if (small[sKeys[sp]] == 0) sp++;
-  }
-
-  if (s.length % 2 == 1) result += lKeys[lKeys.length - 1];
-  if (pKeys.length > 0) result = pKeys[0] + result + pKeys[0];
-
-  return result;
-};
+  return res;
+}
 
 console.log(reorganizeString("aabbcc"))
 
