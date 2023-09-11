@@ -21,7 +21,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 13;
+    var chapter = 2;
 
     var section = 1;
 
@@ -57,7 +57,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
         console.log("selcting chapter " + chapter);
         console.log("selecting section " + section);
-        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI200WilliamsSpring2023/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
+        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI240MATH240HastiFall2023/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
         var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
