@@ -21,7 +21,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 2;
+    var chapter = 3;
 
     var section = 1;
 
