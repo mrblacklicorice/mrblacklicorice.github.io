@@ -3,7 +3,7 @@ var fs = require('fs');
 const puppeteer = require('puppeteer');
 var page;
 
-var login = JSON.parse(fs.readFileSync(__dirname + "\\login.json", 'utf-8'));
+var login = JSON.parse(fs.readFileSync(__dirname + "\\login.json", 'utf-8'))["girish"];
 console.log(login);
 
 
@@ -21,9 +21,9 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 3;
+    var chapter = 4;
 
-    var section = 1;
+    var section = 9;
 
     try {
         console.log("Opening chrome browser");
@@ -57,7 +57,7 @@ function waitForScopedSelector(selector, scopeElement) {
 
         console.log("selcting chapter " + chapter);
         console.log("selecting section " + section);
-        await page.goto(`https://learn.zybooks.com/zybook/WISCCOMPSCI240MATH240HastiFall2023/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
+        await page.goto(`https://learn.zybooks.com/zybook/${login[2]}/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
         var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));

@@ -864,7 +864,6 @@ var findDuplicate = function (nums) {
 };
 
 // console.log(findDuplicate([1, 3, 4, 2, 2]));
-// // 2
 
 let searchMatrix = function (matrix, target) {
 
@@ -5007,7 +5006,7 @@ var reorganizeString = function (s) {
   return res;
 }
 
-console.log(reorganizeString("aabbcc"))
+// console.log(reorganizeString("aabbcc"))
 
 
 /**
@@ -5036,3 +5035,226 @@ var countBits = function (n) {
 };
 
 // console.log(countBits(5));
+
+/**
+ * // Definition for a Node.
+ * function Node(val, next, random) {
+ *    this.val = val;
+ *    this.next = next;
+ *    this.random = random;
+ * };
+ */
+/**
+ * 138. Copy List with Random Pointer
+ * 
+ * @param {Node} head
+ * @return {Node}
+ */
+var copyRandomList = function (head) {
+  if (head == null) return null;
+  var curr = head;
+
+  while (curr != null) {
+    curr.next = new Node(curr.val, curr.next, null)
+    curr = curr.next.next
+  }
+
+  curr = head;
+  while (curr != null) {
+    curr.next.random = (curr.random != null) ? curr.random.next : null;
+
+    curr = curr.next.next
+  }
+
+  var cpy = head.next;
+  var res = cpy;
+  head.next = head.next.next;
+  curr = head.next;
+
+  while (curr != null) {
+    cpy.next = curr.next
+    curr.next = curr.next.next
+    curr = curr.next
+    cpy = cpy.next
+  }
+
+  return res;
+};
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 725. Split Linked List in Parts
+ * 
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode[]}
+ */
+var splitListToParts = function (head, k) {
+  var len = 0;
+
+  var curr = head;
+
+  while (curr != null) {
+    len++;
+    curr = curr.next;
+  }
+
+  var res = [];
+  curr = head;
+  var tmp;
+
+  if (len < k) {
+    for (let i = 0; i < k; i++) {
+      if (curr != null) {
+        res.push(curr);
+
+        tmp = curr.next;
+        curr.next = null;
+        curr = tmp;
+      } else res.push(null)
+    }
+  } else {
+    var each = Math.floor(len / k);
+    var extra = len % k;
+
+    for (let i = 0; i < k; i++) {
+      res.push(curr);
+
+      for (let j = 1; j < each + ((extra > 0) ? 1 : 0); j++) {
+        curr = curr.next;
+      }
+
+      tmp = curr.next;
+      curr.next = null;
+      curr = tmp;
+      extra--;
+    }
+  }
+
+  return res;
+};
+
+/**
+ * 64. Minimum Path Sum
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var minPathSum = function (grid) {
+  var dp = new Array(grid.length)
+
+  // console.log(dp);
+  dp[0] = new Array(grid[0].length);
+  dp[0][0] = grid[0][0]
+
+  for (let i = 1; i < grid.length; i++) {
+    dp[i] = new Array(grid[0].length)
+    dp[i][0] = dp[i - 1][0] + grid[i][0]
+  }
+
+  for (let i = 1; i < grid[0].length; i++) {
+    dp[0][i] = dp[0][i - 1] + grid[0][i]
+  }
+
+  for (let i = 1; i < grid.length; i++) {
+    for (let j = 1; j < grid[0].length; j++) {
+      dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+    }
+  }
+
+  // console.table(dp)
+  return dp[grid.length - 1][grid[0].length - 1]
+};
+
+// console.log(minPathSum([[1, 3, 1], [1, 5, 1], [4, 2, 1]]));
+
+/**
+ * 807. Max Increase to Keep City Skyline
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var maxIncreaseKeepingSkyline = function (grid) {
+  var rowsMax = new Array(grid.length).fill(0);
+  var colsMax = new Array(grid.length).fill(0);
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid.length; j++) {
+      rowsMax[i] = rowsMax[i] > grid[i][j] ? rowsMax[i] : grid[i][j]
+      colsMax[j] = colsMax[j] > grid[i][j] ? colsMax[j] : grid[i][j]
+    }
+  }
+
+  var sum = 0;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid.length; j++) {
+      sum += (rowsMax[i] > colsMax[j]) ? colsMax[j] - grid[i][j] : rowsMax[i] - grid[i][j]
+    }
+  }
+
+  return sum;
+};
+
+// console.log(maxIncreaseKeepingSkyline([[3, 0, 8, 4], [2, 4, 5, 7], [9, 2, 6, 3], [0, 3, 1, 0]]))
+
+/**
+ * @param {number} n
+ * @param {number[][]} edges
+ * @param {number[]} restricted
+ * @return {number}
+ */
+var reachableNodes = function (n, edges, restricted) {
+  var graph = new Array(n).fill(0);
+  var res = {};
+
+  restricted.forEach(e => { res[e] = true })
+
+  console.log(res)
+
+  for (let i = 0; i < edges.length; i++) {
+    if (graph[edges[i][0]] == 0) graph[edges[i][0]] = {}
+    if (graph[edges[i][1]] == 0) graph[edges[i][1]] = {}
+
+    // console.log(res[edges[i][0]], res[edges[i][0]]);
+
+    if ((res[edges[i][0]] == null && res[edges[i][1]] == null)) {
+      graph[edges[i][0]][edges[i][1]] = true;
+      graph[edges[i][1]][edges[i][0]] = true;
+    }
+  }
+
+  console.log(graph)
+
+  var visited = new Array(n).fill(false);
+  visited[0] = true;
+  var count = 1;
+
+  var q = ["0"];
+  var tmp;
+
+  while (q.length != 0) {
+    tmp = q.shift();
+
+    for (const key in graph[Number(tmp)]) {
+      if (Object.hasOwnProperty.call(graph[Number(tmp)], key)) {
+        if (!visited[Number(key)]) {
+          visited[Number(key)] = true;
+          count++;
+          q.push(key)
+        }
+      }
+    }
+  }
+
+  // console.log(count);
+  return count;
+};
+
+// console.log(reachableNodes(7, [[0, 1], [1, 2], [3, 1], [4, 0], [0, 5], [5, 6]], [4, 5]))
