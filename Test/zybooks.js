@@ -21,9 +21,9 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 4;
+    var chapter = 5;
 
-    var section = 9;
+    var section = 1;
 
     try {
         console.log("Opening chrome browser");
@@ -60,10 +60,12 @@ function waitForScopedSelector(selector, scopeElement) {
         await page.goto(`https://learn.zybooks.com/zybook/${login[2]}/chapter/${chapter}/section/${section}`, { waitUntil: "domcontentloaded" });
         await page.waitForSelector(".nav-text.next");
 
-        var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
-        console.log(nxt[0] + "." + nxt[1].split(" ")[0]);
+        var nxt = [chapter, section];
 
         while (nxt[0] == chapter) {
+            var nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
+            console.log("Next Section: " + nxt[0] + "." + nxt[1].split(" ")[0]);
+
             try {
                 await page.waitForSelector(".participation");
             } catch (err) {
@@ -134,6 +136,8 @@ function waitForScopedSelector(selector, scopeElement) {
                     var big = await mC[i].$$(".question-set-question");
 
                     for (let j = 0; j < mCQ.length; j++) {
+                        mCQ[j].le
+
                         var options = await mCQ[j].$$("div > input");
 
                         for (let k = 0; k < options.length; k++) {
@@ -179,9 +183,6 @@ function waitForScopedSelector(selector, scopeElement) {
                     console.log("short answer " + i + " completed");
                 }
             }
-
-            nxt = await page.$eval(".nav-text.next", ele => ele.innerText.split("."));
-            console.log(nxt[0] + "." + nxt[1].split(" ")[0]);
 
             if (nxt[0] == chapter) {
                 await page.click(".nav-text.next");
