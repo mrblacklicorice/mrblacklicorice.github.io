@@ -775,23 +775,6 @@ var maxPower = function (s) {
   return highscore;
 }
 
-var integerBreak = function (n) {
-  if (n < 4) {
-    return n - 1;
-  }
-
-  if (n % 3 == 2) {
-    return 3 ** ~~(n / 3) * 2;
-  } else if (n % 3 == 1) {
-    return 3 ** ~~((n / 3) - 1) * 4;
-  } else {
-    return 3 ** ~~(n / 3);
-  }
-};
-
-// console.log(integerBreak(8));
-
-
 var longestCommonPrefix = function (strs) {
   if (strs.length == 1) return strs[0];
   var highest = -1;
@@ -5258,3 +5241,44 @@ var reachableNodes = function (n, edges, restricted) {
 };
 
 // console.log(reachableNodes(7, [[0, 1], [1, 2], [3, 1], [4, 0], [0, 5], [5, 6]], [4, 5]))
+
+/**
+ * 229. Majority Element II
+ * 
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var majorityElement = function (nums) {
+  var dict = {};
+  var result = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    if (dict[nums[i]] == null) dict[nums[i]] = 1
+    else if (dict[nums[i]] != -1) dict[nums[i]]++
+
+    if (dict[nums[i]] != null && dict[nums[i]] / nums.length > 1 / 3) {
+      result.push(nums[i])
+      dict[nums[i]] = -1;
+    }
+  }
+
+  // console.log(dict)
+  return result;
+};
+
+// console.log(majorityElement([3, 2, 3]))
+
+/**
+ * 343. Integer Break
+ * 
+ * @param {number} n
+ * @return {number}
+ */
+var integerBreak = function (n) {
+  if (n <= 3) return n - 1;
+  if (n % 3 == 2) return 3 ** ~~(n / 3) * 2;
+  else if (n % 3 == 1) return 3 ** ~~((n / 3) - 1) * 4;
+  else return 3 ** ~~(n / 3);
+};
+
+console.log(integerBreak(10));
