@@ -5341,4 +5341,72 @@ var minCost = function (colors, neededTime) {
   return totalTime;
 };
 
-console.log(minCost("bbbaaa", [4, 9, 3, 8, 8, 9]))
+// console.log(minCost("bbbaaa", [4, 9, 3, 8, 8, 9]))
+
+/**
+ * 2610. Convert an Array Into a 2D Array With Conditions
+ * 
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var findMatrix = function (nums) {
+  var result = [];
+
+  var dict = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (dict[nums[i]] != undefined) dict[nums[i]]++;
+    else dict[nums[i]] = 1;
+  }
+
+
+  var temp;
+  var keys = Object.keys(dict);
+
+  while (keys.length != 0) {
+    temp = [];
+
+    for (let i = 0; i < keys.length; i++) {
+      temp.push(keys[i]);
+      dict[keys[i]]--;
+      if (dict[keys[i]] == 0) delete dict[keys[i]];
+    }
+    result.push(temp);
+
+    keys = Object.keys(dict);
+  }
+
+  return result;
+};
+
+// console.log(findMatrix([1, 3, 4, 1, 2, 3, 1]))
+
+/**
+ * 2125. Number of Laser Beams in a Bank
+ * 
+ * @param {string[]} bank
+ * @return {number}
+ */
+var numberOfBeams = function (bank) {
+  var temp = 0;
+  var left = 0;
+  var total = 0;
+
+  for (let i = 0; i < bank.length; i++) {
+    for (let j = 0; j < bank[i].length; j++) {
+      if (bank[i][j] == "1") temp++;
+    }
+
+    if (left == 0) {
+      left = temp;
+    } else if (temp != 0) {
+      total += temp * left;
+      left = temp;
+    }
+
+    temp = 0;
+  }
+
+  return total;
+};
+
+// console.log(numberOfBeams(["011001", "000000", "010100", "001000"]));
