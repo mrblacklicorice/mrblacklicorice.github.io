@@ -5410,3 +5410,30 @@ var numberOfBeams = function (bank) {
 };
 
 // console.log(numberOfBeams(["011001", "000000", "010100", "001000"]));
+
+/**
+ * 2870. Minimum Number of Operations to Make Array Empty
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minOperations = function (nums) {
+  var dict = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (dict[nums[i]] != undefined) dict[nums[i]]++;
+    else dict[nums[i]] = 1;
+  }
+
+
+  var keys = Object.keys(dict);
+  var total = 0;
+
+  for (let i = 0; i < keys.length; i++) {
+    if (dict[keys[i]] == 1) return -1;
+    total += Math.ceil(dict[keys[i]] / 3);
+  }
+
+  return total;
+};
+
+console.log(minOperations([2, 3, 3, 2, 2, 4, 2, 3, 4]));
