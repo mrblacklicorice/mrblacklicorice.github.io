@@ -5436,4 +5436,32 @@ var minOperations = function (nums) {
   return total;
 };
 
-console.log(minOperations([2, 3, 3, 2, 2, 4, 2, 3, 4]));
+// console.log(minOperations([2, 3, 3, 2, 2, 4, 2, 3, 4]));
+
+/**
+ * 300. Longest Increasing Subsequence
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function (nums) {
+  var stor = new Array(nums.length).fill(1);
+
+  var high = 1;
+  var temp = 1;
+
+  for (let i = nums.length - 2; i > -1; i--) {
+    temp = 0;
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[j] > nums[i] && stor[j] > temp)
+        temp = stor[j];
+    }
+
+    stor[i] = temp + 1;
+    if (high < temp + 1) high = temp + 1;
+  }
+
+  return high;
+};
+
+console.log(lengthOfLIS([0, 1, 0, 3, 2, 3]));
