@@ -5464,4 +5464,59 @@ var lengthOfLIS = function (nums) {
   return high;
 };
 
-console.log(lengthOfLIS([0, 1, 0, 3, 2, 3]));
+// console.log(lengthOfLIS([0, 1, 0, 3, 2, 3]));
+
+/**
+ * 1235. Maximum Profit in Job Scheduling
+ * 
+ * @param {number[]} startTime
+ * @param {number[]} endTime
+ * @param {number[]} profit
+ * @return {number}
+ */
+var jobScheduling = function (startTime, endTime, profit) {
+  var dict = { "-1": 0 };
+  var temp = 0;
+
+  var id = Array.from({ length: startTime.length }, (_, i) => i)
+    .sort((a, b) => startTime[a] - startTime[b]);
+
+
+  for (let i = id.length - 1; i >= 0; i--) {
+    if (dict[startTime[id[i]]] == null) dict[startTime[id[i]]] = 0;
+
+    temp = search(endTime[id[i]], id, i)
+
+    if (i == startTime.length - 1) {
+      dict[startTime[id[i]]] = profit[id[i]];
+    } else {
+      dict[startTime[id[i]]] = (dict[startTime[id[i + 1]]] > dict[temp] + profit[id[i]]) ? dict[startTime[id[i + 1]]] : dict[temp] + profit[id[i]];
+    }
+  }
+
+  function search(target, id, left) {
+    let right = id.length - 1;
+    let mid;
+
+    if (target > startTime[id[right]]) {
+      return -1;
+    }
+
+    while (left < right) {
+      mid = Math.floor((left + right) / 2);
+
+      if (startTime[id[mid]] < target) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+
+    return startTime[id[left]];
+  }
+
+
+  return dict[startTime[id[0]]];
+};
+
+// console.log(jobScheduling([6, 15, 7, 11, 1, 3, 16, 2], [19, 18, 19, 16, 10, 8, 19, 8], [2, 9, 1, 19, 5, 7, 3, 19]))
