@@ -5520,3 +5520,104 @@ var jobScheduling = function (startTime, endTime, profit) {
 };
 
 // console.log(jobScheduling([6, 15, 7, 11, 1, 3, 16, 2], [19, 18, 19, 16, 10, 8, 19, 8], [2, 9, 1, 19, 5, 7, 3, 19]))
+
+/**
+ * 1604. Alert Using Same Key-Card Three or More Times in a One Hour Period
+ * 
+ * @param {string[]} keyName
+ * @param {string[]} keyTime
+ * @return {string[]}
+ */
+var alertNames = function (keyName, keyTime) {
+  var result = [];
+  var dict = {};
+  var idx = 0;
+
+  for (let i = 0; i < keyName.length; i++) {
+    if (dict[keyName[i]] == undefined) dict[keyName[i]] = [timeToInt(keyTime[i])]
+    else if (typeof dict[keyName[i]] != "object" && dict[keyName[i]] == false) continue;
+    else {
+      idx = insI(dict[keyName[i]], timeToInt(keyTime[i]))
+      dict[keyName[i]].splice(idx, 0, timeToInt(keyTime[i]));
+
+      if (dict[keyName[i]].length > 2) {
+        for (let j = -2; j <= 0; j++) {
+
+          if (idx + j >= 0 && idx + j + 2 < dict[keyName[i]].length && dict[keyName[i]][idx + j + 2] - dict[keyName[i]][idx + j] <= 60) {
+            if (result.length == 0) {
+              result = [keyName[i]];
+            } else {
+              idx = insI(result, keyName[i])
+              result.splice(idx, 0, keyName[i]);
+            }
+
+            dict[keyName[i]] = false;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  function timeToInt(time) {
+    times = time.split(":");
+    return Number(times[0]) * 60 + Number(times[1]);
+  }
+
+  function insI(arr, ele) {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+
+      if (arr[mid] < ele) {
+        left = mid + 1;
+      } else if (arr[mid] > ele) {
+        right = mid - 1;
+      } else {
+        left = mid;
+        break;
+      }
+    }
+
+    return left;
+  }
+
+  return result;
+};
+
+// console.log(alertNames(["a", "a", "a", "a", "a", "b", "b", "b", "b", "b", "b"], ["23:20", "11:09", "23:30", "23:02", "15:28", "22:57", "23:40", "03:43", "21:55", "20:38", "00:19"]))
+
+/**
+ * 1306. Jump Game III
+ * 
+ * @param {number[]} arr
+ * @param {number} start
+ * @return {boolean}
+ */
+var canReach = function (arr, start) {
+  var visited = new Array(arr.length).fill(false);
+  var q = [start];
+  var temp = 0;
+
+  visited[start] = true;
+
+  while (q.length != 0) {
+    temp = q.shift();
+    if (arr[temp] == 0) return true;
+
+    if (temp + arr[temp] < arr.length && !visited[temp + arr[temp]]) {
+      visited[temp + arr[temp]] = true;
+      q.push(temp + arr[temp])
+    }
+    if (temp - arr[temp] >= 0 && !visited[temp - arr[temp]]) {
+      visited[temp - arr[temp]] = true;
+      q.push(temp - arr[temp])
+    }
+  }
+
+  return false;
+};
+
+console.log(canReach([4, 2, 3, 0, 3, 1, 2], 5))
