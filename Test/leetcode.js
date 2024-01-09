@@ -5620,4 +5620,48 @@ var canReach = function (arr, start) {
   return false;
 };
 
-console.log(canReach([4, 2, 3, 0, 3, 1, 2], 5))
+// console.log(canReach([4, 2, 3, 0, 3, 1, 2], 5))
+
+/**
+ * 2337. Move Pieces to Obtain a String
+ * 
+ * @param {string} start
+ * @param {string} target
+ * @return {boolean}
+ */
+var canChange = function (start, target) {
+  let l = 0
+  let r = 0
+
+  for (let i = 0; i < start.length; i++) {
+    if (start[i] === "R") r++
+    if (start[i] === "L") l--
+    if ((target[i] === "L" || start[i] === "L") && r > 0) return false
+    if (target[i] === "L") l++
+    if (target[i] === "R") r--
+    if (l < 0 || r < 0) return false
+  }
+  return !l && !r
+};
+
+// console.log(canChange("_LL__R__R_", "L___L___RR"));
+
+/**
+ * 120. Triangle
+ * 
+ * @param {number[][]} triangle
+ * @return {number}
+ */
+var minimumTotal = function (triangle) {
+  if (triangle.length == 1) return triangle[0][0];
+
+  for (let i = triangle.length - 2; i > -1; i--) {
+    for (let j = 0; j < triangle[i].length; j++) {
+      triangle[i][j] += triangle[i + 1][j] > triangle[i + 1][j + 1] ? triangle[i + 1][j + 1] : triangle[i + 1][j];
+    }
+  }
+
+  return triangle[0][0];
+};
+
+console.log(minimumTotal([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]))
