@@ -5664,4 +5664,65 @@ var minimumTotal = function (triangle) {
   return triangle[0][0];
 };
 
-console.log(minimumTotal([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]))
+// console.log(minimumTotal([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]))
+
+/**
+ * 826. Most Profit Assigning Work
+ * 
+ * @param {number[]} difficulty
+ * @param {number[]} profit
+ * @param {number[]} worker
+ * @return {number}
+ */
+var maxProfitAssignment = function (difficulty, profit, worker) {
+  function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    let result = -1;
+
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+
+      if (arr[mid] === target) {
+        return mid;
+      } else if (arr[mid] < target) {
+        result = mid;
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    return result;
+  }
+
+  if (worker.length == 0 || difficulty.length == 0 || profit.length == 0) return 0;
+
+  const idx = Array.from({ length: difficulty.length }, (_, i) => i)
+    .sort((a, b) => difficulty[a] - difficulty[b]);
+
+  let maxProfit = profit[idx[0]];
+  const uniqueDifficulty = [difficulty[idx[0]]];
+  const optimalProfit = [maxProfit];
+
+  for (let i = 1; i < idx.length; i++) {
+    const currentIdx = idx[i];
+    maxProfit = Math.max(maxProfit, profit[currentIdx]);
+
+    if (difficulty[currentIdx] !== uniqueDifficulty.at(-1)) {
+      uniqueDifficulty.push(difficulty[currentIdx]);
+      optimalProfit.push(maxProfit);
+    } else {
+      optimalProfit[optimalProfit.length - 1] = maxProfit;
+    }
+  }
+
+  var profit = 0;
+  for (let level of worker) {
+    profit += optimalProfit[binarySearch(uniqueDifficulty, level)] || 0;
+  }
+
+  return profit;
+};
+
+// console.log(maxProfitAssignment([2, 4, 6, 8, 10], [10, 20, 30, 40, 50], [4, 5, 6, 7]))
