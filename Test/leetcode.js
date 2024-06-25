@@ -5726,3 +5726,112 @@ var maxProfitAssignment = function (difficulty, profit, worker) {
 };
 
 // console.log(maxProfitAssignment([2, 4, 6, 8, 10], [10, 20, 30, 40, 50], [4, 5, 6, 7]))
+
+/**
+ * 1052. Grumpy Bookstore Owner
+ * 
+ * @param {number[]} customers
+ * @param {number[]} grumpy
+ * @param {number} minutes
+ * @return {number}
+ */
+var maxSatisfied = function (customers, grumpy, minutes) {
+  let mostSatisfied = 0;
+  let total = 0;
+  let win = 0;
+
+  for (let i = 0; i < minutes; i++) {
+    win += grumpy[i] * customers[i];
+    total += (1 - grumpy[i]) * customers[i];
+  }
+
+  mostSatisfied = win;
+
+  for (let i = minutes; i < customers.length; i++) {
+    win += (grumpy[i - minutes] * -customers[i - minutes]) + grumpy[i] * customers[i];
+    total += (1 - grumpy[i]) * customers[i];
+
+    if (mostSatisfied < win)
+      mostSatisfied = win;
+  }
+
+  return total + mostSatisfied;
+};
+
+// console.log(maxSatisfied([1, 0, 1, 2, 1, 1, 7, 5], [0, 1, 0, 1, 0, 1, 0, 1], 3));
+
+/**
+ * 1248. Count Number of Nice Subarrays
+ * 
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var numberOfSubarrays = function (nums, k) {
+  var odds = [];
+  var stor = {};
+
+  odds.push(nums[0] % 2);
+  stor[odds[0]] = 1
+
+  for (let i = 1; i < nums.length; i++) {
+    odds.push((nums[i] % 2) + odds[i - 1]);
+    if (stor[odds[i]] == undefined)
+      stor[odds[i]] = 1
+    else
+      stor[odds[i]]++;
+  }
+
+  total = stor[k] || 0;
+
+  for (let i = 0; i < odds.length; i++) {
+    total += stor[odds[i] + k] || 0;
+  }
+
+  return total;
+};
+
+// console.log(numberOfSubarrays([2, 2, 2, 1, 2, 2, 1, 2, 2, 2], 2));
+
+/**
+ * 1038. Binary Search Tree to Greater Sum Tree
+ * 538. Convert BST to Greater Tree
+ * 
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var bstToGst = function (root) {
+
+  var order = [];
+
+  var inOrderGet = function (node) {
+    if (node == null)
+      return;
+    inOrderGet(node.right);
+    order.push(node.val + (order.at(-1) || 0))
+    inOrderGet(node.left);
+  }
+
+  var idx = 0;
+  var inOrderPost = function (node) {
+    if (node == null)
+      return;
+    inOrderPost(node.right);
+    node.val = order[idx++];
+    inOrderPost(node.left);
+  }
+
+  inOrderGet(root);
+  console.log(order)
+  inOrderPost(root);
+
+  return root;
+};
