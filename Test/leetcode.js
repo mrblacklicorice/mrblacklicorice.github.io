@@ -5809,29 +5809,59 @@ var numberOfSubarrays = function (nums, k) {
  * @return {TreeNode}
  */
 var bstToGst = function (root) {
-
-  var order = [];
+  var sum = 0;
 
   var inOrderGet = function (node) {
     if (node == null)
       return;
     inOrderGet(node.right);
-    order.push(node.val + (order.at(-1) || 0))
+    sum += node.val
+    node.val = sum;
     inOrderGet(node.left);
   }
 
-  var idx = 0;
-  var inOrderPost = function (node) {
-    if (node == null)
-      return;
-    inOrderPost(node.right);
-    node.val = order[idx++];
-    inOrderPost(node.left);
-  }
-
   inOrderGet(root);
-  console.log(order)
-  inOrderPost(root);
 
   return root;
 };
+
+/**
+ * 1382. Balance a Binary Search Tree
+ * 
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var balanceBST = function (root) {
+  let get = function (node) {
+    if (node == null) return [];
+    return [...get(node.left), node.val, ...get(node.right)];
+  }
+
+  let bst = function (list, start = 0, end = list.length - 1) {
+    if (start > end) return null
+    let mid = Math.floor((end - start) / 2) + start;
+    return new TreeNode(list[mid], bst(list, start, mid - 1), bst(list, mid + 1, end));
+  }
+
+  return bst(get(root));
+};
+
+/**
+ * 1791. Find Center of Star Graph
+ * 
+ * @param {number[][]} edges
+ * @return {number}
+ */
+var findCenter = function (edges) {
+  return (edges[0][0] == edges[1][0] || edges[0][0] == edges[1][1]) ? edges[0][0] : edges[0][1];
+};
+
+// console.log(findCenter([[1, 2], [2, 3], [4, 2]]));
