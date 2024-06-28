@@ -5865,3 +5865,31 @@ var findCenter = function (edges) {
 };
 
 // console.log(findCenter([[1, 2], [2, 3], [4, 2]]));
+
+/**
+ * 2285. Maximum Total Importance of Roads
+ * 
+ * @param {number} n
+ * @param {number[][]} roads
+ * @return {number}
+ */
+var maximumImportance = function (n, roads) {
+  let count = new Array(n).fill(0);
+
+  for (let i = 0; i < roads.length; i++) {
+    count[roads[i][0]]++;
+    count[roads[i][1]]++;
+  }
+
+  // console.log(count);
+  // console.log()
+  let sorted = count.sort((a, b) => a - b)
+  let total = 0;
+  for (let i = 0; i < sorted.length; i++) {
+    total += sorted[i] * (i + 1);
+  }
+
+  return total;
+};
+
+console.log(maximumImportance(5, [[0, 1], [1, 2], [2, 3], [0, 2], [1, 3], [2, 4]])); 
