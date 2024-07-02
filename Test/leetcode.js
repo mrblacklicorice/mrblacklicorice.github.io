@@ -5949,3 +5949,39 @@ function getAncestors(n, edges) {
 }
 
 // console.log(getAncestors(6, [[0, 3], [5, 0], [2, 3], [4, 3], [5, 3], [1, 3], [2, 5], [0, 1], [4, 5], [4, 2], [4, 0], [2, 1], [5, 1]]));
+
+/**
+ * 350. Intersection of Two Arrays II
+ * 
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function (nums1, nums2) {
+  var dict1 = {};
+  var dict2 = {};
+
+  for (let i = 0; i < nums1.length; i++) {
+    if (!dict1[nums1[i]]) dict1[nums1[i]] = 1;
+    else dict1[nums1[i]]++;
+  }
+
+  for (let i = 0; i < nums2.length; i++) {
+    if (!dict2[nums2[i]]) dict2[nums2[i]] = 1;
+    else dict2[nums2[i]]++;
+  }
+
+  let keys = Object.keys(dict1);
+  let result = [];
+  for (let i = 0; i < keys.length; i++) {
+    if (dict2[keys[i]]) {
+      for (let j = 0; j < Math.min(dict2[keys[i]], dict1[keys[i]]); j++) {
+        result.push(Number(keys[i]));
+      }
+    }
+  }
+
+  return result;
+};
+
+// console.log(intersect([1, 2, 2, 1], [2, 2]));
