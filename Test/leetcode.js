@@ -1,3 +1,5 @@
+const { result } = require("lodash");
+
 var binaryPrint = function (root, n) {
   let q = [root];
   let r = [];
@@ -5892,4 +5894,58 @@ var maximumImportance = function (n, roads) {
   return total;
 };
 
-console.log(maximumImportance(5, [[0, 1], [1, 2], [2, 3], [0, 2], [1, 3], [2, 4]])); 
+// console.log(maximumImportance(5, [[0, 1], [1, 2], [2, 3], [0, 2], [1, 3], [2, 4]]));
+
+/**
+ * 1550. Three Consecutive Odds
+ * 
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var threeConsecutiveOdds = function (arr) {
+  if (arr.length < 3) return false;
+
+  for (let i = 2; i < arr.length; i++) {
+    if (arr[i] % 2 == 1 && arr[i - 1] % 2 == 1 && arr[i - 2] % 2 == 1) return true;
+  }
+
+  return false;
+};
+
+// console.log(threeConsecutiveOdds([1, 2, 34, 3, 4, 5, 7, 23, 12]));
+
+
+/**
+ * 2192. All Ancestors of a Node in a Directed Acyclic Graph
+ *
+ * @param {number} n
+ * @param {number[][]} edges
+ * @return {number[][]}
+ */
+function getAncestors(n, edges) {
+  const graph = Array.from({ length: n }, () => []);
+  const ancestors = Array.from({ length: n }, () => new Set());
+
+  for (const [src, dest] of edges) {
+    graph[src].push(dest);
+  }
+
+  function dfs(node, ancestor) {
+    for (const child of graph[node]) {
+      ancestors[child].add(ancestor);
+      ancestors[ancestor].forEach(anc => ancestors[child].add(anc));
+      dfs(child, ancestor);
+      ancestors[node].forEach(anc => ancestors[child].add(anc));
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    dfs(i, i);
+  }
+
+  const result = ancestors.map(ancSet => Array.from(ancSet).sort((a, b) => a - b));
+
+  return result;
+}
+
+// console.log(getAncestors(6, [[0, 3], [5, 0], [2, 3], [4, 3], [5, 3], [1, 3], [2, 5], [0, 1], [4, 5], [4, 2], [4, 0], [2, 1], [5, 1]]));
