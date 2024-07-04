@@ -1,5 +1,3 @@
-const { result } = require("lodash");
-
 var binaryPrint = function (root, n) {
   let q = [root];
   let r = [];
@@ -5985,3 +5983,56 @@ var intersect = function (nums1, nums2) {
 };
 
 // console.log(intersect([1, 2, 2, 1], [2, 2]));
+
+/**
+ * 1509. Minimum Difference Between Largest and Smallest Value in Three Moves
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minDifference = function (nums) {
+  if (nums.length < 5) return 0;
+  n = nums.length;
+
+  nums = nums.sort((a, b) => b - a);
+
+  return Math.min(
+    nums[3] - nums[n - 1],
+    nums[2] - nums[n - 2],
+    nums[1] - nums[n - 3],
+    nums[0] - nums[n - 4]
+  );
+};
+
+// console.log(minDifference([82, 81, 95, 75, 20]));
+
+/**
+ * 2181. Merge Nodes in Between Zeros
+ * 
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var mergeNodes = function (head) {
+  var temp = head.next;
+  var count = head;
+
+  while (temp != null) {
+    if (temp.val == 0 && temp.next != null) {
+      count = count.next;
+      count.val = 0;
+    } else {
+      count.val += temp.val;
+    }
+    temp = temp.next;
+  }
+
+  count.next = null;
+  return head;
+};
