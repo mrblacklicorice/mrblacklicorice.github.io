@@ -6036,3 +6036,64 @@ var mergeNodes = function (head) {
   count.next = null;
   return head;
 };
+
+/**
+ * 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+ * 
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {number[]}
+ */
+var nodesBetweenCriticalPoints = function (head) {
+  var prev = head;
+  var curr = head.next;
+  var first, last;
+  var a = -Infinity;
+  var smallest = Infinity;
+  var counter = 1;
+
+  while (curr.next != null) {
+    if ((prev.val < curr.val && curr.val > curr.next.val)
+      || (prev.val > curr.val && curr.val < curr.next.val)) {
+      if (counter - a < smallest) {
+        smallest = counter - a;
+      }
+      a = counter;
+
+      if (!first) {
+        first = counter;
+      } else {
+        last = counter;
+      }
+    }
+
+    counter++;
+    prev = curr;
+    curr = curr.next;
+  }
+
+
+  if (!last) return [-1, -1];
+  return [smallest, last - first];
+};
+
+
+/**
+ * 2582. Pass the Pillow
+ * 
+ * @param {number} n
+ * @param {number} time
+ * @return {number}
+ */
+var passThePillow = function (n, time) {
+  let post = (time % ((n - 1) * 2))
+  return ((post > n - 1) ? (((n - 1) * 2) - post) : post) + 1;
+};
+
+// console.log(passThePillow(4, 5));
