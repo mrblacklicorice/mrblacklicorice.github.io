@@ -6097,3 +6097,103 @@ var passThePillow = function (n, time) {
 };
 
 // console.log(passThePillow(4, 5));
+
+/**
+ * 1518. Water Bottles
+ * 
+ * @param {number} numBottles
+ * @param {number} numExchange
+ * @return {number}
+ */
+var numWaterBottles = function (numBottles, numExchange) {
+  var total = numBottles;
+  var remainder = 0;
+  var temp;
+
+  while (numBottles != 0) {
+    temp = Math.floor((numBottles + remainder) / numExchange);
+    total += temp
+    remainder = (numBottles + remainder) % numExchange;
+    numBottles = temp;
+  }
+
+  return total;
+};
+
+// console.log(numWaterBottles(9, 3));
+
+/**
+ * 1823. Find the Winner of the Circular Game
+ * 
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+var findTheWinner = function (n, k) {
+  var chairs = [];
+
+  for (let i = 1; i <= n; i++) {
+    chairs.push(i);
+  }
+
+  var idx = 0;
+
+  while (chairs.length != 1) {
+    idx = (idx - 1 + k) % chairs.length;
+
+    chairs.splice(idx, 1);
+  }
+
+  return chairs[0];
+};
+
+// console.log(findTheWinner(6, 5));
+
+/**
+ * 1701. Average Waiting Time
+ * 
+ * @param {number[][]} customers
+ * @return {number}
+ */
+var averageWaitingTime = function (customers) {
+  let totalWaiting = 0;
+  let free = 0
+
+  for (let i = 0; i < customers.length; i++) {
+    if (free <= customers[i][0]) {
+      free = customers[i][0] + customers[i][1];
+      totalWaiting += customers[i][1];
+    } else {
+      free += customers[i][1];
+      totalWaiting += free - customers[i][0];
+    }
+  }
+
+  return totalWaiting / customers.length;
+};
+
+// console.log(averageWaitingTime([[5, 2], [5, 4], [10, 3], [20, 1]]));
+
+/**
+ * 1598. Crawler Log Folder
+ * 
+ * @param {string[]} logs
+ * @return {number}
+ */
+var minOperations = function (logs) {
+  var curr = 0;
+
+  for (let i = 0; i < logs.length; i++) {
+    if (logs[i] == "./") {
+      continue;
+    } else if (logs[i] == "../") {
+      if (curr > 0) curr--;
+    } else {
+      curr++;
+    }
+  }
+
+  return curr;
+};
+
+// console.log(minOperations(["d1/", "d2/", "../", "d21/", "./"]));
