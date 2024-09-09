@@ -6197,3 +6197,87 @@ var minOperations = function (logs) {
 };
 
 // console.log(minOperations(["d1/", "d2/", "../", "d21/", "./"]));
+
+/**
+ * 1190. Reverse Substrings Between Each Pair of Parentheses
+ * 
+ * @param {string} s
+ * @return {string}
+ */
+var reverseParentheses = function (s) {
+  var st = new Array(Math.floor(s.length / 2));
+  var c = 0;
+
+  var result = s.split("");
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == "(") {
+      st[c] = i;
+      c++;
+    } else if (s[i] == ")") {
+      c--;
+      result.splice(st[c] + 1, i - st[c] - 1, ...result.slice(st[c] + 1, i).reverse())
+    }
+  }
+
+  return result.join("").replace(/\(|\)/g, "");
+};
+
+// console.log(reverseParentheses("(u(love)i)"));
+
+/**
+ * 100352. Lexicographically Smallest String After a Swap
+ * 
+ * @param {string} s
+ * @return {string}
+ */
+var getSmallestString = function (s) {
+  for (var i = 0; i < s.length - 1; i++) {
+    if (Number(s[i]) % 2 == Number(s[i + 1]) % 2 && Number(s[i]) > Number(s[i + 1])) {
+      return s.substring(0, i) + s[i + 1] + s[i] + s.substring(i + 2)
+    }
+  }
+
+  return s;
+};
+
+// console.log(getSmallestString("45320"));
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 100368. Delete Nodes From Linked List Present in Array
+ * 
+ * @param {number[]} nums
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var modifiedList = function (nums, head) {
+  dict = {}
+  for (let i = 0; i < nums.length; i++) {
+    dict[nums[i]] = true;
+  }
+
+  while (head != null && nums.includes(head.val)) {
+    head = head.next;
+  }
+
+  var curr = head.next;
+  var prev = head;
+
+  while (curr != null) {
+    if (dict[curr.val]) {
+      prev.next = curr.next;
+    } else {
+      prev = prev.next;
+    }
+    curr = curr.next;
+  }
+
+  return head;
+};

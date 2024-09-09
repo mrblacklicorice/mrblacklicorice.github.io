@@ -21,14 +21,14 @@ function waitForScopedSelector(selector, scopeElement) {
 
     var browser;
 
-    var chapter = 5;
+    var chapter = 1;
 
     var section = 1;
 
     try {
         console.log("Opening chrome browser");
         browser = await puppeteer.launch({
-            headless: false
+            headless: true
         });
         console.log("Opened chrome browser");
 
