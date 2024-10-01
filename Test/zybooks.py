@@ -5,7 +5,11 @@ import json
 import os
 
 
+node_process = None
+
+
 def run_node_script():
+    global node_process
     user = user_combobox.get()  # Get the selected user from the combobox
     chapter = entry_chapter.get()
     section = entry_section.get()
@@ -20,14 +24,14 @@ def run_node_script():
     print(command)
 
   # Run the command
-    result = subprocess.run(
+    node_process = subprocess.run(
         command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
     # Display the output in the text area
     output_text.delete(1.0, tk.END)  # Clear previous output
-    output_text.insert(tk.END, result.stdout)
-    if result.stderr:
-        output_text.insert(tk.END, f"Error: {result.stderr}")
+    output_text.insert(tk.END, node_process.stdout)
+    if node_process.stderr:
+        output_text.insert(tk.END, f"Error: {node_process.stderr}")
 
 
 def select_directory():
@@ -55,6 +59,14 @@ def load_user_options(directory):
     except json.JSONDecodeError:
         output_text.insert(
             tk.END, f"Error: Invalid JSON format in {json_path}.\n")
+
+
+def stop_node_script():
+    global node_process
+    if node_process:
+        node_process.terminate()  # Terminate the process
+        node_process = None  # Reset the reference
+        output_text.insert(tk.END, "Node.js process terminated.\n")
 
 
 # Create the main window
@@ -94,9 +106,22 @@ checkbox_var = tk.BooleanVar()
 checkbox = tk.Checkbutton(root, text="Display Window", variable=checkbox_var)
 checkbox.grid(row=4, columnspan=3, padx=5, pady=5)
 
+# Create a frame for the buttons
+button_frame = tk.Frame(root)
+button_frame.grid(row=5, column=0, columnspan=3, padx=5, pady=5)
+
 # Create run button
-run_button = tk.Button(root, text="Run", command=run_node_script)
-run_button.grid(row=5, columnspan=3, padx=5, pady=5)
+run_button = tk.Button(button_frame, text="Run", command=run_node_script)
+run_button.grid(row=0, column=0, padx=5)  # Place in the frame
+
+# Create stop button
+stop_button = tk.Button(button_frame, text="Stop", command=stop_node_script)
+stop_button.grid(row=0, column=1, padx=5)  # Place in the frame
+
+# Optionally, add sticky options to center the frame in the main window
+root.grid_columnconfigure(0, weight=1)
+root.grid_columnconfigure(1, weight=1)
+root.grid_columnconfigure(2, weight=1)
 
 # Create a text area to display output
 output_text = tk.Text(root, height=10, width=50)
