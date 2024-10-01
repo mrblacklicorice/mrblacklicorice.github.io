@@ -10,7 +10,7 @@ var page;
 var user = (args.length > 0) ? args[0] : "girish"
 var inputChapter = (args.length > 1) ? Number(args[1]) : 1
 var inputSection = (args.length > 2) ? Number(args[2]) : 1
-var isHeadless = (args.length > 3) ? true : Boolean(args[3])
+var isHeadless = (args[3] == "False") ? false : true
 
 var login = JSON.parse(fs.readFileSync(__dirname + "\\login.json", 'utf-8'))[user];
 console.log(login);

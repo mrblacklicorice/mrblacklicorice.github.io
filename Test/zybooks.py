@@ -6,7 +6,7 @@ import os
 
 
 def run_node_script():
-    user = user_combobox.get()
+    user = user_combobox.get()  # Get the selected user from the combobox
     chapter = entry_chapter.get()
     section = entry_section.get()
     display_output = checkbox_var.get()
@@ -17,9 +17,11 @@ def run_node_script():
     # Construct the command to run the Node.js script
     command = ["node", script_path, user,
                chapter, section, str(display_output)]
+    print(command)
 
-    # Run the command
-    result = subprocess.run(command, capture_output=True, text=True)
+  # Run the command
+    result = subprocess.run(
+        command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
     # Display the output in the text area
     output_text.delete(1.0, tk.END)  # Clear previous output
@@ -67,10 +69,12 @@ user_combobox.grid(row=0, column=1, padx=5, pady=5)
 tk.Label(root, text="Chapter (number):").grid(row=1, column=0, padx=5, pady=5)
 entry_chapter = tk.Entry(root)
 entry_chapter.grid(row=1, column=1, padx=5, pady=5)
+entry_chapter.insert(0, "1")  # Autofill chapter
 
 tk.Label(root, text="Section (number):").grid(row=2, column=0, padx=5, pady=5)
 entry_section = tk.Entry(root)
 entry_section.grid(row=2, column=1, padx=5, pady=5)
+entry_section.insert(0, "1")  # Autofill section
 
 # Create a label and entry for the script path
 tk.Label(root, text="Script Path:").grid(row=3, column=0, padx=5, pady=5)
