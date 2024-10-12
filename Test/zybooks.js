@@ -92,52 +92,10 @@ function waitForScopedSelector(selector, scopeElement) {
             console.log(types);
 
             try {
-                if (types.includes("animation-player-content-resource")) {
-                    // animation
-                    // await page.waitForSelector(".animation-player-content-resource");
-                    var ani = await page.$$(".animation-player-content-resource");
-
-                    for (let i = 0; i < ani.length; i++) {
-                        // if (ani[i].$(".large.orange.filled")) break;
-
-                        // x2 button
-                        await ani[i].$eval("input", ele => ele.click());
-
-                        // play button
-                        await ani[i].$eval(".start-button", ele => ele.click());
-
-                        try {
-                            await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
-                        } catch (err) {
-                            console.log("Took longer than 30 seconds");
-                            await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
-                        }
-
-                        // play button
-                        playButton = await ani[i].$(".play-button");
-
-                        var play;
-
-                        do {
-                            await waitForScopedSelector(".animation-player-content-resource .play-button", ani[i]);
-                            playButton = await ani[i].$(".play-button");
-                            play = await ani[i].$eval(".play-button", ele => ele.classList[1] == "bounce");
-                            await page.evaluate((playButton) => { playButton.click() }, playButton);
-                            await delay(1000);
-                        } while (play);
-
-                        await page.$$eval(".animation-player-content-resource .normalize-controls", ele => ele[0].click());
-                        await delay(1000);
-
-                        await page.waitForSelector(".large.orange.filled", ani[i]);
-                        console.log("animation " + i + " completed");
-                    }
-                }
-
                 if (types.includes("multiple-choice-content-resource")) {
                     // multiple choice
-                    await page.waitForSelector(".multiple-choice-content-resource");
-                    var mC = await page.$$(".multiple-choice-content-resource");
+                    await page.waitForSelector(".participation.multiple-choice-content-resource");
+                    var mC = await page.$$(".participation.multiple-choice-content-resource");
 
                     for (let i = 0; i < mC.length; i++) {
                         // if (mC[i].$(".large.orange.filled")) break;
@@ -165,8 +123,8 @@ function waitForScopedSelector(selector, scopeElement) {
 
                 if (types.includes("short-answer-content-resource")) {
                     // short answer
-                    await page.waitForSelector(".short-answer-content-resource");
-                    var sA = await page.$$(".short-answer-content-resource");
+                    await page.waitForSelector(".participation.short-answer-content-resource");
+                    var sA = await page.$$(".participation.short-answer-content-resource");
 
                     for (let i = 0; i < sA.length; i++) {
                         // if (sA[i].$(".large.orange.filled")) break;
@@ -185,12 +143,50 @@ function waitForScopedSelector(selector, scopeElement) {
                             await delay(1000);
 
                             await sAQ[j].$eval("button.raised", (ele) => ele.click());
-
                         }
 
                         await delay(1000);
                         await page.waitForSelector(".large.orange.filled", sA[i]);
                         console.log("short answer " + i + " completed");
+                    }
+                }
+
+                if (types.includes("animation-player-content-resource")) {
+                    var ani = await page.$$(".participation.animation-player-content-resource");
+
+                    for (let i = 0; i < ani.length; i++) {
+                        // x2 button
+                        await ani[i].$eval("input", ele => ele.click());
+
+                        // Play button
+                        await ani[i].$eval(".start-button", ele => ele.click());
+                        await delay(1000);
+                    }
+
+
+                    async function allRotated() {
+                        var done = await page.$$(".play-button.rotate-180")
+                        var total = await page.$$(".play-button")
+                        var stillGoing = await page.$$(".pause-button")
+
+                        if (stillGoing.length != 0) return false;
+                        return total.length == done.length
+                    }
+
+                    let allAnimationsComplete = false;
+
+                    while (!allAnimationsComplete) {
+                        await page.$$eval(".play-button.bounce", buttons => {
+                            buttons.forEach(button => button.click());
+                        });
+
+                        await delay(5000);
+
+                        allAnimationsComplete = await allRotated();
+
+                        if (allAnimationsComplete) {
+                            console.log("All animations are complete");
+                        }
                     }
                 }
             } catch (err) {
@@ -206,7 +202,6 @@ function waitForScopedSelector(selector, scopeElement) {
 
         console.log("Closing browser now");
         await browser.close();
-
     } catch (err) {
         console.log("Exception " + err);
     }
