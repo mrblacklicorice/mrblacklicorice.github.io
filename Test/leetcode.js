@@ -6281,3 +6281,383 @@ var modifiedList = function (nums, head) {
 
   return head;
 };
+
+function bridge(U, weight) {
+  var totalRemoved = 0;
+
+  function helper(i, j) {
+    console.log(i, j)
+    if (i == j) {
+      return [i, i];
+    }
+    if (j - i == 1) {
+      if (weight[j] + weight[i] > U) {
+        totalRemoved++;
+        return (weight[j] - weight[i] > 0) ? [i, i] : [j, j];
+      } else {
+        return [i, j];
+      }
+    }
+
+    var [ll, lr] = helper(i, Math.floor((i + j) / 2), true);
+    var [rl, rr] = helper(Math.floor((i + j) / 2) + 1, j, false);
+
+    console.log("l and r", ll, rl, totalRemoved);
+
+
+    if (weight[lr] + weight[rl] > U) {
+      totalRemoved++;
+    }
+
+    return [ll, rr];
+  }
+
+  var [ll, rr] = helper(0, weight.length - 1);
+  if (ll == rr) totalRemoved++;
+
+  return totalRemoved;
+}
+
+// console.log(bridge(0, [5, 3, 8, 1, 8, 7, 7, 6]))
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * 515. Find Largest Value in Each Tree Row
+ * 
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var largestValues = function (root) {
+  var arr = [];
+
+  function recur(node, idx) {
+    if (node == null) return;
+
+    if (arr.length > idx) {
+      if (arr[idx] < node.val) arr[idx] = node.val;
+    } else arr.push(node.val)
+
+    recur(node.left, idx + 1)
+    recur(node.right, idx + 1)
+  }
+
+  recur(root, 0)
+
+  return arr;
+};
+
+/**
+ * 2222. Number of Ways to Select Buildings
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+/**
+ * 2222. Number of Ways to Select Buildings
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var numberOfWays = function (s) {
+  let count0 = 0, count1 = 0;
+  let count01 = 0, count10 = 0;
+  let result = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '0') {
+      count0++;
+      count10 += count1;
+      result += count01;
+    } else {
+      count1++;
+      count01 += count0;
+      result += count10;
+    }
+  }
+
+  return result;
+};
+// console.log(numberOfWays("0001100100"));
+
+/**
+ * 494. Target Sum
+ * 
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var findTargetSumWays = function (nums, target) {
+  let dp = { "0": 1 };
+
+  for (let num of nums) {
+    let nextDp = {};
+    for (let sum in dp) {
+      let count = dp[sum];
+      let plus = parseInt(sum) + num;
+      let minus = parseInt(sum) - num;
+
+      if (nextDp[plus] === undefined) nextDp[plus] = 0;
+      if (nextDp[minus] === undefined) nextDp[minus] = 0;
+
+      nextDp[plus] += count;
+      nextDp[minus] += count;
+    }
+    dp = nextDp;
+  }
+
+  return dp[target] || 0;
+};
+
+// console.log(findTargetSumWays([1, 1, 1, 1, 1], 3));
+
+/**
+ * 1014. Best Sightseeing Pair
+ * 
+ * @param {number[]} values
+ * @return {number}
+ */
+var maxScoreSightseeingPair = function (values) {
+  var max = 0;
+  var highestI = values[0]
+
+  for (let j = 1; j < values.length; j++) {
+    if (values[j] - j + highestI > max) max = values[j] - j + highestI;
+    highestI = Math.max(highestI, values[j] + j);
+  }
+
+  return max;
+};
+
+// console.log(maxScoreSightseeingPair([8, 1, 5, 2, 6]));
+
+/**
+ * 3271. Hash Divided String
+ * 
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
+ */
+var stringHash = function (s, k) {
+  var result = "";
+  var tmp = 0;
+
+  for (let i = 0; i < s.length; i += k) {
+    tmp = 0;
+    for (let c = i; c < i + k; c++) {
+      tmp += s[c].charCodeAt(0) - 97
+    }
+
+    result += String.fromCharCode((tmp % 26) + 97);
+  }
+
+  return result;
+};
+
+// console.log(stringHash("mxz", 3));
+
+/**
+ * 3239. Minimum Number of Flips to Make Binary Grid Palindromic I
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var minFlips = function (grid) {
+  var rowFlips = 0;
+  var colFlips = 0;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < Math.floor(grid[0].length / 2); j++) {
+      // console.log(i, j, grid[i][j])
+      // console.log(i, grid[0].length - 1 - j, grid[i][grid[0].length - 1 - j])
+      if (grid[i][j] != grid[i][grid[0].length - 1 - j]) rowFlips++;
+    }
+  }
+
+  for (let i = 0; i < grid[0].length; i++) {
+    for (let j = 0; j < Math.floor(grid.length / 2); j++) {
+      if (grid[j][i] != grid[grid.length - 1 - j][i]) colFlips++;
+    }
+  }
+
+  return Math.min(rowFlips, colFlips);
+};
+
+// console.log(minFlips([[1, 0, 0], [0, 0, 0], [0, 0, 1]]));
+
+/**
+ * 2466. Count Ways To Build Good Strings
+ * 
+ * @param {number} low
+ * @param {number} high
+ * @param {number} zero
+ * @param {number} one
+ * @return {number}
+ */
+var countGoodStrings = function (low, high, zero, one) {
+  var results = new Array(high + 1).fill(0);
+  results[zero] += 1;
+  results[one] += 1;
+
+  var sum = 0;
+
+  for (let i = 1; i < results.length; i++) {
+    if (i > zero) results[i] += (results[i - zero] % (1e9 + 7));
+
+    if (i > one) results[i] += (results[i - one] % (1e9 + 7));
+
+    if (i >= low) sum += results[i];
+  }
+
+  return sum % (1e9 + 7);
+};
+
+// console.log(countGoodStrings(3, 3, 1, 1));
+
+/**
+ * 2865. Beautiful Towers I
+ * 
+ * @param {number[]} heights
+ * @return {number}
+ */
+var maximumSumOfHeights = function (heights) {
+  var max = 0;
+  var curr = 0;
+  var last = 0;
+
+  for (let peak = 0; peak < heights.length; peak++) {
+    curr = heights[peak];
+    last = heights[peak];
+
+    for (let i = peak - 1; i >= 0; i--) {
+      curr += Math.min(heights[i], last);
+      last = Math.min(heights[i], last);
+    }
+
+    last = heights[peak];
+    for (let i = peak + 1; i < heights.length; i++) {
+      curr += Math.min(heights[i], last);
+      last = Math.min(heights[i], last);
+    }
+
+    if (max < curr) max = curr;
+  }
+
+  return max;
+};
+
+// console.log(maximumSumOfHeights([6, 5, 3, 9, 2, 7])) // [3,3,3,9,2,2]
+
+/**
+ * 983. Minimum Cost For Tickets
+ * 
+ * @param {number[]} days
+ * @param {number[]} costs
+ * @return {number}
+ */
+var mincostTickets = function (days, costs) {
+  var min = Array(days.length + 1);
+  min[0] = 0;
+
+  for (let i = 0; i < days.length; i++) {
+    min[i + 1] = min[i] + costs[0];
+
+    var d = i;
+    while (d > 0 && days[d] >= days[i] - 6) d--;
+    min[i + 1] = Math.min(((days[d] >= days[i] - 6) ? min[d] : min[d + 1]) + costs[1], min[i + 1]);
+
+    while (d >= 0 && days[d] >= days[i] - 29) d--;
+    min[i + 1] = Math.min(((days[d] >= days[i] - 29) ? min[d] : min[d + 1]) + costs[2], min[i + 1]);
+  }
+
+  return min[days.length];
+};
+
+// console.log(mincostTickets([1, 4, 6, 7, 8, 20], [2, 7, 15]))
+
+/**
+ * 1422. Maximum Score After Splitting a String
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var maxScore = function (s) {
+  var ones = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == "1") ones++;
+  }
+
+  var zeros = 0;
+  var max = 0;
+
+  for (let i = 0; i < s.length - 1; i++) {
+    if (s[i] == "1") ones--;
+    else zeros++;
+
+    max = Math.max(max, zeros + ones);
+  }
+
+  return max;
+};
+
+// console.log(maxScore("011101"));
+
+/**
+ * 2559. Count Vowel Strings in Ranges
+ * 
+ * @param {string[]} words
+ * @param {number[][]} queries
+ * @return {number[]}
+ */
+var vowelStrings = function (words, queries) {
+  var hist = [0];
+  var vowels = new Set(["a", "e", "i", "o", "u"]);
+
+  for (let i = 0; i < words.length; i++) {
+    if (vowels.has(words[i][0]) && vowels.has(words[i].at(-1))) hist.push(hist[i] + 1);
+    else hist.push(hist[i]);
+  }
+
+  var results = [];
+
+  for (let i = 0; i < queries.length; i++) {
+    results.push(hist[queries[i][1] + 1] - hist[queries[i][0]]);
+  }
+
+  return results;
+};
+
+// console.log(vowelStrings(["aba", "bcb", "ece", "aa", "e"], [[0, 2], [1, 4], [1, 1]])) // [2,3,0]
+
+/**
+ * 2270. Number of Ways to Split Array
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var waysToSplitArray = function (nums) {
+  var l = 0;
+  var r = 0;
+  var result = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    r += nums[i];
+  }
+
+  for (let i = 0; i < nums.length - 1; i++) {
+    l += nums[i];
+    r -= nums[i];
+    if (r <= l) result++;
+  }
+
+  return result;
+};
+
+console.log(waysToSplitArray([10, 4, -8, 7]));
