@@ -6660,4 +6660,47 @@ var waysToSplitArray = function (nums) {
   return result;
 };
 
-console.log(waysToSplitArray([10, 4, -8, 7]));
+// console.log(waysToSplitArray([10, 4, -8, 7]));
+
+
+
+/**
+ * 1930. Unique Length-3 Palindromic Subsequences
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var countPalindromicSubsequence = function (s) {
+  function veb(a, l, h) {
+    if (a.length == 0) return false;
+    let le = 0, ri = a.length - 1;
+
+    while (le <= ri) {
+      const m = Math.floor((le + ri) / 2);
+      if (a[m] < l) le = m + 1;
+      else ri = m - 1;
+    }
+
+    return le < a.length && a[le] < h;
+  }
+
+  var dict = {};
+  for (let i = 0; i < s.length; i++) {
+    if (dict[s[i]] == undefined) dict[s[i]] = [i];
+    else dict[s[i]].push(i);
+  }
+
+  var keys = Object.keys(dict);
+  var total = 0;
+
+  for (var k1 of keys) {
+    if (dict[k1].length < 2) continue;
+    for (var k2 of keys) {
+      if ((k1 == k2 && dict[k1].length >= 3) || (k1 != k2 && veb(dict[k2], dict[k1][0], dict[k1].at(-1)))) total++;
+    }
+  }
+
+  return total;
+};
+
+console.log(countPalindromicSubsequence("bbcbaba"));
