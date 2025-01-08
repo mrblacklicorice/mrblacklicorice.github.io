@@ -6474,8 +6474,6 @@ var minFlips = function (grid) {
 
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < Math.floor(grid[0].length / 2); j++) {
-      // console.log(i, j, grid[i][j])
-      // console.log(i, grid[0].length - 1 - j, grid[i][grid[0].length - 1 - j])
       if (grid[i][j] != grid[i][grid[0].length - 1 - j]) rowFlips++;
     }
   }
@@ -6703,4 +6701,105 @@ var countPalindromicSubsequence = function (s) {
   return total;
 };
 
-console.log(countPalindromicSubsequence("bbcbaba"));
+// console.log(countPalindromicSubsequence("bbcbaba"));
+
+/**
+ * 2381. Shifting Letters II
+ * 
+ * @param {string} s
+ * @param {number[][]} shifts
+ * @return {string}
+ */
+var shiftingLetters = function (s, shifts) {
+  var result = "";
+  var changes = new Array(s.length + 1).fill(0);
+
+  for (let i = 0; i < shifts.length; i++) {
+    changes[shifts[i][0]] += (shifts[i][2] == 1) ? 1 : -1;
+    changes[shifts[i][1] + 1] += (shifts[i][2] == 1) ? -1 : 1;
+  }
+
+  var sum = 0;
+  for (let i = 0; i < changes.length - 1; i++) {
+    sum += changes[i];
+    result = result + String.fromCharCode(((((s[i].charCodeAt(0) - 97 + sum) % 26) + 26) % 26) + 97)
+  }
+
+  return result;
+};
+
+// console.log(shiftingLetters("dztz", [[0, 0, 0], [1, 1, 1]]))\
+
+/**
+ * 1769. Minimum Number of Operations to Move All Balls to Each Box
+ * 
+ * @param {string} boxes
+ * @return {number[]}
+ */
+var minOperations = function (boxes) {
+  var l = 0, r = 0;
+  var lb = 0, rb = 0;
+  var result = new Array(boxes.length).fill(0);
+
+  for (let i = 1; i < boxes.length; i++) {
+    lb += (boxes[i - 1] == "1") ? 1 : 0;
+    rb += (boxes[boxes.length - i] == "1") ? 1 : 0;
+
+    l += lb;
+    r += rb;
+
+    // console.log(l, r);
+
+    result[i] += l;
+    result[boxes.length - i - 1] += r;
+  }
+
+  return result;
+};
+
+// console.log(minOperations("001011")); // [11, 8, 5, 4, 3, 4]
+
+/**
+ * 1408. String Matching in an Array
+ * 
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var stringMatching = function (words) {
+  var result = [];
+
+  words = words.sort((a, b) => a.length - b.length);
+
+  for (let i = 0; i < words.length; i++) {
+    for (let j = i + 1; j < words.length; j++) {
+      if (words[j].includes(words[i])) {
+        result.push(words[i]);
+        break;
+      }
+    }
+  }
+
+  return result;
+};
+
+// console.log(stringMatching(["mass", "as", "hero", "superhero"]));
+
+/**
+ * 3042. Count Prefix and Suffix Pairs I
+ * 
+ * @param {string[]} words
+ * @return {number}
+ */
+var countPrefixSuffixPairs = function (words) {
+  var total = 0;
+
+  for (let j = 0; j < words.length; j++) {
+    for (let i = 0; i < j; i++) {
+      if (words[i] == words[j].substring(0, words[i].length) && words[i] == words[j].substring(words[j].length - words[i].length)) total++;
+    }
+  }
+
+  return total;
+};
+
+console.log(countPrefixSuffixPairs(["a", "aba", "ababa", "aa"]));
