@@ -6282,43 +6282,32 @@ var modifiedList = function (nums, head) {
   return head;
 };
 
-function bridge(U, weight) {
-  var totalRemoved = 0;
+function solution1(U, weight) {
+  const dp = new Array(weight.length).fill(0);
 
-  function helper(i, j) {
-    console.log(i, j)
-    if (i == j) {
-      return [i, i];
-    }
-    if (j - i == 1) {
-      if (weight[j] + weight[i] > U) {
-        totalRemoved++;
-        return (weight[j] - weight[i] > 0) ? [i, i] : [j, j];
-      } else {
-        return [i, j];
+  var maxLen = 0;
+  for (var i = 0; i < weight.length; i++) {
+    if (weight[i] > U) {
+      dp[i] = 0;
+    } else {
+      dp[i] = 1;
+
+      for (var j = 0; j < i; j++) {
+        if (dp[j] > 0 && weight[j] + weight[i] <= U) {
+          dp[i] = Math.max(dp[i], dp[j] + 1);
+        }
       }
     }
-
-    var [ll, lr] = helper(i, Math.floor((i + j) / 2), true);
-    var [rl, rr] = helper(Math.floor((i + j) / 2) + 1, j, false);
-
-    console.log("l and r", ll, rl, totalRemoved);
-
-
-    if (weight[lr] + weight[rl] > U) {
-      totalRemoved++;
-    }
-
-    return [ll, rr];
+    maxLen = Math.max(maxLen, dp[i]);
   }
 
-  var [ll, rr] = helper(0, weight.length - 1);
-  if (ll == rr) totalRemoved++;
-
-  return totalRemoved;
+  return weight.length - maxLen;
 }
 
-// console.log(bridge(0, [5, 3, 8, 1, 8, 7, 7, 6]))
+// console.log(solution1(9, [5, 3, 8, 1, 8, 7, 7, 6]))
+// console.log(solution1(7, [7, 6, 5, 2, 7, 4, 5, 4]))
+// console.log(solution1(2, [3, 7, 5, 5, 6, 3, 9, 10, 8, 4]))
+// console.log(solution1(9, [5, 3, 8, 1, 8, 5, 4, 6, 6, 6, 3, 4, 5, 7, 7, 6]))
 
 /**
  * Definition for a binary tree node.
@@ -6353,12 +6342,6 @@ var largestValues = function (root) {
   return arr;
 };
 
-/**
- * 2222. Number of Ways to Select Buildings
- * 
- * @param {string} s
- * @return {number}
- */
 /**
  * 2222. Number of Ways to Select Buildings
  * 
@@ -6802,4 +6785,93 @@ var countPrefixSuffixPairs = function (words) {
   return total;
 };
 
-console.log(countPrefixSuffixPairs(["a", "aba", "ababa", "aa"]));
+// console.log(countPrefixSuffixPairs(["a", "aba", "ababa", "aa"]));
+
+/**
+ * 2185. Counting Words With a Given Prefix
+ * 
+ * @param {string[]} words
+ * @param {string} pref
+ * @return {number}
+ */
+var prefixCount = function (words, pref) {
+  var res = 0;
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].substring(0, pref.length) == pref) res++;
+  }
+
+  return res;
+};
+
+// console.log(prefixCount(["pay", "attention", "practice", "attend"], "at"));
+
+/**
+ * 916. Word Subsets
+ * 
+ * @param {string[]} words1
+ * @param {string[]} words2
+ * @return {string[]}
+ */
+var wordSubsets = function (words1, words2) {
+  var result = [];
+  var bdict = new Array(26).fill(0);
+
+  for (let i = 0; i < words2.length; i++) {
+    var dictTemp = new Array(26).fill(0);
+    for (let c = 0; c < words2[i].length; c++) {
+      dictTemp[words2[i].charCodeAt(c) - 97]++;
+    }
+
+    for (let k = 0; k < 26; k++) {
+      bdict[k] = Math.max(bdict[k], dictTemp[k]);
+    }
+  }
+
+  for (let i = 0; i < words1.length; i++) {
+    var dictTemp = new Array(26).fill(0);
+    for (let c = 0; c < words1[i].length; c++) {
+      dictTemp[words1[i].charCodeAt(c) - 97]++;
+    }
+
+    var isUniversal = true;
+    for (let k = 0; k < 26; k++) {
+      if (dictTemp[k] < bdict[k]) {
+        isUniversal = false;
+        break;
+      }
+    }
+
+    if (isUniversal) result.push(words1[i]);
+  }
+
+  return result;
+};
+
+// console.log(wordSubsets(["amazon", "apple", "facebook", "google", "leetcode"], ["e", "o"]))
+
+/**
+ * 1400. Construct K Palindrome Strings
+ * 
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function (s, k) {
+  if (k > s.length) return false;
+
+  var counts = new Array(26).fill(0);
+
+  for (let c = 0; c < s.length; c++) {
+    counts[s.charCodeAt(c) - 97]++;
+  }
+
+  var allow = k;
+
+  for (let l = 0; l < counts.length; l++) {
+    if (counts[l] % 2 == 1) allow--;
+  }
+
+  return allow >= 0;
+};
+
+console.log(canConstruct("annabelle", 2));
