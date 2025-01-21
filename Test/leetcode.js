@@ -1,3 +1,5 @@
+const e = require("express");
+
 var binaryPrint = function (root, n) {
   let q = [root];
   let r = [];
@@ -6874,4 +6876,279 @@ var canConstruct = function (s, k) {
   return allow >= 0;
 };
 
-console.log(canConstruct("annabelle", 2));
+// console.log(canConstruct("annabelle", 2));
+
+/**
+ * 2116. Check if a Parentheses String Can Be Valid
+ * 
+ * @param {string} s
+ * @param {string} locked
+ * @return {boolean}
+ */
+var canBeValid = function (s, locked) {
+  if (s.length % 2 == 1) return false;
+  var n = s.length;
+
+  let openCount = 0;
+  for (let i = 0; i < n; i++) {
+    if (s[i] === '(' || locked[i] === '0') openCount++;
+    else openCount--;
+    if (openCount < 0) return false;
+  }
+
+  let closeCount = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    if (s[i] === ')' || locked[i] === '0') closeCount++;
+    else closeCount--;
+    if (closeCount < 0) return false;
+  }
+
+  return true;
+};
+
+// console.log(canBeValid("((()(()()))()((()()))))()((()(()", "10111100100101001110100010001001"));
+
+/**
+ * 3223. Minimum Length of String After Operations
+ * 
+ * @param {string} s
+ * @return {number}
+ */
+var minimumLength = function (s) {
+  var counts = new Array(26).fill(0);
+
+  for (let c = 0; c < s.length; c++) {
+    counts[s.charCodeAt(c) - 97]++;
+  }
+
+  var total = 0;
+
+  for (let i = 0; i < counts.length; i++) {
+    if (counts[i] >= 3) {
+      if (counts[i] % 2 == 1) total += counts[i] - 1;
+      else total += counts[i] - 2;
+    }
+  }
+
+  return s.length - total;
+};
+
+// console.log(minimumLength("abaacbcbb"));
+
+/**
+ * 2657. Find the Prefix Common Array of Two Arrays
+ * 
+ * @param {number[]} A
+ * @param {number[]} B
+ * @return {number[]}
+ */
+var findThePrefixCommonArray = function (A, B) {
+  var C = new Array(A.length).fill(0);
+  var track = new Array(A.length).fill(false);
+
+  var total = 0;
+
+  for (let i = 0; i < A.length; i++) {
+    if (A[i] == B[i]) {
+      total++;
+    } else {
+      if (track[A[i] - 1]) total++;
+      else track[A[i] - 1] = true;
+
+      if (track[B[i] - 1]) total++;
+      else track[B[i] - 1] = true;
+    }
+
+    C[i] = total;
+  }
+
+  return C;
+};
+
+// console.log(findThePrefixCommonArray([1, 3, 2, 4], [3, 1, 2, 4]));
+
+/**
+ * 2429. Minimize XOR
+ * 
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+var minimizeXor = function (num1, num2) {
+  var str1 = num1.toString(2).split("");
+  var str2 = num2.toString(2).split("");
+
+  // console.log(str1);
+  // console.log(str2);
+
+  var requiredBits = str2.reduce((accu, curr) => accu + ((curr == "1") ? 1 : 0), 0);
+  var currentBits = str1.reduce((accu, curr) => accu + ((curr == "1") ? 1 : 0), 0);
+
+  if (currentBits == requiredBits) {
+    return num1;
+  } else if (currentBits < requiredBits) {
+    var needed = requiredBits - currentBits;
+    str1 = [...(new Array(Math.max(needed - (str1.length - currentBits), 0)).fill("0")), ...str1]
+
+    // console.log(str1)
+
+    for (let i = str1.length - 1; i >= 0; i--) {
+      if (str1[i] == "1") continue;
+
+      str1[i] = "1"
+      needed--;
+      if (needed == 0) break;
+    }
+
+    return parseInt(str1.join(""), 2);
+  } else {
+    var needed = currentBits - requiredBits;
+
+    for (let i = str1.length - 1; i >= 0; i--) {
+      if (str1[i] == "0") continue;
+
+      str1[i] = "0"
+      needed--;
+      if (needed == 0) break;
+    }
+
+
+    return parseInt(str1.join(""), 2);
+  }
+};
+
+// console.log(minimizeXor(1, 12));
+
+/**
+ * 2425. Bitwise XOR of All Pairings
+ * 
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var xorAllNums = function (nums1, nums2) {
+  var A = (nums2.length % 2 == 1) ? nums1.reduce((a, c) => a ^ c, 0) : 0;
+  var B = (nums1.length % 2 == 1) ? nums2.reduce((a, c) => a ^ c, 0) : 0;
+
+  return A ^ B;
+};
+
+// console.log(xorAllNums([2, 1, 3], [10, 2, 5, 0]));
+
+/**
+ * 2683. Neighboring Bitwise XOR
+ * 
+ * @param {number[]} derived
+ * @return {boolean}
+ */
+var doesValidArrayExist = function (derived) {
+  var sum = 0;
+  for (let i = 0; i < derived.length; i++) {
+    sum = sum ^ derived[i];
+  }
+
+  return sum == 0;
+};
+
+// console.log(doesValidArrayExist([1, 1, 0]));
+
+/**
+ * 1368. Minimum Cost to Make at Least One Valid Path in a Grid
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var minCost = function (grid) {
+  var queue = new MinPriorityQueue({ priority: (element) => element[2] });
+  queue.enqueue([0, 0, 0]);
+  var visited = Array.from({ length: grid.length }, () => new Array(grid[0].length).fill(false));
+
+  while (!queue.isEmpty()) {
+    curr = queue.dequeue().element;
+    // console.log(queue)
+
+    if (curr[0] == grid.length - 1 && curr[1] == grid[0].length - 1) return curr[2];
+
+    visited[curr[0]][curr[1]] = true;
+
+    var toAdd = [];
+
+    if (curr[0] + 1 < grid.length && !visited[curr[0] + 1][curr[1]]) {
+      toAdd.push([curr[0] + 1, curr[1], curr[2] + ((grid[curr[0]][curr[1]] != 3) ? 1 : 0)])
+    }
+
+    if (curr[0] - 1 >= 0 && !visited[curr[0] - 1][curr[1]]) {
+      toAdd.push([curr[0] - 1, curr[1], curr[2] + ((grid[curr[0]][curr[1]] != 4) ? 1 : 0)])
+    }
+
+    if (curr[1] + 1 < grid[0].length && !visited[curr[0]][curr[1] + 1]) {
+      toAdd.push([curr[0], curr[1] + 1, curr[2] + ((grid[curr[0]][curr[1]] != 1) ? 1 : 0)])
+    }
+
+    if (curr[1] - 1 >= 0 && !visited[curr[0]][curr[1] - 1]) {
+      toAdd.push([curr[0], curr[1] - 1, curr[2] + ((grid[curr[0]][curr[1]] != 2) ? 1 : 0)])
+    }
+    // console.log(curr[0], curr[1], toAdd.sort((a, b) => a[2] - b[2]));
+
+    // queue = [...queue, ...toAdd].sort((a, b) => a[2] - b[2]);
+    for (let i = 0; i < toAdd.length; i++) {
+      queue.enqueue(toAdd[i])
+    }
+  }
+
+  return -1;
+}
+
+// console.log(minCost([[1, 1, 1, 1], [2, 2, 2, 2], [1, 1, 1, 1], [2, 2, 2, 2]]));
+// console.log(minCost([[1, 1, 3], [3, 2, 2], [1, 1, 4]]));
+
+/**
+ * 962. Maximum Width Ramp
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxWidthRamp = function (nums) {
+  let indices = nums.map((value, index) => index);
+  indices.sort((a, b) => nums[a] - nums[b]);
+
+  var highest = indices.at(-1);
+  var max = 0;
+
+  for (let i = indices.length - 2; i >= 0; i--) {
+    if (indices[i] < highest && highest - indices[i] > max) max = highest - indices[i]
+    else if (highest < indices[i]) highest = indices[i];
+  }
+
+  return max;
+};
+
+// console.log(maxWidthRamp([6, 0, 8, 2, 1, 5]));
+
+/**
+ * @param {number[]} arr
+ * @param {number[][]} mat
+ * @return {number}
+ */
+var firstCompleteIndex = function (arr, mat) {
+  var rows = new Array(mat.length).fill(mat[0].length);
+  var cols = new Array(mat[0].length).fill(mat.length);
+  var dict = new Array(arr.length);
+
+  for (let i = 0; i < mat.length; i++) {
+    for (let j = 0; j < mat[0].length; j++) {
+      dict[mat[i][j] - 1] = [i, j];
+    }
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    rows[dict[arr[i] - 1][0]]--;
+    cols[dict[arr[i] - 1][1]]--;
+
+    if (rows[dict[arr[i] - 1][0]] == 0 || cols[dict[arr[i] - 1][1]] == 0) return i;
+  }
+
+  return -1;
+};
+
+console.log(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
