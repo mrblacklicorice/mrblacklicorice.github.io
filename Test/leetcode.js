@@ -7151,4 +7151,448 @@ var firstCompleteIndex = function (arr, mat) {
   return -1;
 };
 
-console.log(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
+// console.log(firstCompleteIndex([1, 3, 4, 2], [[1, 4], [2, 3]]))
+
+/**
+ * 3186. Maximum Total Damage With Spell Casting
+ * 
+ * @param {number[]} power
+ * @return {number}
+ */
+var maximumTotalDamage = function (power) {
+  var dict = {};
+
+  for (let i = 0; i < power.length; i++) {
+    dict[power[i]] = (dict[power[i]] == undefined) ? power[i] : power[i] + dict[power[i]];
+  }
+
+  var uniqueDamages = Object.keys(dict).map(Number).sort((a, b) => a - b);
+  if (uniqueDamages.length === 0) return 0;
+
+  const m = uniqueDamages.length;
+  var dp = new Array(m).fill(0);
+  dp[0] = dict[uniqueDamages[0]];
+
+  let prev_safe_idx = 0;
+  for (let i = 1; i < m; i++) {
+    const current_damage = uniqueDamages[i];
+
+    const skip_damage = dp[i - 1];
+
+    let j = -1;
+
+    for (let k = i - 1; k >= 0; k--) {
+      if (uniqueDamages[k] <= current_damage - 3) {
+        j = k;
+        break;
+      }
+    }
+
+    const safe_precursor_damage = (j >= 0) ? dp[j] : 0;
+    const take_damage = dict[current_damage] + safe_precursor_damage;
+
+    dp[i] = Math.max(skip_damage, take_damage);
+  }
+
+  return dp[m - 1];
+};
+
+// console.log(maximumTotalDamage([5, 9, 2, 10, 2, 7, 10, 9, 3, 8]));
+
+/**
+ * 3346. Maximum Frequency of an Element After Performing Operations I
+ * 
+ * @param {number[]} nums
+ * @param {number} k
+ * @param {number} numOperations
+ * @return {number}
+ */
+var maxFrequency = function (nums, k, numOperations) {
+  var dict = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    if (dict[nums[i]]) dict[nums[i]]++;
+    else dict[nums[i]] = 1;
+  }
+
+  numbers = Object.keys(dict).sort((a, b) => a - b);
+
+  // console.log(numbers);
+
+  var max = 0;
+  var j = 0;
+  var temp = 0;
+  var ops_left = numOperations;
+
+  for (let i = 0; i < numbers.length; i++) {
+    j = i - 1;
+    temp = dict[numbers[i]];
+    ops_left = numOperations;
+
+    while (j >= 0 && ops_left > 0 && numbers[j] >= numbers[i] - k) {
+      temp += (dict[numbers[j]] > ops_left) ? ops_left : dict[numbers[j]];
+      ops_left -= dict[numbers[j]];
+      j--;
+    }
+
+    j = i + 1;
+    while (j < numbers.length && ops_left > 0 && numbers[j] <= numbers[i] + k) {
+      temp += (dict[numbers[j]] > ops_left) ? ops_left : dict[numbers[j]];
+      ops_left -= dict[numbers[j]];
+      j++;
+    }
+
+    max = Math.max(max, temp);
+  }
+
+  return max;
+};
+
+// console.log(maxFrequency([1, 5, 4], 1, 2));
+
+/**
+ * 3453. Separate Squares I
+ * 
+ * @param {number[][]} squares
+ * @return {number}
+ */
+var separateSquares = function (squares) {
+  var total_area = 0, max_y = 0;
+
+  for (var sq of squares) {
+    total_area += sq[2] * sq[2];
+    max_y = Math.max(max_y, sq[1] + sq[2])
+  }
+
+  var min = 0;
+  var max = max_y;
+  var mid = 0;
+  var cut_a = 0;
+  var smallest_y = 0;
+
+  while (max - min > 1e-5) {
+    mid = ((max - min) / 2) + min;
+    cut_a = 0;
+    smallest_y = 0;
+
+    for (var sq of squares) {
+      if (sq[1] < mid) {
+        cut_a += sq[2] * (Math.min(sq[1] + sq[2], mid) - sq[1])
+        smallest_y = Math.max(smallest_y, Math.min(sq[1] + sq[2], mid))
+      }
+    }
+
+    if (cut_a == total_area / 2) {
+      return smallest_y;
+    } else if (cut_a < total_area / 2) {
+      min = mid;
+    } else {
+      max = mid;
+    }
+  }
+
+  return smallest_y;
+};
+
+// console.log(separateSquares([[0,0,2],[1,1,1]]));
+
+/**
+ * 2257. Count Unguarded Cells in the Grid
+ * 
+ * @param {number} m
+ * @param {number} n
+ * @param {number[][]} guards
+ * @param {number[][]} walls
+ * @return {number}
+ */
+var countUnguarded = function (m, n, guards, walls) {
+  var total = m * n - (guards.length + walls.length);
+  var grid = Array.from({ length: m }, () => new Array(n).fill(false));
+
+  for (w of walls) {
+    grid[w[0]][w[1]] = 2;
+  }
+
+  for (g of guards) {
+    grid[g[0]][g[1]] = 1;
+  }
+
+  for (g of guards) {
+    var [gx, gy] = g
+
+    // North
+    gx--;
+    while (gx >= 0 && grid[gx][gy] <= 0) {
+      if (grid[gx][gy] == 0) total--;
+      grid[gx][gy] = -1;
+      gx--;
+    }
+
+    // South
+    [gx, gy] = g
+    gx++;
+    while (gx < m && grid[gx][gy] <= 0) {
+      if (grid[gx][gy] == 0) total--;
+      grid[gx][gy] = -1;
+      gx++;
+    }
+
+    // West
+    [gx, gy] = g
+    gy--;
+    while (gy >= 0 && grid[gx][gy] <= 0) {
+      if (grid[gx][gy] == 0) total--;
+      grid[gx][gy] = -1;
+      gy--;
+    }
+
+    // South
+    [gx, gy] = g
+    gy++;
+    while (gy < n && grid[gx][gy] <= 0) {
+      if (grid[gx][gy] == 0) total--;
+      grid[gx][gy] = -1;
+      gy++;
+    }
+  }
+
+  // console.table(grid);
+  return total;
+};
+
+// console.log(countUnguarded(4, 6, [[0, 0], [1, 1], [2, 3]], [[0, 1], [2, 2], [1, 4]])); // 7
+
+/**
+ * 2110. Number of Smooth Descent Periods of a Stock
+ * 
+ * @param {number[]} prices
+ * @return {number}
+ */
+var getDescentPeriods = function (prices) {
+  var left = 0, right = 1;
+  var total = 0;
+
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i - 1] == prices[i] + 1) {
+      right++;
+    } else {
+      total += ((right - left) * ((right - left) + 1)) / 2;
+      left = i;
+      right = i + 1;
+    }
+  }
+
+  return total + ((right - left) * ((right - left) + 1)) / 2;
+};
+
+// console.log(getDescentPeriods([3, 2, 1, 4])) // 7
+// console.log(getDescentPeriods([8, 6, 7, 7])) // 7
+
+/**
+ * 2943. Maximize Area of Square Hole in Grid
+ * 
+ * @param {number} n
+ * @param {number} m
+ * @param {number[]} hBars
+ * @param {number[]} vBars
+ * @return {number}
+ */
+var maximizeSquareHoleArea = function (n, m, hBars, vBars) {
+  if (hBars.length == 0 || vBars.length == 0) return 1;
+
+  hBars = hBars.sort((a, b) => a - b);
+  vBars = vBars.sort((a, b) => a - b);
+
+  var temp = 2, highestH = 2;
+
+  for (let i = 1; i < hBars.length; i++) {
+    if (hBars[i - 1] + 1 == hBars[i]) {
+      temp++;
+    } else {
+      if (temp > highestH) highestH = temp;
+      temp = 2;
+    }
+  }
+
+  if (temp > highestH) highestH = temp;
+
+  var highestV = 2, temp = 2;
+
+  for (let i = 1; i < vBars.length; i++) {
+    if (vBars[i - 1] + 1 == vBars[i]) {
+      temp++;
+    } else {
+      if (temp > highestV) highestV = temp;
+      temp = 2;
+    }
+  }
+
+  if (temp > highestV) highestV = temp;
+
+  return Math.min(highestH, highestV) ** 2;
+};
+
+// console.log(maximizeSquareHoleArea(2, 3, [2, 3], [2, 4])); // 4
+
+/**
+ * 2975. Maximum Square Area by Removing Fences From a Field
+ * 
+ * @param {number} m
+ * @param {number} n
+ * @param {number[]} hFences
+ * @param {number[]} vFences
+ * @return {number}
+ */
+var maximizeSquareArea = function (m, n, hFences, vFences) {
+  hFences.push(...[1, m])
+  vFences.push(...[1, n])
+  hFences = hFences.sort((a, b) => a - b);
+  vFences = vFences.sort((a, b) => a - b);
+
+  var vsum = [], hsum = [];
+
+  for (let i = 1; i < hFences.length; i++) {
+    hsum.push(hFences[i] - hFences[i - 1] + ((hsum.length == 0) ? 0 : hsum[hsum.length - 1]));
+
+  }
+
+  for (let i = 1; i < vFences.length; i++) {
+    vsum.push(vFences[i] - vFences[i - 1] + ((vsum.length == 0) ? 0 : vsum[vsum.length - 1]));
+  }
+
+  var dict = {}
+
+  for (let i = 0; i < hsum.length; i++) {
+    if (dict[hsum[i]] == undefined) dict[hsum[i]] = true;
+    for (let j = 0; j < i; j++) {
+      if (dict[hsum[i] - hsum[j]] == undefined) dict[hsum[i] - hsum[j]] = true;
+    }
+  }
+
+  var max = -1;
+
+  for (let i = 0; i < vsum.length; i++) {
+    if (dict[vsum[i]] && max < vsum[i]) max = vsum[i];
+    for (let j = 0; j < i; j++) {
+      if (dict[vsum[i] - vsum[j]] && max < vsum[i] - vsum[j]) max = vsum[i] - vsum[j];
+    }
+  }
+
+  const MOD = 1000000007n;
+
+  if (max === -1) return -1;
+
+  const side = BigInt(max);
+  return Number((side * side) % MOD);
+};
+
+// console.log(maximizeSquareArea(4, 3, [2, 3], [2])) // 4
+// console.log(maximizeSquareArea(6, 4, [3], [3, 2])) // 4
+
+/**
+ * 22. Generate Parentheses
+ * 
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function (n) {
+  var result = []
+
+  var recur = function (open, close, curr) {
+    if (open == 0 && close == 0) result.push(curr);
+
+    if (open > 0) {
+      recur(open - 1, close, curr + "(")
+    }
+
+    if (close > open) {
+      recur(open, close - 1, curr + ")")
+    }
+  }
+
+  recur(n, n, "");
+  return result;
+};
+
+// console.log(generateParenthesis(3)); // ["((()))","(()())","(())()","()(())","()()()"]
+
+/**
+ * 1895. Largest Magic Square
+ * 
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var largestMagicSquare = function (grid) {
+  const m = grid.length;
+  const n = grid[0].length;
+
+  var verticalSum = Array.from({ length: m }, () => Array(n).fill(0));
+  var horizontalSum = Array.from({ length: m }, () => Array(n).fill(0));
+  var downDiag = Array.from({ length: m }, () => Array(n).fill(0));
+  var upDiag = Array.from({ length: m }, () => Array(n).fill(0));
+
+  // row, col, downDiag
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      horizontalSum[i][j] = grid[i][j] + (j > 0 ? horizontalSum[i][j - 1] : 0);
+      verticalSum[i][j] = grid[i][j] + (i > 0 ? verticalSum[i - 1][j] : 0);
+      downDiag[i][j] = grid[i][j] + (i > 0 && j > 0 ? downDiag[i - 1][j - 1] : 0);
+    }
+  }
+
+  // upDiag ↙
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = 0; j < n; j++) {
+      upDiag[i][j] =
+        grid[i][j] +
+        (i + 1 < m && j - 1 >= 0 ? upDiag[i + 1][j - 1] : 0);
+    }
+  }
+
+  const max_n = Math.min(m, n);
+
+  for (let size = max_n; size >= 2; size--) {
+    for (let i = 0; i + size <= m; i++) {
+      for (let j = 0; j + size <= n; j++) {
+
+        const target =
+          horizontalSum[i][j + size - 1] -
+          (j > 0 ? horizontalSum[i][j - 1] : 0);
+
+        let ok = true;
+
+        for (let k = 0; k < size; k++) {
+          const rowSum =
+            horizontalSum[i + k][j + size - 1] -
+            (j > 0 ? horizontalSum[i + k][j - 1] : 0);
+
+          const colSum =
+            verticalSum[i + size - 1][j + k] -
+            (i > 0 ? verticalSum[i - 1][j + k] : 0);
+
+          if (rowSum !== target || colSum !== target) {
+            ok = false;
+            break;
+          }
+        }
+
+        if (!ok) continue;
+
+        const d1 =
+          downDiag[i + size - 1][j + size - 1] -
+          (i > 0 && j > 0 ? downDiag[i - 1][j - 1] : 0);
+
+        const d2 =
+          upDiag[i][j + size - 1] -
+          (i + size < m && j > 0 ? upDiag[i + size][j - 1] : 0);
+
+        if (d1 === target && d2 === target) return size;
+      }
+    }
+  }
+
+  return 1;
+};
+
+
+// console.log(largestMagicSquare([[7, 1, 4, 5, 6], [2, 5, 1, 6, 4], [1, 5, 4, 3, 2], [1, 2, 7, 3, 4]]));
