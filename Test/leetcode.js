@@ -7596,3 +7596,27 @@ var largestMagicSquare = function (grid) {
 
 
 // console.log(largestMagicSquare([[7, 1, 4, 5, 6], [2, 5, 1, 6, 4], [1, 5, 4, 3, 2], [1, 2, 7, 3, 4]]));
+
+
+/**
+ * 300. Longest Increasing Subsequence
+ * 
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function (nums) {
+  var rec = new Array(nums.length).fill(1);
+
+  var highest = 1;
+
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (nums[i] > nums[j] && rec[i] < rec[j] + 1) rec[i] = rec[j] + 1;
+    }
+    if (rec[i] > highest) highest = rec[i];
+  }
+
+  return highest;
+};
+
+console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]));
