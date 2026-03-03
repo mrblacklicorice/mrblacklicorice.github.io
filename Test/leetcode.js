@@ -7619,4 +7619,54 @@ var lengthOfLIS = function (nums) {
   return highest;
 };
 
-console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]));
+// console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]));
+
+/**
+ * 1404. Number of Steps to Reduce a Number in Binary Representation to One
+ *
+ * @param {string} s
+ * @return {number}
+ */
+var numSteps = function (s) {
+  let steps = 0;
+  let carry = 0;
+
+  for (let i = s.length - 1; i > 0; i--) {
+    let bit = Number(s[i]) + carry;
+
+    if (bit % 2 === 0) {
+      steps += 1;
+    } else {
+      steps += 2;
+      carry = 1;
+    }
+  }
+
+  return steps + carry;
+};
+
+// console.log(numSteps("1101")); //s = 13, 6
+
+/**
+ * 1545. Find Kth Bit in Nth Binary String
+ * 
+ * @param {number} n
+ * @param {number} k
+ * @return {character}
+ */
+var findKthBit = function (n, k) {
+  if (k == 1 || n == 1) return '0';
+  if (Number.isInteger(Math.log2(k))) return '1';
+
+  var opp = (x) => x == '0' ? '1' : '0';
+
+  var mid = Math.pow(2, n - 1)
+
+  if (k < mid) {
+    return findKthBit(n - 1, k)
+  } else {
+    return opp(findKthBit(n - 1, mid + (mid - k)))
+  }
+};
+
+// console.log(findKthBit(3, 6));
