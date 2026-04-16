@@ -93,7 +93,7 @@
     "p-try": "2.2.0",
     "path-exists": "3.0.0",
     "path-is-absolute": "1.0.1",
-    "picomatch": "2.2.2",
+    "picomatch": "2.3.2",
     "prompt": "^1.0.0",
     "puppeteer": "^23.3.0",
     "readdirp": "3.2.0",
